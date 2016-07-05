@@ -30,8 +30,9 @@ if($this->func=='index')
         </td>
         <td><?=$row['addtime']?></td>
         <td>
+            <a href="<?=url("category/?pid={$row['id']}")?>">管理子项</a>
         <? 
-        echo $this->anchor("category/?pid={$row['id']}","管理子项")." | ";
+        //echo $this->anchor("category/?pid={$row['id']}","管理子项")." | ";
 		//echo $this->anchor("category/add/?pid={$row['id']}","添加子项")." | ";
         echo $this->anchor('category/edit/?id='.$row['id'],'编辑')." | ";
         $arr=array(
@@ -39,6 +40,7 @@ if($this->func=='index')
         );
         echo $this->anchor('category/delete/?pid='.$row['pid'].'&id='.$row['id'],'删除',$arr);
         ?>
+
         </td>                                
     </tr> 
     <? }?>

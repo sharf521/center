@@ -53,9 +53,18 @@ class CategoryController extends AdminController
         if ($_POST) {
             $pid = $_POST['pid'];
             $this->model->edit($_POST);
-            show_msg(array('修改成功', '', $this->base_url('category/?pid=' . $pid)));
+
+            //redirect("category/?pid={$pid}")->back();
+            //redirect()->back()->with();
+            //redirect("category/?pid={$pid}")->with('key',array('a'=>1,'b'=>2));
+
+
+
+            //show_msg(array('修改成功', '', $this->base_url('category/?pid=' . $pid)));
+
             //$this->redirect('permission');
             $this->model->createjs();
+            redirect("category/?pid={$pid}")->with('msg','修改成功！');
         } else {
             $data['row'] = DB::table('category')->where("id=?")->bindValues($_GET['id'])->row();
             $this->view('category', $data);

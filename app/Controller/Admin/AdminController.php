@@ -43,6 +43,7 @@ class AdminController extends BaseController
             }
         }
     }
+
     public function error()
     {
         echo 'not find page';

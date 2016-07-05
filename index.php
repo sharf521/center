@@ -18,14 +18,16 @@ use System\Lib\DB;
 error_reporting(7);
 //define('ROOT', dirname(__FILE__).'/');
 //define('ROOT', dirname($_SERVER['SCRIPT_FILENAME']) . '/');
+define('ROOT', __DIR__);
 
 $_G = array();
-require __DIR__ . '/system/init.php';
-require __DIR__ . '/system/Autoloader.php';
+require ROOT. '/system/init.php';
+require ROOT . '/system/Autoloader.php';
 //require __DIR__.'/app/Config.php';
 $mysql = DB::instance('db1');
 
 require __DIR__ . '/system/function.php';
+require __DIR__ . '/system/helper.php';
 $inputClass = new \System\Lib\Input();
 require __DIR__ . '/system/page.class.php';
 $pager = new Page();
@@ -68,3 +70,5 @@ if ($_G['class'] == 'api') {
 
 $t2 = microtime(true);
 //echo '<hr>耗时'.round($t2-$t1,3).'秒';
+
+

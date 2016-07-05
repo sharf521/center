@@ -1,56 +1,7 @@
 <?php
 namespace System\Lib;
-////import("ORG/User/Info.class.php");
-////ORG/User/Info.class.php
-//function import($file)
-//{
-//    static $_file = array();
-//    if (file_exists(ROOT . 'model/' . $file . '.class.php')) {
-//        $file = ROOT . 'model/' . $file . '.class.php';
-//    } else {
-//        $file = $file;
-//    }
-//    if (isset($_file[$file]))
-//        return true;
-//    else
-//        $_file[$file] = true;
-//    require($file);
-//}
-//
-//function new_model($name)
-//{
-//    static $_model = array();
-//    if (isset($_model[$name])) {
-//        return $_model[$name];
-//    }
-//    import($name);
-//    $classname = $name . "Class";
-//    if (class_exists($classname)) {
-//        $model = new $classname();
-//        $_model[$name] = $model;
-//        return $model;
-//    } else {
-//        //return false;
-//        die("error new_model {$name}");
-//    }
-//}
-//
-////模块
-//function m($url, $vars = array())
-//{
-//    $_url = explode('/', $url);
-//
-//    $class = new_model($_url[0]);
-//    $func = $_url[1];
-//    if ($func == '') $func = 'index';
-//    if ($class && method_exists($class, $func)) {
-//        return call_user_func(array($class, $func), $vars);
-//    } else {
-//        //return false;
-//        die("error class or method {$url}");
-//    }
-//}
 
+use App\Config;
 
 class Controller
 {
@@ -61,7 +12,7 @@ class Controller
 
     public function __construct()
     {
-        global $inputClass;
+        global $inputClass,$_G;
         $this->input = $inputClass;
         $this->base_url = '/index.php/';
         $this->control = ($this->input->get(0) != '') ? $this->input->get(0) : 'index';
@@ -69,19 +20,19 @@ class Controller
         $this->user_id = getSession('user_id');
         $this->username = getSession('username');
         $this->user_typeid = getSession('usertype');
-        $this->dbfix=\App\Config::$db1['dbfix'];
+        $this->dbfix = Config::$db1['dbfix'];
     }
 
     //显示模板
     public function view($tpl, $data = array())
     {
-        global $_G;
+        global $_G;//模板要用
         if (!empty($data)) {
             extract($data);
         }
-        $file = __DIR__ . '/../../app/themes/' . $this->template . '/' . $tpl . '.tpl.php';
+        $file = ROOT . '/app/themes/' . $this->template . '/' . $tpl . '.tpl.php';
         if (file_exists($file)) {
-            require $file;
+            require($file);
         } else {
             echo 'Error:no file ' . $this->template . '/' . $tpl . '.tpl.php';
         }
@@ -105,7 +56,6 @@ class Controller
                 $str = $attributes;
             }
         }
-
         return '<a href="' . $url . '" ' . $str . '>' . $title . '</a>';
     }
 
@@ -120,4 +70,10 @@ class Controller
     {
         echo '找不到当前网页';
     }
+
+    public function __destruct()
+    {
+       session()->flash_remove();
+    }
 }
+

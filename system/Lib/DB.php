@@ -9,8 +9,7 @@ class DB
 
     /**
      * @param null $config_name
-     * @return DbConnection
-     * @throws Exception
+     * @return \System\Lib\DbConnection
      */
     public static function instance($config_name = null)
     {
@@ -19,9 +18,7 @@ class DB
         }
         if (!isset(\App\Config::$$config_name)) {
             echo "Config::$config_name not set\n";
-            throw new \Exception("Config::$config_name not set\n");
         }
-
         if (empty(self::$instance[$config_name])) {
             $config = \App\Config::$$config_name;
             self::$instance[$config_name] = new DbConnection($config['host'], $config['port'], $config['user'], $config['password'], $config['dbname'], $config['charset'], $config['dbfix']);
@@ -264,7 +261,7 @@ class DbConnection
         if (empty($this->select)) {
             $this->select = '*';
         }
-        $sql = "select {$this->distinct} {$this->select} from {$this->table}"
+        $sql = "SELECT {$this->distinct} {$this->select} FROM {$this->table}"
             . $this->buildJoin()
             . $this->where
             . $this->groupBy
@@ -277,7 +274,7 @@ class DbConnection
     public function page($page = 1, $pageSize = 10)
     {
         $sql = $this->buildSelect();
-        $pageSql = "select {$this->distinct} count(1) as num from {$this->table}"
+        $pageSql = "SELECT {$this->distinct} count(1) as num FROM {$this->table}"
             . $this->buildJoin()
             . $this->where
             . $this->groupBy

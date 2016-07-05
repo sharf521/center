@@ -55,4 +55,17 @@ class Model
         }
         return DB::table($table)->where($data)->update(array('status'=>-1));
     }
+
+    public function __get($key)
+    {
+        if (isset($this->$key)) {
+            return ($this->$key);
+        }
+    }
+
+    public function __set($key, $value)
+    {
+        $this->$key = $value;
+    }
+
 }
