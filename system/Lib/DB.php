@@ -153,10 +153,10 @@ class DbConnection
 //        }
     }
 
-    public function get_one($sql, $param = null)
+    public function get_one($sql, $param = null,$mode=\PDO::FETCH_ASSOC)
     {
         $this->query($sql, $param);
-        $this->sQuery->setFetchMode(\PDO::FETCH_ASSOC);
+        $this->sQuery->setFetchMode($mode);
         $result = $this->sQuery->fetch();
         if($result){
             return $result;
@@ -165,10 +165,10 @@ class DbConnection
         }
     }
 
-    public function get_all($sql, $param = null)
+    public function get_all($sql, $param = null,$mode=\PDO::FETCH_ASSOC)
     {
         $this->query($sql, $param);
-        $this->sQuery->setFetchMode(\PDO::FETCH_ASSOC);
+        $this->sQuery->setFetchMode($mode);
         $result = $this->sQuery->fetchAll();
         if($result){
             return $result;
@@ -354,6 +354,10 @@ class DbConnection
         return $this;
     }
 
+    /**
+     * @param array|string $where
+     * @return $this
+     */
     public function where($where)
     {
         if(is_array($where)){
@@ -408,19 +412,24 @@ class DbConnection
         return $this;
     }
 
+    public function getSql()
+    {
+        return $this->buildSelect();
+    }
+
     //取一行
-    public function row()
+    public function row($mode=\PDO::FETCH_ASSOC)
     {
         $sql = $this->buildSelect() . " limit 1";
-        return $this->get_one($sql);
+        return $this->get_one($sql,null,$mode);
     }
 
     //取多行
-    public function all()
+    public function all($mode=\PDO::FETCH_ASSOC)
     {
         $sql = $this->buildSelect();
         //echo $sql;
-        return $this->get_all($sql);
+        return $this->get_all($sql,null,$mode);
     }
 
     //取一行中一列的值

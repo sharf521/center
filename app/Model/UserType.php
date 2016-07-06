@@ -5,10 +5,10 @@ use System\Lib\DB;
 
 class UserType extends Model
 {
+    protected $table='usertype';
     public function __construct()
     {
         parent::__construct();
-        $this->table='usertype';
     }
 
     function getList()
@@ -43,5 +43,13 @@ class UserType extends Model
     function delete($data = array())
     {
         return $this->destroy($data);
+    }
+
+    /**
+     * @return \App\Model\User
+     */
+    public function User()
+    {
+        return $this->hasMany('App\Model\User','type_id','id');
     }
 }

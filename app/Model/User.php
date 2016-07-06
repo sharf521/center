@@ -5,10 +5,10 @@ use System\Lib\DB;
 
 class User extends Model
 {
+    protected $table='user';
     public function __construct()
     {
         parent::__construct();
-        $this->table = 'user';
         $this->fields = array('name', 'username', 'password', 'addtime', 'status', 'lastip', 'portrait', 'times', 'zf_password', 'email', 'tel', 'qq', 'address');
     }
 
@@ -207,5 +207,13 @@ class User extends Model
         unset($data['user_id']);
         $data = $this->filterFields($data, $this->fields);
         return DB::table('user')->where('user_id=?')->bindValues($user_id)->limit(1)->update($data);
+    }
+
+    /**
+     * @return \App\Model\UserType
+     */
+    public function UserType()
+    {
+        return $this->hasOne('App\Model\UserType','id','type_id');
     }
 }

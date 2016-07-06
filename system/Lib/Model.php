@@ -4,12 +4,13 @@ namespace System\Lib;
 class Model
 {
     protected $table;
-    protected $fields;
+    protected $fields=array();
+    private $pdo;
 
     public function __construct()
     {
-        $this->fields = array();
         $this->dbfix = \App\Config::$db1['dbfix'];
+        $this->pdo=DB::instance();
     }
 
     public function filterFields($post, $fields = array())//过滤字段
@@ -56,6 +57,7 @@ class Model
         return DB::table($table)->where($data)->update(array('status'=>-1));
     }
 
+
     public function __get($key)
     {
         if (isset($this->$key)) {
@@ -66,6 +68,108 @@ class Model
     public function __set($key, $value)
     {
         $this->$key = $value;
+    }
+
+    public function hasOne($class,$foreign_key,$local_key='id')
+    {
+        $mod = new $class();
+        return $mod->where($foreign_key.'='.$this->$local_key)->first();
+    }
+
+    public function hasMany($class,$foreign_key,$local_key='id')
+    {
+        $mod = new $class();
+        return $mod->where($foreign_key.'='.$this->$local_key)->all();
+    }
+
+///////////////////////////////////////////////////////////
+
+
+
+    public function find($id)
+    {
+        return $this->where('id=?')->bindValues($id)->first();
+    }
+    //取一行
+    public function first()
+    {
+        $this->pdo->table($this->table);
+        echo $this->pdo->getSql();
+        $row=$this->pdo->row();
+        foreach ($row as $k=>$v){
+            $this->$k=$v;
+        }
+        unset($this->dbfix);
+        unset($this->pdo);
+        return $this;
+    }
+
+    //取多行
+    public function get()
+    {
+        $arr=array();
+        $this->pdo->table($this->table);
+        $result=$this->pdo->all();
+        unset($this->dbfix);
+        unset($this->pdo);
+        foreach ($result as $row){
+            $obj = clone $this;
+            foreach ($row as $k=>$v){
+                $obj->$k=$v;
+            }
+            array_push($arr,$obj);
+        }
+        return $arr;
+    }
+
+    public function select($str)
+    {
+        $this->pdo->where($str);
+        return $this;
+    }
+    public function distinct()
+    {
+        $this->pdo->distinct();
+        return $this;
+    }
+    /**
+     * @param array|string $str
+     * @return $this
+     */
+    public function where($str)
+    {
+        $this->pdo->where($str);
+        return $this;
+    }
+
+    public function orderBy($str)
+    {
+        $this->pdo->orderBy($str);
+        return $this;
+    }
+
+    public function groupBy($str)
+    {
+        $this->pdo->groupBy($str);
+        return $this;
+    }
+
+    public function having($str)
+    {
+        $this->pdo->having($str);
+        return $this;
+    }
+
+    public function limit($str)
+    {
+        $this->pdo->limit($str);
+        return $this;
+    }
+
+    public function bindValues($values = array())
+    {
+        $this->pdo->bindValues($values);
+        return $this;
     }
 
 }

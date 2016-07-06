@@ -2,6 +2,8 @@
 namespace App\Controller\Admin;
 
 use App\Model\Category;
+use App\Model\User;
+use App\Model\UserType;
 use System\Lib\DB;
 
 class CategoryController extends AdminController
@@ -15,6 +17,24 @@ class CategoryController extends AdminController
     //列表
     function index()
     {
+//        $user=new User();
+//        var_dump($user->first()->UserType()->name);
+//        exit;
+//        //$a=$user->where('user_id=2010')->first();
+//        //$b=$a->UserType()->name;
+//        //var_dump($b);
+//
+//        $ut=new UserType();
+//        $a=$ut->find(1)->User();
+//        var_dump($a);
+//        exit;
+//
+//        $a=$user->all();
+//        foreach ($a as $item)
+//        {
+//            var_dump($item->user_id);
+//        }
+//        var_dump($a);
         $pid = (int)$_GET['pid'];
         if (isset($_POST['showorder'])) {
             $id = $_POST['id'];
