@@ -33,9 +33,9 @@ if (!function_exists('session')) {
         static $session = null;
         if ($session===null) {
 
-
-            $session=new \System\Lib\Session();
             echo 1111;
+            $session=new \System\Lib\Session();
+            echo 2222;
             exit;
         }
 
