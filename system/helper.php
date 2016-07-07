@@ -32,10 +32,11 @@ if (!function_exists('session')) {
     {
         static $session = null;
         if ($session===null) {
-            echo 1111;
-            exit;
+
 
             $session=new \System\Lib\Session();
+            echo 1111;
+            exit;
         }
 
         if($name===null){
