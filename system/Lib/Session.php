@@ -66,8 +66,11 @@ class Session
     //删除一次性session
     public function flash_remove()
     {
-        foreach ($this->get('flash.old', array()) as $v) {
-            $this->remove($v);
+        $arr=$this->get('flash.old');
+        if(is_array($arr)){
+            foreach ($arr as $v) {
+                $this->remove($v);
+            }
         }
         $this->set('flash.old', $this->get('flash.new'));
         $this->remove('flash.new');
