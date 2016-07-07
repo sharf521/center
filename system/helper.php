@@ -35,6 +35,8 @@ if (!function_exists('session')) {
             $session=new \System\Lib\Session();
         }
         if($name===null){
+            echo 1111;
+            exit;
             return $session;
         }
         else{
