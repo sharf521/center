@@ -8,9 +8,10 @@ class Session
         if (!is_array($key)) {
             $key = [$key => $value];
         }
+        echo $key;
         foreach ($key as $k => $v) {
             $_key = base64_encode($k);
-            $_SESSION[$_key] = self::DeCode(serialize($v), 'E');
+            $_SESSION[$_key] = $this->DeCode(serialize($v), 'E');
         }
     }
 
@@ -18,7 +19,7 @@ class Session
     {
         $_key = base64_encode($key);
         $_val = $_SESSION[$_key];
-        $value = unserialize(self::DeCode($_val, 'D'));
+        $value = unserialize($this->DeCode($_val, 'D'));
         if (empty($value)) {
             return $default;
         }
