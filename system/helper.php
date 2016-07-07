@@ -30,14 +30,10 @@ if (!function_exists('session')) {
      */
     function session($name=null)
     {
-
         static $session = null;
-
         if ($session===null) {
             $session=new \System\Lib\Session();
         }
-        echo 4444;
-        exit;
         if($name===null){
             return $session;
         }

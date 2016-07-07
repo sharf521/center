@@ -17,7 +17,7 @@ class IndexController extends Controller
     public function index($a=100,$b,$c=300)
     {
         session()->set('aa',1234);
-        echo session('aa');
+        session()->debug();
         echo '<hr>';
         print_r($a);
         echo '<br>';
