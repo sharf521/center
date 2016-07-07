@@ -16,6 +16,7 @@ class Autoloader
         }
         //echo $class_file.'<br><br><br>';
         if (is_file($class_file)) {
+            echo $class_file;
             require_once($class_file);
             if (class_exists($name, false)) {
                 return true;
