@@ -122,6 +122,27 @@ class Model
         return $arr;
     }
 
+    public function page($page = 1, $pageSize = 10)
+    {
+        $arr=array();
+        $this->pdo->table($this->table);
+        $result=$this->pdo->page($page,$pageSize);
+        unset($this->dbfix);
+        unset($this->pdo);
+        foreach ($result['list'] as $row){
+            $obj = clone $this;
+            foreach ($row as $k=>$v){
+                $obj->$k=$v;
+            }
+            array_push($arr,$obj);
+        }
+        return array(
+            'list' => $arr,
+            'total' => $result['total'],
+            'page' =>$result['page']
+        );
+    }
+
     public function select($str)
     {
         $this->pdo->where($str);

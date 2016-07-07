@@ -282,8 +282,9 @@ class DbConnection
 //        echo $pageSql . '<br>';
         $row = $this->get_one($pageSql);
         $total = $row['num'];
-        $pageSize = empty($pageSize)?10:$pageSize;
-        if ((int)$page > 0) {
+        $pageSize = empty($pageSize)?10:(int)$pageSize;
+        $page=(int)$page;
+        if ($page > 0) {
             $index = $pageSize * ($page - 1);
         } else {
             $index = 0;

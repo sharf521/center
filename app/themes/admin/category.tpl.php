@@ -1,5 +1,6 @@
 <?php require 'header.php';?>
 <?
+echo $aa;
 if($this->func=='index')
 {
 ?>

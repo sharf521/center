@@ -68,7 +68,7 @@ class Controller
 
     public function error()
     {
-        echo '找不到当前网页';
+        echo 'not find page';
     }
 
     public function __destruct()

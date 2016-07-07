@@ -4,7 +4,6 @@ namespace System\Lib;
 class Redirect
 {
     private $path;
-    private $param;
     private $is_back=false;
     public function __construct($str='')
     {
@@ -32,7 +31,6 @@ class Redirect
         foreach ($key as $k => $v) {
             session()->flash($k,$v);
         }
-        $this->param=$key;
     }
     
     public function __destruct()
