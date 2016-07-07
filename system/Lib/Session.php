@@ -5,10 +5,11 @@ class Session
 {
     public function set($key, $value = null)
     {
+        echo $key;
+        exit;
         if (!is_array($key)) {
             $key = [$key => $value];
         }
-        echo $key;
         foreach ($key as $k => $v) {
             $_key = base64_encode($k);
             $_SESSION[$_key] = $this->DeCode(serialize($v), 'E');
