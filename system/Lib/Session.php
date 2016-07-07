@@ -5,6 +5,7 @@ class Session
 {
     public function set($key, $value = null)
     {
+        echo 111;
         echo $key;
         exit;
         if (!is_array($key)) {
@@ -66,6 +67,7 @@ class Session
     //删除一次性session
     public function flash_remove()
     {
+        exit;
         $arr=$this->get('flash.old');
         if(is_array($arr)){
             foreach ($arr as $v) {
