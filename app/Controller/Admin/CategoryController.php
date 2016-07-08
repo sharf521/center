@@ -22,12 +22,12 @@ class CategoryController extends AdminController
 
 //
       // var_dump($userType);
-            $userType->name=$userType->name.'亲爱的会员';
-            var_dump($userType->save());
-            echo '<hr>';
-            $ut=new UserType();
-            $ut->name='亲爱的会员';
-            var_dump($ut->save());
+//            $userType->name=$userType->name.'亲爱的会员';
+//            var_dump($userType->save());
+//            echo '<hr>';
+//            $ut=new UserType();
+//            $ut->name='亲爱的会员';
+//            var_dump($ut->save());
 
 //        var_dump($user->first()->UserType()->name);
 //        exit;
