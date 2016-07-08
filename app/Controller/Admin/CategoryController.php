@@ -17,7 +17,7 @@ class CategoryController extends AdminController
     //列表
     function index(User $user)
     {
-            $a=$user->where('user_id=1')->first();
+        $a=$user->where('user_id=1')->first();
         var_dump($a);
         //echo $a['page'];
 //        var_dump($user->first()->UserType()->name);
