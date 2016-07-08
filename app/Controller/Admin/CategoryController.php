@@ -18,18 +18,15 @@ class CategoryController extends AdminController
     function index(UserType $userType)
     {
 
-        $userType=$userType->find(1);
-        var_dump($userType);
-        $userType->name=$userType->name.'亲爱的会员';
-        var_dump($userType->save());
-        echo '<hr>';
-        $ut=new UserType();
-        $ut->name='亲爱的会员';
-        var_dump($ut->save());
-       // echo $a->save();
-//        echo $a->name;
-//        var_dump($a);
-        //echo $a['page'];
+//        $userType=$userType->find(1);
+//        var_dump($userType);
+//        $userType->name=$userType->name.'亲爱的会员';
+//        var_dump($userType->save());
+//        echo '<hr>';
+//        $ut=new UserType();
+//        $ut->name='亲爱的会员';
+//        var_dump($ut->save());
+
 //        var_dump($user->first()->UserType()->name);
 //        exit;
 //        //$a=$user->where('user_id=2010')->first();
