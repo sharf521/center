@@ -5,12 +5,12 @@ class Model
 {
     protected $table;
     protected $fields=array();
-    private $pdo;
+    protected $mysql;
 
     public function __construct()
     {
         $this->dbfix = \App\Config::$db1['dbfix'];
-        $this->pdo=DB::instance();
+        $this->mysql=DB::instance('db1');
     }
 
     public function filterFields($post, $fields = array())//过滤字段
@@ -29,6 +29,11 @@ class Model
         return $post;
     }
 
+    /**
+     * @param array $data
+     * @param string $table
+     * @return array
+     */
     public function getOne($data = array(),$table='')
     {
         if($table==''){
@@ -93,14 +98,13 @@ class Model
     //取一行
     public function first()
     {
-        $this->pdo->table($this->table);
-        echo $this->pdo->getSql();
-        $row=$this->pdo->row();
+        $this->mysql->table($this->table);
+        $row=$this->mysql->row();
         foreach ($row as $k=>$v){
             $this->$k=$v;
         }
         unset($this->dbfix);
-        unset($this->pdo);
+        unset($this->mysql);
         return $this;
     }
 
@@ -108,10 +112,10 @@ class Model
     public function get()
     {
         $arr=array();
-        $this->pdo->table($this->table);
-        $result=$this->pdo->all();
+        $this->mysql->table($this->table);
+        $result=$this->mysql->all();
         unset($this->dbfix);
-        unset($this->pdo);
+        unset($this->mysql);
         foreach ($result as $row){
             $obj = clone $this;
             foreach ($row as $k=>$v){
@@ -125,10 +129,10 @@ class Model
     public function page($page = 1, $pageSize = 10)
     {
         $arr=array();
-        $this->pdo->table($this->table);
-        $result=$this->pdo->page($page,$pageSize);
+        $this->mysql->table($this->table);
+        $result=$this->mysql->page($page,$pageSize);
         unset($this->dbfix);
-        unset($this->pdo);
+        unset($this->mysql);
         foreach ($result['list'] as $row){
             $obj = clone $this;
             foreach ($row as $k=>$v){
@@ -145,12 +149,12 @@ class Model
 
     public function select($str)
     {
-        $this->pdo->where($str);
+        $this->mysql->where($str);
         return $this;
     }
     public function distinct()
     {
-        $this->pdo->distinct();
+        $this->mysql->distinct();
         return $this;
     }
     /**
@@ -159,37 +163,37 @@ class Model
      */
     public function where($str)
     {
-        $this->pdo->where($str);
+        $this->mysql->where($str);
         return $this;
     }
 
     public function orderBy($str)
     {
-        $this->pdo->orderBy($str);
+        $this->mysql->orderBy($str);
         return $this;
     }
 
     public function groupBy($str)
     {
-        $this->pdo->groupBy($str);
+        $this->mysql->groupBy($str);
         return $this;
     }
 
     public function having($str)
     {
-        $this->pdo->having($str);
+        $this->mysql->having($str);
         return $this;
     }
 
     public function limit($str)
     {
-        $this->pdo->limit($str);
+        $this->mysql->limit($str);
         return $this;
     }
 
     public function bindValues($values = array())
     {
-        $this->pdo->bindValues($values);
+        $this->mysql->bindValues($values);
         return $this;
     }
 

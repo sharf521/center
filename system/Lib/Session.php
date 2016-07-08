@@ -56,7 +56,7 @@ class Session
     {
         $arr = array();
         foreach ($_SESSION as $k => $v) {
-            $arr[base64_decode($k)] = unserialize(self::DeCode($v, 'D'));
+            $arr[base64_decode($k)] = unserialize($this->DeCode($v, 'D'));
         }
         print_r($arr);
     }
