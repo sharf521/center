@@ -25,8 +25,8 @@ $_G = array();
 require ROOT . '/system/init.php';
 require ROOT . '/system/Autoloader.php';
 //require __DIR__.'/app/Config.php';
-$mysql = DB::instance('db1');
 
+$mysql = DB::instance('db1');
 require __DIR__ . '/system/function.php';
 require __DIR__ . '/system/helper.php';
 $inputClass = new \System\Lib\Input();

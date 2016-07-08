@@ -1,8 +1,6 @@
 <?php
 namespace System\Lib;
 
-use App\Config;
-
 class Controller
 {
     public $base_url;
@@ -20,7 +18,7 @@ class Controller
         $this->user_id = session('user_id');
         $this->username = session('username');
         $this->user_typeid = session('usertype');
-        $this->dbfix = Config::$db1['dbfix'];
+        $this->dbfix = DB::dbfix();
     }
 
     //显示模板

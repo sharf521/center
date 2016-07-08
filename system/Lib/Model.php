@@ -6,13 +6,12 @@ class Model
     //属性必须在这里声明
     protected $table;
     protected $fields=array();
-    protected $mysql;
     protected $attributes=array();
     protected $dbfix;
+    protected $primaryKey='id';
     public function __construct()
     {
-        $this->dbfix = \App\Config::$db1['dbfix'];
-        $this->mysql=DB::instance('db1');
+        $this->dbfix = DB::dbfix();
     }
 
     public function __get($key)
@@ -81,9 +80,6 @@ class Model
         return DB::table($table)->where($data)->update(array('status'=>-1));
     }
 
-
-
-
     public function hasOne($class,$foreign_key,$local_key='id')
     {
         $mod = new $class();
@@ -102,7 +98,7 @@ class Model
 
     public function find($id)
     {
-        return $this->where('id=?')->bindValues($id)->first();
+        return $this->where($this->primaryKey."=?")->bindValues($id)->first();
     }
     /**
      * 获取一个对象
@@ -112,28 +108,12 @@ class Model
     {
         $row=$this->row();
         $obj = clone $this;
-        unset($obj->dbfix);
-        unset($obj->mysql);
         foreach ($row as $k=>$v){
             $obj->$k=$v;
         }
         return $obj;
     }
 
-    /**
-     * @return array
-     */
-    public function row()
-    {
-        echo $this->table;
-        $this->mysql->table($this->table);
-        return $this->mysql->row();
-    }
-    public function all()
-    {
-        $this->mysql->table($this->table);
-        return $this->mysql->all();
-    }
     /**
      * 返回一个数组，每个元素是一个对象
      * @return array
@@ -144,8 +124,6 @@ class Model
         $result=$this->all();
         foreach ($result as $row){
             $obj = clone $this;
-            unset($obj->dbfix);
-            unset($obj->mysql);
             foreach ($row as $k=>$v){
                 $obj->$k=$v;
             }
@@ -156,22 +134,20 @@ class Model
 
     public function save()
     {
-        if(isset($this->id)){
-            $id=$this->id;
-            unset($this->id);
+        $primaryKey=$this->primaryKey;
+        if(isset($this->$primaryKey)){
+            $id=$this->$primaryKey;
+            unset($this->$primaryKey);
             return DB::table($this->table)->where('id=?')->bindValues($id)->update($this->attributes);
         }else{
             return DB::table($this->table)->insertGetId($this->attributes);
         }
     }
 
-    public function page($page = 1, $pageSize = 10)
+    public function pager($page = 1, $pageSize = 10)
     {
         $arr=array();
-        $this->mysql->table($this->table);
-        $result=$this->mysql->page($page,$pageSize);
-        unset($this->dbfix);
-        unset($this->mysql);
+        $result=$this->page($page,$pageSize);
         foreach ($result['list'] as $row){
             $obj = clone $this;
             foreach ($row as $k=>$v){
@@ -185,15 +161,41 @@ class Model
             'page' =>$result['page']
         );
     }
+///////以下重写DB类方法/////////////////////////////////////////////////////////////////////////////////
+    /**
+     * @param int $page
+     * @param int $pageSize
+     * @return array
+     */
+    public function page($page = 1, $pageSize = 10)
+    {
+        return DB::table($this->table)->page($page,$pageSize);
+    }
+
+    /**
+     * @return array
+     */
+    public function row()
+    {
+        return DB::table($this->table)->row();
+    }
+
+    /**
+     * @return array
+     */
+    public function all()
+    {
+        return DB::table($this->table)->all();
+    }
 
     public function select($str)
     {
-        $this->mysql->where($str);
+        DB::where($str);
         return $this;
     }
     public function distinct()
     {
-        $this->mysql->distinct();
+        DB::distinct();
         return $this;
     }
     /**
@@ -202,38 +204,37 @@ class Model
      */
     public function where($str)
     {
-        $this->mysql->where($str);
+        DB::where($str);
         return $this;
     }
 
     public function orderBy($str)
     {
-        $this->mysql->orderBy($str);
+        DB::orderBy($str);
         return $this;
     }
 
     public function groupBy($str)
     {
-        $this->mysql->groupBy($str);
+        DB::groupBy($str);
         return $this;
     }
 
     public function having($str)
     {
-        $this->mysql->having($str);
+        DB::having($str);
         return $this;
     }
 
     public function limit($str)
     {
-        $this->mysql->limit($str);
+        DB::limit($str);
         return $this;
     }
 
     public function bindValues($values = array())
     {
-        $this->mysql->bindValues($values);
+        DB::bindValues($values);
         return $this;
     }
-
 }

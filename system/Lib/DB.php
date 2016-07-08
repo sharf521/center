@@ -6,7 +6,7 @@ class DB
 {
     //实例数组
     protected static $instance = array();
-
+    protected static $instance_name;
     /**
      * @param null $config_name
      * @return \System\Lib\DbConnection
@@ -14,7 +14,9 @@ class DB
     public static function instance($config_name = null)
     {
         if ($config_name == null) {
-            $config_name = 'db1';
+            $config_name = self::$instance_name;
+        }else{
+            self::$instance_name=$config_name;
         }
         if (!isset(\App\Config::$$config_name)) {
             echo "Config::$config_name not set\n";
@@ -24,6 +26,13 @@ class DB
             self::$instance[$config_name] = new DbConnection($config['host'], $config['port'], $config['user'], $config['password'], $config['dbname'], $config['charset'], $config['dbfix']);
         }
         return self::$instance[$config_name];
+    }
+
+    public static function dbfix()
+    {
+        $config_name=self::$instance_name;
+        $config = \App\Config::$$config_name;
+        return $config['dbfix'];
     }
 
     /**
