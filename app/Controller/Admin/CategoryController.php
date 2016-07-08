@@ -17,7 +17,7 @@ class CategoryController extends AdminController
     //列表
     function index(UserType $userType)
     {
-
+        //var_dump($userType->get());
 //        $userType=$userType->find(1);
 //        var_dump($userType);
 //        $userType->name=$userType->name.'亲爱的会员';

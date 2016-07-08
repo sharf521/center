@@ -104,29 +104,48 @@ class Model
     {
         return $this->where('id=?')->bindValues($id)->first();
     }
-    //取一行
+    /**
+     * 获取一个对象
+     * @return $this
+     */
     public function first()
     {
-        $this->mysql->table($this->table);
-        $row=$this->mysql->row();
+        $row=$this->row();
+        $obj = clone $this;
+        unset($obj->dbfix);
+        unset($obj->mysql);
         foreach ($row as $k=>$v){
-            $this->$k=$v;
+            $obj->$k=$v;
         }
-        unset($this->dbfix);
-        unset($this->mysql);
-        return $this;
+        return $obj;
     }
 
-    //取多行
+    /**
+     * @return array
+     */
+    public function row()
+    {
+        echo $this->table;
+        $this->mysql->table($this->table);
+        return $this->mysql->row();
+    }
+    public function all()
+    {
+        $this->mysql->table($this->table);
+        return $this->mysql->all();
+    }
+    /**
+     * 返回一个数组，每个元素是一个对象
+     * @return array
+     */
     public function get()
     {
         $arr=array();
-        $this->mysql->table($this->table);
-        $result=$this->mysql->all();
-        unset($this->dbfix);
-        unset($this->mysql);
+        $result=$this->all();
         foreach ($result as $row){
             $obj = clone $this;
+            unset($obj->dbfix);
+            unset($obj->mysql);
             foreach ($row as $k=>$v){
                 $obj->$k=$v;
             }
