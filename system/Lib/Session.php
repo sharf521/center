@@ -5,11 +5,8 @@ class Session
 {
     public function set($key, $value = null)
     {
-        echo 111;
-        echo $key;
-        exit;
         if (!is_array($key)) {
-            $key = [$key => $value];
+            $key = array($key => $value);
         }
         foreach ($key as $k => $v) {
             $_key = base64_encode($k);
@@ -47,12 +44,12 @@ class Session
     {
         $this->set($key, $value);
         $this->push('flash.new', $key);
-        $this->removeFromOldFlashData([$key]);
+        $this->removeFromOldFlashData(array($key));
     }
 
     protected function removeFromOldFlashData(array $keys)
     {
-        $this->set('flash.old', array_diff($this->get('flash.old', []), $keys));
+        $this->set('flash.old', array_diff($this->get('flash.old', array()), $keys));
     }
 
     public function debug()
@@ -67,7 +64,6 @@ class Session
     //删除一次性session
     public function flash_remove()
     {
-        exit;
         $arr=$this->get('flash.old');
         if(is_array($arr)){
             foreach ($arr as $v) {

@@ -73,7 +73,7 @@ class Controller
 
     public function __destruct()
     {
-        //session()->flash_remove();
+        session()->flash_remove();
     }
 }
 

@@ -16,6 +16,7 @@ class IndexController extends Controller
 
     public function index($a=100,$b,$c=300)
     {
+
         session()->set('aa',1234);
         session()->debug();
         echo '<hr>';
@@ -23,6 +24,6 @@ class IndexController extends Controller
         echo '<br>';
         print_r($b);echo '<br>';
         print_r($c);echo '<br>';
-        echo 1111;
+        echo 888;
     }
 }
