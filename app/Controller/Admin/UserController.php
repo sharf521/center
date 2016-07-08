@@ -48,7 +48,7 @@ class UserController extends AdminController
     //编辑用户资料
     function edit()
     {
-        if ($_REQUEST['user_id'] == "1") {
+        if ($_REQUEST['id'] == "1") {
             show_msg(array('超级管理员禁止操作', '', $this->base_url('user')));
             exit;
         }
@@ -58,12 +58,12 @@ class UserController extends AdminController
             $arr['tel'] = $_POST['tel'];
             $arr['qq'] = $_POST['qq'];
             $arr['address'] = $_POST['address'];
-            $arr['user_id'] = (int)$_POST['user_id'];
+            $arr['id'] = (int)$_POST['id'];
             $this->User->edit($arr);
             show_msg(array('修改成功', '', $this->base_url('user')));
             //$this->redirect('usertype');
         } else {
-            $data['row'] = DB::table('user')->where('user_id=?')->bindValues($_GET['user_id'])->row();
+            $data['row'] = DB::table('user')->where('id=?')->bindValues($_GET['id'])->row();
             $this->view('user', $data);
         }
     }
@@ -74,7 +74,7 @@ class UserController extends AdminController
         if ($_POST) {
 //            if(!empty($_POST['invite_userid']))
 //            {
-//                $invite_userid = DB::table('user')->where('user_id=?')->bindValues($_POST['invite_userid'])->value('user_id', 'int');
+//                $invite_userid = DB::table('user')->where('id=?')->bindValues($_POST['invite_userid'])->value('id', 'int');
 //                if ($invite_userid == 0) {
 //                    show_msg(array('邀请人ID不正确'));exit;
 //                }
@@ -82,13 +82,13 @@ class UserController extends AdminController
             $arr = array(
                 'type_id' => (int)$_POST['type_id']
             );
-            DB::table('user')->where('user_id=?')->bindValues($_GET['user_id'])->limit(1)->update($arr);
+            DB::table('user')->where('id=?')->bindValues($_GET['id'])->limit(1)->update($arr);
             show_msg(array('修改成功', '', $this->base_url('user')));
             //$this->redirect('usertype');
         } else {
             $UserType = new UserType();
             $data['usertype'] = $UserType->getList();
-            $data['row'] = $this->User->getOne(array('user_id' => $_GET['user_id']));
+            $data['row'] = $this->User->getOne(array('id' => $_GET['id']));
             $this->view('user', $data);
         }
     }
@@ -118,7 +118,7 @@ class UserController extends AdminController
                 show_msg(array($returnmsg, '', $this->base_url('user')));;
             }
         } else {
-            $data['row'] = $this->User->getOne(array('user_id' => $_GET['user_id']));
+            $data['row'] = $this->User->getOne(array('id' => $_GET['id']));
             $this->view('user', $data);
         }
     }

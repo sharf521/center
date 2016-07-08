@@ -17,9 +17,9 @@ class Controller
         $this->base_url = '/index.php/';
         $this->control = ($this->input->get(0) != '') ? $this->input->get(0) : 'index';
         $this->func = ($this->input->get(1) != '') ? $this->input->get(1) : 'index';
-        $this->user_id = getSession('user_id');
-        $this->username = getSession('username');
-        $this->user_typeid = getSession('usertype');
+        $this->user_id = session('user_id');
+        $this->username = session('username');
+        $this->user_typeid = session('usertype');
         $this->dbfix = Config::$db1['dbfix'];
     }
 

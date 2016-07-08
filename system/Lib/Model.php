@@ -6,11 +6,29 @@ class Model
     protected $table;
     protected $fields=array();
     protected $mysql;
-
+    protected $attributes=array();
+    protected $dbfix;
     public function __construct()
     {
         $this->dbfix = \App\Config::$db1['dbfix'];
         $this->mysql=DB::instance('db1');
+    }
+
+    public function __get($key)
+    {
+        return $this->attributes[$key];
+    }
+
+    public function __set($key, $value)
+    {
+        $this->attributes[$key]=$value;
+    }
+    public function __isset($key){
+        return isset($this->attributes[$key]);
+    }
+    public function __unset($key)
+    {
+        unset($this->attributes[$key]);
     }
 
     public function filterFields($post, $fields = array())//过滤字段
@@ -63,17 +81,7 @@ class Model
     }
 
 
-    public function __get($key)
-    {
-        if (isset($this->$key)) {
-            return ($this->$key);
-        }
-    }
 
-    public function __set($key, $value)
-    {
-        $this->$key = $value;
-    }
 
     public function hasOne($class,$foreign_key,$local_key='id')
     {
@@ -84,7 +92,7 @@ class Model
     public function hasMany($class,$foreign_key,$local_key='id')
     {
         $mod = new $class();
-        return $mod->where($foreign_key.'='.$this->$local_key)->all();
+        return $mod->where($foreign_key.'='.$this->$local_key)->get();
     }
 
 ///////////////////////////////////////////////////////////
@@ -124,6 +132,17 @@ class Model
             array_push($arr,$obj);
         }
         return $arr;
+    }
+
+    public function save()
+    {
+        if(isset($this->id)){
+            $id=$this->id;
+            unset($this->id);
+            return DB::table($this->table)->where('id=?')->bindValues($id)->update($this->attributes);
+        }else{
+            return DB::table($this->table)->insertGetId($this->attributes);
+        }
     }
 
     public function page($page = 1, $pageSize = 10)

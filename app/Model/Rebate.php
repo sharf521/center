@@ -442,7 +442,7 @@ class Rebate extends Model
         if ($data['status'] != '') {
             $where .= " and r.status={$data['status']}";
         }
-        $sql = "select SELECT from {$this->dbfix}rebate r left join {$this->dbfix}user u on r.user_id=u.user_id {$where} ORDER LIMIT";
+        $sql = "select SELECT from {$this->dbfix}rebate r left join {$this->dbfix}user u on r.user_id=u.id {$where} ORDER LIMIT";
 
         $_order = isset($data['order']) ? ' order by ' . $data['order'] : 'order by r.id desc';
         //总条数
@@ -494,7 +494,7 @@ class Rebate extends Model
             $where .= " and rl.addtime<'{$data['enddate']}'";
         }
         $sql = "select SELECT from {$this->dbfix}rebate_list rl left join {$this->dbfix}rebate r on rl.rebate_id=r.id
- left join {$this->dbfix}user u on rl.user_id=u.user_id {$where} ORDER LIMIT";
+ left join {$this->dbfix}user u on rl.user_id=u.id {$where} ORDER LIMIT";
 
         $_order = isset($data['order']) ? ' order by ' . $data['order'] : 'order by rl.id desc';
         //总条数
@@ -549,7 +549,7 @@ class Rebate extends Model
         if (!empty($data['rebate_id'])) {
             $where .= " and rl.rebate_id={$data['rebate_id']}";
         }
-        $sql = "select SELECT from {$this->dbfix}rebate_log rl  left join {$this->dbfix}user u on rl.user_id=u.user_id {$where} ORDER LIMIT";
+        $sql = "select SELECT from {$this->dbfix}rebate_log rl  left join {$this->dbfix}user u on rl.user_id=u.id {$where} ORDER LIMIT";
 
         $_order = isset($data['order']) ? ' order by ' . $data['order'] : 'order by rl.id desc';
         //总条数

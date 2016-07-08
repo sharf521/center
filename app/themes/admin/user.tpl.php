@@ -39,7 +39,7 @@ if($this->func=='index'){?>
 			{
 			?>
             <tr>
-            	<td><?=$row['user_id']?></td>
+            	<td><?=$row['id']?></td>
                 <td><?=$row['typename']?></td>
                 <td><?=$row['username']?></td>
                 <td><?=$row['email']?></td>
@@ -50,17 +50,17 @@ if($this->func=='index'){?>
                 <td><?=$row['addtime']?></td>
                 <td class="operate">
 				<? 
-				if($row['user_id']=="1")
+				if($row['id']=="1")
 				{
 					echo "ADMIN用户禁止操作";
 				}
 				else
 				{
-					echo $this->anchor('user/edit/?user_id='.$row['user_id'],'编辑');
+					echo $this->anchor('user/edit/?id='.$row['id'],'编辑');
 					echo '&nbsp;|&nbsp;';
-					echo $this->anchor('user/edittype/?user_id='.$row['user_id'],'修改用户类型');
+					echo $this->anchor('user/edittype/?id='.$row['id'],'修改用户类型');
                     echo '&nbsp;|&nbsp;';
-                    echo $this->anchor('user/updatepwd/?user_id='.$row['user_id'],'修改密码');
+                    echo $this->anchor('user/updatepwd/?id='.$row['id'],'修改密码');
 
 
 				}
@@ -76,7 +76,7 @@ if($this->func=='index'){?>
 		<?=$this->anchor('user','列表','class="but1"');?>
     </div>
     <form method="post">
-    	<input type="hidden" name="user_id" value="<?=$row['user_id']?>"/>
+    	<input type="hidden" name="id" value="<?=$row['id']?>"/>
     	<div class="form1">
             <ul>
               <li><label>用户名：</label><input type="text" name="username" class="input1" onblur="validate_register(this)"/><span class="validate_tip">*用户名5-15位字符</span></li>
@@ -96,7 +96,7 @@ elseif($this->func=='edit'){?>
 		<?=$this->anchor('user','列表','class="but1"');?>
     </div>
     <form method="post">
-    	<input type="hidden" name="user_id" value="<?=$row['user_id']?>"/>
+    	<input type="hidden" name="id" value="<?=$row['id']?>"/>
     	<div class="form1">
             <ul>
                 <li><label>用户名：</label><?=$row['username']?></li>
@@ -119,12 +119,12 @@ elseif($this->func=='updatepwd'){?>
     <form method="post">
         <div class="form1">
             <ul>
-                <li><label>用户编号：</label><?=$row['user_id']?></li>
+                <li><label>用户编号：</label><?=$row['id']?></li>
                 <li><label>用户名：</label><?=$row['username']?></li>
                 <li><label>新密码：</label><input type="text" name="password" /></li>
                 <li><label>确认新密码：</label><input type="text" name="sure_password" /></li>
             </ul>
-            <input type="hidden" name="user_id" value="<?=$row['user_id']?>"/>
+            <input type="hidden" name="id" value="<?=$row['id']?>"/>
             <input type="hidden" name="username" value="<?=$row['username']?>"/>
             <input type="submit" class="but3" value="保存" />
             <input type="button" class="but3" value="返回" onclick="window.history.go(-1)"/>
@@ -140,7 +140,7 @@ elseif($this->func=='edittype')
 		<?=$this->anchor('user','列表','class="but1"');?>
     </div>
     <form method="post">
-    	<input type="hidden" name="user_id" value="<?=$row['user_id']?>"/>
+    	<input type="hidden" name="id" value="<?=$row['id']?>"/>
     	<div class="form1">
             <ul>
                 <li><label>用户名：</label><?=$row['username']?></li>
@@ -172,7 +172,7 @@ elseif($this->func=='thaw')
 		<?=$this->anchor('user','列表','class="but1"');?>
     </div>
     <form method="post">
-    	<input type="hidden" name="user_id" value="<?=$row['user_id']?>"/>
+    	<input type="hidden" name="id" value="<?=$row['id']?>"/>
     	<div class="form1">
             <ul>
                 <li><label>用户名：</label><?=$row['username']?></li>
@@ -195,7 +195,7 @@ elseif($this->func=='frozen')
 		<?=$this->anchor('user','列表','class="but1"');?>
     </div>
     <form method="post">
-    	<input type="hidden" name="user_id" value="<?=$row['user_id']?>"/>
+    	<input type="hidden" name="id" value="<?=$row['id']?>"/>
     	<div class="form1">
             <ul>
                 <li><label>用户名：</label><?=$row['username']?></li>

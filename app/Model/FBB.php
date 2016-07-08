@@ -199,40 +199,8 @@ class FBB extends Model
             $pids=DB::table('fbb')->where("id=?")->bindValues($data['id'])->value('pids');
             $where.=" and  r.pids like '{$pids}%'";
         }
-
-
-        $result=DB::table('fbb r')->select($_select)->leftJoin("user u","r.user_id=u.user_id")->where($where)->orderBy("r.id desc")->page($data['page'],$data['epage']);
+        $result=DB::table('fbb r')->select($_select)->leftJoin("user u","r.user_id=u.id")->where($where)->orderBy("r.id desc")->page($data['page'],$data['epage']);
         return $result;
-        $sql = "select SELECT from {$this->dbfix}fbb r left join {$this->dbfix}user u on r.user_id=u.user_id where {$where} ORDER LIMIT";
-
-        $_order=isset($data['order'])?' order by '.$data['order']:'order by r.id desc';
-        //总条数
-        $row=DB::get_one(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array('count(1) as num', '', ''), $sql));
-        $total = $row['num'];
-
-        $epage = empty($data['epage'])?10:$data['epage'];
-        $page=$data['page'];
-        if(!empty($page))
-        {
-            $index = $epage * ($page - 1);
-        }
-        else
-        {
-            $index=0;$page=1;
-        }
-        if($index>$total){$index=0;$page=1;}
-        $limit = " limit {$index}, {$epage}";
-        // echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
-        $list = DB::get_all(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql));
-        global $pager;
-        $pager->page=$page;
-        $pager->epage=$epage;
-        $pager->total=$total;
-        return array(
-            'list' => $list,
-            'total' => $total,
-            'page' => $pager->show()
-        );
     }
     function getFbbLogByPage($data){
         $_select="fl.*";

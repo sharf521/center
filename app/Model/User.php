@@ -14,11 +14,11 @@ class User extends Model
 
     function logout()
     {
-        setSession('user_id', '');
-        setSession('username', '');
-        setSession('lastip', '');
-        setSession('usertype', '');
-        setSession('permission_id', '');
+        session()->remove('user_id');
+        session()->remove('username');
+        session()->remove('lastip');
+        session()->remove('usertype');
+        session()->remove('permission_id');
     }
 
     function login($data)
@@ -26,7 +26,7 @@ class User extends Model
         $return['status'] = 0;
         if ($data['direct'] == '1') {
             //后台WAP登录
-            $uid = (int)$data['user_id'];
+            $uid = (int)$data['id'];
         } else {
 
             list($uid, $username, $password, $email) = outer_call('uc_user_login', array($data['username'], $data['password']));
@@ -36,7 +36,7 @@ class User extends Model
         }
         if ($uid > 0) {
             $return['status'] = 1;
-            $user = DB::table('user')->select('*')->where("user_id=?")->bindValues($uid)->row();
+            $user = DB::table('user')->select('*')->where("id=?")->bindValues($uid)->row();
             if ($user) {
                 if ($data['admin'] == true) {
                     $usertype = DB::table('usertype')->select('id,permission_id,is_admin')->where("id={$user['type_id']}")->row();
@@ -44,19 +44,19 @@ class User extends Model
                         $return['msg'] = '会员禁止登陆！';
                         return $return;
                     }
-                    setSession('usertype', $usertype['id']);
-                    setSession('permission_id', $usertype['permission_id']);
+                    session()->set('usertype', $usertype['id']);
+                    session()->set('permission_id', $usertype['permission_id']);
                 } else {
-                    setSession('usertype', 0);
-                    setSession('permission_id', '');
+                    session()->set('usertype', 0);
+                    session()->set('permission_id', '');
                 }
-                setSession('user_id', $user['user_id']);
-                setSession('username', $user["username"]);
-                setSession('lastip', $user["lastip"]);
+                session()->set('user_id', $user['id']);
+                session()->set('username', $user["username"]);
+                session()->set('lastip', $user["lastip"]);
                 $arr = array(
                     'lastip' => ip()
                 );
-                DB::table('user')->where("user_id={$user["user_id"]}")->limit(1)->update($arr);
+                DB::table('user')->where("id={$user["id"]}")->limit(1)->update($arr);
                 return true;
             } else {
                 $return['msg'] = '本地用户错误！';
@@ -90,7 +90,7 @@ class User extends Model
             return "邮箱不能为空！";
         }
         if (!empty($data['names'])) {
-            $invite_userid = DB::table('user')->where('username=?')->bindValues($data['names'])->value('user_id', 'int');
+            $invite_userid = DB::table('user')->where('username=?')->bindValues($data['names'])->value('id', 'int');
             if ($invite_userid == 0) {
                 return "介绍人用户名不正确！";
             }
@@ -98,7 +98,7 @@ class User extends Model
         $status = outer_call('uc_user_register', array($data['username'], $data['password'], $data['email']));
         if ($status > 0) {
              $data = array(
-                'user_id' => $status,
+                'id' => $status,
                 'type_id' => 3,
                 'username' => $data['username'],
                 'zf_password' => md5($data['password']),
@@ -106,18 +106,6 @@ class User extends Model
                 'times' => 0,
                 'status' => 0,
                 'lastip'=>ip(),
-                'email' => $data['email'],
-                'invite_userid' => (int)$invite_userid
-            );
-            DB::table('user')->insert($data);
-			
-			
-			$data = array(
-                'user_id' => $status,
-                'type_id' => 3,
-                'username' => $data['username'],
-                'zf_password' => md5($data['password']),
-                'addtime' => date('Y-m-d H:i:s'),
                 'email' => $data['email'],
                 'invite_userid' => (int)$invite_userid
             );
@@ -150,7 +138,7 @@ class User extends Model
             $where .= " and u.username like '{$data['username']}%'";
         }
         return DB::table('user u')->select($_select)
-            ->leftJoin('user uu', 'u.invite_userid=uu.user_id')
+            ->leftJoin('user uu', 'u.invite_userid=uu.id')
             ->leftJoin('usertype ut', 'u.type_id=ut.id')
             ->where($where)
             ->page($data['page'], $data['epage']);
@@ -188,25 +176,27 @@ class User extends Model
     function paypwd($data)
     {
         $arr['zf_password'] = md5($data['zf_password']);
-        return DB::table('user')->where("user_id=?")->bindValues($data['user_id'])->limit(1)->update($arr);
+        return DB::table('user')->where("id=?")->bindValues($data['id'])->limit(1)->update($arr);
     }
 
     //实名认证显示信息
     function userinfoone($data)
     {
         $select = "u.*,i.*,b.account";
-        $where = "where u.user_id=" . $data['user_id'];
-        $sql = "select {$select} from {$this->dbfix}user u left join {$this->dbfix}userinfo i on u.user_id=i.user_id left join {$this->dbfix}account_bank b on u.user_id=b.user_id {$where}";
+        $where = "where u.id=" . $data['id'];
+        $sql = "select {$select} from {$this->dbfix}user u 
+left join {$this->dbfix}userinfo i on u.id=i.user_id 
+left join {$this->dbfix}account_bank b on u.id=b.user_id {$where}";
         return $this->mysql->get_one($sql);
     }
 
     //用户管理编辑
     function edit($data = array())
     {
-        $user_id = (int)$data['user_id'];
-        unset($data['user_id']);
+        $id = (int)$data['id'];
+        unset($data['id']);
         $data = $this->filterFields($data, $this->fields);
-        return DB::table('user')->where('user_id=?')->bindValues($user_id)->limit(1)->update($data);
+        return DB::table('user')->where('id=?')->bindValues($id)->limit(1)->update($data);
     }
 
     /**

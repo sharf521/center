@@ -310,7 +310,7 @@ class ZJ extends Model
         }
 
 
-        $sql = "select SELECT from {$this->dbfix}zj r left join {$this->dbfix}user u on r.user_id=u.user_id {$where} ORDER LIMIT";
+        $sql = "select SELECT from {$this->dbfix}zj r left join {$this->dbfix}user u on r.user_id=u.id {$where} ORDER LIMIT";
 
         $_order = isset($data['order']) ? ' order by ' . $data['order'] : 'order by r.id desc';
         //总条数

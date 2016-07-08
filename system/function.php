@@ -620,19 +620,6 @@ function DeCode($string, $operation, $key = 'cgqhcYpp')
     }
 }
 
-function setSession($key, $val)
-{
-    $_key = base64_encode($key . 'ac');
-    $_SESSION[$_key] = DeCode($val, 'E');
-}
-
-function getSession($key)
-{
-    $_key = base64_encode($key . 'ac');
-    $_val = $_SESSION[$_key];
-    return DeCode($_val, 'D');
-}
-
 
 //返回首字母
 function getcharacter($s0)

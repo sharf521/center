@@ -13,8 +13,8 @@ class AdminController extends BaseController
         $this->template='admin';
         $this->control	=($this->input->get(1)!='')?$this->input->get(1):'index';
         $this->func		=($this->input->get(2)!='')?$this->input->get(2):'index';
-        $this->user_typeid	=getSession('usertype');
-        $this->permission_id=getSession('permission_id');
+        $this->user_typeid	=session('usertype');
+        $this->permission_id=session('permission_id');
 
         if($this->control !='login' && $this->control !='logout'){
             if(empty($this->user_id) || empty($this->permission_id)){

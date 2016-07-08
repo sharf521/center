@@ -15,9 +15,13 @@ class CategoryController extends AdminController
     }
 
     //列表
-    function index(User $user)
+    function index(User $user,UserType $userType)
     {
-//        $a=$user->where('user_id=1')->first();
+
+        //$userType=$userType->find(1);
+        //$userType->name='会员';
+        //var_dump($userType->save());
+       // echo $a->save();
 //        echo $a->name;
 //        var_dump($a);
         //echo $a['page'];
