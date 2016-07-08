@@ -3,6 +3,7 @@ namespace System\Lib;
 
 class Model
 {
+    //属性必须在这里声明
     protected $table;
     protected $fields=array();
     protected $mysql;
