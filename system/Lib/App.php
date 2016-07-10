@@ -1,5 +1,22 @@
 <?php
 namespace System\Lib;
+class App
+{
+    private static $instance = array();
+
+    public static function getInstance($key)
+    {
+        if(!isset(self::$instance['Container'])){
+            self::$instance['Container'] = new Container();
+        }
+        self::$instance['Container']->$key = $key;
+        if (!isset(self::$instance[$key])) {
+            self::$instance[$key] = self::$instance['Container']->$key;
+        }
+        return self::$instance[$key];
+    }
+}
+
 class Container
 {
     private $s = array();
@@ -89,6 +106,7 @@ class Container
 }
 
 
+/*
 class Bim
 {
     public function doSomething()
@@ -129,31 +147,12 @@ class Foo
     }
 }
 
-//
-////// ----
-////$c = new Container();
-////$c->bar = 'Bar';
-////$c->foo = function ($c) {
-////    return new Foo($c->bar);
-////};
-////// 从容器中取得Foo
-////$foo = $c->foo;
-////$foo->doSomething(); // Bim::doSomething|Bar::doSomething|Foo::doSomething
-//
-//// ----
-//$di = new \System\Lib\Container();
-//
-//$di->foo = 'Foo';
-//
-///** @var Foo $foo */
-//$di->foo->doSomething();
-///*
-//Foo#10 (1) {
-//  private $bar =>
-//  class Bar#14 (1) {
-//    private $bim =>
-//    class Bim#16 (0) {
-//    }
-//  }
-//}
-//*/
+
+
+App::getInstance('Bar')->doSomething();
+echo '<hr>';
+App::getInstance('Foo')->doSomething();
+exit;
+
+*/
+
