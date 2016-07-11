@@ -1,6 +1,6 @@
 <?php require 'header.php';?>
 <div class="topbox">
-	<img src="/themes/images/logo.png" width="200px;"/>
+	<h3><i class="fa fa-home"></i>管理后台</h3>
     <ul class="nav">
     	<?
 		//输出一级菜单
@@ -19,10 +19,6 @@
         <li class="nihao">您好，<?=$this->username?>！</li>
         <li class="tuichu"><?=$this->anchor('changepwd','[修改密码]','target="iframe_main"')?></li>
         <li class="tuichu"><?=$this->anchor('logout','[退出]')?></li>
-        <!--<li class="shangcheng"><a href="/" target="_blank">[网站首页]</a></li>
-        <li class="shuaxin"><a href="#">刷新</a></li>
-        <li class="gengxin"><a href="#">更新缓存</a></li>
-        <li class="houtai"><a href="#">后台导航</a></li>-->
     </ul>
 </div>
 <div class="neirong">

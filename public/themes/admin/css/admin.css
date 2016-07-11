@@ -35,11 +35,13 @@ h1,h2,h3{ font-weight:normal;}
 .but2{color:#FFF; background-color:#4cd1fc;padding:5px 18px 3px 18px; margin-left:10px; border:0px}
 .but3{color:#fff; background-color:#f9691a;padding:5px 18px 3px 18px; margin-left:10px; border:0px}
 
-/*topbox*/
-.topbox{ background-color:#f7f6f5; overflow:hidden; height:90px; position:relative;}
-.topbox img{ float:left; margin-top:25px; margin-left:32px;}
+.topbox{width:100%; background:#fff; height:54px; border-top:2px solid #2baab1;  box-shadow: 0 1px 1px rgba(0,0,0,.15);  -moz-box-shadow: 0 1px 1px rgba(0,0,0,.15);  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.15); position:fixed; left:0px;  top:0px; z-index:9990;}
+ .topbox h3{ float:left;font-weight:normal; font-size:18px; color:#2baab1; line-height:54px; padding:0 0 0 20px;}
+ .topbox h3 i{ margin-right:6px; font-size:24px;}
+
+
 .nav{ float:left; margin-left:20px;}
-.nav li{float:left; margin-left:20px; height:90px; cursor:pointer;color:#018dba; font-size:14px; padding:0 21px; line-height:90px;  padding-top:15px;}
+.nav li{float:left; margin-left:20px;  cursor:pointer;color:#018dba; font-size:14px; padding:0 21px; line-height:54px;  padding-top:2px;}
 .nav li.checkit{ color:#FFF; background-color:#4cd1fc;}
 .nav li:hover{background-color:#4cd1fc; color:#FFF;}
 
