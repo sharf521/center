@@ -11,6 +11,7 @@ class App
         }
         self::$instance['Container']->$key = $key;
         if (!isset(self::$instance[$key])) {
+           // echo $key.'<br>';
             self::$instance[$key] = self::$instance['Container']->$key;
         }
         return self::$instance[$key];

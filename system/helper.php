@@ -30,10 +30,7 @@ if (!function_exists('session')) {
      */
     function session($name=null)
     {
-        static $session = null;
-        if ($session===null) {
-            $session=new \System\Lib\Session();
-        }
+        $session=app('\System\Lib\Session');
         if($name===null){
             return $session;
         }
@@ -50,8 +47,13 @@ if (!function_exists('app')) {
      */
     function app($className,$method=null)
     {
+        //echo $className;
+        //echo '<hr>';
         $class=\System\Lib\App::getInstance($className);
         if($method!==null){
+            if (!method_exists($class, $method)) {
+                $method = 'error';
+            }
             $rMethod = new \ReflectionMethod($className, $method);
             $params = $rMethod->getParameters();
             $dependencies = array();

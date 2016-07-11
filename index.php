@@ -45,10 +45,11 @@ if ($_G['class'] == 'api') {
 if($_path==''){
     if (file_exists(__DIR__ . '/app/Controller/' . ucfirst($_G['class']) . 'Controller.php')) {
         $_classpath = "\\App\\Controller\\" . ucfirst($_G['class']) . "Controller";
-        $class = new $_classpath();
+        //$class = new $_classpath();
         $method = $_G['func'];
     } else {
-        $class = new \App\Controller\IndexController();
+        $_classpath='\App\Controller\IndexController';
+        //$class = new \App\Controller\IndexController();
         $method = $_G['class'];
     }
 }else{
@@ -56,18 +57,19 @@ if($_path==''){
     $_G['func'] = ($inputClass->get(2) != '') ? $inputClass->get(2) : 'index';
     if (file_exists(__DIR__ . '/app/Controller/'.$_path.'/' . ucfirst($_G['class']) . 'Controller.php')) {
         $_classpath = "\\App\\Controller\\" .$_path.'\\'. ucfirst($_G['class']) . "Controller";
-        $class = new $_classpath();
+        //$class = new $_classpath();
         $method = $_G['func'];
     } else {
         $_classpath = "\\App\\Controller\\" .$_path."\\IndexController";
-        $class = new $_classpath();
+        //$class = new $_classpath();
         $method = $_G['class'];
     }
 }
 $_G['Controller'] = $class;
-if (!method_exists($class, $method)) {
-    $method = 'error';
-}
+
+app($_classpath,$method);
+exit;
+
 $rMethod = new \ReflectionMethod($class, $method);
 $params = $rMethod->getParameters();
 $dependencies = array();

@@ -2,7 +2,6 @@
 namespace App\Controller\Admin;
 
 use App\Model\Category;
-use App\Model\User;
 use App\Model\UserType;
 use System\Lib\DB;
 

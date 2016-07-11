@@ -1,6 +1,6 @@
 <?php require 'header.php';?>
 <?
-echo $aa;
+echo url('category/?pid=1');
 if($this->func=='index')
 {
 ?>
