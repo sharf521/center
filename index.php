@@ -57,33 +57,13 @@ if($_path==''){
     $_G['func'] = ($inputClass->get(2) != '') ? $inputClass->get(2) : 'index';
     if (file_exists(__DIR__ . '/app/Controller/'.$_path.'/' . ucfirst($_G['class']) . 'Controller.php')) {
         $_classpath = "\\App\\Controller\\" .$_path.'\\'. ucfirst($_G['class']) . "Controller";
-        //$class = new $_classpath();
         $method = $_G['func'];
     } else {
         $_classpath = "\\App\\Controller\\" .$_path."\\IndexController";
-        //$class = new $_classpath();
         $method = $_G['class'];
     }
 }
-$_G['Controller'] = $class;
-app($_classpath,$method);
-exit;
-
-$rMethod = new \ReflectionMethod($class, $method);
-$params = $rMethod->getParameters();
-$dependencies = array();
-foreach ($params as $param) {
-    if ($param->getClass()) {
-        $_name = $param->getClass()->name;
-        array_push($dependencies, new $_name());
-    } elseif ($param->isDefaultValueAvailable()) {
-        array_push($dependencies, $param->getDefaultValue());
-    } else {
-        array_push($dependencies, null);
-    }
-}
-return call_user_func_array(array($class, $method), $dependencies);
-
+return controller($_classpath,$method);
 $t2 = microtime(true);
 //echo '<hr>耗时'.round($t2-$t1,3).'秒';
 

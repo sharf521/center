@@ -14,9 +14,9 @@ class CategoryController extends AdminController
     }
 
     //列表
-    function index(UserType $userType)
+    function index(Category $category)
     {
-        $userType=$userType->find(1);
+        //$userType=$userType->find(1);
 
 
 //
@@ -52,10 +52,10 @@ class CategoryController extends AdminController
             foreach ($id as $key => $val) {
                 DB::table('category')->where("id={$val}")->limit(1)->update(array('showorder' => intval($showorder[$key])));
             }
-            $this->model->createjs();
+            $category->createjs();
             show_msg(array('操作成功', '', $this->base_url('category/?pid=' . $_GET['pid'])));
         } else {
-            $data['list'] = $this->model->getlist(array('pid' => $pid));
+            $data['list'] = $category->getlist(array('pid' => $pid));
             if ($pid != 0) {
                 $row = DB::table('category')->where("id={$pid}")->row();
                 $pid = $row['pid'];
@@ -66,23 +66,23 @@ class CategoryController extends AdminController
         }
     }
 
-    function add()
+    function add(Category $category)
     {
         if ($_POST) {
-            $this->model->add($_POST);
+            $category->add($_POST);
             show_msg(array('添加成功', '', $this->base_url('category/?pid=' . $_GET['pid'])));
             //$this->redirect('permission');
-            $this->model->createjs();
+            $category->createjs();
         } else {
             $this->view('category');
         }
     }
 
-    function edit()
+    function edit(Category $category)
     {
         if ($_POST) {
             $pid = $_POST['pid'];
-            $this->model->edit($_POST);
+            $category->edit($_POST);
 
             //redirect("category/?pid={$pid}")->back();
             //redirect()->back()->with();
@@ -93,7 +93,7 @@ class CategoryController extends AdminController
             //show_msg(array('修改成功', '', $this->base_url('category/?pid=' . $pid)));
 
             //$this->redirect('permission');
-            $this->model->createjs();
+            $category->createjs();
             redirect("category/?pid={$pid}")->with('msg','修改成功！');
         } else {
             $data['row'] = DB::table('category')->where("id=?")->bindValues($_GET['id'])->row();
@@ -101,17 +101,18 @@ class CategoryController extends AdminController
         }
     }
 
-    function delete()
+    function delete(Category $category)
     {
         $id = (int)$_GET['id'];
-        $list = $this->model->getlist(array('pid' => $id));
+        $list = $category->getlist(array('pid' => $id));
         if ($list) {
             show_msg(array('存在子分类，先删除子分类！'));
             exit;
         }
         DB::table('category')->where("id=?")->bindValues($id)->limit(1)->delete();
-        show_msg(array('删除成功', '', $this->base_url('category')));
-        $this->model->createjs();
+        //show_msg(array('删除成功', '', $this->base_url('category')));
+        redirect('category')->with('msg','删除成功');
+        $category->createjs();
         //$this->redirect('permission');
     }
 }

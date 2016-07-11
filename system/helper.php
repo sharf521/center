@@ -42,34 +42,36 @@ if (!function_exists('session')) {
 if (!function_exists('app')) {
     /**
      * @param $className
-     * @param null $method
      * @return mixed
      */
-    function app($className,$method=null)
+    function app($className)
     {
-        //echo $className;
-        //echo '<hr>';
-        $class=\System\Lib\App::getInstance($className);
-        if($method!==null){
-            if (!method_exists($class, $method)) {
-                $method = 'error';
-            }
-            $rMethod = new \ReflectionMethod($className, $method);
-            $params = $rMethod->getParameters();
-            $dependencies = array();
-            foreach ($params as $param) {
-                if ($param->getClass()) {
-                    $_name = $param->getClass()->name;
-                    array_push($dependencies, new $_name());
-                } elseif ($param->isDefaultValueAvailable()) {
-                    array_push($dependencies, $param->getDefaultValue());
-                } else {
-                    array_push($dependencies, null);
-                }
-            }
-            return call_user_func_array(array($class, $method), $dependencies);
+        return \System\Lib\App::getInstance($className);
+    }
+}
+if (!function_exists('controller')) {
+    function controller($control,$method='index')
+    {
+        global $_G;
+        $class=\System\Lib\App::getInstance($control);
+        $_G['Controller'] = $class;
+        if (!method_exists($class, $method)) {
+            $method = 'error';
         }
-        return $class;
+        $rMethod = new \ReflectionMethod($control, $method);
+        $params = $rMethod->getParameters();
+        $dependencies = array();
+        foreach ($params as $param) {
+            if ($param->getClass()) {
+                $_name = $param->getClass()->name;
+                array_push($dependencies, new $_name());
+            } elseif ($param->isDefaultValueAvailable()) {
+                array_push($dependencies, $param->getDefaultValue());
+            } else {
+                array_push($dependencies, null);
+            }
+        }
+        return call_user_func_array(array($class, $method), $dependencies);
     }
 }
 
