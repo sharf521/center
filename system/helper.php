@@ -50,12 +50,17 @@ if (!function_exists('app')) {
         //echo $className;
         //echo '<hr>';
         $class=\System\Lib\App::getInstance($className);
+        echo 1;
         if($method!==null){
+            echo 2;
             if (!method_exists($class, $method)) {
                 $method = 'error';
             }
+            echo 3;
             $rMethod = new \ReflectionMethod($className, $method);
+            echo 4;
             $params = $rMethod->getParameters();
+            echo 5;
             $dependencies = array();
             foreach ($params as $param) {
                 if ($param->getClass()) {
@@ -67,6 +72,7 @@ if (!function_exists('app')) {
                     array_push($dependencies, null);
                 }
             }
+            echo 6;
             return call_user_func_array(array($class, $method), $dependencies);
         }
         return $class;
