@@ -66,7 +66,6 @@ if($_path==''){
     }
 }
 $_G['Controller'] = $class;
-echo $_classpath.'<hr>';
 app($_classpath,$method);
 exit;
 
