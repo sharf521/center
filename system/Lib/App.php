@@ -75,7 +75,7 @@ class Container
      */
     public function getDependencies($parameters)
     {
-        $dependencies = [];
+        $dependencies = array();
         /** @var ReflectionParameter $parameter */
         foreach ($parameters as $parameter) {
             /** @var ReflectionClass $dependency */
