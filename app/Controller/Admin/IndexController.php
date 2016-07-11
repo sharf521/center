@@ -93,9 +93,6 @@ class IndexController extends AdminController
             if ($_POST['password'] != $_POST['sure_password']) {
                 $errorMsg .= "两次输入密码不同！" . "<br>";
             }
-            if ($_POST['valicode'] != $_SESSION['randcode']) {
-                $errorMsg .= "验证码不正确！" . "<br>";
-            }
             if (strlen($errorMsg) > 0) {
                 show_msg(array($errorMsg));
             } else {

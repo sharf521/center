@@ -463,7 +463,7 @@ class Rebate extends Model
             $page = 1;
         }
         $limit = " limit {$index}, {$epage}";
-        echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
+        //echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
         $list = DB::get_all(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql));
         global $pager;
         $pager->page = $page;
@@ -514,7 +514,7 @@ class Rebate extends Model
             $page = 1;
         }
         $limit = " limit {$index}, {$epage}";
-        echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
+        //echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
         $list = DB::get_all(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql));
         global $pager;
         $pager->page = $page;
@@ -570,7 +570,7 @@ class Rebate extends Model
             $page = 1;
         }
         $limit = " limit {$index}, {$epage}";
-        echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
+        //echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
         $list = DB::get_all(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql));
         global $pager;
         $pager->page = $page;

@@ -1,6 +1,20 @@
-*{font-family:微软雅黑;font-size:12px;}
+*{font-family:微软雅黑;font-size:14px;}
 img{border:0px}
 div,p,dl,dt,dd,h2,h3,form,ul,li,body{ margin:0; padding:0;}
+body { font-family:"Microsoft YaHei"; font-size:14px; height:100%;}
+
+
+fieldset, img {border: 0;vertical-align: middle;}
+select, input, button, textarea {font: 100% "Microsoft YaHei";padding: 0;}
+
+input,select {vertical-align: middle;  height:36px; line-height:36px; background:#fdfdfd; border:1px solid #e4e4e4;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px; padding:0 6px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box; }
+textarea {vertical-align: middle; line-height:24px; background:#fdfdfd; border:1px solid #e4e4e4;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px; padding:0 6px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box; }
+
+input:focus{ border:1px solid #2baab1;}
+input[type=button],input[type=submit]{ background:#2baab1; color:#fff;border: 1px solid #26969c; cursor:pointer; padding: 0 20px;}
+input[type=button]:hover,input[type=submit]:hover{ background:#32c5cd;}
+input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
+
 ul, li{ list-style:none;}
 .hide{ display:none}
 .clear{ clear:both}
@@ -13,8 +27,9 @@ ul, li{ list-style:none;}
  content:'';
 }
 
-a{ text-decoration:none; color:none;}
+a{ text-decoration:none;}
 h1,h2,h3{ font-weight:normal;}
+
 
 .but1{color:#FFF; background-color:#fcb993;padding:5px 18px 3px 18px; margin-left:10px; border:0px}
 .but2{color:#FFF; background-color:#4cd1fc;padding:5px 18px 3px 18px; margin-left:10px; border:0px}
@@ -124,12 +139,17 @@ li.menuSelectd a:hover{ color:#018dba;border-left: 0px ; padding-left: 20px;}
 
 /*right*/
 .rightpanel{ float:right;}
-.table{ width:98%; margin-top:20px; line-height:30px; border-bottom:1px solid #5ad5fd;}
-.table td{text-align:center}
+.table{ width:100%; margin-top:20px; border-collapse: collapse; border:1px solid #dddddd;border-bottom:2px solid #dddddd;}
 .table .l{ text-align:left}
 .table .bt{ background-color:#f5f3f1;}
 .table .operate{ text-align:left; padding-left:20px;}
 .table .gs{border-bottom:1px solid #666;}
+.table .fl{ text-align: left;}
+.table .fr{ text-align: right}
+.table th{line-height:36px;border-bottom:2px solid #dddddd; background:#f9f9f9;}
+.table td{padding:6px 0; line-height:36px; font-size:14px; text-align:center; border-bottom: 1px solid #f1f1f1;}
+.table tr:hover{ background:#f9f9f9}
+
 
 .multiple{width:130px;}
 
@@ -175,11 +195,6 @@ li.menuSelectd a:hover{ color:#018dba;border-left: 0px ; padding-left: 20px;}
 .div_evalre .line{ border:1px solid #d9d9d9; margin:10px 0;}
 
 
-
-
-
-
-
 /*上传按钮*/
 .upload-upimg{height:25px; line-height:25px;width:80px;position:relative; overflow:hidden; }
 .upload-upimg ._upload_f{height:25px;background-color:#fd493d; display:block;
@@ -189,50 +204,13 @@ li.menuSelectd a:hover{ color:#018dba;border-left: 0px ; padding-left: 20px;}
 /*---------------分页----*/
 
 .page{padding-top:10px}
-.p_bar {
-clear:both;
-margin:5px 0; text-align:center;
-margin-bottom:20px;
-}
-.p_bar a {
-font-size:12px;
-text-decoration:none;
-padding:2px 5px;
-}
-.p_bar a:hover {
-background:#F5FBFF;
-border:1px solid #86B9D6;
-text-decoration:none;
-}
-
-.p_info {
-background:#F5FBFF;
-border:1px solid #86B9D6;
-margin-right:1px;
-padding:2px 5px;
-}
-.p_num {
-background:#FFF;
-border:1px solid #DEDEB8;
-margin-right:1px;
-}
-.p_redirect {
-background:#FFF;
-border:1px solid #DEDEB8;
-margin-right:1px;
-font-weight:700;
-font-size:12px;
-}
-
-
-.p_curpage {
-margin-right:1px;
-border:1px solid #DEDEB8;
-background:#FFFFD9;
-color:#92A05A;
-font-weight:700;
-padding:2px 5px;
-}
+.p_bar {clear:both;padding:10px 0; text-align:center; font-size:14px; color: #0e0e0e; height: 30px; overflow: hidden;}
+.p_info { border:1px solid #dddddd; padding:4px 10px;}
+.p_bar a {text-decoration:none;padding:4px 10px; color: #0e0e0e;}
+.p_bar a:hover {background:#dddddd;border:1px solid #dddddd; border-left: 0px;text-decoration:none;}
+.p_num {background:#FFF;border:1px solid #dddddd; border-left: 0px;}
+.p_redirect {background:#FFF;border:1px solid #dddddd; border-left: 0px; padding:4px 10px;}
+.p_curpage {border:1px solid #337ab7; border-left: 0px;background:#337ab7;color:#fff; padding:4px 10px;}
 
 /*footer*/
 .footer{ line-height:50px; margin:0 auto; width:445px;}
