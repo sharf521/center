@@ -11,7 +11,6 @@
 
 exit;*/
 $t1 = microtime(true);
-
 use System\Lib\DB;
 
 //error_reporting(E_ALL & ~E_NOTICE);
@@ -28,13 +27,13 @@ require ROOT . '/system/Autoloader.php';
 $mysql = DB::instance('db1');
 require __DIR__ . '/system/function.php';
 require __DIR__ . '/system/helper.php';
-$inputClass = new \System\Lib\Input();
 require __DIR__ . '/system/page.class.php';
 $pager = new Page();
 //参数
+$request=app('\System\Lib\Request');
 $_G['system'] = DB::table('system')->orderBy("`showorder`,id")->lists('value', 'code');
-$_G['class'] = ($inputClass->get(0) != '') ? $inputClass->get(0) : 'index';
-$_G['func'] = ($inputClass->get(1) != '') ? $inputClass->get(1) : 'index';
+$_G['class'] = ($request->get(0) != '') ? $request->get(0) : 'index';
+$_G['func'] = ($request->get(1) != '') ? $request->get(1) : 'index';
 
 $_path='';
 if ($_G['class'] == 'api') {
@@ -53,8 +52,8 @@ if($_path==''){
         $method = $_G['class'];
     }
 }else{
-    $_G['class'] = ($inputClass->get(1) != '') ? $inputClass->get(1) : 'index';
-    $_G['func'] = ($inputClass->get(2) != '') ? $inputClass->get(2) : 'index';
+    $_G['class'] = ($request->get(1) != '') ? $request->get(1) : 'index';
+    $_G['func'] = ($request->get(2) != '') ? $request->get(2) : 'index';
     if (file_exists(__DIR__ . '/app/Controller/'.$_path.'/' . ucfirst($_G['class']) . 'Controller.php')) {
         $_classpath = "\\App\\Controller\\" .$_path.'\\'. ucfirst($_G['class']) . "Controller";
         $method = $_G['func'];

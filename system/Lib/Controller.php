@@ -10,11 +10,10 @@ class Controller
 
     public function __construct()
     {
-        global $inputClass,$_G;
-        $this->input = $inputClass;
+        global $_G;
         $this->base_url = '/index.php/';
-        $this->control = ($this->input->get(0) != '') ? $this->input->get(0) : 'index';
-        $this->func = ($this->input->get(1) != '') ? $this->input->get(1) : 'index';
+        $this->control	=$_G['class'];
+        $this->func		=$_G['func'];
         $this->user_id = session('user_id');
         $this->username = session('username');
         $this->user_typeid = session('usertype');

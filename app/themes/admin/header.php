@@ -2,6 +2,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <link href="/plugin/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="/themes/admin/css/admin.css" rel="stylesheet">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script language="javascript" src="/plugin/js/jquery.js"></script>

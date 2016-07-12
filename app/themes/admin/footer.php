@@ -11,6 +11,18 @@ if(session('msg'))
     </script>
     <?
 }
+if(session('error'))
+{
+    ?>
+    <script>
+        layer.msg('<?=session('error')?>', {
+            offset: '200px',
+            icon: 2,
+            time: 2000
+        });
+    </script>
+    <?
+}
 ?>
 </body>
 </html>

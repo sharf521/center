@@ -11,8 +11,8 @@ class AdminController extends BaseController
         global $_G;
         $this->base_url='/index.php/'.$_G['system']['houtai'].'/';
         $this->template='admin';
-        $this->control	=($this->input->get(1)!='')?$this->input->get(1):'index';
-        $this->func		=($this->input->get(2)!='')?$this->input->get(2):'index';
+        $this->control	=$_G['class'];
+        $this->func		=$_G['func'];
         $this->user_typeid	=session('usertype');
         $this->permission_id=session('permission_id');
 

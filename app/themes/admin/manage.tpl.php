@@ -1,5 +1,5 @@
 <?php require 'header.php';?>
-<div class="topbox">
+<div class="topbox clearFix">
 	<h3><i class="fa fa-home"></i>管理后台</h3>
     <ul class="nav">
     	<?
@@ -40,7 +40,7 @@
                       //$num1=0;
                       foreach($m['son'] as $li)
                       {
-                          ?>					
+                          ?>
                           <li><?=$this->anchor($li['url'],$li['name'],'target="iframe_main"')?></li>
                           <?
                       }
@@ -56,9 +56,7 @@
     </div>
     <div class="clear"></div>
 </div>
-
-<div class="footer">Copyright  &nbsp;2012-2020 &nbsp;璞胜创投  Inc.,All Rights reserved. 
-</div>
+<div class="footer">Copyright  &nbsp;2012-2020 &nbsp;璞胜创投  Inc.,All Rights reserved. </div>
 <script>
 $(document).ready(function() 
 {	 

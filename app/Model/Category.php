@@ -5,6 +5,7 @@ use System\Lib\DB;
 
 class Category extends Model
 {
+    protected $table = 'category';
     function __construct()
     {
         parent::__construct();

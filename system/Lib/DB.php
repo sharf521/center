@@ -277,6 +277,7 @@ class DbConnection
             . $this->having
             . $this->orderBy
             . $this->limit;
+       // echo $sql;
         return $sql;
     }
 
@@ -501,6 +502,7 @@ class DbConnection
         }
         $value = implode(',', $_sql);
         $sql = "UPDATE " . $this->table . " SET $value " . $this->where . $this->limit;
+        //echo $sql;
         return $this->query($sql);
     }
 

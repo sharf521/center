@@ -30,12 +30,22 @@ ul, li{ list-style:none;}
 a{ text-decoration:none;}
 h1,h2,h3{ font-weight:normal;}
 
+.table{ width:100%; margin-top:20px; border-collapse: collapse; border:1px solid #dddddd;border-bottom:2px solid #dddddd;}
+.table .l{ text-align:left}
+.table .bt{ background-color:#f5f3f1;}
+.table .operate{ text-align:left; padding-left:20px;}
+.table .gs{border-bottom:1px solid #666;}
+.table .fl{ text-align: left;}
+.table .fr{ text-align: right}
+.table th{line-height:36px;border-bottom:2px solid #dddddd; background:#f9f9f9;}
+.table td{padding:6px 0; line-height:36px; font-size:14px; text-align:center; border-bottom: 1px solid #f1f1f1;}
+.table tr:hover{ background:#f9f9f9}
 
 .but1{color:#FFF; background-color:#fcb993;padding:5px 18px 3px 18px; margin-left:10px; border:0px}
 .but2{color:#FFF; background-color:#4cd1fc;padding:5px 18px 3px 18px; margin-left:10px; border:0px}
 .but3{color:#fff; background-color:#f9691a;padding:5px 18px 3px 18px; margin-left:10px; border:0px}
 
-.topbox{width:100%; background:#fff; height:54px; border-top:2px solid #2baab1;  box-shadow: 0 1px 1px rgba(0,0,0,.15);  -moz-box-shadow: 0 1px 1px rgba(0,0,0,.15);  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.15); position:fixed; left:0px;  top:0px; z-index:9990;}
+.topbox{width:100%; background:#fff; height:54px; overflow: hidden; border-top:2px solid #2baab1;  box-shadow: 0 1px 1px rgba(0,0,0,.15);  -moz-box-shadow: 0 1px 1px rgba(0,0,0,.15);  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.15); }
  .topbox h3{ float:left;font-weight:normal; font-size:18px; color:#2baab1; line-height:54px; padding:0 0 0 20px;}
  .topbox h3 i{ margin-right:6px; font-size:24px;}
 
@@ -62,6 +72,12 @@ h1,h2,h3{ font-weight:normal;}
 /*left*/
 .neirong{ overflow:hidden;}
 .leftpanel{ background-color:#fef1e9; width:180px; float:left;}
+
+
+/*right*/
+.rightpanel{ float:right;}
+
+
 .leftpanel h1{ font-size:16px; color:#f9691a; margin-left:36px; margin-top:30px;}
 
 /*二级菜单*/
@@ -139,21 +155,9 @@ li.menuSelectd a:hover{ color:#018dba;border-left: 0px ; padding-left: 20px;}
 
 
 
-/*right*/
-.rightpanel{ float:right;}
-.table{ width:100%; margin-top:20px; border-collapse: collapse; border:1px solid #dddddd;border-bottom:2px solid #dddddd;}
-.table .l{ text-align:left}
-.table .bt{ background-color:#f5f3f1;}
-.table .operate{ text-align:left; padding-left:20px;}
-.table .gs{border-bottom:1px solid #666;}
-.table .fl{ text-align: left;}
-.table .fr{ text-align: right}
-.table th{line-height:36px;border-bottom:2px solid #dddddd; background:#f9f9f9;}
-.table td{padding:6px 0; line-height:36px; font-size:14px; text-align:center; border-bottom: 1px solid #f1f1f1;}
-.table tr:hover{ background:#f9f9f9}
 
 
-.multiple{width:130px;}
+.multiple{width:130px; height: 150px;}
 
 .main_title{ line-height:50px;}
 .main_title span{ margin-right:20px; font-size:14px;}

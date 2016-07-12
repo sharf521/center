@@ -9,6 +9,7 @@ class Model
     protected $attributes=array();
     protected $dbfix;
     protected $primaryKey='id';
+    protected $is_exist=false;
     public function __construct()
     {
         $this->dbfix = DB::dbfix();
@@ -100,6 +101,16 @@ class Model
     {
         return $this->where($this->primaryKey."=?")->bindValues($id)->first();
     }
+
+    private function arrToObj($row)
+    {
+        $obj = clone $this;
+        $obj->is_exist=true;
+        foreach ($row as $k=>$v){
+            $obj->attributes[$k]=$v;
+        }
+        return $obj;
+    }
     /**
      * 获取一个对象
      * @return $this
@@ -107,11 +118,7 @@ class Model
     public function first()
     {
         $row=$this->row();
-        $obj = clone $this;
-        foreach ($row as $k=>$v){
-            $obj->$k=$v;
-        }
-        return $obj;
+        return $this->arrToObj($row);
     }
 
     /**
@@ -123,36 +130,17 @@ class Model
         $arr=array();
         $result=$this->all();
         foreach ($result as $row){
-            $obj = clone $this;
-            foreach ($row as $k=>$v){
-                $obj->$k=$v;
-            }
+            $obj = $this->arrToObj($row);
             array_push($arr,$obj);
         }
         return $arr;
     }
-
-    public function save()
-    {
-        $primaryKey=$this->primaryKey;
-        if(isset($this->$primaryKey)){
-            $id=$this->$primaryKey;
-            unset($this->$primaryKey);
-            return DB::table($this->table)->where('id=?')->bindValues($id)->update($this->attributes);
-        }else{
-            return DB::table($this->table)->insertGetId($this->attributes);
-        }
-    }
-
     public function pager($page = 1, $pageSize = 10)
     {
         $arr=array();
         $result=$this->page($page,$pageSize);
         foreach ($result['list'] as $row){
-            $obj = clone $this;
-            foreach ($row as $k=>$v){
-                $obj->$k=$v;
-            }
+            $obj = $this->arrToObj($row);
             array_push($arr,$obj);
         }
         return array(
@@ -160,6 +148,17 @@ class Model
             'total' => $result['total'],
             'page' =>$result['page']
         );
+    }
+    public function save()
+    {
+        $primaryKey=$this->primaryKey;
+        if($this->is_exist){
+            $id=$this->$primaryKey;
+            unset($this->$primaryKey);
+            return DB::table($this->table)->where("{$primaryKey}=?")->bindValues($id)->update($this->attributes);
+        }else{
+            return DB::table($this->table)->insertGetId($this->attributes);
+        }
     }
 ///////以下重写DB类方法/////////////////////////////////////////////////////////////////////////////////
     /**
