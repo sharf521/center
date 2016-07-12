@@ -21,7 +21,7 @@ class ArticleController extends AdminController
         if (!empty($_GET['keyword'])) {
             $where .= " and title like '%{$_GET['keyword']}%'";
         }
-        $result = $article->where($where)->pager($_GET['page']);
+        $result = $article->orderBy('id desc')->where($where)->pager($_GET['page']);
         $data['result'] = $result;
         $data['cates'] = $category->echoOption(array('pid' => 2, 'path' => $_GET['categorypath']));
         $this->view('article', $data);
