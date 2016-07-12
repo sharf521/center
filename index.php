@@ -62,7 +62,7 @@ if($_path==''){
         $method = $_G['class'];
     }
 }
-return controller($_classpath,$method);
+controller($_classpath,$method);
 $t2 = microtime(true);
 echo '<hr>耗时'.round($t2-$t1,3).'秒';
 
