@@ -83,14 +83,12 @@ class Model
 
     public function hasOne($class,$foreign_key,$local_key='id')
     {
-        $mod = new $class();
-        return $mod->where($foreign_key.'='.$this->$local_key)->first();
+        return app($class)->where($foreign_key.'='.$this->$local_key)->first();
     }
 
     public function hasMany($class,$foreign_key,$local_key='id')
     {
-        $mod = new $class();
-        return $mod->where($foreign_key.'='.$this->$local_key)->get();
+        return app($class)->where($foreign_key.'='.$this->$local_key)->get();
     }
 
 ///////////////////////////////////////////////////////////
