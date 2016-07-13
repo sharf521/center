@@ -115,7 +115,6 @@ class Uploader
 				return ;
 			}
 		}
-
         //创建目录失败
         if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
             $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
@@ -123,13 +122,28 @@ class Uploader
         } else if (!is_writeable($dirname)) {
             $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
             return;
-        }
+        }		
 
         //移动文件
-        if (!(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath))) { //移动失败
+        if (!(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath))) { //移动失败	
             $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
-        } else { //移动成功
-            $this->stateInfo = $this->stateMap[0];
+        } else { //移动成功			
+			include '../../../system/upload.class.php';
+			$data=array(
+				'file'=>$this->filePath,
+				'path'=>dirname($this->fullName)
+			);		
+			$up=new upload();
+			$arr=$up->curl_file($data);
+			if($arr['status']==1)
+			{
+				$this->fullName=$arr['file'];
+				$this->stateInfo = $this->stateMap[0];
+			}
+			else
+			{
+				$this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");	
+			}			
         }
     }
 
@@ -270,6 +284,7 @@ class Uploader
      */
     private function getFullName()
     {
+		/*
         //替换日期事件
         $t = time();
         $d = explode('-', date("Y-y-m-d-H-i-s"));
@@ -292,8 +307,11 @@ class Uploader
         $randNum = rand(1, 10000000000) . rand(1, 10000000000);
         if (preg_match("/\{rand\:([\d]*)\}/i", $format, $matches)) {
             $format = preg_replace("/\{rand\:[\d]*\}/i", substr($randNum, 0, $matches[1]), $format);
-        }
-
+        }*/
+        include_once __DIR__.'/../../../../system/Lib/Session.php';
+        $session=new \System\Lib\Session();
+        $user_id=$session->get('user_id');
+		$format="/data/upload/".intval($user_id/2000)."/".$user_id."/".date('Ym').'/'.rand(1, 10000000000) . rand(1, 10000000000);
         $ext = $this->getFileExt();
         return $format . $ext;
     }

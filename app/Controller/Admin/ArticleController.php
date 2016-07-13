@@ -3,6 +3,7 @@ namespace App\Controller\Admin;
 
 use App\Model\Article;
 use App\Model\Category;
+use System\Lib\DB;
 use System\Lib\Request;
 
 class ArticleController extends AdminController
@@ -28,20 +29,19 @@ class ArticleController extends AdminController
     }
 
     //添加文章
-    function add(Category $category)
+    function add(Category $category,Article $article,Request $request)
     {
         if ($_POST) {
             $errormsg = "";
             if ($_POST['title'] == "") {
                 $errormsg .= "文章标题不能为空<br>";
-                redirect()->back()->with('error','文章标题不能为空');
             }
             if ($_POST['categoryid'] == "") {
                 $errormsg .= "文章分类必选<br>";
             }
             if (!empty($_POST['lable'])) {
-                $lable = $this->mysql->one('article', array('lable' => $_POST['lable'], 'subsite_id' => $_POST['subsite_id']));
-                if (is_array($lable)) {
+                $id=$article->where('lable=?')->bindValues($request->post('lable'))->value();
+                if ($id) {
                     $errormsg .= "该标签已存在<br>";
                 }
             }
@@ -58,8 +58,7 @@ class ArticleController extends AdminController
             }
             $categoryid = (int)$categoryid;
             if ($categoryid != 0) {
-                $row = $this->mysql->one('category', array("id" => $categoryid));
-                $categorypath = $row['path'];
+                $categorypath = $category->find($categoryid)->path;
             }
             //分类end
 
@@ -69,30 +68,24 @@ class ArticleController extends AdminController
             $arr['subsite_id'] = $_POST['subsite_id'];
             $arr['title'] = $_POST['title'];
             $arr['typeid'] = (int)$_POST['typeid'];
-            $arr['categoryid'] = $categoryid;
-            $arr['categorypath'] = $categorypath;
+            $arr['category_id'] = $categoryid;
+            $arr['category_path'] = $categorypath;
             $arr['lable'] = $_POST['lable'];
             $arr['status'] = $_POST['status'];
             $arr['picture'] = $_POST['picture'];
             $arr['addtime'] = date('Y-m-d H:i:s');
-            $result = $this->mysql->insert('article', $arr);
-            if ($result !== true) {
-                show_msg(array('添加文章信息失败'));
-                exit;
-            }
-            $artice_id = $this->mysql->insert_id();
+            $artice_id =DB::table('article')->insertGetId($arr);
 
             //添加文章内容
             $arr = array();
             $arr['id'] = $artice_id;
             $arr['content'] = $_POST['content'];
-            $result = $this->mysql->insert('article_data', $arr);
-            if ($result !== true) {
-                show_msg(array('添加文章内容失败'));
-                exit;
+            $result = DB::table('article_data')->insert($arr);
+            if ($result) {
+                redirect('article')->with('msg','添加成功!!');
+            }else{
+                redirect()->back()->with('error','添加失败');
             }
-
-            show_msg(array('添加文章成功', '', $this->base_url('article')));
         } else {
             //一级分类
             $data['cates'] = $category->getlist(array('pid' => 2));
@@ -101,9 +94,9 @@ class ArticleController extends AdminController
     }
 
     //修改文章
-    function edit()
+    function edit(Category $category,Article $article,Request $request)
     {
-        $id = (int)$_REQUEST['id'];
+        $id = (int)$request->id;
         if ($_POST) {
             $errormsg = "";
             if ($_POST['title'] == "") {
@@ -111,13 +104,6 @@ class ArticleController extends AdminController
             }
             if ($_POST['categoryid'] == "") {
                 $errormsg .= "文章分类必选<br>";
-            }
-            if (!empty($_POST['lable'])) {
-                $sql = "select * from plf_article where lable='{$_POST['lable']}' and subsite_id={$_POST['subsite_id']} and id != {$id}";
-                $lable = $this->mysql->get_one($sql);
-                if (is_array($lable)) {
-                    $errormsg .= "该标签已存在<br>";
-                }
             }
             if ($errormsg != "") {
                 show_msg(array($errormsg));
@@ -132,8 +118,7 @@ class ArticleController extends AdminController
             }
             $categoryid = (int)$categoryid;
             if ($categoryid != 0) {
-                $row = $this->mysql->one('category', array("id" => $categoryid));
-                $categorypath = $row['path'];
+                $categorypath = $category->find($categoryid)->path;
             }
             //分类end
 
@@ -143,52 +128,38 @@ class ArticleController extends AdminController
             $arr['subsite_id'] = $_POST['subsite_id'];
             $arr['title'] = $_POST['title'];
             $arr['typeid'] = $_POST['typeid'];
-            $arr['categoryid'] = $categoryid;
-            $arr['categorypath'] = $categorypath;
+            $arr['category_id'] = $categoryid;
+            $arr['category_path'] = $categorypath;
             $arr['lable'] = $_POST['lable'];
             $arr['status'] = $_POST['status'];
             $arr['picture'] = $_POST['picture'];
             $arr['edittime'] = date('Y-m-d H:i:s');
-            $result = $this->mysql->update('article', $arr, "id={$id}");
-            if ($result !== true) {
-                show_msg(array('修改文章信息失败'));
-                exit;
-            }
+            $result=Db::table('article')->where("id={$id}")->limit(1)->update($arr);
 
-            //修改文章内容
             $arr = array();
             $arr['content'] = $_POST['content'];
-            $result = $this->mysql->update('article_data', $arr, "id={$id}");
-            if ($result !== true) {
-                show_msg(array('修改文章内容失败'));
-                exit;
+            $result=Db::table('article_data')->where("id={$id}")->limit(1)->update($arr);
+            if ($result) {
+                redirect('article/?page='.$request->get('page'))->with('msg','保存成功!!');
+            }else{
+                redirect()->back()->with('error','保存失败!');
             }
-
-            show_msg(array('修改文章成功', '', $this->base_url('article')));
         } else {
             //一级分类
-            $data['cates'] = m('category/getlist', array('pid' => 7));
-            $data['row'] = m('article/getone', array('id' => $id));
-            $categoryid = $data['row']['categoryid'];
-            $categorypath = $data['row']['categorypath'];
-            $categorypath = explode(',', $categorypath);
+            $data['cates'] = $category->getlist(array('pid' => 2));
+            $data['row'] = $article->findOrFail($id);
+            $data['row']->content = $data['row']->ArticleData()->content;
+            $categorypath = explode(',', $data['row']->category_path);
             array_shift($categorypath);
             array_pop($categorypath);
             $i = 1;
             $str = '';
             foreach ($categorypath as $c) {
-
                 $sel = "getsel($i,$c);";
                 $str .= $sel;
                 $i++;
             }
-            $data['row']['sel'] = $str;
-
-            $subsite = m('substation/getlist');
-            foreach ($subsite as $row) {
-                $data['subsite'][$row['id']] = $row['name'];
-            }
-
+            $data['row']->sel = $str;
             $this->view('article', $data);
         }
     }
@@ -196,8 +167,8 @@ class ArticleController extends AdminController
     //文章状态切换
     public function change(Article $article, Request $request)
     {
-        $id = $request->get('id', 'int');
-        $page = $request->get('page', 'int');
+        $id = (int)$request->get('id');
+        $page = (int)$request->get('page');
         $art = $article->findOrFail($id);
         if ($art->status == '1') {
             $art->status = 0;

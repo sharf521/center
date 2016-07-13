@@ -96,9 +96,6 @@ class Category extends Model
         return DB::table('category')->where("id={$id}")->limit(1)->update($arr);
     }
 
-
-
-
     function echoOption($data)
     {
         $pid = $data['pid'];

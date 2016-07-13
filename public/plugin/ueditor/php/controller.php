@@ -6,8 +6,10 @@ error_reporting(E_ERROR);
 header("Content-Type: text/html; charset=utf-8");
 
 session_start();
-include("../../../core/function.php");
-$user_id=getSession('user_id');
+
+include_once __DIR__.'/../../../../system/Lib/Session.php';
+$session=new \System\Lib\Session();
+$user_id=$session->get('user_id');
 
 $CONFIG = json_decode(preg_replace("/\/\*[\s\S]+?\*\//", "", file_get_contents("config.json")), true);
 $action = $_GET['action'];

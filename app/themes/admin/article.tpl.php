@@ -69,27 +69,27 @@ function comupload_success(path,type)
     </div>
     <script src="/plugin/js/ajaxfileupload.js"></script>
     <form method="post">
-    	<input type="hidden" name="id" value="<?=$row['id']?>"/>
+    	<input type="hidden" name="id" value="<?=$row->id?>"/>
         <table>
-            <tr><td>标题：</td><td><input type="text" name="title" value="<?=$row['title']?>" size="50"/></td></tr>
+            <tr><td>标题：</td><td><input type="text" name="title" value="<?=$row->title?>" size="50"/></td></tr>
 
 
             <tr><td>文章类型：</td>
                 <td><div id="div_category">
                     <select name="categoryid[]" id="category1" class="multiple" multiple="multiple" onchange="getsel(1,this.value)">
                       <? foreach($cates as $var) {?>
-                      <option value='<?=$var['id']?>' <? if($var['id']==$row['categoryid']){echo 'selected';}?>><?=$var['name']?></option>
+                      <option value='<?=$var['id']?>' <? if($var['id']==$row->category_id){echo 'selected';}?>><?=$var['name']?></option>
                       <? }?>
                     </select>
                     </div>
                 </td>
             </tr>
-            <tr style="display: none"><td>显示图片：</td>
+            <tr ><td>显示图片：</td>
                 <td>
-                <input type="hidden" name="picture" id="article" value="<?=$row['picture']?>"/>
+                <input type="hidden" name="picture" id="article" value="<?=$row->picture?>"/>
                 <span id="upload_span_article">
-                    <? if($row['picture']!=''){?>
-                    <a href="<?=$row['picture'];?>" target="_blank"><img src="<?=$row['picture']?>" align="absmiddle" width="100"/></a>
+                    <? if($row->picture!=''){?>
+                    <a href="<?=$row->picture;?>" target="_blank"><img src="<?=$row->picture?>" align="absmiddle" width="100"/></a>
                     <? }?>
                 </span>
                 <div class="upload-upimg">
@@ -100,11 +100,10 @@ function comupload_success(path,type)
             </tr>
 
 
-            <tr><td valign="top">内容：</td><td><? ueditor(array('value'=>$row['content']));?></td></tr>
-          <!--  <tr><td>类型:</td><td><?=linkpage('type_article',$row['typeid'],array('name'=>'typeid','title'=>'==无=='))?></td></tr>-->
+            <tr><td valign="top">内容：</td><td><? ueditor(array('value'=>$row->content));?></td></tr>
             <tr><td>状态：</td>
                 <td><label><input type="radio" name="status" value="1" checked="checked"/>显示</label>
-                    <label><input type="radio" name="status" value="0" <? if($row['status']=='0'){echo 'checked';}?>/>隐藏</label>
+                    <label><input type="radio" name="status" value="0" <? if($row->status=='0'){echo 'checked';}?>/>隐藏</label>
                 </td>
             </tr>
         </table>
@@ -113,7 +112,7 @@ function comupload_success(path,type)
     </form>
 <script language="javascript">
 $.ajaxSetup({async: false});
-<?=$row['sel']?>
+<?=$row->sel?>
 </script>
 <? }?>
 <?php require 'footer.php';?>

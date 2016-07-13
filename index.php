@@ -22,13 +22,11 @@ define('ROOT', __DIR__);
 $_G = array();
 require ROOT . '/system/init.php';
 require ROOT . '/system/Autoloader.php';
-//require __DIR__.'/app/Config.php';
 
 $mysql = DB::instance('db1');
-require __DIR__ . '/system/function.php';
-require __DIR__ . '/system/helper.php';
-require __DIR__ . '/system/page.class.php';
-$pager = new Page();
+require ROOT . '/system/function.php';
+require ROOT . '/system/helper.php';
+$pager = new \System\Lib\Page();
 //参数
 $request=app('\System\Lib\Request');
 $_G['system'] = DB::table('system')->orderBy("`showorder`,id")->lists('value', 'code');
@@ -42,7 +40,7 @@ if ($_G['class'] == 'api') {
     $_path='Admin';
 }
 if($_path==''){
-    if (file_exists(__DIR__ . '/app/Controller/' . ucfirst($_G['class']) . 'Controller.php')) {
+    if (file_exists(ROOT . '/app/Controller/' . ucfirst($_G['class']) . 'Controller.php')) {
         $_classpath = "\\App\\Controller\\" . ucfirst($_G['class']) . "Controller";
         //$class = new $_classpath();
         $method = $_G['func'];
@@ -54,7 +52,7 @@ if($_path==''){
 }else{
     $_G['class'] = ($request->get(1) != '') ? $request->get(1) : 'index';
     $_G['func'] = ($request->get(2) != '') ? $request->get(2) : 'index';
-    if (file_exists(__DIR__ . '/app/Controller/'.$_path.'/' . ucfirst($_G['class']) . 'Controller.php')) {
+    if (file_exists(ROOT . '/app/Controller/'.$_path.'/' . ucfirst($_G['class']) . 'Controller.php')) {
         $_classpath = "\\App\\Controller\\" .$_path.'\\'. ucfirst($_G['class']) . "Controller";
         $method = $_G['func'];
     } else {

@@ -7,7 +7,7 @@ class Article extends Model
     
     public function ArticleData()
     {
-        return $this->hasOne('article_data','id','id');
+        return $this->hasOne('App\Model\ArticleData','id','id');
     }
 
     /**

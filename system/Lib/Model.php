@@ -199,6 +199,15 @@ class Model
     {
         return DB::table($this->table)->all();
     }
+    //取一行中一列的值
+    public function value($col=null, $type = 'int|float')
+    {
+        if($col==null){
+            $col=$this->primaryKey;
+        }
+        echo $col;
+        return DB::table($this->table)->value($col,$type);
+    }
 
     public function select($str)
     {
