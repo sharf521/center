@@ -281,7 +281,7 @@ class DbConnection
         return $sql;
     }
 
-    public function page($page = 1, $pageSize = 10)
+    public function page($page = 1, $pageSize = 10,$mode=\PDO::FETCH_ASSOC)
     {
         $sql = $this->buildSelect();
         $pageSql = "SELECT {$this->distinct} count(1) as num FROM {$this->table}"
@@ -306,7 +306,7 @@ class DbConnection
         }
         $sql .= " limit {$index}, {$pageSize}";
  //       echo $sql;
-        $list = $this->get_all($sql);
+        $list = $this->get_all($sql,null,$mode);
         global $pager;
         $pager->page = $page;
         $pager->epage = $pageSize;

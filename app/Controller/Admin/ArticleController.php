@@ -199,16 +199,14 @@ class ArticleController extends AdminController
         $id = $request->get('id', 'int');
         $page = $request->get('page', 'int');
         $art = $article->find($id);
-        if (isset($art->status)) {
-            if ($art->status == '1') {
-                $art->status = 0;
-            } else {
-                $art->status = 1;
-            }
-            $art->save();
-            redirect('article/?page=' . $page)->with('msg', '操作成功！');
+        if ($art->status == '1') {
+            $art->status = 0;
+        } else {
+            $art->status = 1;
         }
-        redirect('article/?page=' . $page)->with('error', '参数错误！');
+        //var_dump($art);
+        $art->save();
+        redirect('article/?page=' . $page)->with('msg', '操作成功！');
     }
 
     //删除文章

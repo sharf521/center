@@ -7,6 +7,7 @@ class Model
     protected $table;
     protected $fields=array();
     protected $attributes=array();
+    protected $cols;
     protected $dbfix;
     protected $primaryKey='id';
     protected $is_exist=false;
@@ -17,7 +18,11 @@ class Model
 
     public function __get($key)
     {
-        return $this->attributes[$key];
+        if(isset($this->attributes[$key])){
+            return $this->attributes[$key];
+        }else{
+            return $this->cols->$key;
+        }
     }
 
     public function __set($key, $value)
@@ -93,20 +98,25 @@ class Model
 
 ///////////////////////////////////////////////////////////
 
-
-
     public function find($id)
     {
         return $this->where($this->primaryKey."=?")->bindValues($id)->first();
     }
+    public function findOrFail($id)
+    {
+        $obj=$this->find($id);
+        if(empty($obj->cols)){
+            die('find Fail !!!');
+        }
+    }
 
-    private function arrToObj($row)
+    private function setObj($o)
     {
         $obj = clone $this;
+        $id=$obj->primaryKey;
+        $obj->attributes[$obj->primaryKey]=$obj->$id;
         $obj->is_exist=true;
-        foreach ($row as $k=>$v){
-            $obj->attributes[$k]=$v;
-        }
+        $obj->cols=$o;
         return $obj;
     }
     /**
@@ -115,8 +125,8 @@ class Model
      */
     public function first()
     {
-        $row=$this->row();
-        return $this->arrToObj($row);
+        $obj=DB::table($this->table)->row(\PDO::FETCH_OBJ);
+        return $this->setObj($obj);
     }
 
     /**
@@ -125,24 +135,20 @@ class Model
      */
     public function get()
     {
-        $arr=array();
-        $result=$this->all();
-        foreach ($result as $row){
-            $obj = $this->arrToObj($row);
-            array_push($arr,$obj);
+        $result=DB::table($this->table)->all(\PDO::FETCH_OBJ);
+        foreach ($result as $i=>$v){
+            $result[$i]=$this->setObj($v);
         }
-        return $arr;
+        return $result;
     }
     public function pager($page = 1, $pageSize = 10)
     {
-        $arr=array();
-        $result=$this->page($page,$pageSize);
-        foreach ($result['list'] as $row){
-            $obj = $this->arrToObj($row);
-            array_push($arr,$obj);
+        $result=DB::table($this->table)->page($page,$pageSize,\PDO::FETCH_OBJ);
+        foreach ($result['list'] as $i=>$v){
+            $result['list'][$i]=$this->setObj($v);
         }
         return array(
-            'list' => $arr,
+            'list' => $result['list'],
             'total' => $result['total'],
             'page' =>$result['page']
         );
@@ -153,7 +159,7 @@ class Model
         if($this->is_exist){
             $id=$this->$primaryKey;
             unset($this->$primaryKey);
-            return DB::table($this->table)->where("{$primaryKey}=?")->bindValues($id)->update($this->attributes);
+            return DB::table($this->table)->where("{$primaryKey}=?")->bindValues($id)->limit('1')->update($this->attributes);
         }else{
             return DB::table($this->table)->insertGetId($this->attributes);
         }
