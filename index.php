@@ -64,6 +64,6 @@ if($_path==''){
 }
 controller($_classpath,$method);
 $t2 = microtime(true);
-echo '<hr>耗时'.round($t2-$t1,3).'秒';
+//echo '<hr>耗时'.round($t2-$t1,3).'秒';
 
 

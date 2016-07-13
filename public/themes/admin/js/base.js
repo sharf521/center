@@ -31,9 +31,9 @@ function init_menu() {
     })
 }
 function initwh() {
-    $('.leftpanel').css('height', ($(window).height() - 56 - 50));
+    $('.leftpanel').css('height', ($(window).height() - 56 ));
     $('#iframe_main').css('width', ($(window).width() - 200));
-    $('#iframe_main').css('height', ($(window).height() - 56 - 50));
+    $('#iframe_main').css('height', ($(window).height() - 56 ));
 }
 
 //proxy.php   start

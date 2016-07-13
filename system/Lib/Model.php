@@ -108,6 +108,15 @@ class Model
         if(empty($obj->cols)){
             die('find Fail !!!');
         }
+        return $obj;
+    }
+    public function firstOrFail()
+    {
+        $obj=$this->first();
+        if(empty($obj->cols)){
+            die('find Fail !!!');
+        }
+        return $obj;
     }
 
     private function setObj($o)

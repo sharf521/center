@@ -56,7 +56,6 @@
     </div>
     <div class="clear"></div>
 </div>
-<div class="footer">Copyright  &nbsp;2012-2020 &nbsp;璞胜创投  Inc.,All Rights reserved. </div>
 <script>
 $(document).ready(function() 
 {	 

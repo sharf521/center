@@ -198,7 +198,7 @@ class ArticleController extends AdminController
     {
         $id = $request->get('id', 'int');
         $page = $request->get('page', 'int');
-        $art = $article->find($id);
+        $art = $article->findOrFail($id);
         if ($art->status == '1') {
             $art->status = 0;
         } else {
@@ -214,8 +214,9 @@ class ArticleController extends AdminController
     {
         $id = $request->get('id', 'int');
         $page = $request->get('page', 'int');
-        $art = $article->find($id);
+        $art = $article->findOrFail($id);
         $art->status = -1;
+        
         if ($art->save()) {
             redirect('article/?page=' . $page)->with('msg', '删除成功！');
         } else {
