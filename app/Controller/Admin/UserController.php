@@ -88,7 +88,7 @@ class UserController extends AdminController
         } else {
             $UserType = new UserType();
             $data['usertype'] = $UserType->getList();
-            $data['row'] = $this->User->getOne(array('id' => $_GET['id']));
+            $data['row'] = DB::table('user')->where('id=?')->bindValues($_GET['id'])->row();
             $this->view('user', $data);
         }
     }
@@ -118,9 +118,8 @@ class UserController extends AdminController
                 show_msg(array($returnmsg, '', $this->base_url('user')));;
             }
         } else {
-            $data['row'] = $this->User->getOne(array('id' => $_GET['id']));
+            $data['row'] = DB::table('user')->where('id=?')->bindValues($_GET['id'])->row();
             $this->view('user', $data);
         }
     }
-
 }

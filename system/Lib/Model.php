@@ -5,12 +5,13 @@ class Model
 {
     //属性必须在这里声明
     protected $table;
-    protected $fields=array();
-    protected $attributes=array();
+    protected $fields = array();
+    protected $attributes = array();
     protected $cols;
     protected $dbfix;
-    protected $primaryKey='id';
-    protected $is_exist=false;
+    protected $primaryKey = 'id';
+    protected $is_exist = false;
+
     public function __construct()
     {
         $this->dbfix = DB::dbfix();
@@ -18,20 +19,23 @@ class Model
 
     public function __get($key)
     {
-        if(isset($this->attributes[$key])){
+        if (isset($this->attributes[$key])) {
             return $this->attributes[$key];
-        }else{
+        } else {
             return $this->cols->$key;
         }
     }
 
     public function __set($key, $value)
     {
-        $this->attributes[$key]=$value;
+        $this->attributes[$key] = $value;
     }
-    public function __isset($key){
+
+    public function __isset($key)
+    {
         return isset($this->attributes[$key]);
     }
+
     public function __unset($key)
     {
         unset($this->attributes[$key]);
@@ -58,10 +62,10 @@ class Model
      * @param string $table
      * @return array
      */
-    public function getOne($data = array(),$table='')
+    public function getOne($data = array(), $table = '')
     {
-        if($table==''){
-            $table=$this->table;
+        if ($table == '') {
+            $table = $this->table;
         }
         $where = " 1=1";
         $params = array();
@@ -73,47 +77,49 @@ class Model
     }
 
     //删除
-    public function destroy($data=array())
+    public function destroy($data = array())
     {
         return DB::table($this->table)->where($data)->delete();
     }
 
-    public function dirty($data=array(),$table='')
+    public function dirty($data = array(), $table = '')
     {
-        if($table==''){
-            $table=$this->table;
+        if ($table == '') {
+            $table = $this->table;
         }
-        return DB::table($table)->where($data)->update(array('status'=>-1));
+        return DB::table($table)->where($data)->update(array('status' => -1));
     }
 
-    public function hasOne($class,$foreign_key,$local_key='id')
+    public function hasOne($class, $foreign_key, $local_key = 'id')
     {
-        return app($class)->where($foreign_key.'='.$this->$local_key)->first();
+        return app($class)->where($foreign_key . '=' . $this->$local_key)->first();
     }
 
-    public function hasMany($class,$foreign_key,$local_key='id')
+    public function hasMany($class, $foreign_key, $local_key = 'id')
     {
-        return app($class)->where($foreign_key.'='.$this->$local_key)->get();
+        return app($class)->where($foreign_key . '=' . $this->$local_key)->get();
     }
 
 ///////////////////////////////////////////////////////////
 
     public function find($id)
     {
-        return $this->where($this->primaryKey."=?")->bindValues($id)->first();
+        return $this->where($this->primaryKey . "=?")->bindValues($id)->first();
     }
+
     public function findOrFail($id)
     {
-        $obj=$this->find($id);
-        if(empty($obj->cols)){
+        $obj = $this->find($id);
+        if (empty($obj->cols)) {
             die('find Fail !!!');
         }
         return $obj;
     }
+
     public function firstOrFail()
     {
-        $obj=$this->first();
-        if(empty($obj->cols)){
+        $obj = $this->first();
+        if (empty($obj->cols)) {
             die('find Fail !!!');
         }
         return $obj;
@@ -122,19 +128,20 @@ class Model
     private function setObj($o)
     {
         $obj = clone $this;
-        $id=$obj->primaryKey;
-        $obj->attributes[$obj->primaryKey]=$obj->$id;
-        $obj->is_exist=true;
-        $obj->cols=$o;
+        $id = $obj->primaryKey;
+        $obj->attributes[$obj->primaryKey] = $obj->$id;
+        $obj->is_exist = true;
+        $obj->cols = $o;
         return $obj;
     }
+
     /**
      * 获取一个对象
      * @return $this
      */
     public function first()
     {
-        $obj=DB::table($this->table)->row(\PDO::FETCH_OBJ);
+        $obj = DB::table($this->table)->row(\PDO::FETCH_OBJ);
         return $this->setObj($obj);
     }
 
@@ -144,36 +151,38 @@ class Model
      */
     public function get()
     {
-        $result=DB::table($this->table)->all(\PDO::FETCH_OBJ);
-        foreach ($result as $i=>$v){
-            $result[$i]=$this->setObj($v);
+        $result = DB::table($this->table)->all(\PDO::FETCH_OBJ);
+        foreach ($result as $i => $v) {
+            $result[$i] = $this->setObj($v);
         }
         return $result;
     }
+
     public function pager($page = 1, $pageSize = 10)
     {
-        $result=DB::table($this->table)->page($page,$pageSize,\PDO::FETCH_OBJ);
-        foreach ($result['list'] as $i=>$v){
-            $result['list'][$i]=$this->setObj($v);
+        $result = DB::table($this->table)->page($page, $pageSize, \PDO::FETCH_OBJ);
+        foreach ($result['list'] as $i => $v) {
+            $result['list'][$i] = $this->setObj($v);
         }
         return array(
             'list' => $result['list'],
             'total' => $result['total'],
-            'page' =>$result['page']
+            'page' => $result['page']
         );
     }
+
     public function save()
     {
-        $primaryKey=$this->primaryKey;
-        if($this->is_exist){
-            $id=$this->$primaryKey;
+        if ($this->is_exist) {
+            $primaryKey = $this->primaryKey;
+            $id = $this->$primaryKey;
             unset($this->$primaryKey);
             return DB::table($this->table)->where("{$primaryKey}=?")->bindValues($id)->limit('1')->update($this->attributes);
-        }else{
+        } else {
             return DB::table($this->table)->insertGetId($this->attributes);
         }
     }
-///////以下重写DB类方法/////////////////////////////////////////////////////////////////////////////////
+///////以下DB类方法/////////////////////////////////////////////////////////////////////////////////
     /**
      * @param int $page
      * @param int $pageSize
@@ -181,7 +190,7 @@ class Model
      */
     public function page($page = 1, $pageSize = 10)
     {
-        return DB::table($this->table)->page($page,$pageSize);
+        return DB::table($this->table)->page($page, $pageSize);
     }
 
     /**
@@ -199,14 +208,11 @@ class Model
     {
         return DB::table($this->table)->all();
     }
+
     //取一行中一列的值
-    public function value($col=null, $type = 'int|float')
+    public function value($col = 'id', $type = 'int|float')
     {
-        if($col==null){
-            $col=$this->primaryKey;
-        }
-        echo $col;
-        return DB::table($this->table)->value($col,$type);
+        return DB::table($this->table)->value($col, $type);
     }
 
     public function select($str)
@@ -214,11 +220,13 @@ class Model
         DB::where($str);
         return $this;
     }
+
     public function distinct()
     {
         DB::distinct();
         return $this;
     }
+
     /**
      * @param array|string $str
      * @return $this
