@@ -181,8 +181,7 @@ function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0)
 //发送EMAIL
 function mail_send($to, $title, $body)
 {
-    require(ROOT . 'core/PHPMailer/class.phpmailer.php');
-    $mail = new PHPMailer();
+    $mail = new \PHPMailer();
     $mail->IsSMTP(); // telling the class to use SMTP
     $mail->SMTPDebug = false;                     // enables SMTP debug information (for testing)
     // 1 = errors and messages

@@ -13,7 +13,6 @@ class UserController extends AdminController
     {
         parent::__construct();
         $this->User = new User();
-
     }
 
     function index()

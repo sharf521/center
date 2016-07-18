@@ -1,10 +1,23 @@
 <?php
+$t1 = microtime(true);
 //error_reporting(E_ALL & ~E_NOTICE);
 error_reporting(7);
-$t1 = microtime(true);
+header('Content-language: zh');
+header('Content-type: text/html; charset=utf-8');
+header('X-Powered-By: JAVA');
+header('Pragma: no-cache');
+header('Cache-Control: private',false); // required for certain browsers
+header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
+header('Expires: '.gmdate('D, d M Y H:i:s') . ' GMT');
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+session_cache_limiter('private,must-revalidate');
+session_start();
+date_default_timezone_set('Asia/Shanghai');//时区配置
+set_time_limit($set_time = 3600);
+
 define('ROOT', __DIR__);
 $_G = array();
-require ROOT . '/system/init.php';
+require ROOT . '/vendor/autoload.php';
 require ROOT . '/system/Autoloader.php';
 use System\Lib\DB;
 DB::instance('db1');
