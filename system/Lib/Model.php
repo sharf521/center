@@ -20,9 +20,14 @@ class Model
     public function __get($key)
     {
         if (isset($this->attributes[$key])) {
-            return $this->attributes[$key];
+            $val= $this->attributes[$key];
         } else {
-            return $this->cols->$key;
+            $val= $this->cols->$key;
+        }
+        if(in_array($key,array('created_at','updated_at'))){
+            return date('Y-m-d H:i:s',$val);
+        }else{
+            return $val;
         }
     }
 
@@ -77,9 +82,13 @@ class Model
     }
 
     //删除
-    public function destroy($data = array())
+    public function delete($id='int|array')
     {
-        return DB::table($this->table)->where($data)->delete();
+        if(is_array($id)){
+            return DB::table($this->table)->where($id)->delete();
+        }else{
+            return DB::table($this->table)->where($this->primaryKey . "=?")->bindValues($id)->delete();
+        }
     }
 
     public function dirty($data = array(), $table = '')
@@ -177,8 +186,11 @@ class Model
             $primaryKey = $this->primaryKey;
             $id = $this->$primaryKey;
             unset($this->$primaryKey);
+            $this->attributes['updated_at']=time();
             return DB::table($this->table)->where("{$primaryKey}=?")->bindValues($id)->limit('1')->update($this->attributes);
         } else {
+            $this->attributes['created_at']=time();
+            $this->attributes['updated_at']=time();
             return DB::table($this->table)->insertGetId($this->attributes);
         }
     }

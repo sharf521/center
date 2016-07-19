@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: 127.0.0.1
--- 生成日期: 2016 年 07 月 18 日 17:04
+-- 生成日期: 2016 年 07 月 19 日 18:00
 -- 服务器版本: 5.5.40
 -- PHP 版本: 5.2.17
 
@@ -1218,6 +1218,30 @@ INSERT INTO `plf_algorithm_log` (`id`, `user_id`, `addtime`, `money`, `status`, 
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `plf_app`
+--
+
+CREATE TABLE IF NOT EXISTS `plf_app` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) NOT NULL,
+  `appid` varchar(64) NOT NULL,
+  `appsecret` varchar(64) NOT NULL,
+  `domain` varchar(64) NOT NULL,
+  `created_at` int(11) NOT NULL DEFAULT '0',
+  `updated_at` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='应用表' AUTO_INCREMENT=6 ;
+
+--
+-- 转存表中的数据 `plf_app`
+--
+
+INSERT INTO `plf_app` (`id`, `name`, `appid`, `appsecret`, `domain`, `created_at`, `updated_at`) VALUES
+(5, '1111', '2222', '3333', 'http://www.yuantuwang.com', 1468922323, 1468922352);
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `plf_article`
 --
 
@@ -1568,7 +1592,7 @@ CREATE TABLE IF NOT EXISTS `plf_category` (
 
 INSERT INTO `plf_category` (`id`, `name`, `title`, `keyword`, `remark`, `pid`, `path`, `level`, `aside1`, `aside2`, `aside3`, `showorder`, `addtime`) VALUES
 (1, '文章分类', '', '', '', 0, '1,', 1, '', '', '', 1, '2016-04-13 16:53:08'),
-(2, '商城分类', '', '', '', 0, '2,', 1, '', '', '', 2, '2016-04-13 16:53:22'),
+(2, '商城分类', '', '', '', 0, '2,', 1, '', '', '', 3, '2016-04-13 16:53:22'),
 (3, '女装', '', '', '', 2, '2,3,', 2, 'nvzhuang', '16', 'fa-female', 1, '2016-04-13 16:54:05'),
 (4, '鞋子', '', '', '', 2, '2,4,', 2, 'xiezi', '', 'fa-stumbleupon', 4, '2016-04-13 16:54:14'),
 (5, '居家', '', '', '', 2, '2,5,', 2, 'jujia', '', 'fa-university', 5, '2016-04-13 16:54:29'),
@@ -2563,7 +2587,7 @@ CREATE TABLE IF NOT EXISTS `plf_linkpage` (
   `status` tinyint(1) NOT NULL,
   `deltime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=125 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=126 ;
 
 --
 -- 转存表中的数据 `plf_linkpage`
@@ -2586,7 +2610,8 @@ INSERT INTO `plf_linkpage` (`id`, `showorder`, `typeid`, `name`, `value`, `creat
 (37, 10, 5, '光大银行', '光大银行', '2014-10-30 15:19:45', 1, NULL),
 (122, 10, 22, '111', '222', '2016-04-06 16:23:26', 1, NULL),
 (123, 10, 22, '111', '11', '2016-04-06 16:23:26', 1, NULL),
-(124, 10, 22, '12', '222', '2016-04-06 16:23:26', 1, NULL);
+(124, 10, 22, '12', '222', '2016-04-06 16:23:26', 1, NULL),
+(125, 10, 21, '11', '222', '2016-07-19 12:32:54', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -2657,7 +2682,7 @@ CREATE TABLE IF NOT EXISTS `plf_permissions` (
   `cmvalue` text NOT NULL COMMENT '控制器/方法URL',
   `order` int(4) DEFAULT '10' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=42 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
 
 --
 -- 转存表中的数据 `plf_permissions`
@@ -2682,7 +2707,8 @@ INSERT INTO `plf_permissions` (`id`, `pid`, `name`, `desc`, `url`, `cmvalue`, `o
 (37, 2, '分类管理', '', 'category', '', 10),
 (39, 3, 'webservice', '', 'algorithm', '', 10),
 (2, 0, '内容管理', '', '', '', 10),
-(41, 2, '文章管理', '', 'article', '', 0);
+(41, 2, '文章管理', '', 'article', '', 0),
+(42, 4, '应用管理', '', 'app', '', 10);
 
 -- --------------------------------------------------------
 
