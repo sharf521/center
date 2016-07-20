@@ -62,25 +62,6 @@ class Model
         return $post;
     }
 
-    /**
-     * @param array $data
-     * @param string $table
-     * @return array
-     */
-    public function getOne($data = array(), $table = '')
-    {
-        if ($table == '') {
-            $table = $this->table;
-        }
-        $where = " 1=1";
-        $params = array();
-        foreach ($data as $field => $v) {
-            $where .= " and {$field}=:{$field}";
-            $params["{$field}"] = $v;
-        }
-        return DB::table($table)->where($where)->bindValues($params)->row();
-    }
-
     //删除
     public function delete($id='int|array')
     {
@@ -89,14 +70,6 @@ class Model
         }else{
             return DB::table($this->table)->where($this->primaryKey . "=?")->bindValues($id)->delete();
         }
-    }
-
-    public function dirty($data = array(), $table = '')
-    {
-        if ($table == '') {
-            $table = $this->table;
-        }
-        return DB::table($table)->where($data)->update(array('status' => -1));
     }
 
     public function hasOne($class, $foreign_key, $local_key = 'id')
@@ -195,31 +168,6 @@ class Model
         }
     }
 ///////以下DB类方法/////////////////////////////////////////////////////////////////////////////////
-    /**
-     * @param int $page
-     * @param int $pageSize
-     * @return array
-     */
-    public function page($page = 1, $pageSize = 10)
-    {
-        return DB::table($this->table)->page($page, $pageSize);
-    }
-
-    /**
-     * @return array
-     */
-    public function row()
-    {
-        return DB::table($this->table)->row();
-    }
-
-    /**
-     * @return array
-     */
-    public function all()
-    {
-        return DB::table($this->table)->all();
-    }
 
     //取一行中一列的值
     public function value($col = 'id', $type = 'int|float')

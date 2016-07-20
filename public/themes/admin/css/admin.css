@@ -15,6 +15,9 @@ input[type=button],input[type=submit]{ background:#2baab1; color:#fff;border: 1p
 input[type=button]:hover,input[type=submit]:hover{ background:#32c5cd;}
 input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
 
+.but1{color:#FFF; background-color:#d9534f;border:1px solid #df4c43;padding:5px 10px; margin:0 1px;  font-size: 12px; line-height: 1.5; border-radius:3px;}
+.but1:hover{background-color:#c9302c; }
+
 ul, li{ list-style:none;}
 .hide{ display:none}
 .clear{ clear:both}
@@ -56,8 +59,7 @@ h1,h2,h3{ font-weight:normal;}
 .main_content>table{margin:0px; border:0px;}
 .main_content>form>table{margin:0px; border:0px;}
 
-.but1{color:#FFF; background-color:#d9534f;border:1px solid #df4c43;padding:5px 10px; margin:0 1px;  font-size: 12px; line-height: 1.5; border-radius:3px;}
-.but1:hover{background-color:#d9534f; }
+
 
 .topbox{width:100%; background:#fff; height:54px; overflow: hidden; border-top:2px solid #2baab1;  box-shadow: 0 1px 1px rgba(0,0,0,.15);  -moz-box-shadow: 0 1px 1px rgba(0,0,0,.15);  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.15); }
  .topbox h3{ float:left;font-weight:normal; font-size:18px; color:#2baab1; line-height:54px; padding:0 0 0 20px;}

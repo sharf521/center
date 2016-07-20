@@ -55,11 +55,11 @@
                 </tr>
                 <tr>
                     <td>appsecret：</td>
-                    <td><input type="text" name="appsecret" value="<?= $row->appsecret ?>"/></td>
+                    <td><input type="text" name="appsecret" value="<?= $row->appsecret ?>" size="50"/></td>
                 </tr>
                 <tr>
                     <td>域名：</td>
-                    <td><input type="text" name="domain" value="<?= $row->domain ?>"/></td>
+                    <td><input type="text" name="domain" value="<?= $row->domain ?>" size="50"/></td>
                 </tr>
                 <tr>
                     <td></td>
