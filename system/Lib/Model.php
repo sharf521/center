@@ -24,7 +24,7 @@ class Model
         } else {
             $val= $this->cols->$key;
         }
-        if(in_array($key,array('created_at','updated_at'))){
+        if($key=='created_at'){
             return date('Y-m-d H:i:s',$val);
         }else{
             return $val;
@@ -159,11 +159,9 @@ class Model
             $primaryKey = $this->primaryKey;
             $id = $this->$primaryKey;
             unset($this->$primaryKey);
-            $this->attributes['updated_at']=time();
             return DB::table($this->table)->where("{$primaryKey}=?")->bindValues($id)->limit('1')->update($this->attributes);
         } else {
             $this->attributes['created_at']=time();
-            $this->attributes['updated_at']=time();
             return DB::table($this->table)->insertGetId($this->attributes);
         }
     }
