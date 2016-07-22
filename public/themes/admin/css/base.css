@@ -14,6 +14,12 @@ a{ text-decoration:none; color:#0099FF}
 .form1{margin:5px; background-color:#efefef; padding:5px; border:1px solid #ccc}
 
 
+
+:focus {outline: 0 none;}
+
+
+
+
 .btn3 {background: url(../images/btn3.gif);display: block;width: 81px;height: 20px;line-height: 20px;color: #fff;text-align: center;text-decoration: none; overflow:hidden}
 .btn3 a{color: #fff;}
 .submit{ padding:2px 8px 1px 8px;background: #CDECFF;border: 1px solid #5BBDFF;color: 000;cursor: pointer; min-width:60px; text-align:center;}

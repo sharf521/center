@@ -25,7 +25,10 @@ require ROOT . '/system/function.php';
 require ROOT . '/system/helper.php';
 $pager = app('\System\Lib\Page');
 $request=app('\System\Lib\Request');
+
 $_G['system'] = DB::table('system')->orderBy("`showorder`,id")->lists('value', 'code');
+//$houtai=app('\App\Model\System')->getCode('houtai');
+
 $_G['class'] = ($request->get(0) != '') ? $request->get(0) : 'index';
 $_G['func'] = ($request->get(1) != '') ? $request->get(1) : 'index';
 $_path='';
@@ -34,14 +37,13 @@ if ($_G['class'] == 'api') {
 } elseif ($_G['class'] == $_G['system']['houtai']) {
     $_path='Admin';
 }
+
 if($_path==''){
     if (file_exists(ROOT . '/app/Controller/' . ucfirst($_G['class']) . 'Controller.php')) {
         $_classpath = "\\App\\Controller\\" . ucfirst($_G['class']) . "Controller";
-        //$class = new $_classpath();
         $method = $_G['func'];
     } else {
         $_classpath='\App\Controller\IndexController';
-        //$class = new \App\Controller\IndexController();
         $method = $_G['class'];
     }
 }else{

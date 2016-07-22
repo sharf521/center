@@ -134,8 +134,8 @@ class DbConnection
 //        if (!is_array($params)) {
 //            $params = array($params);
 //        }
-//      echo $query.'<br>';
-//       print_r($params);
+//        echo $query . '<br>';
+//        print_r($params);
 //        echo '<br>';
         $this->sQuery = $this->pdo->prepare($query);
         if (is_array($params)) {
@@ -210,7 +210,7 @@ class DbConnection
     {
         $mysql_dir = 'data';
         $dtime = date("Y-m-d", time());
-        $ip = $this->ip();
+        $ip = ip();
         $file = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER["REQUEST_URI"];
         if (!file_exists($mysql_dir . "/mysql_error")) {
             mkdir($mysql_dir . "/mysql_error", 0777);
@@ -223,20 +223,6 @@ class DbConnection
         @fclose($fp);
         echo $str;
         return false;
-    }
-
-    function ip()
-    {
-        if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
-            $ip_address = $_SERVER["HTTP_CLIENT_IP"];
-        } else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
-            $ip_address = array_pop(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
-        } else if (!empty($_SERVER["REMOTE_ADDR"])) {
-            $ip_address = $_SERVER["REMOTE_ADDR"];
-        } else {
-            $ip_address = '';
-        }
-        return $ip_address;
     }
 
     //禁止克隆
@@ -502,7 +488,7 @@ class DbConnection
         }
         $value = implode(',', $_sql);
         $sql = "UPDATE " . $this->table . " SET $value " . $this->where . $this->limit;
-        //echo $sql;
+//        echo $sql;
         return $this->query($sql);
     }
 

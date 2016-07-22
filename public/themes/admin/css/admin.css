@@ -3,10 +3,9 @@ img{border:0px}
 div,p,dl,dt,dd,h2,h3,form,ul,li,body{ margin:0; padding:0;}
 body { font-family:"Microsoft YaHei"; font-size:14px; height:100%;}
 
-
 fieldset, img {border: 0;vertical-align: middle;}
 select, input, button, textarea {font: 100% "Microsoft YaHei";padding: 0;}
-
+:focus {outline: 0 none;}
 input,select {vertical-align: middle;  height:30px; background:#fdfdfd; border:1px solid #e4e4e4;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px; padding:0px 3px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box; }
 textarea {vertical-align: middle; line-height:30px; background:#fdfdfd; border:1px solid #e4e4e4;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px; padding:0 6px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box; }
 
@@ -17,6 +16,7 @@ input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
 
 .but1{color:#FFF; background-color:#d9534f;border:1px solid #df4c43;padding:5px 10px; margin:0 1px;  font-size: 12px; line-height: 1.5; border-radius:3px;}
 .but1:hover{background-color:#c9302c; }
+
 
 ul, li{ list-style:none;}
 .hide{ display:none}
@@ -39,7 +39,7 @@ h1,h2,h3{ font-weight:normal;}
 
 
 
-.table{ width:100%; margin-top:20px; border-collapse: collapse; border:1px solid #dddddd;border-bottom:2px solid #dddddd;}
+.table{ width:100%; margin-top:10px; border-collapse: collapse; border:1px solid #dddddd;border-bottom:2px solid #dddddd;}
 .table .l{ text-align:left}
 .table .operate{ text-align:left; padding-left:20px;}
 .table .gs{border-bottom:1px solid #666;}
@@ -59,7 +59,7 @@ h1,h2,h3{ font-weight:normal;}
 .main_content>table{margin:0px; border:0px;}
 .main_content>form>table{margin:0px; border:0px;}
 
-
+.search{ margin-top: 10px;}
 
 .topbox{width:100%; background:#fff; height:54px; overflow: hidden; border-top:2px solid #2baab1;  box-shadow: 0 1px 1px rgba(0,0,0,.15);  -moz-box-shadow: 0 1px 1px rgba(0,0,0,.15);  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.15); }
  .topbox h3{ float:left;font-weight:normal; font-size:18px; color:#2baab1; line-height:54px; padding:0 0 0 20px;}

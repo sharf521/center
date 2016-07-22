@@ -9,7 +9,6 @@ class IndexController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->userModel = new User();
     }
 
     function index()
@@ -46,76 +45,58 @@ class IndexController extends AdminController
         exit;
     }
 
-    function logout()
+    function logout(User $user)
     {
-        $this->userModel->logout();
+        $user->logout();
         $this->redirect('login');
         exit;
     }
 
-    function login()
+    public function login(User $user)
     {
         if ($_POST) {
             if ($_POST['valicode'] != $_SESSION['randcode']) {
-                $msg = '验证码不正确！';
+                $error = '验证码不正确！';
             } else {
                 $data = array(
                     'admin' => true,
                     'username' => trim($_POST['username']),
                     'password' => $_POST['password']
                 );
-                $result = $this->userModel->login($data);
-               // print_r($result);
+                $result = $user->login($data);
                 if ($result === true) {
-                    $this->redirect('index');
+                    redirect('index');
                 } else {
-                    $msg = $result['msg'];
+                    $error = $result;
                 }
             }
-            if ($msg) show_msg(array($msg));
+            redirect()->back()->with('error',$error);
         } else {
             $this->view('login');
         }
     }
 
     //修改密码
-    function changepwd()
+    function changepwd(User $user)
     {
         if ($_POST) {
-            $username = $this->username;
-            $errorMsg = "";
-            if (strlen($_POST['password']) == 0) {
-                $errorMsg .= "密码不能为空！" . "<br>";
-            }
-            if (strlen($_POST['password']) > 15 || strlen($_POST['password']) < 6) {
-                $errorMsg .= "密码长度6位到15位！" . "<br>";
-            }
+            $id= $this->user_id;
             if ($_POST['password'] != $_POST['sure_password']) {
-                $errorMsg .= "两次输入密码不同！" . "<br>";
-            }
-            if (strlen($errorMsg) > 0) {
-                show_msg(array($errorMsg));
+                $error = "两次输入密码不同！";
             } else {
                 $post = array(
-                    'username' => $username,
+                    'id' => $id,
                     'old_password' => $_POST['old_password'],
                     'password' => $_POST['password'],
                 );
-                $returnmsg = "";
-                $status = outer_call('uc_user_edit', array($post['username'], $post['old_password'], $post['password'], ""));
-                if ($status == 1) {
-                    $returnmsg = '修改密码成功！';
-                } elseif ($status == -1) {
-                    $returnmsg = '原密码错误！';
-                } elseif ($status == -7 || $status == 0) {
-                    $returnmsg = '没有做任何修改！';
+                $result=$user->updatePwd($post);
+                if ($result === true) {
+                    redirect()->back()->with('msg','修改成功!');
                 } else {
-                    $returnmsg = '未知错误！';
+                    $error = $result;
                 }
-                show_msg(array($returnmsg));
-                //$this->redirect('user/changepwd');
             }
-
+            redirect()->back()->with('error',$error);
         } else {
             $this->view('pwd');
         }

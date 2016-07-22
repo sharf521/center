@@ -53,7 +53,7 @@ if (!function_exists('controller')) {
     function controller($control,$method='index')
     {
         global $_G;
-        $class=\System\Lib\App::getInstance($control);
+        $class=app($control);
         $_G['Controller'] = $class;
         if (!method_exists($class, $method)) {
             $method = 'error';
@@ -72,6 +72,22 @@ if (!function_exists('controller')) {
             }
         }
         return call_user_func_array(array($class, $method), $dependencies);
+    }
+}
+
+if (!function_exists('ip')) {
+    function ip()
+    {
+        if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
+            $ip_address = $_SERVER["HTTP_CLIENT_IP"];
+        } else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+            $ip_address = array_pop(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
+        } else if (!empty($_SERVER["REMOTE_ADDR"])) {
+            $ip_address = $_SERVER["REMOTE_ADDR"];
+        } else {
+            $ip_address = '';
+        }
+        return $ip_address;
     }
 }
 

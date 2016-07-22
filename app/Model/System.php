@@ -5,31 +5,27 @@ use System\Lib\DB;
 
 class System extends Model
 {
+    private $result=null;
     public function __construct()
     {
         parent::__construct();
+        $this->result=DB::table('system')->orderBy("`showorder`,id")->lists('value','code');
     }
 
-    function getlist($data=array())
-    {
-        $result=DB::table('system')->orderBy("`showorder`,id")->all();
-        //结果转换为特定格式
-        /*$items=array();
-        foreach($result as $row)
-        {
-            $items[$row['id']]=$row;
-        }*/
-        return $result;
-    }
     function lists()
     {
-        //DB::table('system')->orderBy("`showorder`,id")->lists('value','code');
-        $_system = $this->getlist();
-        foreach ($_system as $key => $value){
-            $system[$value['code']] = $value['value'];
-        }
-        return $system;
+//        $_system = $this->getlist();
+//        foreach ($_system as $key => $value){
+//            $system[$value['code']] = $value['value'];
+//        }
+//        return $system;
     }
+
+    public function getCode($code)
+    {
+        return $this->result[$code];
+    }
+
     function add($data=array())
     {
         $arr['code'] = $data['code'];

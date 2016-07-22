@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 use App\Model\User;
 use App\Model\UserType;
 use System\Lib\DB;
+use System\Lib\Request;
 
 class UserController extends AdminController
 {
@@ -92,30 +93,24 @@ class UserController extends AdminController
         }
     }
 
-    function updatepwd()
+    function updatepwd(User $user,Request $request)
     {
         if ($_POST) {
-            $username = $_POST['username'];
-            $errorMsg = "";
-            if (strlen($_POST['password']) == 0) {
-                $errorMsg .= "密码不能为空！" . "<br>";
-            }
-            if (strlen($_POST['password']) > 15 || strlen($_POST['password']) < 6) {
-                $errorMsg .= "密码长度6位到15位！" . "<br>";
-            }
             if ($_POST['password'] != $_POST['sure_password']) {
-                $errorMsg .= "两次输入密码不同！" . "<br>";
-            }
-            if (strlen($errorMsg) > 0) {
-                show_msg(array($errorMsg));
-            } else {
+                $error='两次输入密码不同';
+            }else{
                 $post = array(
-                    'username' => $username,
-                    'password' => $_POST['password'],
+                    'id' => $request->post('id'),
+                    'password' => $request->post('password'),
                 );
-                $returnmsg = $this->User->updatepwd($post);
-                show_msg(array($returnmsg, '', $this->base_url('user')));;
+                $return=$user->updatePwd($post);
+                if($return===true){
+                    redirect('user')->with('msg','修改成功！');
+                }else{
+                    $error=$return;
+                }
             }
+            redirect()->back()->with('error',$error);
         } else {
             $data['row'] = DB::table('user')->where('id=?')->bindValues($_GET['id'])->row();
             $this->view('user', $data);

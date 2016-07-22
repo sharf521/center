@@ -32,7 +32,7 @@ class SystemController extends AdminController
         }
         else
         {
-            $data['result']=$this->model->getlist();
+            $data['result']=DB::table('system')->orderBy("`showorder`,id")->all();
             $this->view('system',$data);
         }
     }

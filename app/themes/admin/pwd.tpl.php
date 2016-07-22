@@ -8,16 +8,16 @@ if ($this->func == 'index') {
         <form method="post" onsubmit="return setdisabled();">
             <table class="table_from">
                 <tr>
-                    <td >原密码：</td>
+                    <td>原密码：</td>
                     <td><input type="password" name="old_password"/></td>
                 </tr>
                 <tr>
-                    <td  >新密码：</td>
+                    <td>新密码：</td>
                     <td><input type="password" name="password"/> 密码长度6位到15位</td>
                 </tr>
                 <tr>
-                    <td  >确认新密码：</td>
-                    <td ><input type="password" name="sure_password"/></td>
+                    <td>确认新密码：</td>
+                    <td><input type="password" name="sure_password"/></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -26,5 +26,5 @@ if ($this->func == 'index') {
             </table>
         </form>
     </div>
-
 <? } ?>
+<?php require 'footer.php'; ?>

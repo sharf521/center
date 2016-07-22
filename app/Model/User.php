@@ -5,7 +5,8 @@ use System\Lib\DB;
 
 class User extends Model
 {
-    protected $table='user';
+    protected $table = 'user';
+
     public function __construct()
     {
         parent::__construct();
@@ -23,62 +24,45 @@ class User extends Model
 
     function login($data)
     {
-        $return['status'] = 0;
         if ($data['direct'] == '1') {
             //后台WAP登录
-            $uid = (int)$data['id'];
+            $id = (int)$data['id'];
+            $user = DB::table('user')->where("id=?")->bindValues($id)->row();
         } else {
-
-            list($uid, $username, $password, $email) = outer_call('uc_user_login', array($data['username'], $data['password']));
-
-            //$uid=1;
-
-        }
-        if ($uid > 0) {
-            $return['status'] = 1;
-            $user = DB::table('user')->select('*')->where("id=?")->bindValues($uid)->row();
-            if ($user) {
-                if ($data['admin'] == true) {
-                    $usertype = DB::table('usertype')->select('id,permission_id,is_admin')->where("id={$user['type_id']}")->row();
-                    if ($usertype['is_admin'] != 1) {
-                        $return['msg'] = '会员禁止登陆！';
-                        return $return;
-                    }
-                    session()->set('usertype', $usertype['id']);
-                    session()->set('permission_id', $usertype['permission_id']);
-                } else {
-                    session()->set('usertype', 0);
-                    session()->set('permission_id', '');
-                }
-                session()->set('user_id', $user['id']);
-                session()->set('username', $user["username"]);
-                session()->set('lastip', $user["lastip"]);
-                $arr = array(
-                    'lastip' => ip()
-                );
-                DB::table('user')->where("id={$user["id"]}")->limit(1)->update($arr);
-                return true;
-            } else {
-                $return['msg'] = '本地用户错误！';
+            $user = DB::table('user')->where("username=?")->bindValues($data['username'])->row();
+            $id = (int)$user['id'];
+            if ($id == 0) {
+                return '用户名或密码错误';
+            } elseif ($user['password'] != md5(md5($data['password']) . $user['salt'])) {
+                return '用户名或密码错误！';
             }
-        } elseif ($uid == -1 || $uid == -2) {
-            $return['msg'] = '用户名或密码错误！';
-        } else {
-            $return['msg'] = '未知错误！';
         }
-        return $return;
+        if ($data['admin'] == true) {
+            $usertype = DB::table('usertype')->select('id,permission_id,is_admin')->where("id={$user['type_id']}")->row();
+            if ($usertype['is_admin'] != 1) {
+                return '会员禁止登陆！';
+            }
+            session()->set('usertype', $usertype['id']);
+            session()->set('permission_id', $usertype['permission_id']);
+        } else {
+            session()->set('usertype', 0);
+            session()->set('permission_id', '');
+        }
+        session()->set('user_id', $user['id']);
+        session()->set('username', $user["username"]);
+        session()->set('lastip', $user["lastip"]);
+        $arr = array(
+            'lastip' => ip()
+        );
+        DB::table('user')->where("id={$user["id"]}")->limit(1)->update($arr);
+        return true;
     }
 
     function register($data)
     {
-        if (empty($data['username'])) {
-            return "用户名不能为空！";
-        }
-        if (strlen($data['username']) < 4 || strlen($data['username']) > 30) {
-            return "用户名长度5位到15位！";
-        }
-        if (strlen($data['password']) == 0) {
-            return "密码不能为空！";
+        $check = $this->checkUserName($data['username']);
+        if ($check !== true) {
+            return $check;
         }
         if (strlen($data['password']) > 15 || strlen($data['password']) < 6) {
             return "密码长度6位到15位！";
@@ -86,45 +70,25 @@ class User extends Model
         if ($data['password'] != $data['sure_password']) {
             return "两次输入密码不同！";
         }
-        if (strlen($data['email']) == 0) {
-            return "邮箱不能为空！";
+        $check = $this->checkEmail($data['email']);
+        if ($check !== true) {
+            return $check;
         }
-        if (!empty($data['names'])) {
-            $invite_userid = DB::table('user')->where('username=?')->bindValues($data['names'])->value('id', 'int');
-            if ($invite_userid == 0) {
-                return "介绍人用户名不正确！";
-            }
-        }
-        $status = outer_call('uc_user_register', array($data['username'], $data['password'], $data['email']));
-        if ($status > 0) {
-             $data = array(
-                'id' => $status,
-                'type_id' => 3,
-                'username' => $data['username'],
-                'zf_password' => md5($data['password']),
-                'addtime' => date('Y-m-d H:i:s'),
-                'times' => 0,
-                'status' => 0,
-                'lastip'=>ip(),
-                'email' => $data['email'],
-                'invite_userid' => (int)$invite_userid
-            );
-            DB::table('user')->insert($data);
-            return true;
-        } elseif ($status == -1) {
-            $returnmsg = '用户名不合法！';
-        } elseif ($status == -2) {
-            $returnmsg = '包含不允许注册的词语！';
-        } elseif ($status == -3) {
-            $returnmsg = '用户名已经存在！';
-        } elseif ($status == -4) {
-            $returnmsg = 'Email 格式有误！';
-        } elseif ($status == -5) {
-            $returnmsg = 'Email 不允许注册！';
-        } elseif ($status == -6) {
-            $returnmsg = '该 Email 已经被注册！';
-        }
-        return $returnmsg;
+        $salt = rand(100000, 999999);
+        $data = array(
+            'type_id' => 3,
+            'username' => $data['username'],
+            'password' => md5(md5($data['password']) . $salt),
+            'zf_password' => md5(md5($data['password']) . $salt),
+            'addtime' => date('Y-m-d H:i:s'),
+            'times' => 0,
+            'status' => 0,
+            'lastip' => ip(),
+            'email' => $data['email'],
+            'salt' => $salt,
+            'invite_userid' => 0
+        );
+        return DB::table('user')->insert($data);
     }
 
     function getlist($data = array())
@@ -145,38 +109,30 @@ class User extends Model
     }
 
     //修改密码
-    function changepwd($data)
+    public function updatePwd($data)
     {
-        $status = outer_call('uc_user_edit', array($data['username'], $data['old_password'], $data['password'], ""));
-        if ($status == 1) {
-            $returnmsg = '修改密码成功！';
-        } elseif ($status == -1) {
-            $returnmsg = '原密码错误！';
-        } elseif ($status == -7 || $status == 0) {
-            $returnmsg = '没有做任何修改！';
-        } else {
-            $returnmsg = '未知错误！';
+        $user = $this->findOrFail($data['id']);
+        if (strlen($data['password']) > 15 || strlen($data['password']) < 6) {
+            return "密码长度6位到15位！";
+        } elseif (isset($data['old_password'])) {
+            if ($user->password != md5(md5($data['old_password']) . $user->salt)) {
+                return '原密码错误！';
+            }
         }
-        return $returnmsg;
-    }
-
-    //找回密码
-    function updatepwd($data)
-    {
-        $status = outer_call('uc_user_edit', array($data['username'], "", $data['password'], "", 1));
-        if ($status == 1 || $status == -7 || $status == 0) {
-            $returnmsg = '重置密码成功！';
-        } else {
-            $returnmsg = '未知错误！';
-        }
-        return $returnmsg;
+        $user->password = md5(md5($data['password']) . $user->salt);
+        return $user->save();
     }
 
     //修改支付密码
-    function paypwd($data)
+    public function updateZfPwd($data)
     {
-        $arr['zf_password'] = md5($data['zf_password']);
-        return DB::table('user')->where("id=?")->bindValues($data['id'])->limit(1)->update($arr);
+        $user = $this->findOrFail($data['id']);
+        if (strlen($data['zf_password']) > 15 || strlen($data['zf_password']) < 6) {
+            return "密码长度6位到15位！";
+        } else {
+            $user->zf_password = md5(md5($data['zf_password']) . $user->salt);
+            return $user->save();
+        }
     }
 
     //实名认证显示信息
@@ -199,11 +155,41 @@ left join {$this->dbfix}account_bank b on u.id=b.user_id {$where}";
         return DB::table('user')->where('id=?')->bindValues($id)->limit(1)->update($data);
     }
 
+    public function checkEmail($email)
+    {
+        if (empty($email)) {
+            return '电子邮件不能为空';
+        }
+        $pattern = "/^([0-9A-Za-z\\-_\\.]+)@([0-9a-z]+\\.[a-z]{2,3}(\\.[a-z]{2})?)$/i";
+        if (preg_match($pattern, $email)) {
+            $id = DB::table('user')->where("email=?")->bindValues($email)->value('id', 'int');
+            if ($id > 0) {
+                return '该 电子邮件 已经被注册';
+            }
+            return true;
+        } else {
+            return "电子邮件 格式有误！";
+        }
+    }
+
+    public function checkUserName($username)
+    {
+        if (strlen($username) < 5 || strlen($username) > 30) {
+            return "用户名长度5位到15位！";
+        } else {
+            $id = DB::table('user')->where("username=?")->bindValues($username)->value('id', 'int');
+            if ($id > 0) {
+                return '用户名已经存在';
+            }
+            return true;
+        }
+    }
+
     /**
      * @return \App\Model\UserType
      */
     public function UserType()
     {
-        return $this->hasOne('App\Model\UserType','id','type_id');
+        return $this->hasOne('App\Model\UserType', 'id', 'type_id');
     }
 }
