@@ -37,7 +37,6 @@ if ($_G['class'] == 'api') {
 } elseif ($_G['class'] == $_G['system']['houtai']) {
     $_path='Admin';
 }
-
 if($_path==''){
     if (file_exists(ROOT . '/app/Controller/' . ucfirst($_G['class']) . 'Controller.php')) {
         $_classpath = "\\App\\Controller\\" . ucfirst($_G['class']) . "Controller";
