@@ -66,17 +66,16 @@ function linkpage($code, $val = '', $data = array())
 //找回密码邮件内容
 function GetpwdMsg($data = array())
 {
-    global $_G;
     $user_id = $data['user_id'];
     $username = $data['username'];
-    $webname = $_G['subsite']['name'];
+    $webname = '找回密码';
     $email = $data['email'];
     $active_id = urlencode(authcode($user_id . "," . time(), "ENCODE"));
     if ($data['type'] == 'getpwd') {
         $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/getpwd/updatepwd?id={$active_id}";
         $tital = "修改登录密码";
-    } elseif ($data['type'] == 'getpaypwd') {
-        $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/member/user/resetpaypwd?id={$active_id}";
+    } elseif ($data['type'] == 'getPayPwd') {
+        $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/member/user/resetPayPwd?id={$active_id}";
         $tital = "修改支付密码";
     } elseif ($data['type'] == 'sure_email') {
         $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/register/sure_email?id={$active_id}";
@@ -86,7 +85,7 @@ function GetpwdMsg($data = array())
 	<div style="font-size:14px; ">
 	<div style="padding: 10px 0px;">
 		<h1 style="padding: 0px 15px; margin: 0px;">
-			<a title="' . $webname . '用户中心" href="http://' . $_SERVER['HTTP_HOST'] . '/" target="_blank" swaped="true">' . $webname . '</a>
+			<a title="用户中心" href="http://' . $_SERVER['HTTP_HOST'] . '/" target="_blank" swaped="true">' . $webname . '</a>
 		</h1>
 
 		<div style="padding: 2px 20px 30px;">
@@ -95,7 +94,7 @@ function GetpwdMsg($data = array())
 			<p style="overflow: hidden; width: 100%; word-wrap: break-word;"><a title="点击' . $tital . '" href="' . $_url . '" target="_blank" swaped="true">' . $_url . '</a>
 			<br><span style="color: rgb(153, 153, 153);">(如果链接无法点击，请将它拷贝到浏览器的地址栏中)</span></p>
 
-			<p style="text-align: right;"><br>' . $webname . '用户中心 敬启</p>
+			<p style="text-align: right;"><br>用户中心 敬启</p>
 			<p><br>此为自动发送邮件，请勿直接回复！如您有任何疑问，请点击<a title="点击联系我们" style="color: rgb(15, 136, 221);" href="http://' . $_SERVER['HTTP_HOST'] . '/" target="_blank" >联系我们</a></p>
 		</div>
 	</div>
@@ -110,7 +109,7 @@ function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0)
     // 动态密匙长度，相同的明文会生成不同密文就是依靠动态密匙
     $ckey_length = 4;
     // 密匙
-    $key = md5($key ? $key : "jsiw982sjwo29swoir8743652dnapfmfka");
+    $key = md5($key ? $key : "jsiw982sjwo29apfmfka");
     // 密匙a会参与加解密
     $keya = md5(substr($key, 0, 16));
     // 密匙b会用来做数据完整性验证
@@ -177,7 +176,7 @@ function mail_send($to, $title, $body)
     $mail->Host = "smtp.qq.com"; // sets the SMTP server
     $mail->Port = 25;                    // set the SMTP port for the GMAIL server
     $mail->Username = "353889718@qq.com"; // SMTP account username
-    $mail->Password = "qqww1122";        // SMTP account password
+    $mail->Password = "qqww112233";        // SMTP account password
     $mail->SetFrom('353889718@qq.com', '服务平台');
     $mail->AddReplyTo("353889718@qq.com", "AddReplyTo");
     $mail->Subject = "=?utf-8?B?" . base64_encode($title) . "?=";

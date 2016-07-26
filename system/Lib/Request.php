@@ -1,6 +1,8 @@
 <?php
 namespace System\Lib;
 
+use App\Model\User;
+
 class Request
 {
     function __construct()
@@ -47,5 +49,23 @@ class Request
             }
         }
         return $str;
+    }
+
+    public function checkToken()
+    {
+        if($this->post('_token')!=session('_token')){
+            echo 'token error,请重试！';
+            exit;
+        }
+        session()->remove('_token');
+    }
+    
+    public function user()
+    {
+        $user=app('\App\Model\User');
+        $id=session('user_id');
+        if(!empty($id)){
+            return $user->findOrFail($id);
+        }
     }
 }

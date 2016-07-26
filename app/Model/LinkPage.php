@@ -5,21 +5,51 @@ use System\Lib\DB;
 
 class LinkPage extends Model
 {
+
+    private $result=null;
     function __construct()
     {
         parent::__construct();
+        $this->result=$this->getlinkpage();
     }
 
-    function getlinkpage()
+    private function getlinkpage()
     {
         $arr = array();
-        $_result = DB::table('linkpage_type a')->select('b.*,a.code,a.name as tname')->join('linkpage b', 'a.id=b.typeid')->orderBy('b.showorder asc');
+        $_result = DB::table('linkpage_type a')->select('a.code,b.value,b.name')->join('linkpage b', 'a.id=b.typeid')->orderBy('b.showorder asc')->all();
         foreach ($_result as $_row) {
-            $arr[$_row['id']] = $_row['name'];
             $arr[$_row['code']][$_row['value']] = $_row['name'];
         }
         $_result = null;
         return $arr;
+    }
+
+    public function echoLink($code,$val='',$data=array())
+    {
+        $linkpage = $this->result;
+        $name = isset($data['name']) ? $data['name'] : $code;
+        $title = isset($data['title']) ? $data['title'] : '请选择';
+        $attr = isset($data['attr']) ? $data['attr'] : '';
+        $html='';
+        if ($data['type'] == 'checkbox') {
+            foreach ($linkpage[$code] as $i => $v) {
+                $_chk = '';
+                if (is_array($val) && in_array($i, $val)) {
+                    $_chk = 'checked';
+                }
+                $html.= "<label><input type='checkbox' name='{$name}[]' {$_chk} value='{$i}'>{$v}</label>&nbsp;";
+            }
+        } else {
+            $html.= "<select name='{$name}' {$attr}><option value=''>{$title}</option>";
+            foreach ($linkpage[$code] as $i => $v) {
+                if ("$i" == "$val")
+                    $html.= "<option value='{$i}' selected>{$v}</option>";
+                else
+                    $html.= "<option value='{$i}'>{$v}</option>";
+            }
+            $html.= "</select>";
+        }
+        return $html;
     }
 
     function getlist($data = array())

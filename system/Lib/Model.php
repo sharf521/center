@@ -86,6 +86,7 @@ class Model
 
     public function find($id)
     {
+        $this->attributes[$this->primaryKey] = $id;
         return $this->where($this->primaryKey . "=?")->bindValues($id)->first();
     }
 
@@ -109,12 +110,17 @@ class Model
 
     private function setObj($o)
     {
-        $obj = clone $this;
-        $id = $obj->primaryKey;
-        $obj->attributes[$obj->primaryKey] = $obj->$id;
-        $obj->is_exist = true;
-        $obj->cols = $o;
-        return $obj;
+        if(empty($o)){
+            $this->is_exist=false;
+            return $this;
+        }else{
+            $obj = clone $this;
+            $id = $obj->primaryKey;
+            $obj->attributes[$obj->primaryKey] = $obj->$id;
+            $obj->is_exist = true;
+            $obj->cols = $o;
+            return $obj;
+        }
     }
 
     /**
@@ -162,7 +168,7 @@ class Model
             return DB::table($this->table)->where("{$primaryKey}=?")->bindValues($id)->limit('1')->update($this->attributes);
         } else {
             $this->attributes['created_at']=time();
-            return DB::table($this->table)->insertGetId($this->attributes);
+            return DB::table($this->table)->insert($this->attributes);
         }
     }
 ///////以下DB类方法/////////////////////////////////////////////////////////////////////////////////

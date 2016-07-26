@@ -128,11 +128,14 @@ class User extends Model
     {
         $user = $this->findOrFail($data['id']);
         if (strlen($data['zf_password']) > 15 || strlen($data['zf_password']) < 6) {
-            return "密码长度6位到15位！";
-        } else {
-            $user->zf_password = md5(md5($data['zf_password']) . $user->salt);
-            return $user->save();
+            return "支付密码长度6位到15位！";
+        } elseif (isset($data['old_password'])) {
+            if ($user->zf_password != md5(md5($data['old_password']) . $user->salt)) {
+                return '原密码错误！';
+            }
         }
+        $user->zf_password = md5(md5($data['zf_password']) . $user->salt);
+        return $user->save();
     }
 
     //实名认证显示信息

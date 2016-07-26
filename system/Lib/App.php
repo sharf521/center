@@ -17,7 +17,7 @@ class App
         return self::$instance[$key];
     }
 }
-
+//注意：有继承关系的构造函数慎用
 class Container
 {
     private $s = array();

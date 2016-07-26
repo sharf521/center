@@ -5,9 +5,9 @@ class Redirect
 {
     private $path;
     private $is_back=false;
-    public function __construct($str='')
+    public function __construct($path='')
     {
-        $this->path=$str;
+        $this->path=$path;
         return $this;
     }
     /**
@@ -39,8 +39,9 @@ class Redirect
             echo '<script>history.go(-1);</script>';
         }else{
             global $_G;
-            if (substr($this->path, 0, 1) != '/') {
-                $url = $_G['Controller']->base_url . $this->path;
+            $url = $this->path;
+            if (substr($this->path, 0, 1) == '/') {
+                $url = $_G['Controller']->base_url . $url;
             }
         }
         header("location:$url");

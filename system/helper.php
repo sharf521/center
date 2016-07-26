@@ -46,6 +46,9 @@ if (!function_exists('app')) {
      */
     function app($className)
     {
+//        if (file_exists(ROOT . '/app/Model/' . ucfirst($className) . '.php')) {
+//            $className='\\app\\Model\\' . ucfirst($className);
+//        }
         return \System\Lib\App::getInstance($className);
     }
 }
@@ -88,6 +91,15 @@ if (!function_exists('ip')) {
             $ip_address = '';
         }
         return $ip_address;
+    }
+}
+
+if (!function_exists('_token')) {
+    function _token()
+    {
+        $token = md5(time());
+        session()->set('_token', $token);
+        return $token;
     }
 }
 

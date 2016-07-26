@@ -32,6 +32,8 @@ $_G['func'] = ($request->get(1) != '') ? $request->get(1) : 'index';
 $_path='';
 if ($_G['class'] == 'api') {
     $_path='Api';
+} elseif ($_G['class'] == 'member') {
+    $_path='Member';
 } elseif ($_G['class'] == $_G['system']['houtai']) {
     $_path='Admin';
 }
@@ -51,6 +53,7 @@ if($_path==''){
         $method = $_G['func'];
     } else {
         $_classpath = "\\App\\Controller\\" .$_path."\\IndexController";
+
         $method = $_G['class'];
     }
 }
