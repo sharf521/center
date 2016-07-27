@@ -8,9 +8,10 @@ class ApiController extends BaseController
 {
     public function __construct()
     {
+        global $_G;
         parent::__construct();
-        $this->control	=($this->input->get(1)!='')?$this->input->get(1):'index';
-        $this->func		=($this->input->get(2)!='')?$this->input->get(2):'index';
+        $this->control	=$_G['class'];
+        $this->func		=$_G['func'];
         ///验证权限
         if(!in_array($this->control,array('index','plugin'))){
             if (abs(time() - $_POST['time']) > 600) {

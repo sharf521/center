@@ -97,7 +97,10 @@ if (!function_exists('ip')) {
 if (!function_exists('_token')) {
     function _token()
     {
-        $token = md5(time());
+        $token=session('_token');
+        if(empty($token)){
+            $token = md5(time());
+        }
         session()->set('_token', $token);
         return $token;
     }

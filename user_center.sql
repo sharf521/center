@@ -42,7 +42,16 @@ CREATE TABLE IF NOT EXISTS `plf_account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
+CREATE TABLE IF NOT EXISTS `plf_algorithm_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `addtime` date DEFAULT NULL,
+  `money` decimal(18,5) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0' COMMENT '0:未处理  1：己处理',
+  `send_money` decimal(18,5) NOT NULL DEFAULT '0.00000' COMMENT '发放金额',
+  `send_date` datetime NOT NULL COMMENT '发放时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 --
 -- 表的结构 `plf_account_bank`
 --

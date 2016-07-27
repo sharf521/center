@@ -53,7 +53,7 @@ class AlgorithmController extends ApiController
     function zj_do()
     {
         $zj = new ZJ();
-        $return =$zj->calZj();
+        $return = $zj->calZj();
         echo $return;
     }
 
@@ -80,9 +80,10 @@ class AlgorithmController extends ApiController
     function rebate_do()
     {
         $reate = new Rebate();
-        $return =$reate->calRebate();
+        $return = $reate->calRebate();
         echo $return;
     }
+
     /**
      *
      * typeid:1,2,3
@@ -108,7 +109,7 @@ class AlgorithmController extends ApiController
         if ($size == 0) {
             $size = 100;
         }
-        $result = DB::table('rebate')->select('*')->where('site_id=? and id>?')->orderBy('id')->bindValues(array($site_id,$id))->limit("0,{$size}")->all();
+        $result = DB::table('rebate')->select('*')->where('site_id=? and id>?')->orderBy('id')->bindValues(array($site_id, $id))->limit("0,{$size}")->all();
         $result = json_encode($result);
         echo $result;
     }
@@ -127,7 +128,7 @@ class AlgorithmController extends ApiController
 
     function log_collect()
     {
-        $algorithm=new Algorithm();
+        $algorithm = new Algorithm();
         $result = $algorithm->collectLog();
         $result = json_encode($result);
         echo $result;
@@ -144,7 +145,6 @@ class AlgorithmController extends ApiController
         $result = json_encode($result);
         echo $result;
     }
-
 
 
 }
