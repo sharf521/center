@@ -10,23 +10,27 @@ class LinkPage extends Model
     function __construct()
     {
         parent::__construct();
-        $this->result=$this->getlinkpage();
     }
 
-    private function getlinkpage()
+    public function getLinkPage()
     {
-        $arr = array();
-        $_result = DB::table('linkpage_type a')->select('a.code,b.value,b.name')->join('linkpage b', 'a.id=b.typeid')->orderBy('b.showorder asc')->all();
-        foreach ($_result as $_row) {
-            $arr[$_row['code']][$_row['value']] = $_row['name'];
+        if($this->result==null){
+            $arr = array();
+            $_result = DB::table('linkpage_type a')->select('a.code,b.value,b.name')->join('linkpage b', 'a.id=b.typeid')->orderBy('b.showorder asc')->all();
+            foreach ($_result as $_row) {
+                $arr[$_row['code']][$_row['value']] = $_row['name'];
+            }
+            $_result = null;
+            return $arr;
         }
-        $_result = null;
-        return $arr;
+        else{
+            return $this->result;
+        }
     }
 
     public function echoLink($code,$val='',$data=array())
     {
-        $linkpage = $this->result;
+        $linkpage = $this->getLinkPage();
         $name = isset($data['name']) ? $data['name'] : $code;
         $title = isset($data['title']) ? $data['title'] : '请选择';
         $attr = isset($data['attr']) ? $data['attr'] : '';

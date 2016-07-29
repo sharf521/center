@@ -32,7 +32,9 @@ $_G['func'] = ($request->get(1) != '') ? $request->get(1) : 'index';
 $_path='';
 if ($_G['class'] == 'api') {
     $_path='Api';
-} elseif ($_G['class'] == 'member') {
+}elseif ($_G['class'] == 'auth'){
+    $_path='Auth';
+}elseif ($_G['class'] == 'member') {
     $_path='Member';
 } elseif ($_G['class'] == $_G['system']['houtai']) {
     $_path='Admin';

@@ -9,10 +9,10 @@
             <table class="table">
                 <tr class="bt">
                     <th>ID</th>
-                    <th>PID</th>
                     <th>名称</th>
-                    <th>路径</th>
-                    <th>排序</th>
+                    <th>appid</th>
+                    <th>appsecret</th>
+                    <th>域名</th>
                     <th>添加时间</th>
                     <th>修改时间</th>
                     <th>操作</th>

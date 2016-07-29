@@ -57,7 +57,6 @@ class Request
             echo 'token error,请重试！';
             exit;
         }
-        session()->remove('_token');
     }
     
     public function user()

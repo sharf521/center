@@ -1,6 +1,6 @@
 function changetype(type) {
     if (type == 1) {
-        document.getElementById("formpay").action = "/payapi/RecvMerchant.php";
+        document.getElementById("formpay").action = "/pay/recharge";
         document.getElementById("formpay").target='_blank';
         document.getElementById("xianxia").style.display = "none";
         document.getElementById("xianxiabz").style.display = "none";

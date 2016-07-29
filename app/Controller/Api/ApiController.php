@@ -1,53 +1,82 @@
 <?php
 namespace App\Controller\Api;
 
-use App\Config;
 use System\Lib\Controller as BaseController;
+use System\Lib\DB;
 
 class ApiController extends BaseController
 {
+    protected $appid;
+    protected $appsecret;
+    protected $data;
+
     public function __construct()
     {
         global $_G;
         parent::__construct();
-        $this->control	=$_G['class'];
-        $this->func		=$_G['func'];
-        ///验证权限
-        if(!in_array($this->control,array('index','plugin'))){
-            if (abs(time() - $_POST['time']) > 600) {
-                die('time over');
-            }else{
-                if($_POST['sign']!==$this->getSignature($_POST)){
-                    die('sign error');
-                }
-            }
+        $this->control = $_G['class'];
+        $this->func = $_G['func'];
+
+        $this->data = json_decode($_POST['data'], true);
+        $msg = $this->checkSign($this->data);
+        if ($msg !== true) {
+            $this->returnError($msg);
+            exit;
         }
     }
+
     public function error()
     {
         echo 'not find page';
     }
 
-
-    //生成签名
-    private function getSignature($data)
+    //签名
+    protected function checkSign($data)
     {
-        $MD5key=Config::$siteKeys[$data['site_id']];
-//        $sign_params = array(
-//            'site_id' => $data['site_id'],
-//            'time' => $data['time'],
-//            'user_id' => $data['user_id'],
-//            "money" => sprintf("%.5f", $data['money']),
-//        );
-        unset($data['sign']);
-        $sign_params = $data;
-        $sign_str = "";
-        ksort($sign_params);
-        foreach ($sign_params as $key => $val) {
-            $sign_str .= sprintf("%s=%s&", $key, $val);
+        if (abs(time() - $data['time']) > 600) {
+            return 'time over';
         }
-        // echo  $sign_str;print '<br/><br/><br/>';
-        return strtoupper(md5($sign_str . strtoupper(md5($MD5key))));
+        $row = DB::table('app')->where('appid=?')->bindValues($data['appid'])->row();
+        $this->appsecret = $row['appsecret'];
+        $this->appid = $row['id'];
+        if (empty($this->appsecret)) {
+            return 'check sign with appid error!';
+        }
+        if ($data['sign'] != $this->getSign($data)) {
+            return 'check sign error';
+        }
+        return true;
+    }
+
+    protected function getSign($data)
+    {
+        if (isset($data['sign'])) {
+            unset($data['sign']);
+        }
+        ksort($data);
+        $jsonStr = json_encode($data);
+        $str = strtoupper(md5($jsonStr . $this->appsecret));
+        return $str;
+    }
+
+    protected function getUserId($openid)
+    {
+        return DB::table('app_user')->where('app_id=? and openid=?')->bindValues(array($this->appid, $openid))->value('user_id','int');
+    }
+
+    protected function returnSuccess($data = array())
+    {
+        $data['return_code'] = 'success';
+        echo json_encode($data);
+    }
+
+    protected function returnError($msg)
+    {
+        $data = array(
+            'return_code' => 'fail',
+            'return_msg' => $msg
+        );
+        echo json_encode($data);
     }
 }
 

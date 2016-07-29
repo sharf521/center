@@ -26,7 +26,7 @@ class Rebate extends Model
     function addRebate($data)
     {
         if (empty($data['user_id']) || empty($data['typeid']) || empty($data['money'])) {
-            $return = array('code' => 0, 'msg' => '参数错误！');
+            $return = '参数错误！';
         } else {
             $arr = array(
                 'site_id' => (int)$data['site_id'],
@@ -43,12 +43,12 @@ class Rebate extends Model
                 DB::table('rebate_user')->insert(array('user_id' => $arr['user_id'], 'money_last' => 0, 'money_30time' => 0));
             }
             if ($id > 0) {
-                $return = array('code' => 200, 'msg' => 'ok');
+                $return = true;
             } else {
-                $return = array('code' => 0, 'msg' => '内部错误');
+                $return = '内部错误';
             }
         }
-        return json_encode($return);
+        return $return;
     }
 
     //计算

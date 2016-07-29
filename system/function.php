@@ -341,25 +341,7 @@ function substr_cn($str, $mylen)
     return $content;
 }
 
-//处理小数位
-function round_money($money, $type = 1, $len = 2)
-{
-    $money = (float)$money;
-    if ($type == 1)//舍去第3位
-    {
-        //$pri=substr(sprintf("%.3f", $money), 0, -1);
-        $_arr = explode('.', $money);
-        if (isset($_arr[1])) {
-            $_a = substr($_arr[1], 0, $len);
-            $pri = $_arr[0] . '.' . $_a;
-        } else {
-            $pri = $_arr[0];
-        }
-    } else {
-        $pri = ceil($money * pow(10, $len)) / pow(10, $len);
-    }
-    return $pri;
-}
+
 
 #/*/
 /*/

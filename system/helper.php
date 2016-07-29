@@ -46,9 +46,9 @@ if (!function_exists('app')) {
      */
     function app($className)
     {
-//        if (file_exists(ROOT . '/app/Model/' . ucfirst($className) . '.php')) {
-//            $className='\\app\\Model\\' . ucfirst($className);
-//        }
+        if (file_exists(ROOT . '/app/Model/' . ucfirst($className) . '.php')) {
+            $className='\\app\\Model\\' . ucfirst($className);
+        }
         return \System\Lib\App::getInstance($className);
     }
 }
@@ -105,4 +105,51 @@ if (!function_exists('_token')) {
         return $token;
     }
 }
+
+if (!function_exists('math')) {
+    /**
+     * @param $numA
+     * @param $numB
+     * @param $method
+     * @param int $accuracy
+     * @return float
+     */
+    function math($numA,$numB,$method,$accuracy=3)
+    {
+        if ($method == '+') {
+            return floatval(bcadd($numA, $numB, $accuracy));
+
+        } elseif ($method == '-') {
+            return floatval(bcsub($numA, $numB, $accuracy));
+
+        } elseif ($method == '*') {
+            return floatval(bcmul($numA, $numB, $accuracy));
+
+        } elseif ($method == '/') {
+            return floatval(bcdiv($numA, $numB, $accuracy));
+        }
+    }
+}
+
+if (!function_exists('round_money')) {
+    //处理小数位
+    function round_money($money, $type = 1, $len = 2)
+    {
+        $money = (float)$money;
+        if ($type == 1) {//舍
+            //$pri=substr(sprintf("%.3f", $money), 0, -1);
+            $_arr = explode('.', $money);
+            if (isset($_arr[1])) {
+                $_a = substr($_arr[1], 0, $len);
+                $pri = $_arr[0] . '.' . $_a;
+            } else {
+                $pri = $_arr[0];
+            }
+        } else {
+            $pri = ceil($money * pow(10, $len)) / pow(10, $len);
+        }
+        return $pri;
+    }
+}
+
 

@@ -12,9 +12,11 @@ class RegisterController extends Controller
             $request->checkToken();
             $data = array(
                 'username' => $request->post('username'),
-                'password' => $request->post('password')
+                'email'=>$request->post('email'),
+                'password' => $request->post('password'),
+                'sure_password'=>$request->post('sure_password'),
             );
-            $result = $user->login($data);
+            $result = $user->register($data);
             if ($result === true) {
                 redirect('member/');
             } else {

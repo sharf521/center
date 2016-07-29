@@ -1,5 +1,4 @@
 <?php require 'header.php';?>
-
 <div class="warpcon">
     <?php require 'left.php';?>
     <div class="warpright">
@@ -9,7 +8,8 @@
                     <li class="active"><a href="<?=url('account/recharge')?>">我要充值</a></li>
                     <li><a href="<?=url('account/rechargeLog')?>">充值记录</a></li>
                 </ul>
-                <form id="formpay" method="post" onSubmit="return card();" action="/payapi/RecvMerchant.php" target="_blank">
+                <form id="formpay" method="post" onSubmit="return card();" action="/pay/recharge" target="_blank">
+                    <input type="hidden" name="user_id" value="<?=$user->id?>">
                     <table class="table_from">
                         <tr>
                             <td align="right">用户名：</td><td><?=$user->username?></td>
@@ -91,7 +91,7 @@
                     <li>2.	线下充值备注  请注明您的用户名，转账银行卡号和转账流水号，以及转账时间。</li>
                 </ul>
             </div>
-        <?php elseif ($this->func=='rechargeLog') : ?>
+        <?php elseif ($this->func=='rechargeLog'): ?>
             <div class="box">
                 <ul class="nav-tabs">
                     <li><a href="<?=url('account/recharge')?>">我要充值</a></li>
@@ -122,8 +122,8 @@
                             <tr>
                                 <td align="center"><?=$row->created_at?></td>
                                 <td align="center"><? if($row->type==1){echo "在线";}else{echo "线下";}?></td>
-                                <td>￥<?=$row->money?></td>
-                                <td>￥<?=$row->fee?></td>
+                                <td>￥<?=(float)$row->money?></td>
+                                <td>￥<?=(float)$row->fee?></td>
                                 <td style="color:#F00;"><? if($row->status==1){?>￥<?=$row->money-$row->fee?><? }?></td>
                                 <td><?=nl2br($row->remark)?></td>
                                 <td><?=nl2br($row->verify_remark)?></td>
@@ -141,7 +141,43 @@
                     <div class="alert-warning" role="alert">无记录！</div>
                 <? }?>
                 <?=$result['page'];?>
-
+            </div>
+            <?php elseif ($this->func=='log'): ?>
+            <div class="box">
+                <h3>资金记录：</h3>
+                <div class="search">
+                    <form  method="get">
+                        记录时间：
+                        <input  name="starttime" type="text" value="<?=$_GET['starttime']?>" onClick="javascript:WdatePicker();" class="Wdate">
+                        到
+                        <input  name="endtime" type="text" value="<?=$_GET['endtime']?>" onClick="javascript:WdatePicker();" class="Wdate">
+                        <input  type="submit" value="查询" />
+                    </form>
+                </div>
+                <? if(!empty($result['total'])){?>
+                    <table class="table">
+                        <tr>
+                            <th>时间</th>
+                            <th>类型</th>
+                            <th>变动</th>
+                            <th>当前</th>
+                            <th>备注</th>
+                        </tr>
+                        <? foreach($result['list'] as $row){
+                            ?>
+                            <tr>
+                                <td><?=$row->created_at?></td>
+                                <td><?=$row->getLinkPage('account_type',$row->type);?></td>
+                                <td class="fl"><?=$row->change?></td>
+                                <td class="fl"><?=$row->now?></td>
+                                <td class="fl"><?=nl2br($row->remark)?></td>
+                            </tr>
+                        <? }?>
+                    </table>
+                <? }else{?>
+                    <div class="alert-warning" role="alert">无记录！</div>
+                <? }?>
+                <?=$result['page'];?>
             </div>
         <?php endif;?>
     </div>

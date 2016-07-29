@@ -82,6 +82,13 @@ class Model
         return app($class)->where($foreign_key . '=' . $this->$local_key)->get();
     }
 
+    //获取联动值
+    public function getLinkPage($code, $codeKey)
+    {
+        $result = app('\App\Model\LinkPage')->getLinkPage();
+        return $result[$code][$codeKey];
+    }
+
 ///////////////////////////////////////////////////////////
 
     public function find($id)

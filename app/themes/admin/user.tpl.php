@@ -47,7 +47,7 @@ if($this->func=='index'){?>
                 <td><?=$row['tel']?></td>
                 <td><?=$row['qq']?></td>
                 <td><?=$row['address']?></td>
-                <td><?=$row['addtime']?></td>
+                <td><?=date('Y-m-d H:i:s',$row['created_at'])?></td>
                 <td class="operate">
 				<? 
 				if($row['id']=="1")

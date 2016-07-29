@@ -17,7 +17,6 @@ class User extends Model
     {
         session()->remove('user_id');
         session()->remove('username');
-        session()->remove('lastip');
         session()->remove('usertype');
         session()->remove('permission_id');
     }
@@ -50,11 +49,6 @@ class User extends Model
         }
         session()->set('user_id', $user['id']);
         session()->set('username', $user["username"]);
-        session()->set('lastip', $user["lastip"]);
-        $arr = array(
-            'lastip' => ip()
-        );
-        DB::table('user')->where("id={$user["id"]}")->limit(1)->update($arr);
         return true;
     }
 
@@ -76,19 +70,24 @@ class User extends Model
         }
         $salt = rand(100000, 999999);
         $data = array(
-            'type_id' => 3,
+            'type_id' => 1,
             'username' => $data['username'],
             'password' => md5(md5($data['password']) . $salt),
             'zf_password' => md5(md5($data['password']) . $salt),
-            'addtime' => date('Y-m-d H:i:s'),
-            'times' => 0,
+            'created_at' => time(),
             'status' => 0,
-            'lastip' => ip(),
             'email' => $data['email'],
             'salt' => $salt,
             'invite_userid' => 0
         );
-        return DB::table('user')->insert($data);
+        $id = DB::table('user')->insertGetId($data);
+        if (is_numeric($id) && $id > 0) {
+            session()->set('user_id', $id);
+            session()->set('username', $data["username"]);
+            return true;
+        } else {
+            return $id;
+        }
     }
 
     function getlist($data = array())
@@ -163,7 +162,7 @@ left join {$this->dbfix}account_bank b on u.id=b.user_id {$where}";
         if (empty($email)) {
             return '电子邮件不能为空';
         }
-        $pattern = "/^([0-9A-Za-z\\-_\\.]+)@([0-9a-z]+\\.[a-z]{2,3}(\\.[a-z]{2})?)$/i";
+        $pattern = "/^([0-9A-Za-z\\-_\\.]+)@([0-9a-z]+\\.[a-z]{2,5}(\\.[a-z]{2})?)$/i";
         if (preg_match($pattern, $email)) {
             $id = DB::table('user')->where("email=?")->bindValues($email)->value('id', 'int');
             if ($id > 0) {

@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Member;
 
+use App\Model\AccountLog;
 use App\Model\AccountRecharge;
 use System\Lib\DB;
 use System\Lib\Request;
@@ -50,8 +51,16 @@ class AccountController extends MemberController
         }
     }
 
-    public function rechargeLog(AccountRecharge $recharge,Request $request)
+    public function rechargeLog(AccountRecharge $recharge,Request $request,AccountLog $accountLog)
     {
+//        $log = array();
+//        $log['user_id'] = 1;
+//        $log['type'] = 1;
+//        $log['funds_available'] = 10;
+//        $log['remark'] = "在线充值：";
+//        $log['label']='AA';
+//        $accountLog->addLog($log);
+
         $page=$request->get('page');
         $starttime=$request->get('starttime');
         $endtime=$request->get('endtime');
@@ -82,12 +91,14 @@ class AccountController extends MemberController
     }
 
     //资金流水
-    public function log()
+    public function log(Request $request,AccountLog $accountLog)
     {
-        if ($_POST) {
-
-        } else {
-            $this->view('account');
-        }
+        $arr=array(
+            'user_id'=>$this->user_id,
+            'starttime'=>$request->get('starttime'),
+            'endtime'=>$request->get('$endtime')
+        );
+        $data['result']=$accountLog->getList($arr);
+        $this->view('account',$data);
     }
 }
