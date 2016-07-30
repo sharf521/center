@@ -37,6 +37,24 @@ class UserController extends ApiController
             return $this->returnError('not find openid：'.$data['openid']);
         }
     }
+    //验证支付密码
+    public function checkPayPwd()
+    {
+        $data=$this->data;
+        $row = DB::table('app_user au')->select('u.*')
+            ->leftJoin('user u', 'au.user_id=u.id')
+            ->where('au.app_id=? and au.openid=?')
+            ->bindValues(array($this->appid, $data['openid']))
+            ->row();
+        if($row){
+            if ($row['zf_password'] == md5(md5($data['pay_password']) . $row['salt'])) {
+                return $this->returnSuccess();
+            }
+            return $this->returnError(' check failed ');
+        }else{
+            return $this->returnError('not find openid：'.$data['openid']);
+        }
+    }
 
     //获取用户资金
     public function fund()
