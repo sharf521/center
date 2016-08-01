@@ -36,12 +36,12 @@ class IndexController extends AuthController
             $result = $user->login($data);
             if ($result === true) {
                 $id=session('user_id');
-                $openid=DB::table('app_user')->where("user_id={$id} and app_id=?")->bindValues($this->appid)->value('openid');
+                $openid=DB::table('app_user')->where("user_id={$id} and app_id=?")->bindValues($this->app_id)->value('openid');
                 if(empty($openid)){
                     $openid = $this->createOpenId();
                     $arr=array(
                         'user_id'=>$id,
-                        'app_id'=>$this->appid,
+                        'app_id'=>$this->app_id,
                         'openid'=>$openid,
                         'created_at'=>time()
                     );
@@ -86,6 +86,7 @@ class IndexController extends AuthController
                 'password' => $request->post('password'),
                 'sure_password'=>$request->post('sure_password'),
                 'invite_user'=>$request->post('invite_user'),
+                'app_id'=>$this->app_id
             );
             $result = $user->register($data);
             if ($result === true) {
@@ -93,7 +94,7 @@ class IndexController extends AuthController
                 $openid = $this->createOpenId();
                 $arr=array(
                     'user_id'=>$id,
-                    'app_id'=>$this->appid,
+                    'app_id'=>$this->app_id,
                     'openid'=>$openid,
                     'created_at'=>time()
                 );

@@ -6,7 +6,7 @@ use System\Lib\DB;
 
 class AuthController extends BaseController
 {
-    protected $appid;
+    protected $app_id;
     protected $appsecret;
     public function __construct()
     {
@@ -33,7 +33,7 @@ class AuthController extends BaseController
     {
         $row=DB::table('app')->where('appid=?')->bindValues($data['appid'])->row();
         $this->appsecret=$row['appsecret'];
-        $this->appid=$row['id'];
+        $this->app_id=$row['id'];
         if(empty($this->appsecret)){
             echo 'check sign with appid error!';
             exit;

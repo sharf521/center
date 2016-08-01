@@ -6,7 +6,7 @@ use System\Lib\DB;
 
 class ApiController extends BaseController
 {
-    protected $appid;
+    protected $app_id;
     protected $appsecret;
     protected $data;
 
@@ -38,7 +38,7 @@ class ApiController extends BaseController
         }
         $row = DB::table('app')->where('appid=?')->bindValues($data['appid'])->row();
         $this->appsecret = $row['appsecret'];
-        $this->appid = $row['id'];
+        $this->app_id = $row['id'];
         if (empty($this->appsecret)) {
             return 'check sign with appid error!';
         }
@@ -61,7 +61,7 @@ class ApiController extends BaseController
 
     protected function getUserId($openid)
     {
-        return DB::table('app_user')->where('app_id=? and openid=?')->bindValues(array($this->appid, $openid))->value('user_id','int');
+        return DB::table('app_user')->where('app_id=? and openid=?')->bindValues(array($this->app_id, $openid))->value('user_id','int');
     }
 
     protected function returnSuccess($data = array())

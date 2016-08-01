@@ -93,7 +93,7 @@ class AlgorithmController extends ApiController
             $reate = new Rebate();
             $post = array(
                 'user_id' => $user_id,
-                'site_id' => $this->appid,
+                'site_id' => $this->app_id,
                 'typeid' => $data['typeid'],
                 'money' => $data['money']
             );
@@ -109,7 +109,7 @@ class AlgorithmController extends ApiController
     public function rebate_list()
     {
         $data=$this->data;
-        $site_id=$this->appid;
+        $site_id=$this->app_id;
         $id = (int)$data['id'];
         $size = (int)$data['size'];
         if ($size == 0) {

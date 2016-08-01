@@ -68,16 +68,28 @@ class User extends Model
         if ($check !== true) {
             return $check;
         }
-        if(empty($data['invite_user'])){
-            $invite_userid=0;
-            $invite_path='';
-        }else{
-            $invite_user=DB::table('user')->select('id,invite_path')->where("username=?")->bindValues($data['invite_user'])->row();
-            if($invite_user){
-                $invite_userid=$invite_user['id'];
-                $invite_path=$invite_user['invite_path'].$invite_user['id'].',';
+        $invite_userid=0;
+        $invite_path='';
+        if(!empty($data['invite_user']) ){
+            if(empty($data['app_id'])){
+                $invite_user=DB::table('user')->select('id,invite_path')->where("username=?")->bindValues($data['invite_user'])->row();
+                if($invite_user){
+                    $invite_userid=$invite_user['id'];
+                    $invite_path=$invite_user['invite_path'].$invite_user['id'].',';
+                }else{
+                    return "推荐人不存在！";
+                }
             }else{
-                return "推荐人不存在！";
+                $invite_user=DB::table('user u')->select('u.id,u.invite_path')
+                    ->leftJoin('app_user au',"u.id=au.user_id")
+                    ->where("u.username=? and au.app_id=?")
+                    ->bindValues(array($data['invite_user'],$data['app_id']))->row();
+                if($invite_user){
+                    $invite_userid=$invite_user['id'];
+                    $invite_path=$invite_user['invite_path'].$invite_user['id'].',';
+                }else{
+                    return "推荐人不存在！";
+                }
             }
         }
         $salt = rand(100000, 999999);

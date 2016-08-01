@@ -18,7 +18,7 @@ class UserController extends ApiController
         $row = DB::table('app_user au')->select('u.*')
             ->leftJoin('user u', 'au.user_id=u.id')
             ->where('au.app_id=? and au.openid=?')
-            ->bindValues(array($this->appid, $data['openid']))
+            ->bindValues(array($this->app_id, $data['openid']))
             ->row();
         if($row){
             $user=array(
@@ -29,9 +29,13 @@ class UserController extends ApiController
                 'qq' => $row['qq'],
                 'tel' => $row['tel'],
                 'address' => $row['address'],
-                'invite_userid' => $row['invite_userid'],
+                'invite_openid' => '',
                 'email' =>$row['email']
             );
+            if($row['invite_userid']!=0){
+                $user['invite_openid']=DB::table('app_user')->where('app_id=? and user_id=?')
+                    ->bindValues(array($this->app_id, $row['invite_userid']))->value('openid');
+            }
             return $this->returnSuccess($user);
         }else{
             return $this->returnError('not find openid：'.$data['openid']);
@@ -44,7 +48,7 @@ class UserController extends ApiController
         $row = DB::table('app_user au')->select('u.*')
             ->leftJoin('user u', 'au.user_id=u.id')
             ->where('au.app_id=? and au.openid=?')
-            ->bindValues(array($this->appid, $data['openid']))
+            ->bindValues(array($this->app_id, $data['openid']))
             ->row();
         if($row){
             if ($row['zf_password'] == md5(md5($data['pay_password']) . $row['salt'])) {
@@ -63,7 +67,7 @@ class UserController extends ApiController
         $row = DB::table('app_user au')->select('a.*')
             ->leftJoin('account a', 'au.user_id=a.user_id')
             ->where('au.app_id=? and au.openid=?')
-            ->bindValues(array($this->appid, $data['openid']))
+            ->bindValues(array($this->app_id, $data['openid']))
             ->row();
         if($row){
             unset($row['user_id']);
@@ -81,7 +85,7 @@ class UserController extends ApiController
     {
         $data=$this->data;
         $pay_order=array(
-            'app_id'=>$this->appid,
+            'app_id'=>$this->app_id,
             'openid'=>$data['openid'],
             'user_id'=>(int)$data['user_id'],
             'body'=>$data['body'],
