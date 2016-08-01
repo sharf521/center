@@ -19,7 +19,7 @@
             <div class="from_cont">
                 <p><input type="text" name="username"  placeholder="请输入账号"/><b></b></p>
                 <p><input type="text" name="email"  placeholder="请输入邮箱"/><b></b></p>
-                <p><input type="text" name="invite_user"  placeholder="推荐人"/><b></b></p>
+                <p><input type="text" name="invite_user"  placeholder="推荐人" value="<?=$r?>"/><b></b></p>
                 <p><input type="password" name="password"  placeholder="请输入密码" /><b></b></p>
                 <p><input type="password" name="sure_password"  placeholder="确认密码"/><b></b></p>
             </div>

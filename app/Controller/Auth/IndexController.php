@@ -13,6 +13,7 @@ class IndexController extends AuthController
     }
 
     //index.php/auth/login/?appid=shop&redirect_uri=http://www.yuantuwang.com/&sign=1F07E77550FEBAD99EC245CBDBC7EF29
+    //http://center.test.cn:8000/index.php/auth/login/?appid=shop&redirect_uri=/&sign=6F25A41551491FF8A05112E9709688B4&r=admin
     public function login(Request $request,User $user)
     {
         $get=array(
@@ -20,6 +21,11 @@ class IndexController extends AuthController
             'sign'=>$request->sign,
             'redirect_uri'=>$request->redirect_uri
         );
+        $_url="/auth/register/?appid={$get['appid']}&redirect_uri={$get['redirect_uri']}&sign={$get['sign']}";
+        if(isset($_GET['r'])){
+            $get['r']=$request->get('r');
+            $_url.="&r={$get['r']}";
+        }
         $this->checkSign($get);
         if($_POST){
             $request->checkToken();
@@ -53,7 +59,7 @@ class IndexController extends AuthController
             }
             redirect()->back()->with('error',$error);
         }else{
-            $data['_url']="/auth/register/?appid={$get['appid']}&redirect_uri={$get['redirect_uri']}&sign={$get['sign']}";
+            $data['_url']=$_url;
             $this->view('login',$data);
         }
     }
@@ -65,6 +71,12 @@ class IndexController extends AuthController
             'sign'=>$request->sign,
             'redirect_uri'=>$request->redirect_uri
         );
+        $_url="/auth/login/?appid={$get['appid']}&redirect_uri={$get['redirect_uri']}&sign={$get['sign']}";
+        if(isset($_GET['r'])){
+            $get['r']=$request->get('r');
+            $data['r']=$get['r'];
+            $_url.="&r={$get['r']}";
+        }
         $this->checkSign($get);
         if($_POST){
             $request->checkToken();
@@ -73,6 +85,7 @@ class IndexController extends AuthController
                 'email'=>$request->post('email'),
                 'password' => $request->post('password'),
                 'sure_password'=>$request->post('sure_password'),
+                'invite_user'=>$request->post('invite_user'),
             );
             $result = $user->register($data);
             if ($result === true) {
@@ -97,7 +110,7 @@ class IndexController extends AuthController
             }
             redirect()->back()->with('error',$error);
         }else{
-            $data['_url']="/auth/login/?appid={$get['appid']}&redirect_uri={$get['redirect_uri']}&sign={$get['sign']}";
+            $data['_url']=$_url;
             $this->view('register',$data);
         }
     }

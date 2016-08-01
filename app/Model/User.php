@@ -68,6 +68,18 @@ class User extends Model
         if ($check !== true) {
             return $check;
         }
+        if(empty($data['invite_user'])){
+            $invite_userid=0;
+            $invite_path='';
+        }else{
+            $invite_user=DB::table('user')->select('id,invite_path')->where("username=?")->bindValues($data['invite_user'])->row();
+            if($invite_user){
+                $invite_userid=$invite_user['id'];
+                $invite_path=$invite_user['invite_path'].$invite_user['id'].',';
+            }else{
+                return "推荐人不存在！";
+            }
+        }
         $salt = rand(100000, 999999);
         $data = array(
             'type_id' => 1,
@@ -78,7 +90,8 @@ class User extends Model
             'status' => 0,
             'email' => $data['email'],
             'salt' => $salt,
-            'invite_userid' => 0
+            'invite_userid' => $invite_userid,
+            'invite_path'=>$invite_path
         );
         $id = DB::table('user')->insertGetId($data);
         if (is_numeric($id) && $id > 0) {
