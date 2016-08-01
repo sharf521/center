@@ -15,6 +15,7 @@ class RegisterController extends Controller
                 'email'=>$request->post('email'),
                 'password' => $request->post('password'),
                 'sure_password'=>$request->post('sure_password'),
+                'invite_user'=>$request->post('invite_user')
             );
             $result = $user->register($data);
             if ($result === true) {
