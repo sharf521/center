@@ -2,12 +2,15 @@
 namespace App\Controller\Member;
 
 use App\Model\User;
+use System\Lib\DB;
 
 class IndexController extends MemberController
 {
+
     function index()
     {
-        $this->view('manage');
+        $data['account']=DB::table('account')->where('user_id')->bindValues($this->user_id)->row();
+        $this->view('manage',$data);
     }
 
     function logout(User $user)
