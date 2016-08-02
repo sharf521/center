@@ -87,6 +87,15 @@ class AccountLog extends Model
         if(!empty($data['endtime'])){
             $where.=" and created_at<".strtotime($data['endtime']);
         }
+        if(!empty($data['label'])){
+            $where.=" and label='{$data['label']}'";
+        }
+        if(!empty($data['label'])){
+            $where.=" and label='{$data['label']}'";
+        }
+        if(!empty($data['user_id'])){
+            $where.=" and user_id='{$data['user_id']}'";
+        }
         $result=$this->where($where)->orderBy('id desc')->pager(intval($_GET['page']));
         foreach ($result['list'] as $index=>$value){
             $change='';
@@ -153,6 +162,10 @@ class AccountLog extends Model
         return $result;
     }
 
+    public function user()
+    {
+       return $this->hasOne('User','id','user_id');
+    }
 
     private function sign($signature)
     {

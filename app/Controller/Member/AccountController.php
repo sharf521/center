@@ -96,7 +96,7 @@ class AccountController extends MemberController
         $arr=array(
             'user_id'=>$this->user_id,
             'starttime'=>$request->get('starttime'),
-            'endtime'=>$request->get('$endtime')
+            'endtime'=>$request->get('endtime')
         );
         $data['result']=$accountLog->getList($arr);
         $this->view('account',$data);
