@@ -170,19 +170,19 @@ class AccountLog extends Model
             }
             if($value->turnover_available!=0){
                 if($value->turnover_available>0){
-                    $change.="保证金：+{$value->turnover_available}<br>";
+                    $change.="保证金：+{$value->security_deposit}<br>";
                 }else{
-                    $change.="保证金：{$value->turnover_available}<br>";
+                    $change.="保证金：{$value->security_deposit}<br>";
                 }
-                $now.="当前保证金：{$value->turnover_available}<br>";
+                $now.="当前保证金：{$value->security_deposit}<br>";
             }
-            if($value->security_deposit!=0){
-                if($value->security_deposit>0){
-                    $change.="可用周转金：+{$value->security_deposit}.<br>";
+            if($value->turnover_available!=0){
+                if($value->turnover_available>0){
+                    $change.="可用周转金：+{$value->turnover_available}.<br>";
                 }else{
-                    $change.="可用周转金：{$value->security_deposit}.<br>";
+                    $change.="可用周转金：{$value->turnover_available}.<br>";
                 }
-                $now.="可用周转金：{$value->security_deposit_now}<br>";
+                $now.="可用周转金：{$value->turnover_available_now}<br>";
             }
             if($value->turnover_credit!=0){
                 if($value->turnover_credit){
