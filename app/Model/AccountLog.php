@@ -55,7 +55,7 @@ class AccountLog extends Model
                 foreach ($arr_col as $col){
                     if(isset($data[$col])){
                         $log[$col]=$data[$col];
-                        $account[$col]=math($account[$col],$data[$col],'+',2);
+                        $account[$col]=math($account[$col],$data[$col],'+',5);
                         $log[$col.'_now']=$account[$col];
                     }else{
                         $log[$col]=0;
