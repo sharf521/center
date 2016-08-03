@@ -52,14 +52,50 @@ class AccountLog extends Model
                     'addip'=>ip()
                 );
                 $arr_col=array('funds_available','funds_freeze','integral_available','integral_freeze','security_deposit','turnover_available','turnover_credit');
+                $_turnover_available=0;//额外变动的周转金
                 foreach ($arr_col as $col){
                     if(isset($data[$col])){
+                        if($col=='funds_available'){//入帐
+                            if($data['funds_available']>0){
+                                //是否欠周转金
+                                $owe=(float)math($account['turnover_credit'],$account['turnover_available'],'-',2);
+                                if($owe>0){
+                                    /*
+                                     * 充值金额可以还清欠款
+                                     * 周转金:增加所欠的欠款
+                                     * 可用资金:增加 还清欠款后 剩余的金额
+                                     * */
+                                    if($data['funds_available']>=$owe){
+                                        $data['funds_available']=math($data['funds_available'],$owe,'-',2);
+                                        $_turnover_available=$owe;
+                                    }else{
+                                        $data['funds_available']=0;
+                                        $_turnover_available=$data['funds_available'];
+                                    }
+                                }
+                            }else{ //出帐
+                                if(in_array($data['type'],array(14,15))){
+                                    //买pos,买车 可以使用周转金
+                                    $owe=(float)math($account['funds_available'],$data['funds_available'],'+',2);
+                                    if($owe<0){
+                                        //出现欠款 把可用资金减为0
+                                        $data['funds_available']='-'.$account['funds_available'];
+                                        $_turnover_available=$owe;
+                                    }
+                                }
+                            }
+                        }
                         $log[$col]=$data[$col];
                         $account[$col]=math($account[$col],$data[$col],'+',5);
                         $log[$col.'_now']=$account[$col];
                     }else{
                         $log[$col]=0;
                     }
+                }
+                if($_turnover_available!=0){
+                    $log['turnover_available']=math($log['turnover_available'],$_turnover_available,'+',2);
+                    $account['turnover_available']=math($account['turnover_available'],$_turnover_available,'+',2);
+                    $log['turnover_available_now']=$account['turnover_available'];
                 }
                 $account['signature']=$this->sign($account);
                 if($insert){
