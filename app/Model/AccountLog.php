@@ -168,8 +168,8 @@ class AccountLog extends Model
                 }
                 $now.="当前冻结积分：{$value->integral_freeze_now}<br>";
             }
-            if($value->turnover_available!=0){
-                if($value->turnover_available>0){
+            if($value->security_deposit!=0){
+                if($value->security_deposit>0){
                     $change.="保证金：+{$value->security_deposit}<br>";
                 }else{
                     $change.="保证金：{$value->security_deposit}<br>";
