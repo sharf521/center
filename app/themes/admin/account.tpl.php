@@ -46,8 +46,8 @@
                         <td class="fl">￥<?=(float)$row->funds_freeze_now?></td>
                         <td class="fl">￥<?=(float)$row->integral_available_now?></td>
                         <td class="fl">￥<?=(float)$row->integral_freeze_now?></td>
-                        <td class="fl">￥<?=(float)$row->turnover_available?></td>
                         <td class="fl">￥<?=(float)$row->security_deposit_now?></td>
+                        <td class="fl">￥<?=(float)$row->turnover_available_now?></td>
                         <td class="fl">￥<?=(float)$row->turnover_credit_now?></td>
                     </tr>
                 <? }?>
