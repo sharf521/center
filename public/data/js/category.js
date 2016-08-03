@@ -1,5 +1,6 @@
 var cate_arr=new Array();
 cate_arr[0]='1#文章分类[SER]2#商城分类';
+cate_arr[1]='85#默认';
 cate_arr[2]='3#女装[SER]27#内衣[SER]13#男装[SER]4#鞋子[SER]5#居家[SER]6#包包[SER]7#母婴[SER]8#配饰[SER]10#化妆[SER]11#文体[SER]12#数码[SER]9#其它';
 cate_arr[3]='14#上衣[SER]15#针织衫[SER]16#裙装[SER]17#裤装[SER]18#套装[SER]19#大码[SER]20#爆款';
 cate_arr[4]='39#男鞋[SER]40#女鞋[SER]57#童鞋/亲子鞋[SER]80#帆布鞋[SER]81#低帮鞋[SER]82#高帮鞋[SER]83#凉鞋';

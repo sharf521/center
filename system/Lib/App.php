@@ -16,6 +16,27 @@ class App
         }
         return self::$instance[$key];
     }
+    public static function start($control,$method='index')
+    {
+        $class=new $control();
+        if (!method_exists($class, $method)) {
+            $method = 'error';
+        }
+        $rMethod = new \ReflectionMethod($control, $method);
+        $params = $rMethod->getParameters();
+        $dependencies = array();
+        foreach ($params as $param) {
+            if ($param->getClass()) {
+                $_name = $param->getClass()->name;
+                array_push($dependencies, new $_name());
+            } elseif ($param->isDefaultValueAvailable()) {
+                array_push($dependencies, $param->getDefaultValue());
+            } else {
+                array_push($dependencies, null);
+            }
+        }
+        return call_user_func_array(array($class, $method), $dependencies);
+    }
 }
 //注意：有继承关系的构造函数慎用
 class Container
