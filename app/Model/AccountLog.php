@@ -168,7 +168,7 @@ class AccountLog extends Model
                 }
                 $now.="当前冻结积分：{$value->integral_freeze_now}<br>";
             }
-            if($value->integral_freeze!=0){
+            if($value->turnover_available!=0){
                 if($value->turnover_available>0){
                     $change.="保证金：+{$value->turnover_available}<br>";
                 }else{
@@ -176,7 +176,7 @@ class AccountLog extends Model
                 }
                 $now.="当前保证金：{$value->turnover_available}<br>";
             }
-            if($value->integral_freeze!=0){
+            if($value->security_deposit!=0){
                 if($value->security_deposit>0){
                     $change.="可用周转金：+{$value->security_deposit}.<br>";
                 }else{
@@ -184,7 +184,7 @@ class AccountLog extends Model
                 }
                 $now.="可用周转金：{$value->security_deposit_now}<br>";
             }
-            if($value->integral_freeze!=0){
+            if($value->turnover_credit!=0){
                 if($value->turnover_credit){
                     $change.="周转金额度：+{$value->turnover_credit}.<br>";
                 }else{
