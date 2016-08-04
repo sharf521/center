@@ -27,7 +27,8 @@ class LoginController extends Controller
             }
             redirect()->back()->with('error',$error);
         }else{
-            $this->view('login');
+            $data['title_herder']='用户登陆';
+            $this->view('login',$data);
         }
     }
 }

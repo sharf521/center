@@ -60,6 +60,7 @@ class IndexController extends AuthController
             redirect()->back()->with('error',$error);
         }else{
             $data['_url']=$_url;
+            $data['title_herder']='用户登陆';
             $this->view('login',$data);
         }
     }
@@ -112,6 +113,7 @@ class IndexController extends AuthController
             redirect()->back()->with('error',$error);
         }else{
             $data['_url']=$_url;
+            $data['title_herder']='新用户注册';
             $this->view('register',$data);
         }
     }

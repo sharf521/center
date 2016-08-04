@@ -25,7 +25,8 @@ class RegisterController extends Controller
             }
             redirect()->back()->with('error', $error);
         } else {
-            $this->view('register');
+            $data['title_herder']='新用户注册';
+            $this->view('register',$data);
         }
     }
 }

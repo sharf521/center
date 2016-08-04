@@ -1,3 +1,3 @@
 <?php require 'header.php';?>
-    index
+index
 <?php require 'footer.php';?>
