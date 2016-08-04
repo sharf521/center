@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta http-equiv="Expires" content="-1">
     <meta http-equiv="pragram" content="no-cache">
-    <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+    <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi,initial-scale=1, maximum-scale=1">
     <title>我的账户</title>
     <link href="/themes/member_wap/css/common.css" type="text/css" rel="stylesheet"/>
     <link href="/themes/member_wap/css/account.css" type="text/css" rel="stylesheet"/>
