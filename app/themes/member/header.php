@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>账户中心</title>
+    <title><?=$title_herder?></title>
     <link href="/themes/member/user.css" rel="stylesheet" type="text/css" />
     <script language="javascript" src="/plugin/js/jquery.js"></script>
     <script charset="utf-8" src="/plugin/js/My97DatePicker/WdatePicker.js"></script>

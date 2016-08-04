@@ -6,14 +6,18 @@ use System\Lib\DB;
 
 class IndexController extends MemberController
 {
-
-    function index()
+    public function __construct()
     {
-        $data['account']=DB::table('account')->where('user_id')->bindValues($this->user_id)->row();
-        $this->view('manage',$data);
+        parent::__construct();
     }
 
-    function logout(User $user)
+    public function index()
+    {
+        $data['account'] = DB::table('account')->where('user_id')->bindValues($this->user_id)->row();
+        $this->view('manage', $data);
+    }
+
+    public function logout(User $user)
     {
         $user->logout();
         $this->redirect('/login');
@@ -21,7 +25,7 @@ class IndexController extends MemberController
     }
 
     //修改密码
-    function changepwd(User $user)
+    public function changepwd(User $user)
     {
         if ($_POST) {
             $id = $this->user_id;

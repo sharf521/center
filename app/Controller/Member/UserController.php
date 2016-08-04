@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller\Member;
 
-
 use App\Model\AccountBank;
 use App\Model\LinkPage;
 use App\Model\User;
@@ -9,6 +8,10 @@ use System\Lib\Request;
 
 class UserController  extends MemberController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function index()
     {

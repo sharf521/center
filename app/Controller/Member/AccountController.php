@@ -8,6 +8,11 @@ use System\Lib\Request;
 
 class AccountController extends MemberController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     public function index()
     {
 
