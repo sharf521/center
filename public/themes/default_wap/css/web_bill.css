@@ -1,0 +1,12 @@
+.m_bitable{ width:90%; margin:0 auto 2rem;}
+.m_bitable li{ border-bottom:1px solid #eee; position:relative; width:100%; padding:0 0 0 16rem; box-sizing:border-box;}
+.m_bitable li .m_blis_date{ display:inline-block; max-height:99999px;height:6rem;font-size:2.2rem; text-align:center; position:absolute; left:0; line-height:3rem; top:50%; margin-top:-3rem; padding:0 2rem 0 1rem; border-right:1px solid #eee; color:#999}
+.m_bitable li .m_blis_cont{ display:inline-block; float:left; max-height:99999px; font-size:2.2rem; padding:2rem 0;}
+.m_bitable li .m_blis_cont b{ color:#333; font-size:2.6rem; font-weight:normal; padding-bottom:.4rem; display:block;}
+.m_bitable li .m_blis_cont b font.adds{ color:#008aca;}
+.m_bitable li .m_blis_cont b font.redu{ color:#f00;}
+
+
+
+
+

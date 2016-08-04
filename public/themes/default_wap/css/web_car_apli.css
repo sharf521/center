@@ -1,0 +1,111 @@
+body{ background:#fff;}
+.m_cartable{ width:90%; margin:0 auto 2rem;}
+.m_cartable li{ border-bottom:1px solid #eee; position:relative; width:100%; padding:0 0 0 19rem; box-sizing:border-box;}
+.m_cartable li .m_blis_date{ display:inline-block; max-height:99999px;height:14rem;text-align:center; position:absolute; left:0;top:50%; margin-top:-7rem; padding:0 2rem 0 1rem; border-right:1px solid #eee; color:#999}
+.m_cartable li .m_blis_date img{height:14rem; width:14rem;}
+.m_cartable li .m_blis_cont{ display:inline-block; float:left; max-height:99999px; font-size:2.2rem; padding:2rem 0; min-height:14rem;}
+.m_cartable li .m_blis_cont p{padding:.4rem 0; display:block;}
+.m_cartable li .m_blis_cont .car_type{ color:#333; font-size:2.2rem;}
+.m_cartable li .m_blis_cont .car_type font{ color:#008aca;}
+
+.m_cartable li .m_blis_cont .car_apilics{ color:#666; font-size:2.2rem;}
+.m_cartable li .m_blis_cont .car_cuzuos a{ color:#fff; background:#f60; c font-size:2.2rem; padding:.4rem 1rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; }
+
+.m_cartable li .m_blis_cont .car_date{ color:#666; font-size:2.2rem;}
+.m_cartable li .m_blis_cont .car_date font{ color:#333; font-size:2.2rem;}
+
+
+
+
+
+
+
+/*carform_table*/
+.carform_table{ width:90%; margin:3rem auto; background:#fff;}
+.carform_table table{ width:100%; border-collapse:collapse;}
+.carform_table table td{ max-height:99999px; padding:2rem 0; font-size:2.6rem; border-bottom:1px dashed #ddd; position:relative;}
+.carform_table table td.noborde{border-bottom:0; padding:2rem 0 0;}
+.carform_table table td input{ width:94%; line-height:7rem; height:7rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; border:0; font-size:2.4rem;}
+
+.carform_table table td .subm_buton{ font-size:2.4rem;border:0; background:#00adfe; color:#fff; font-size:3rem; width:94%;line-height:7rem; height:7rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; display:block; text-align:center;}
+.carform_table table td .gohis_buton{ border:0; background:#f90; color:#fff; font-size:3rem;}
+
+.car_conts{ position:relative; min-height:14rem; width:100%; padding-left:16rem; box-sizing:border-box; color:#00adfe}
+.car_conts img{ position:absolute; width:14rem; height:14rem; left:0; top:0;}
+
+
+.carform_table .det_img_list{ width:100%;}
+.carform_table .det_img_list img{ float:left; height:10rem; margin:0 2rem 2rem 0;}
+
+.carform_table table td input.error{}
+.carform_table table td label.error {
+    color: #f00;
+	position:absolute; bottom:.4rem; left:0rem;
+	font-size:2rem;}
+
+
+
+/*carrm_leable*/
+.carrm_leable{ width:100%; padding:0 5%; box-sizing:border-box; margin-bottom:12rem;}
+.carrm_leable p{  border-bottom:1px dashed #ddd; max-height:99999px; font-size:2.6rem; line-height:4rem; padding:2rem 0;}
+.carrm_leable p label{ position:relative; padding-left:6rem; display:block;}
+.carrm_leable p label input[type="radio"]{ width:3rem; height:3rem; position:absolute; left:1rem; top:50%; margin-top:-1.5rem;}
+.car_nexts{ width:100%; position:fixed; bottom:0; background-color:rgba(0,0,0,0.2); height:10rem; left:0}
+.car_nexts a{ background:#00adfe; color:#fff; font-size:2.8rem; width:94%;line-height:7rem; height:7rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; display:block; margin:1.5rem auto 0; text-align:center;}
+
+.procars{ float:right; color:#000; font-size:2.4rem;}
+
+
+.carrm_types{ width:100%; padding:0 5%; box-sizing:border-box; margin-bottom:12rem;}
+.carrm_types li{ width:100%; padding:2rem 0; border-bottom:1px dashed #ddd;}
+.carrm_types li label{ width:100%; position:relative; box-sizing:border-box; padding-left:28rem; display:block; min-height:18rem; padding-top:4rem;}
+.carrm_types li label input[type="radio"]{ width:4rem; height:4rem; position:absolute; left:1rem; top:50%; margin-top:-2rem;}
+.carrm_types li img{ position:absolute; left:8rem; top:0; width:18rem; height:18rem;}
+.carrm_types li p{ max-height:99999px; font-size:2.8rem;}
+
+/*oicfiled*/
+.oicfiled{background: url(../images/upload_btn.png) center no-repeat;
+  background-size: 10rem auto;
+  float: left;
+  overflow: hidden;
+  position: relative;
+  width: 10rem;
+  height: 10rem;}
+.oicfiled input{  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  overflow: hidden;
+  height: 10rem;
+  width: 10rem;}
+
+.post_imglist li{  position: relative;
+  float: left;
+  padding:.4rem 1rem .6rem 0;
+  line-height: 38px;}
+
+.post_imglist li .del {position: absolute;
+  right: 0rem;
+  top: -1rem;
+  background: url(../images/close.png) no-repeat 0 0;
+  background-size:4rem;
+  width: 4rem;
+  height: 4rem;
+  display: inline-block;}
+  
+.imglist li img.wh60 {
+  margin: 0 auto;
+  display: block;
+  width: 10rem;
+  height: 10rem;}
+  
+/*ca_d_table*/
+.ca_d_table{ width:100%; box-sizing:border-box; padding:0 5%;}
+.ca_d_table td{ max-height:9999px; font-size:2.4rem; position:relative;border-bottom:1px dashed #ddd; padding:2rem 0;}
+.ca_d_table .bod_sol{border-bottom:1px solid #ddd; color:#00adfe; font-size:2.8rem;}
+.ca_d_table td .icp_ts{ width:4rem; height:4rem;}
+.ca_da_tiss{ display:none; position:absolute; width:30rem; top:50%; margin-top:-5rem; text-align:left; padding:2rem; background:#fff; border:1px solid #eee;right:4.6rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; z-index:99999999;}
+.ca_da_tiss i{ width:3rem; height:4rem; background:url(../images/close.png) no-repeat; background-size:100%; display:block; position:absolute; right:-.6rem; top:-.6rem;}
+.ca_da_tiss a{ color:#00adfe;}
+.ca_d_table table td .cada_tba{ font-size:2.4rem;border:0; background:#00adfe; color:#fff; font-size:3rem; width:94%;line-height:7rem; height:7rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; display:block; text-align:center;}

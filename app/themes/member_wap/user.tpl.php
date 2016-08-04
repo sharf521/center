@@ -1,8 +1,6 @@
 <?php require 'header.php';?>
 
-<div class="warpcon">
-    <?php require 'left.php';?>
-    <div class="warpright">
+
         <?php if($this->func=='userInfo'): ?>
             <div class="box">
                 <h3>个人信息：</h3>
@@ -18,28 +16,44 @@
                 </form>
             </div>
         <?php elseif($this->func=='changePwd'):?>
-            <div class="box">
-                <h3>修改密码：</h3>
-                <form method="post" onsubmit="return setdisabled();">
-                    <table class="table_from">
-                        <tr>
-                            <td>原密码：</td>
-                            <td><input type="password" name="old_password"/></td>
-                        </tr>
-                        <tr>
-                            <td>新密码：</td>
-                            <td><input type="password" name="password"/> 密码长度6位到15位</td>
-                        </tr>
-                        <tr>
-                            <td>确认新密码：</td>
-                            <td><input type="password" name="sure_password"/></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><input class="but3" value="保存" type="submit"/></td>
-                        </tr>
-                    </table>
-                </form>
+            <nav>
+                <span><a href="javascript:history.go(-1)"><img src="/themes/member_wap/images/icon_right_hui.png" /></a></span>
+                <p>首页</p>
+            </nav>
+            <div class="m_regtilinde">密码修改</div>
+            <div class="view">
+                <ul>
+                    <li class="cur"><a  href="<?=url('user/changePwd')?>">账户密码</a></li>
+                    <li>支付密码</li>
+                    <li>找回密码</li>
+                </ul>
+            </div>
+            <div class="show_box">
+                <div class="show_now" style="display: block;">
+                        <form method="post" onsubmit="return setdisabled();">
+                        <div class="ca_d_table">
+                            <table width="100%">
+                                <tbody>
+                                <tr>
+                                    <td align="right" style="width:12rem;">原始密码：</td>
+                                    <td colspan="2"><input type="password" name="old_password" class="nam_inpou" /><b></b></td>
+                                </tr>
+                                <tr>
+                                    <td align="right" style="width:12rem;">新密码：</td>
+                                    <td colspan="2"><input type="password" name="password"  class="nam_inpou" /><b></b></td>
+                                </tr>
+                                <tr>
+                                    <td align="right" style="width:12rem;">确认密码：</td>
+                                    <td colspan="2"><input type="password" name="sure_password" class="nam_inpou" /><b></b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" align="center"><input class="cada_tba" type="submit" value="确认修改"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
             </div>
             <?php elseif($this->func=='changePayPwd') : ?>
             <div class="box">
@@ -127,6 +141,5 @@
                 <? }?>
             </div>
         <?php endif;?>
-    </div>
-</div>
+
 <?php require 'footer.php';?>

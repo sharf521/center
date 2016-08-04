@@ -51,28 +51,6 @@ footer li img{ width: 4rem; height: 4rem;}
 footer li p{ line-height: 4rem; font-size: 3rem;}
 
 @media only screen and (min-width:640px){
-    body{ width:640px; margin:0 auto;}
+body{ width:640px; margin:0 auto;}
 
 }
-
-
-/*  */
-
-/*表单布局*/
-.nam_inpou{ width:100%; box-sizing:border-box; height:6rem; border:1px solid #f1f1f1; font-size:2.4rem; padding:0 .6rem;}
-/*ca_d_table*/
-.ca_d_table{ width:100%; box-sizing:border-box; padding:0 5%;}
-.ca_d_table td{ max-height:9999px; font-size:2.4rem; position:relative;border-bottom:1px dashed #ddd; padding:2rem 0;}
-.ca_d_table .bod_sol{border-bottom:1px solid #ddd; color:#00adfe; font-size:2.8rem;}
-.ca_d_table td .icp_ts{ width:4rem; height:4rem;}
-.ca_d_table table td .cada_tba{ border:0; background:#00adfe; color:#fff; font-size:3rem; width:94%;line-height:7rem; height:7rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; display:block; text-align:center;}
-.ca_d_table td{ padding: 3rem 0;}
-.ca_d_table .num_btn{ height: 6rem; border: none; line-height: 6rem; background: #00adfe; color: #fff; display: inline-block; width: 18rem; text-align: center; border-radius: .5rem;}
-.ca_d_table .marks{ width: 100%; box-sizing: border-box; padding: 0 .6rem; line-height: 3rem; height: 10.2rem; border: 1px solid #f1f1f1; font-size: 2.4rem;}
-.input_right input[type=text]{ text-align: right; border: none;}
-.ca_d_table input[type=radio]{ width: 2.4rem; height: 2.4rem; margin-right: 1rem;}
-.input_right label span{ line-height: 5rem;}
-.input_right .photo{ width: 10rem; height: 10rem; display: inline-block; float: right; position: relative;}
-.input_right .photo img{ width: 10rem;}
-.input_right .photo input{ width: 10rem; height: 10rem; position: absolute; top: 0; left: 0; opacity: 0;}
-.ca_d_table .tip{ font-size: 2.4rem; color: #FF4B00; line-height: 3rem;}

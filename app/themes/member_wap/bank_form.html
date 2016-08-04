@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--允许全屏-->
+    <meta name="apple-touch-fullscreen" content="YES">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="pragram" content="no-cache">
+    <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+    <title>绑定银行卡</title>
+    <link href="../css/common.css" type="text/css" rel="stylesheet"/>
+    <link href="../css/account.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<nav>
+    <span><a href="javascript:history.go(-1)"><img src="../images/icon_right_hui.png" /></a></span>
+    <p>首页</p>
+</nav>
+<div class="m_regtilinde">绑定银行卡</div>
+<div class="ca_d_table">
+    <form id="bank_form">
+    <table width="100%">
+        <tbody>
+        <tr>
+            <td align="right" style="width:12rem;">开户行：</td>
+            <td colspan="2"><input type="text" class="nam_inpou" name="bank_type" /><b></b></td>
+        </tr>
+        <tr>
+            <td align="right" style="width:12rem;">持卡人：</td>
+            <td colspan="2"><input type="text" class="nam_inpou" name="bank_name"  /><b></b></td>
+        </tr>
+        <tr>
+            <td align="right" style="width:12rem;">身份证号：</td>
+            <td colspan="2"><input type="text" class="nam_inpou" name="id_card" /><b></b></td>
+        </tr>
+        <tr>
+            <td align="right" style="width:12rem;">银行卡号：</td>
+            <td colspan="2"><input type="text" class="nam_inpou" name="bank_num" /><b></b></td>
+        </tr>
+        <tr>
+            <td align="right" style="width:12rem;">预留手机：</td>
+            <td colspan="2"><input type="text" class="nam_inpou" name="mobile" /><b></b></td>
+        </tr>
+        <tr>
+            <td align="right" style="width:12rem;">验证码：</td>
+            <td><input type="text" class="nam_inpou" name="codes" /><b></b></td>
+            <td style="width: 18rem"><a class="num_btn">获取验证码</a></td>
+        </tr>
+        <tr>
+            <td colspan="3" align="center"><input class="cada_tba" type="submit"></td>
+        </tr>
+        </tbody>
+    </table>
+    </form>
+</div>
+<div class="point">
+    <span><img src="../images/icon_success.png"/><!--<img src="../images/icon_false.png"/><img src="../images/icon_warn.png"/>--></span>
+    <p class="text">操作成功！</p>
+</div>
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery.validation.min.js"></script>
+<script>
+    $(document).ready(function(){
+
+        $('#bank_form').validate({
+            onkeyup: false,
+            errorPlacement: function(error, element){
+                element.nextAll('b').first().after(error);
+            },
+            submitHandler:function(form){
+                ajaxpost('add_acon', '', '', 'onerror');
+            },
+            rules: {
+                bank_type: {
+                    required: true,
+                },
+                bank_name: {
+                    required: true,
+                },
+                id_card: {
+                    required: true,
+                },
+                bank_num: {
+                    required: true,
+                },
+                mobile: {
+                    required: true,
+                    digits:true,
+                    rangelength:[11,11]
+                },
+                codes: {
+                    required: true,
+                },
+            },
+            messages: {
+                money: {
+                    required: '请输入提现金额',
+                    number:'请输入大于0的数字',
+                    min:'请输入大于0的数字',
+                },
+                pay_password: {
+                    required: '请输入支付密码',
+                },
+                bank_type: {
+                    required: '请输入开户行',
+                },
+                bank_name: {
+                    required: '请输入持卡人',
+                },
+                id_card: {
+                    required: '请输入身份证号码',
+                },
+                bank_num: {
+                    required: '请输入银行卡号',
+                },
+                mobile: {
+                    required: '请输入预留手机号',
+                    digits: '手机号格式不正确',
+                    rangelength:'手机号格式不正确'
+                },
+                codes: {
+                    required: '请输入验证码',
+                },
+            }
+        });
+    });
+</script>
+</body>
+</html>

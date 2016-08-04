@@ -1,0 +1,79 @@
+/*我的护照*/
+.mypossport{ }
+.mypossport h3{padding:20px 0 16px; line-height:30px; height:30px; background:url(../Images/ar_line.gif) no-repeat left bottom; width:670px; margin:0 auto; text-indent:4px;}
+.rez_tishitit{ width:100%; text-align: center; font-size:18px; color:#f00; border-bottom:1px dotted #f1f1f1;line-height:24px; padding:30px 0 18px;}
+.throrz{color:#47a0c7;}
+
+.mypossport .busilicen{ width:100px; height:30px;}
+
+.mypossport .ord_pos_congt{ padding:20px 30px;}
+.mypossport .ord_pos_congt li{ height:40px; line-height:40px; color:#666; width:100%;}
+.mypossport .ord_pos_congt li b{ padding-left:100px; color:#47a0c7; font-size:18px; font-weight:normal;}
+.mypossport .ord_pos_congt li span{width:160px; text-align:right; display:inline-block; height:40px; color:#999; float:left; margin-right:6px;}
+.mypossport .ord_pos_congt li input{ width:280px; height:28px; line-height:28px; border:1px solid #cdcdcd; padding:0 6px;}
+
+.fbbutonggs { width:100%; text-align:center;}
+.fbbutonggs .nowbds{ height:34px; line-height:34px; padding:0; width:90%; background:#f90; border:0px; color:#fff; font-size:16px; margin-top:10px; display:inline-block;}
+.fbbutonggs .nowbds:hover{background:#ff9000;}
+
+.mypossport .ord_pos_congt li .file{ width:auto; border:0px;}
+.mypossport .ord_pos_congt li .rhscewm{ color:#31a3e7; font-size:12px; background:url(../Images/err.png) no-repeat left; padding-left:20px;}
+.mypossport .ord_pos_congt li .rhscewm:hover{ text-decoration:underline;}
+
+.mypossport .mypiedit li{ border-bottom:1px dashed #f1f1f1; padding:6px 0 10px;}
+.mypossport .mypiedit li:nth-last-child(1){ border-bottom:0px;}
+.mypossport .mypiedit li select{ border:1px solid #cdcdcd; height:28px; line-height:28px; margin:0 6px 0 0; color:#666;}
+.mypossport .mypiedit li strong{ font-size:16px; color:#f00; margin-right:6px;}
+.mypossport .mypiedit li .chess_nvs{ width:16px; height:16px; line-height:none; border:0px; padding:0; margin:0 4px 0 10px;}
+.mypossport .mypiedit .gezl_texts{ height:auto; padding:16px 0 10px; position:relative;}
+.mypossport .mypiedit .gezl_texts textarea{ width:360PX; height:88px;border:1px solid #cdcdcd; padding:6px; line-height:20px;}
+
+
+/*线路发布*/
+.mypossport .fabline{ }
+.mypossport .fabline li span{width:100px;}
+
+.mypossport .fabline .fabuye{ padding-bottom:20px; }
+.mypossport .fabline .fabuye h4{ padding-left:20px; color:#47a0c7; font-size:18px; font-weight:normal; line-height:40px; padding-bottom:10px; border-bottom:1px solid #b0d1e2; margin-bottom:10px;cursor:pointer;}
+.mypossport .fabline .fabuye h4:hover{ background:#f8f8f8}
+.mypossport .fabline .fabuye h4 span{ float:right;font-size:18px; font-weight:normal; }
+.mypossport .fabline .fabuye h4:hover span{ color:#f90;}
+.mypossport .fabline .fabuye ul{ display:none;}
+
+
+.mypossport .fabline .fabuye .add_liashan,.mypossport .fabline .fabuye .add_chsend{ width:80px;height:26px;line-height:26px;background:#61c2ed;text-align:center;color:#fff;font-size:12px;margin-left:30px;cursor:pointer;}
+.mypossport .fabline .fabuye .add_chsend{ width:100px;}
+.mypossport .fabline .fabuye .add_liashan:hover,.mypossport .fabline .fabuye .add_chsend:hover{ background:#f90;}
+
+.mypossport .fabline .fabuye .filepic{ border:0px;}
+
+.mypossport .ord_pos_congt li .highsbuton{ background:#f90; width:60px; color:#fff; border:0px; margin-left:110px;}
+
+.add_lint_bs{ background:#fbfbfb; position:relative;display:none;}
+.add_lint_bs .desletes{ position:absolute; right:0px; top:0px; font-size:20px; width:24px; height:24px; text-align:center; background:#f1f1f1; line-height:24px; color:#333;}
+.desletes:hover{color:#f00; cursor:pointer;}
+
+.highlights{ font-size:12px;}
+.highlights p{float:left;width:484px;line-height: 22px;padding-top: 9px;}
+.mypossport .mypiedit .gezl_texts .del_thhigh{ position:absolute; right:0px; font-size:12px; cursor:pointer;}
+.mypossport .mypiedit .gezl_texts .del_thhigh span{ width:auto;}
+.mypossport .mypiedit .gezl_texts .del_thhigh span:hover{ color:#f60;}
+
+
+.addshcead{ position:fixed; width:900px; height:600px;background:#fff; display:none; top:50%; left:50%; margin:-320px 0 0 -470px; z-index:200; padding:0 20px 20px;}
+.addshcead th{ line-height:40px; font-size:28px; font-weight: normal; color:#47a0c7; border-bottom:1px dotted #f1f1f1; height:60px; line-height:60px;}
+.addshcead td{ height:40px;}
+.addshcead td input{ height:24px; line-height:24px; font-size:12px;}
+.addshcead td strong{ color:#f00;}
+.addshcead .sum_ad_schebt{ width:80px; border:0px; height:30px; line-height:30px; background:#47a0c7; color:#fff;}
+.addshcead .sum_ad_schebt:hover{ background:#f90;}
+.addshcead .clo_adshc{ position:absolute;right:0px;top:0px;width:40px;height:40px;line-height:40px;color:#666;background:#f1f1f1;display:block;text-align:center;font-size:30px;cursor:pointer;}
+.addshcead .clo_adshc:hover{ color:#fff; background:#f90;}
+
+.addshceadbgs{position:fixed;width:100%;height:100%; background:#000;filter:alpha(opacity=50);opacity:0.5; display:none; top:0px; left:0px; z-index:10;}
+
+
+.shcead_main{ font-size:12px;}
+.shcead_main td{ color:#999; line-height:24px;}
+.shcead_main .shfc_ma_tirt{ color:#333;}
+.shcead_main .shcead_congt{ max-height:120px; overflow-y:scroll; overflow-x:hidden;}

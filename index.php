@@ -55,7 +55,6 @@ if($_path==''){
         $method = $_G['func'];
     } else {
         $_classpath = "\\App\\Controller\\" .$_path."\\IndexController";
-
         $method = $_G['class'];
     }
 }

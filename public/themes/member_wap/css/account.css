@@ -1,0 +1,128 @@
+/*首页个人信息*/
+.m_user_title{width:100%; background:url(../images/userbg.jpg) no-repeat center center; text-align:center; padding:3rem 0 0rem; position:relative;}
+.m_user_title h3{ color:#fff; line-height:8rem; height:8rem; font-size:3rem; font-weight:normal;}
+.m_user_title img{ width:14rem; height:14rem; border:.6rem solid #fff; background:#fff;  -moz-box-shadow: 1px 1px 20px #666; box-shadow: 1px 1px 20px #666; -webkit-border-radius:50%; -moz-border-radius:50%; border-radius:50%;}
+.m_user_title .m_tit_zds{ position:absolute; right:2rem; top:2rem; color:#ddd; font-size:2.4rem;}
+/*首页列表*/
+.set{ background: #eee; margin-bottom: 10rem;}
+.set ul{ margin-bottom: 1rem; background: #fff; padding: 0 2rem;}
+.set ul li{ height: 5rem; background: #fff; font-size: 2.8rem; padding: 2rem 0 2rem 1rem; border-bottom: 1px solid #ddd;}
+.set ul li:last-child{ border-bottom: none;}
+.set li a{ display: block;}
+.set li i{ float: right; width: 5rem; height: 5rem; display: inline-block;}
+.set img{ width: 100%;}
+.set li b{ display: inline-block; float: left; width: 5rem; height: 5rem; margin-right: 2rem;}
+.set li span{ line-height: 5rem;}
+/*切换*/
+.switch{ height: 8rem; line-height: 8rem; font-size: 2.6rem; width: 90%; margin: 0 auto;}
+.switch li{ float: left; width: 50%; text-align: center; border-bottom: 2px solid #ddd;}
+.switch li.cur{ border-bottom: 2px solid #f60; color: #f60;}
+.view{height: 8rem; line-height: 8rem; font-size: 2.6rem; width: 90%; margin: 0 auto;}
+.view li{ float: left; width: 33.33%; text-align: center; border-bottom: 2px solid #ddd;}
+.view li.cur{ border-bottom: 2px solid #f60; color: #f60;}
+.show_now{ display: none;}
+/*账户余额*/
+.mode{ padding: 5rem 2rem 5rem 2rem; background: #e00; color: #fff; text-align: center;}
+.mode p{font-size: 3rem; line-height: 3rem;}
+.mode h3{ font-size: 6rem; line-height: 18rem; font-weight: normal;}
+.mode .link_bill{ color: #fff; font-size: 2.6rem; line-height: 5rem;}
+.lump{ padding: 2rem 0; border-bottom: 1px solid #ddd;}
+.lump li{ float: left; font-size: 2.6rem; width: 50%; border-left: 1px solid #ddd; box-sizing: border-box; padding: 2rem 3rem 0; line-height: 5rem; border-top: 1px solid #ddd;}
+.lump li:first-child{ border: none;}
+.lump li:nth-child(2){ border-top: none;}
+.lump li:nth-child(2n-1){ border-left: none;}
+.lump li span{ color: #FF4B00; font-size: 4rem; line-height: 8rem;}
+.mode_foot{ position: fixed; width: 100%; left: 0; bottom: 0; border-top: 1px solid #ddd; padding: 1rem 0; height: 8rem; line-height: 8rem; text-align: center; }
+.mode_foot li{ width: 50%; font-size: 3rem; display: inline-block; float: left; }
+.mode_foot p{ width: 100%; font-size: 3rem; display: inline-block; float: left; }
+.mode_foot a{ color: #e00; display: block;}
+/*备选银行卡列表*/
+.gary{ position: fixed; width: 100%; height: 100%; background: rgba(0,0,0,0.7); bottom: 0; left: 0; display: none;}
+.sel_box{ position:absolute; height: 50rem; width: 100%; left: 0; bottom: 0; background: #fff; padding-bottom: 8rem; display: none; }
+.sel_list{ padding: 0 2rem;  height: 42rem; overflow-y: scroll;}
+.sel_list li{ position: relative; padding: 1rem 0; border-bottom: 1px solid #ddd; line-height: 4rem; font-size: 2.4rem;}
+.sel_list li span{ }
+.sel_list li i{ display: none; width: 5rem; height: 5rem; position: absolute; top: 50%; margin-top: -2.5rem; right: 0;}
+.sel_list li.cur i{ display: inline-block;}
+.sel_list li b{ width: 5rem; height: 5rem; position: absolute; top: 50%; margin-top: -2.5rem; right: 0; display: inline-block; }
+.bank_new { line-height: 8rem;}
+.sel_box .sel_title{ text-align: center; font-size: 2.4rem; line-height: 8rem; border-bottom: 1px solid #ddd;}
+.sel_box .sel_close{ position: absolute; width: 100%; left: 0; bottom: 0; height: 8rem; line-height: 8rem; text-align: center; font-size: 2.4rem; color: #FF4B00; border-top: 1px solid #ddd; background: #fff;}
+/*表单布局*/
+.nam_inpou{ width:100%; box-sizing:border-box; height:6rem; border:1px solid #f1f1f1; font-size:2.4rem; padding:0 .6rem;}
+/*ca_d_table*/
+.ca_d_table{ width:100%; box-sizing:border-box; padding:0 5%;}
+.ca_d_table td{ max-height:9999px; font-size:2.4rem; position:relative;border-bottom:1px dashed #ddd; padding:2rem 0;}
+.ca_d_table .bod_sol{border-bottom:1px solid #ddd; color:#00adfe; font-size:2.8rem;}
+.ca_d_table td .icp_ts{ width:4rem; height:4rem;}
+.ca_da_tiss{ display:none; position:absolute; width:30rem; top:50%; margin-top:-5rem; text-align:left; padding:2rem; background:#fff; border:1px solid #eee;right:4.6rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; z-index:99999999;}
+.ca_da_tiss i{ width:3rem; height:4rem; background:url(../images/close.png) no-repeat; background-size:100%; display:block; position:absolute; right:-.6rem; top:-.6rem;}
+.ca_da_tiss a{ color:#00adfe;}
+.ca_d_table table td .cada_tba{ border:0; background:#00adfe; color:#fff; font-size:3rem; width:94%;line-height:7rem; height:7rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; display:block; text-align:center;}
+.ca_d_table td{ padding: 3rem 0;}
+.ca_d_table .num_btn{ height: 6rem; border: none; line-height: 6rem; background: #00adfe; color: #fff; display: inline-block; width: 18rem; text-align: center; border-radius: .5rem;}
+.ca_d_table .marks{ width: 100%; box-sizing: border-box; padding: 0 .6rem; line-height: 3rem; height: 10.2rem; border: 1px solid #f1f1f1; font-size: 2.4rem;}
+.input_right input[type=text]{ text-align: right; border: none;}
+.ca_d_table input[type=radio]{ width: 2.4rem; height: 2.4rem; margin-right: 1rem;}
+.input_right label span{ line-height: 5rem;}
+.input_right .photo{ width: 10rem; height: 10rem; display: inline-block; float: right; position: relative;}
+.input_right .photo img{ width: 10rem;}
+.input_right .photo input{ width: 10rem; height: 10rem; position: absolute; top: 0; left: 0; opacity: 0;}
+.bank_msg{ padding-left: 1rem;}
+.bank_msg span{ font-size: 2.4rem; line-height: 3rem;}
+.bank_msg p{ line-height: 5rem;}
+.bank_msg i{ font-size: 5rem; float: right; font-style: normal; display: inline-block; width: 5rem; height: 5rem;}
+.ca_d_table .tip{ font-size: 2.4rem; color: #FF4B00; line-height: 3rem;}
+/*表单错误提示*/
+label.error { color: #f00; position:absolute; bottom:0; left:0; font-size:2rem;}
+/*银行卡列表*/
+.bank_box{ background: #fff; padding: 2rem 2rem 10rem;}
+.bank_box .bank_list{ padding: 2rem; border-radius: .5rem; -webkit-border-radius: .5rem; -moz-border-radius: .5rem; color: #fff; margin: 3rem 0; line-height: 5rem;}
+.bank_box .bank_list:nth-child(3n-2){ background: #319C8B;}
+.bank_box .bank_list:nth-child(3n-1){ background: #00367A;}
+.bank_box .bank_list:nth-child(3n){ background: #A71E32;}
+.bank_box .bank_list span{ font-size: 3rem;}
+.bank_box .bank_list b{ font-size: 2.4rem; font-weight: normal;}
+.bank_box .bank_list p{ text-align: right; font-size: 4rem; }
+.bot_btn{ position: fixed; width: 100%; height: 8rem; line-height: 8rem; font-size: 3rem; text-align: center; left: 0; bottom: 0; background: #fff;  border-top: 1px solid #ddd;}
+.bot_btn a{width: 100%; height: 8rem; line-height: 8rem; font-size: 3rem; text-align: center; display: inline-block; color: #00adfe; border-top: 1px solid #ddd;}
+/*账单列表*/
+.bill_box{ background: #fff;}
+.bill_box .bill_list{ background: #fff; border-bottom: 1px solid #ccc; padding: 2rem 0}
+.bill_top{ line-height: 8rem; height: 8rem; padding: 0 3rem;}
+.bill_top .date{ font-size: 2.6rem; line-height: 4rem; display: inline-block; height: 8rem; padding-right: 2rem; border-right: 1px solid #ddd; color: #888; float: left; text-align: center;}
+.bill_top .still{ font-style: normal; line-height: 4rem; text-align: right;}
+.bill_top .still span{ font-size: 4rem; line-height: 4rem; }
+.bill_top .still p{ line-height: 4rem; font-size: 3rem;}
+.bill_top .still .add{ color: #28D496; font-size: 4rem;}
+.bill_top .still .reduce{ color: #A71E32; font-size: 4rem;}
+.bill_top .state{ float: right; margin-left: 3rem; font-size: 3rem;}
+.bill_top .state p{ line-height: 4rem;}
+.bill_top i{ font-style: normal; font-size: 3rem; line-height: 6rem; }
+.bill_top .no_pay{ color: #A71E32;}
+.bill_top .now_pay{ color: #f60;}
+.bill_top .yes_pay{ color: #28D496;}
+.bill_top .down{ display: inline-block; float: right; width: 4rem; height: 4rem; text-align: center; margin: 2rem 0 2rem 2rem; background: url(../images/icon_top.png) no-repeat center; background-size: 4rem; }
+.bill_show{ padding: 1rem 2rem 0; display: none; background: #eee; border-top: 1px solid #ccc; margin-top: 2rem;}
+.bill_show p{ padding: 1rem 0; font-size: 3rem;}
+.bill_show p i{ font-style: normal;}
+.bill_show p span{ font-size: 3rem; display: inline-block;}
+.bill_show b{ font-weight: normal;}
+.bill_show .no_pay{ color: #A71E32;}
+.bill_show .now_pay{ color: #f60;}
+.bill_show .yes_pay{ color: #28D496;}
+.bill_list.show{ background: #eee;}
+.bill_list.show .bill_show{ display: block;}
+.bill_list.show .bill_top .down{ transform:rotate(180deg); -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); }
+.date_box{ margin-top: 2rem; line-height: 6rem; font-size: 2.6rem; border-bottom: 1px solid #ddd; padding: 2rem;}
+.date_box input[type=text]{ width: 15rem; height: 6rem; border:1px solid #ddd; font-size: 2.6rem; text-align: center;}
+.date_box input[type=submit]{ border: none; background: #00adfe; border-radius: .5rem; -webkit-border-radius: .5rem; -moz-border-radius: .5rem; height: 6rem; color: #fff;font-size: 2.6rem; padding: 0 1rem; float: right;}
+/*操作成功失败警告提示*/
+.point{ position: fixed; width: 80%; background: rgba(0,0,0,.6); color: #fff; text-align: center; padding: 2rem; box-sizing: border-box; border-radius: .5rem; -webkit-border-radius: .5rem; -moz-border-radius: .5rem;  left: 10%; top: 40%; z-index: 888}
+.point span{ display: block; width: 8rem; height: 8rem; margin: 0 auto;}
+.point span img{ width: 100%;}
+.point .text{ font-size: 3rem; line-height: 3.6rem; margin-top: 3rem;}
+.point_btn a{ width: 20rem; height: 6rem; line-height: 6rem; color: #fff; background: #00adfe; margin: 3rem auto 2rem; font-size: 2.6rem; display: inline-block; border-radius: .3rem; -webkit-border-radius: .3rem; -moz-border-radius: .3rem;}
+
+.black{ width: 100%; height: 100%; background: rgba(0,0,0,.7); position: fixed; left: 0; top: 0;}
+.black .remove_bank{ width: 80%; background: #fff; padding: 3rem 2rem; box-sizing: border-box; border-radius: .3rem; -moz-border-radius: .3rem; -webkit-border-radius: .3rem; position: absolute; top: 40%; left: 10%; font-size: 2.6rem; text-align: center; line-height: 3rem;}

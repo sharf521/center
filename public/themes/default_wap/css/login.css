@@ -1,0 +1,6 @@
+html,body{ background:#f0f2f4;}
+
+.logincont{ width:420px;left:50%; top:50%; margin:200px auto 0;}
+.logincont h3{ height:80px; line-height:80px; text-align:center; font-size:30px; font-weight:normal; color:#2baab1;}
+.logincont li{ height: auto; padding-bottom:20px;}
+

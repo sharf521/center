@@ -1,0 +1,58 @@
+
+.pos_table{ width:90%; margin:3rem auto;}
+.pos_aplcation{ width:100%; border-collapse:collapse; background:#fff;}
+.pos_aplcation th,.pos_aplcation td{ max-height:99999px; padding:2rem 0;}
+.pos_aplcation th{ font-size:1.8rem; color:#333; background:#f5f5f5}
+.pos_aplcation td{ text-align:center; font-size:2rem;}
+
+.posform_table{ width:90%; margin:3rem auto; background:#fff;}
+.posform_table table{ width:100%; border-collapse:collapse;}
+.posform_table table td{ max-height:99999px; padding:2rem 0; font-size:2.6rem; border-top:1px solid #f1f1f1; position:relative;}
+.posform_table table td input{ width:94%; line-height:7rem; height:7rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; border:0; font-size:2.4rem;}
+.posform_table table td input::-webkit-input-placeholder {color: #ddd !important; /* WebKit browsers */}
+.posform_table table td input:-moz-placeholder {color: #ddd !important; /* Mozilla Firefox 4 to 18 */}
+.posform_table table td input::-moz-placeholder {color: #ddd !important; /* Mozilla Firefox 19+ */}
+.posform_table table td input:-ms-input-placeholder {color: #ddd !important; /* Internet Explorer 10+ */}
+.posform_table table td select{ width:auto; background:none; line-height:7rem; height:7rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; border:0; font-size:2.4rem;}
+.posform_table table td label{ display:inline-block; padding:.8rem .6rem .8rem 0; line-height:3rem;}
+.posform_table table td input[type="checkbox"]{ width:3rem; height:3rem;}
+.posform_table table td input[type="radio"]{ width:2.4rem; height:2.4rem;}
+.posform_table table td .subm_buton{ border:0; background:#00adfe; color:#fff; font-size:3rem;}
+.posform_table table td .gohis_buton{ border:0; background:#f90; color:#fff; font-size:3rem;}
+.posform_table table td b{color:#f60; font-size:2.2rem;}
+.posform_table table td .xfmony{color:#f00;}
+.posform_table table td .yuebs{ font-style:normal;}
+
+
+.posform_table table td input.error{}
+.posform_table table td label.error {
+    color: #f00;
+	position:absolute; bottom:.4rem; left:0rem;
+	font-size:2rem;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
