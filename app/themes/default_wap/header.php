@@ -10,6 +10,11 @@
     <meta http-equiv="Expires" content="-1">
     <meta http-equiv="pragram" content="no-cache">
     <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi,initial-scale=1, maximum-scale=1">
-    <title>账户</title>
-    <link href="/themes/default_wap/css.css" type="text/css" rel="stylesheet"/>
+    <title>新用户注册</title>
+    <link href="/themes/default_wap/css/web_style.css" type="text/css" rel="stylesheet"/>
+    <link href="/themes/default_wap/css/web_login.css" type="text/css" rel="stylesheet"/>
+    <!-- Jquery -->
+    <script type="text/javascript" src="/themes/default_wap/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/themes/default_wap/js/jquery.validation.min.js"></script>
 </head>
+<body>
