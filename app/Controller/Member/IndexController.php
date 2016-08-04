@@ -13,6 +13,7 @@ class IndexController extends MemberController
 
     public function index()
     {
+        echo $this->user_id;
         $data['account'] = DB::table('account')->where('user_id')->bindValues($this->user_id)->row();
         $data['title_herder']='帐户中心';
         $this->view('manage', $data);
