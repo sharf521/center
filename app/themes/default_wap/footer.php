@@ -1,13 +1,13 @@
-<script charset="utf-8" src="/plugin/layer/layer.js"></script>
+<script charset="utf-8" src="/plugin/layer.mobile/layer.js"></script>
 <?php
 if(session('msg'))
 {
     ?>
     <script>
-        layer.msg('<?=session('msg')?>', {
-            offset: '200px',
-            icon: 1,
-            time: 1000
+        layer.open({
+            content: '<?=session('msg')?>',
+            style: 'background-color:#ffffff; border:none;',
+            time: 1
         });
     </script>
     <?
@@ -16,10 +16,10 @@ if(session('error'))
 {
     ?>
     <script>
-        layer.msg('<?=session('error')?>', {
-            offset: '200px',
-            icon: 2,
-            time: 2000
+        layer.open({
+            content: '<?=session('error')?>',
+            style: 'background-color:#ffffff;  border:none;',
+            time: 2
         });
     </script>
     <?
