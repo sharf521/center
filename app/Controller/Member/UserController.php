@@ -53,7 +53,7 @@ class UserController  extends MemberController
         }
     }
 
-    public function changepwd(User $user)
+    public function changePwd(User $user)
     {
         if ($_POST) {
             if ($_POST['password'] != $_POST['sure_password']) {
