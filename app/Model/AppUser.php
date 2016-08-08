@@ -12,7 +12,7 @@ class AppUser extends Model
 
     public function getOpenId($user_id,$app_id)
     {
-        return DB::table('app_user')->where("user_id={$user_id} and app_id=?")->bindValues($this->$app_id)->value('openid');
+        return DB::table('app_user')->where("user_id={$user_id} and app_id=?")->bindValues($app_id)->value('openid');
     }
 
     public function create($user_id,$app_id)
