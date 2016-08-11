@@ -40,15 +40,16 @@ class UserController  extends MemberController
         if($_POST){
             $bank->bank = $request->post('bank');
             $bank->branch = $request->post('branch');
-            $bank->account = $request->post('account');
+            $bank->card_no = $request->post('card_no');
             if ($bank->save()) {
                 redirect()->back()->with('msg', '保存成功！');
             } else {
                 redirect()->back()->with('error', '保存失败！');
             }
         }else{
-            $bank->selBank=$linkPage->echoLink('account_bank','',array('name'=>'bank'));
+            $bank->selBank=$linkPage->echoLink('account_bank',$bank->bank,array('name'=>'bank'));
             $data['bank']=$bank;
+            $data['title_herder']='我的银行卡';
             $this->view('user',$data);
         }
     }
@@ -73,7 +74,8 @@ class UserController  extends MemberController
             }
             redirect()->back()->with('error',$error);
         } else {
-            $this->view('user');
+            $data['title_herder']='修改密码';
+            $this->view('user',$data);
         }
     }
     
@@ -97,7 +99,8 @@ class UserController  extends MemberController
             }
             redirect()->back()->with('error',$error);
         } else {
-            $this->view('user');
+            $data['title_herder']='修改支付密码';
+            $this->view('user',$data);
         }
     }
     
@@ -131,6 +134,7 @@ class UserController  extends MemberController
             redirect()->back()->with('error',$error);
         } else {
             $data['user']=$this->user;
+            $data['title_herder']='找回支付密码';
             $this->view('user',$data);
         }
     }
@@ -173,6 +177,7 @@ class UserController  extends MemberController
             redirect()->back()->with('error', $error);
         } else {
             $data['error'] = $error;
+            $data['title_herder']='重置支付密码';
             $this->view('user', $data);
         }
     }

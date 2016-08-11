@@ -166,7 +166,7 @@ class Model
         );
     }
 
-    public function save()
+    public function save($returnId=false)
     {
         if ($this->is_exist) {
             $primaryKey = $this->primaryKey;
@@ -175,7 +175,11 @@ class Model
             return DB::table($this->table)->where("{$primaryKey}=?")->bindValues($id)->limit('1')->update($this->attributes);
         } else {
             $this->attributes['created_at']=time();
-            return DB::table($this->table)->insert($this->attributes);
+            if($returnId){
+                return DB::table($this->table)->insertGetId($this->attributes);
+            }else{
+                return DB::table($this->table)->insert($this->attributes);
+            }
         }
     }
 ///////以下DB类方法/////////////////////////////////////////////////////////////////////////////////

@@ -90,6 +90,7 @@ class AccountLog extends Model
                         $log[$col.'_now']=$account[$col];
                     }else{
                         $log[$col]=0;
+                        $log[$col.'_now']=$account[$col];
                     }
                 }
                 if($_turnover_available!=0){

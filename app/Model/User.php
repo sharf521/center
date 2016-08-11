@@ -169,6 +169,16 @@ class User extends Model
         return $user->save();
     }
 
+    //验证支付密码
+    public function checkPayPwd($pwd,$user)
+    {
+        if ($user->zf_password == md5(md5($pwd) . $user->salt)) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     //实名认证显示信息
     function userinfoone($data)
     {
@@ -225,5 +235,14 @@ left join {$this->dbfix}account_bank b on u.id=b.user_id {$where}";
     public function UserType()
     {
         return $this->hasOne('App\Model\UserType', 'id', 'type_id');
+    }
+
+    public function Account()
+    {
+        return $this->hasOne('App\Model\Account','user_id','id');
+    }
+    public function Bank()
+    {
+        return $this->hasOne('App\Model\AccountBank','user_id','id');
     }
 }

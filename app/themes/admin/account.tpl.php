@@ -18,6 +18,7 @@
         <? if(!empty($result['total'])){?>
             <table class="table">
                 <tr>
+                    <th>ID</th>
                     <th>用户/ID</th>
                     <th>时间</th>
                     <th>类型</th>
@@ -36,6 +37,7 @@
                 <? foreach($result['list'] as $row){
                     ?>
                     <tr>
+                        <td><?=$row->id?></td>
                         <td><?=$row->user()->username?>/<?=$row->user()->id?></td>
                         <td><?=$row->created_at?></td>
                         <td><?=$row->getLinkPageName('account_type',$row->type);?></td>

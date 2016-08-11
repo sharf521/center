@@ -112,7 +112,7 @@
                             <tr><td >真实姓名：</td><td><?=$this->user->name?></td></tr>
                             <tr><td>开户银行：</td><td><?=$bank->selBank?></td></tr>
                             <tr><td >开户支行：</td><td><input  name="branch" type="text" value="<?=$bank->branch?>"/></td></tr>
-                            <tr><td >银行账号：</td><td><input  name="account" type="text" value="<?=$bank->account?>"/></td></tr>
+                            <tr><td >银行账号：</td><td><input  name="card_no" type="text" value="<?=$bank->card_no?>"/></td></tr>
                             <tr><td></td><td><input type="submit" value="保 存" /></td></tr>
                         </table>
                     </form>
@@ -122,7 +122,7 @@
                         <tr><td >真实姓名：</td><td><?=$this->user->name?></td></tr>
                         <tr><td align="right">开户银行：</td><td><?=$bank->bank?></td></tr>
                         <tr><td align="right">开户支行：</td><td><?=$bank->branch?></td></tr>
-                        <tr><td align="right">银行账号：</td><td><?=$bank->account?></td></tr>
+                        <tr><td align="right">银行账号：</td><td><?=$bank->card_no?></td></tr>
                     </table>
                 <? }?>
             </div>

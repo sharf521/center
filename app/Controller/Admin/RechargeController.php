@@ -17,6 +17,11 @@ use System\Lib\Request;
 
 class RechargeController extends AdminController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function index(AccountRecharge $recharge,Request $request,User $user)
     {
         $where=" 1=1";
@@ -52,9 +57,11 @@ class RechargeController extends AdminController
         if ($_POST) {
             if (empty($_POST['status'])) {
                 redirect()->back()->with('error', '审核状态必选');
-            } elseif (empty($_POST['verify_remark'])) {
+            }
+            if (empty($_POST['verify_remark'])) {
                 redirect()->back()->with('error', '审核备注不能为空');
-            } elseif ($row->status == 0) {
+            }
+            if ($row->status == 0) {
                 $arr = array();
                 $arr['verify_userid'] = $this->user_id;
                 $arr['id'] = $_POST['id'];

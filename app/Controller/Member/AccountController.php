@@ -1,8 +1,10 @@
 <?php
 namespace App\Controller\Member;
 
+use App\Model\AccountCash;
 use App\Model\AccountLog;
 use App\Model\AccountRecharge;
+use App\Model\System;
 use System\Lib\DB;
 use System\Lib\Request;
 
@@ -52,11 +54,11 @@ class AccountController extends MemberController
             }
         } else {
             $data['user']=$this->user;
-            $this->view('account',$data);
+            $this->view('accountRecharge',$data);
         }
     }
 
-    public function rechargeLog(AccountRecharge $recharge,Request $request,AccountLog $accountLog)
+    public function rechargeLog(AccountRecharge $recharge,Request $request)
     {
 //        $log = array();
 //        $log['user_id'] = 1;
@@ -77,22 +79,76 @@ class AccountController extends MemberController
             $where.=" and created_at<".strtotime($endtime);
         }
         $data['result']=$recharge->where($where)->orderBy('id desc')->pager($page);
-        $this->view('account',$data);
+        $this->view('accountRecharge',$data);
     }
 
     //提现
-    public function cash()
+    public function cash(System $system,Request $request,AccountCash $accountCash)
     {
+        $cash_rate=(float)$system->getCode('cash_rate');
+        $account=$this->user->Account();
+        $bank=$this->user->Bank();
         if ($_POST) {
+            $total=(float)$request->post('total');
+            if($total < 50 || $total > 50000){
+                redirect()->back()->with('error','提现范围50元-50000元！');
+            }
+            if($total > $account->funds_available){
+                redirect()->back()->with('error','提现金额超过可提现金额！');
+            }
+            $checkPwd=$this->user->checkPayPwd($request->post('zf_password'),$this->user);
+            if($checkPwd!==true){
+                redirect()->back()->with('error','支付密码错误！');
+            }
+            $fee=round_money(math($total,$cash_rate,'*',2),1);
+            if($fee<5){$fee=5;}
+            $accountCash->user_id=$this->user_id;
+            $accountCash->name=$this->user->name;
+            $accountCash->bank=$bank->bank;
+            $accountCash->branch=$bank->branch;
+            $accountCash->card_no=$bank->card_no;
+            $accountCash->total=$total;
+            $accountCash->credited=math($total,$fee,'-',2);
+            $accountCash->fee=$fee;
+            $accountCash->status=1;
+            $accountCash->addip=ip();
+            $insertId=$accountCash->save(true);
 
+            $accountLog=new AccountLog();
+            $log = array();
+            $log['user_id'] = $this->user_id;
+            $log['type'] = 'cash_frost';
+            $log['funds_available'] ='-'.$total;
+            $log['funds_freeze']=$total;
+            $log['label'] = "cash_{$insertId}";
+            $log['remark'] = "提现ID：{$insertId}";
+            $accountLog->addLog($log);
+            redirect('account/cashLog')->with('msg','申请提现成功，静等审核！');
         } else {
-            $this->view('account');
+            $data['cash_rate']=$cash_rate;
+            $data['account']=$account;
+            $data['bank']=$bank;
+            $data['title_herder']='我要提现';
+            $this->view('accountCash',$data);
         }
     }
 
-    public function cashLog()
+    public function cashLog(Request $request,AccountCash $accountCash)
     {
-        $this->view('account');
+        $page=$request->get('page');
+        $starttime=$request->get('starttime');
+        $endtime=$request->get('endtime');
+        $where=" user_id=".$this->user_id;
+        if(!empty($starttime)){
+            $where.=" and created_at>=".strtotime($starttime);
+        }
+        if(!empty($endtime)){
+            $where.=" and created_at<".strtotime($endtime);
+        }
+        $data['result']=$accountCash->where($where)->orderBy('id desc')->pager($page);
+
+        $data['title_herder']='提现记录';
+        $this->view('accountCash',$data);
     }
 
     //资金流水
@@ -104,6 +160,7 @@ class AccountController extends MemberController
             'endtime'=>$request->get('endtime')
         );
         $data['result']=$accountLog->getList($arr);
+        $data['title_herder']='资金流水';
         $this->view('account',$data);
     }
 }
