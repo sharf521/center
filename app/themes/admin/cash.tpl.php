@@ -5,26 +5,8 @@
     </div>
     <div class="search">
         <form>
-            充值类型：<select name="type">
-                <option value=""<? if($_GET['type']==""){?> selected="selected"<? }?>>请选择</option>
-                <option value="1"<? if($_GET['type']=="1"){?> selected="selected"<? }?>>在线充值</option>
-                <option value="2"<? if($_GET['type']=="2"){?> selected="selected"<? }?>>线下充值</option>
-            </select>
-            <? if($this->user['type_id']==2){?>
-                归属分站：
-                <select name="subsite_id">
-                    <option value=""<? if($_GET['subsite_id']==""){?> selected="selected"<? }?>>请选择</option>
-                    <? foreach($subsite as $key_se=>$row_se){?>
-                        <option value="<?=$key_se?>"<? if($_GET['subsite_id']==$key_se){?> selected="selected"<? }?>><?=$row_se?></option>
-                    <? }?>
-                </select>
-            <? }?>
-            状态：<select name="status">
-                <option value=""<? if($_GET['status']==""){?> selected="selected"<? }?>>请选择</option>
-                <option value="1"<? if($_GET['status']=="1"){?> selected="selected"<? }?>>充值成功</option>
-                <option value="2"<? if($_GET['status']=="2"){?> selected="selected"<? }?>>审核未通过</option>
-                <option value="0"<? if($_GET['status']=="0"){?> selected="selected"<? }?>>待审核</option>
-            </select>
+
+            状态：<?=$check_status?>
             用户名：<input type="text" name="username" value="<?=$_GET['username']?>"/>
             充值时间：<input type="text" name="starttime" value="<?=$_GET['starttime']?>" class="Wdate" onclick="javascript:WdatePicker();" size="10"/>
             到<input type="text" name="endtime" value="<?=$_GET['endtime']?>" class="Wdate" onclick="javascript:WdatePicker();" size="10"/>

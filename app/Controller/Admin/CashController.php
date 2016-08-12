@@ -10,6 +10,7 @@ namespace App\Controller\Admin;
 
 use App\Model\AccountCash;
 use App\Model\AccountLog;
+use App\Model\LinkPage;
 use App\Model\User;
 use System\Lib\Request;
 
@@ -20,7 +21,7 @@ class CashController extends AdminController
         parent::__construct();
     }
 
-    public function index(AccountCash $accountCash,Request $request,User $user)
+    public function index(AccountCash $accountCash,Request $request,User $user,LinkPage $linkPage)
     {
         $where=" 1=1";
         $page=$request->get('page');
@@ -45,6 +46,7 @@ class CashController extends AdminController
         if(!empty($endtime)){
             $where.=" and created_at<".strtotime($endtime);
         }
+        $data['check_status']=$linkPage->echoLink('check_status',$status,array('name'=>'status'));
         $data['result']=$accountCash->where($where)->orderBy('id desc')->pager($page);
         $this->view('cash',$data);
     }
