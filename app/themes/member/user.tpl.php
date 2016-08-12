@@ -6,10 +6,11 @@
         <?php if($this->func=='userInfo'): ?>
             <div class="box">
                 <h3>个人信息：</h3>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <table class="table_from">
                         <tr><td>用户名：</td><td><?=$user->username?></td></tr>
                         <tr><td>注册邮箱：</td><td><?=$user->email?></td></tr>
+                        <tr><td>头像：</td><td><img src="<?=$user->headimgurl?>" width="50"><input type="file" name="headimgurl"></td></tr>
                         <tr><td>联系电话：</td><td><input type="text" name="tel" value="<?=$user->tel?>"/></td></tr>
                         <tr><td>联系QQ： </td><td><input type="text" name="qq" class="form-control" value="<?=$user->qq?>" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/></td></tr>
                         <tr><td>联系地址：</td><td><input type="text" name="address" class="form-control" value="<?=$user->address?>"/></td></tr>

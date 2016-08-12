@@ -13,7 +13,7 @@
     layer.msg('<?= session('error') ?>', {
         offset: '200px',
         icon: 2,
-        time: 2000
+        time: 20000
     });
     <?php } ?>
 //    $(document).ready(function () {

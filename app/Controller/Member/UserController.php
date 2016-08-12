@@ -23,11 +23,28 @@ class UserController  extends MemberController
             $this->user->tel = $request->post('tel');
             $this->user->qq = $request->post('qq');
             $this->user->address = $request->post('address');
-            if ($this->user->save()) {
-                redirect()->back()->with('msg', '保存成功！');
-            } else {
-                redirect()->back()->with('error', '保存失败！');
+
+            if($_FILES['headimgurl']['name']!=''){
+                $path='/data/upload/';
+                $storage = new \Upload\Storage\FileSystem(ROOT.'/public'.$path);
+                $file = new \Upload\File('headimgurl', $storage);
+                $file->setName(time().rand(10000,9000));
+                $file->addValidations(array(
+                    new \Upload\Validation\Mimetype(array('image/png', 'image/gif','image/jpeg')),
+                    // Ensure file is no larger than 5M (use "B", "K", M", or "G")
+                    new \Upload\Validation\Size('5M'),
+                ));
+                try {
+                    if($file->upload()){
+                        $this->user->headimgurl=$path.$file->getNameWithExtension();
+                    }
+                } catch (\Exception $e) {
+                    $errors = $file->getErrors();
+                    redirect()->back()->with('error', '上传文件失败：'.json_encode($errors));
+                }
             }
+            $this->user->save();
+            redirect()->back()->with('msg', '保存成功！');
         } else {
             $data['user'] = $this->user;
             $this->view('user', $data);
