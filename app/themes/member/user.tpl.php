@@ -6,11 +6,43 @@
         <?php if($this->func=='userInfo'): ?>
             <div class="box">
                 <h3>个人信息：</h3>
-                <form method="post" enctype="multipart/form-data">
+                <form method="post">
                     <table class="table_from">
                         <tr><td>用户名：</td><td><?=$user->username?></td></tr>
                         <tr><td>注册邮箱：</td><td><?=$user->email?></td></tr>
-                        <tr><td>头像：</td><td><img src="<?=$user->headimgurl?>" width="50"><input type="file" name="headimgurl"></td></tr>
+                        <tr><td>头像：</td><td>
+                                <span id="upload_span_headimgurl"><img src="<?=$user->headimgurl?>" height="50"></span>
+                                <input type="hidden" name="headimgurl" value="<?=$user->headimgurl?>" id="headimgurl">
+                                <input type="file" id="upload_headimgurl" name="files" onchange="upload_image11('headimgurl','headimgurl')">
+                                <script src="/plugin/js/ajaxfileupload.js"></script>
+                                <script>
+                                    //上传图片
+                                    function upload_image11(id,type)
+                                    {
+                                        $('#upload_span_'+id).html('上传中...');
+                                        $.ajaxFileUpload({
+                                            url:'/index.php/plugin/ajaxFileUpload?type='+type,
+                                            fileElementId :'upload_'+id,
+                                            dataType:'json',
+                                            success: function (result, status){
+                                                if(result.status == 'success'){
+                                                    var path=result.data+'?'+Math.random();
+                                                    $('#'+id).val(path);
+                                                    var _str="<a href='"+path+"' target='_blank'><img src='"+path+"' height='50'/></a>";
+                                                    $('#upload_span_'+id).html(_str);
+                                                }else{
+                                                    alert(result.data);
+                                                }
+                                            },
+                                            error: function (result, status, e){
+                                                alert(e);
+                                            }
+                                        });
+                                        return false;
+                                    }
+                                </script>
+
+                            </td></tr>
                         <tr><td>联系电话：</td><td><input type="text" name="tel" value="<?=$user->tel?>"/></td></tr>
                         <tr><td>联系QQ： </td><td><input type="text" name="qq" class="form-control" value="<?=$user->qq?>" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/></td></tr>
                         <tr><td>联系地址：</td><td><input type="text" name="address" class="form-control" value="<?=$user->address?>"/></td></tr>

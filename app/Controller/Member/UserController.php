@@ -23,32 +23,7 @@ class UserController  extends MemberController
             $this->user->tel = $request->post('tel');
             $this->user->qq = $request->post('qq');
             $this->user->address = $request->post('address');
-
-            if($_FILES['headimgurl']['name']!=''){
-                $path='/data/upload/headimgurl/';
-                $_path=ROOT.'/public'.$path;
-                if (!file_exists($_path)) {
-                    if (!mkdir($_path, 0777, true)) {
-                        redirect()->back()->with('error', 'Can not create tempath directory');
-                    }
-                }
-                $storage = new \Upload\Storage\FileSystem($_path);
-                $file = new \Upload\File('headimgurl', $storage);
-                $file->setName($this->user_id);
-                $file->addValidations(array(
-                    new \Upload\Validation\Mimetype(array('image/png', 'image/gif','image/jpeg')),
-                    // Ensure file is no larger than 5M (use "B", "K", M", or "G")
-                    new \Upload\Validation\Size('5M'),
-                ));
-                try {
-                    if($file->upload()){
-                        $this->user->headimgurl=$path.$file->getNameWithExtension();
-                    }
-                } catch (\Exception $e) {
-                    $errors = $file->getErrors();
-                    redirect()->back()->with('error', '上传文件失败：'.json_encode($errors));
-                }
-            }
+            $this->user->headimgurl=$request->post('headimgurl');
             $this->user->save();
             redirect()->back()->with('msg', '保存成功！');
         } else {
