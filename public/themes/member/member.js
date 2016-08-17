@@ -66,3 +66,40 @@ function upload_image(id,type)
     });
     return false;
 }
+
+//userInfo   start
+function changeProvince(value)
+{
+    document.getElementById('province').value=value;
+    var sel=document.getElementById('city');
+    if(value!='0')
+    {
+        changeSel(sel,value);
+    }
+    else
+    {
+        sel.options.length=0;
+    }
+    document.getElementById('county').options.length=0;
+}
+function changeCity(value)
+{
+    document.getElementById('city').value=value;
+    var sel=document.getElementById('county');
+    changeSel(sel,value);
+}
+function changeSel(sel,id)
+{
+    $.post("/index.php/ajax/region_substring/"+id,{},function(str){
+        var arr =str.split("[#]");
+        sel.options.length=0;
+        sel.options.add(new Option('请选择','0'));
+        for(v in arr)
+        {
+            var v=arr[v].split("::");
+            if(v[0]!='')
+                sel.options.add(new Option(v[1],v[0]));
+        }
+    });
+}
+//userInfo   end

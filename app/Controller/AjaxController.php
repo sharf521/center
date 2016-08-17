@@ -2,7 +2,9 @@
 namespace App\Controller;
 
 use App\Model\Algorithm;
+use App\Model\Region;
 use System\Lib\DB;
+use System\Lib\Request;
 
 class AjaxController extends Controller
 {
@@ -132,6 +134,16 @@ class AjaxController extends Controller
             echo '完成';
         }else{
             echo $return;
+        }
+    }
+
+    //选择省市县
+    function region_substring(Request $request,Region $region)
+    {
+        $pid=(int)$request->get(2);
+        $result=$region->getList($pid);
+        foreach($result as $row){
+            echo "{$row['id']}::{$row['name']}[#]";
         }
     }
 }

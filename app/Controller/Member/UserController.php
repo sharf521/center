@@ -3,7 +3,9 @@ namespace App\Controller\Member;
 
 use App\Model\AccountBank;
 use App\Model\LinkPage;
+use App\Model\Region;
 use App\Model\User;
+use App\Model\UserInfo;
 use System\Lib\Request;
 
 class UserController  extends MemberController
@@ -29,6 +31,52 @@ class UserController  extends MemberController
         } else {
             $data['user'] = $this->user;
             $this->view('user', $data);
+        }
+    }
+    public function realName(Request $request,Region $region)
+    {
+        $user= $this->user;
+        if($_POST){
+            $userInfo=new UserInfo();
+            $name=$request->post('name');
+            $sex=$request->post('sex');
+            $card_no=$request->post('card_no');
+            $province=$request->post('province');
+            $city=$request->post('city');
+            $county=$request->post('county');
+            $card_pic1=$request->post('card_pic1');
+            $card_pic2=$request->post('card_pic2');
+            if(empty($name)){
+                redirect()->back()->with('error', '姓名不能为空！');
+            }
+            if(! $userInfo->isIdCard($card_no)){
+                redirect()->back()->with('error', '请输入正确的身份证号！');
+            }
+
+
+            $userInfo->name=$name;
+            $userInfo->sex=$sex;
+            $userInfo->card_no=$card_no;
+            $userInfo->province=$province;
+            $userInfo->city=$city;
+            $userInfo->county=$county;
+            $userInfo->card_pic1=$card_pic1;
+            $userInfo->card_pic2=$card_pic2;
+            $userInfo->card_status=1;
+            $userInfo->user_id=$this->user_id;
+            $userInfo->save();
+            redirect()->back()->with('msg', '操作成功，等待管理员审核！');
+        }else{
+            $userInfo=$user->UserInfo();
+            $userInfo->provinceName=$region->getName($userInfo->province);
+            $userInfo->cityName=$region->getName($userInfo->city);
+            $userInfo->countyName=$region->getName($userInfo->county);
+            $data['provinceArray']=$region->getList(0);
+            $data['userInfo']=$userInfo;
+            $data['user'] = $user;
+
+            $data['title_herder']='实名认证';
+            $this->view('realName', $data);
         }
     }
     

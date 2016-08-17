@@ -3,6 +3,7 @@
     <ul>
         <li><a href="<?=url('user/userInfo')?>"  <? if($this->func=='userInfo'){echo 'class="whover"';}?>>个人信息</a></li>
         <li><a href="<?=url('user/bank')?>" <? if($this->func=='bank'){echo 'class="whover"';}?>>银行帐号</a></li>
+        <li><a href="<?=url('user/realName')?>" <? if($this->func=='realName'){echo 'class="whover"';}?>>实名认证</a></li>
     </ul>
     <h3>我的资金</h3>
     <ul>

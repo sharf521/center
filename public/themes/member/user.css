@@ -152,3 +152,11 @@ input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
 .p_curpage {border:1px solid #337ab7; border-left: 0px;background:#337ab7;color:#fff; padding:4px 10px;}
 
 .alert-warning{color: #8a6d3b;background-color: #fcf8e3;border-color: #faebcc;padding: 15px;margin: 20px;border: 1px solid transparent; border-radius: 4px;}
+
+
+/*上传按钮*/
+.upload-upimg{height:30px;width:80px;position:relative; overflow:hidden; margin:0 1px;display:inline-block;border-radius: 2px;}
+.upload-upimg ._upload_f{height:30px;width:80px; background-color:#d9534f; display:block;
+    color: #FFF; font-size:12px; line-height:30px; text-align:center}
+.upload-upimg:hover{background-color:#F00;}
+.upload-upimg input{width: 100%; height: 100%;cursor: pointer;filter:alpha(opacity=0); -moz-opacity:0;	position:absolute;opacity:0;left:0px;top: 0px;}

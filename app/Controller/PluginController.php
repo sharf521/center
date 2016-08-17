@@ -70,12 +70,24 @@ class PluginController extends Controller
     {
         $type=$_GET['type'];
         $name=time().rand(1000,9000);
+        $user_id=$this->user_id;
+        if(empty($user_id)){
+            $data = array(
+                'status' => 'fail',
+                'data' => '超时，请重新登陆'
+            );
+            echo json_encode($data);
+            exit;
+        }
         $path = '/data/upload/' . date('Ym').'/';
         if ($type == 'article') {
             $path = 'upload/article/' . date('Ym');
         }elseif ($type=='headimgurl'){
-            $name=$this->user_id;
-            $path='/data/upload/headimgurl/';
+            $name='face';
+            $path='/data/upload/'.ceil($user_id/2000).'/'.$user_id.'/';
+        }elseif ($type=='card1' || $type=='card2'){
+            $name=$type;
+            $path='/data/upload/'.ceil($user_id/2000).'/'.$user_id.'/';
         }
         //创建文件夹
         $_path=ROOT.'/public'.$path;

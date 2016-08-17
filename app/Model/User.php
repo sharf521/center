@@ -179,16 +179,7 @@ class User extends Model
         }
     }
 
-    //实名认证显示信息
-    function userinfoone($data)
-    {
-        $select = "u.*,i.*,b.account";
-        $where = "where u.id=" . $data['id'];
-        $sql = "select {$select} from {$this->dbfix}user u 
-left join {$this->dbfix}userinfo i on u.id=i.user_id 
-left join {$this->dbfix}account_bank b on u.id=b.user_id {$where}";
-        return $this->mysql->get_one($sql);
-    }
+
 
     //用户管理编辑
     function edit($data = array())
@@ -244,5 +235,11 @@ left join {$this->dbfix}account_bank b on u.id=b.user_id {$where}";
     public function Bank()
     {
         return $this->hasOne('App\Model\AccountBank','user_id','id');
+    }
+
+    //实名认证
+    public function UserInfo()
+    {
+        return $this->hasOne('App\Model\UserInfo','user_id','id');
     }
 }
