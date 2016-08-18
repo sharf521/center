@@ -5,67 +5,79 @@ if($this->func=='index'){?>
     	<span>用户管理</span>列表  <?=$this->anchor('user/add/','添加');?>
     </div>
     <form method="get">
-    <div class="search">
-    	用户类型：<select name="type_id" id="type_id">
-                	<option value="">请选择</option>
-                	<?
-                    	foreach($usertype as $utype)
-						{
-							?>
-                            <option value="<?=$utype['id']?>" <? if($utype['id']==$_GET['type_id']){echo ' selected';}?>><?=$utype['name']?></option>  
-                            <?
-						}
-					?>   
-                </select>
-        用户名：<input type="text" name="username" value="<?=$_GET['username']?>"/>
-        <input type="submit" class="but2" value="查询" />
-    </div>
+        <div class="search">
+            用户类型：<select name="type_id" id="type_id">
+                <option value="">请选择</option>
+                <?
+                foreach ($usertype as $utype) {
+                    ?>
+                    <option value="<?= $utype['id'] ?>" <? if ($utype['id'] == $_GET['type_id']) {
+                        echo ' selected';
+                    } ?>><?= $utype['name'] ?></option>
+                    <?
+                }
+                ?>
+            </select>
+            用户名：<input type="text" name="username" value="<?= $_GET['username'] ?>"/>
+            邀请人ID:<input type="text" size="4" name="invite_userid" value="<?= $_GET['invite_userid'] ?>"/>
+
+            时间：<input  name="starttime" type="text" value="<?=$_GET['starttime']?>" onClick="javascript:WdatePicker();" class="Wdate">
+            到
+            <input  name="endtime" type="text" value="<?=$_GET['endtime']?>" onClick="javascript:WdatePicker();" class="Wdate">
+            <input type="submit" class="but2" value="查询"/>
+        </div>
     </form>
         <table class="table">
         	<tr class="bt">
-            	<th>USER_ID</th>
-                <th>用户类型</th>
+            	<th>ID</th>
                 <th>用户名</th>
+                <th>用户类型</th>
+                <th>姓名</th>
+                <th>推荐人/姓名</th>
                 <th>EMAIL</th>
-                <th>真实姓名</th>
-                <th>电话</th>
-                <th>QQ</th>
-                <th>地址</th>
                 <th>注册时间</th>
+                <th>可用资金</th>
+                <th>冻结资金</th>
+                <th>可用积分</th>
+                <th>冻结积分</th>
+                <th>保证金</th>
+                <th>可用周转金</th>
+                <th>周转金额度</th>
                 <th>操作</th>
             </tr>
             <?
             foreach($list as $row)
 			{
+                $account=$row->Account();
 			?>
             <tr>
-            	<td><?=$row['id']?></td>
-                <td><?=$row['typename']?></td>
-                <td><?=$row['username']?></td>
-                <td><?=$row['email']?></td>
-                <td><?=$row['name']?></td>
-                <td><?=$row['tel']?></td>
-                <td><?=$row['qq']?></td>
-                <td><?=$row['address']?></td>
-                <td><?=date('Y-m-d H:i:s',$row['created_at'])?></td>
-                <td class="operate">
-				<? 
-				if($row['id']=="1")
-				{
-					echo "ADMIN用户禁止操作";
-				}
-				else
-				{
-					echo $this->anchor('user/edit/?id='.$row['id'],'编辑');
-					echo '&nbsp;|&nbsp;';
-					echo $this->anchor('user/edittype/?id='.$row['id'],'修改用户类型');
-                    echo '&nbsp;|&nbsp;';
-                    echo $this->anchor('user/updatepwd/?id='.$row['id'],'修改密码');
-
-
-				}
-				?>
-                    </td>
+                <td><?=$row->id?></td>
+                <td><?=$row->username?></td>
+                <td><?=$row->UserType()->name?></td>
+                <td><span onmouseover=""></span><?=$row->name?></td>
+                <td><?=$row->Invite()->username?>/<?=$row->Invite()->name?></td>
+                <td><?=$row->email?></td>
+                <td><?=$row->created_at?></td>
+                <td class="fl">￥<?=(float)$account->funds_available?></td>
+                <td class="fl">￥<?=(float)$account->funds_freeze?></td>
+                <td class="fl">￥<?=(float)$account->integral_available?></td>
+                <td class="fl">￥<?=(float)$account->integral_freeze?></td>
+                <td class="fl">￥<?=(float)$account->security_deposit?></td>
+                <td class="fl">￥<?=(float)$account->turnover_available?></td>
+                <td class="fl">￥<?=(float)$account->turnover_credit?></td>
+                <td>
+                    <?
+                    if ($row->id == "2") {
+                        echo "ADMIN用户禁止操作";
+                    } else {
+                        echo $this->anchor('user/edit/?id=' . $row->id, '编辑');
+                        echo '&nbsp;|&nbsp;';
+                        echo $this->anchor('user/edittype/?id=' . $row->id, '修改用户类型');
+                        echo '&nbsp;|&nbsp;';
+                        echo $this->anchor('user/updatepwd/?id=' . $row->id, '修改密码');
+                    }
+                    ?>
+                </td>
             </tr>
             <? }?>
         </table>

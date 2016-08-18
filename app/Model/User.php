@@ -242,4 +242,9 @@ class User extends Model
     {
         return $this->hasOne('App\Model\UserInfo','user_id','id');
     }
+
+    public  function Invite()
+    {
+        return $this->hasOne('App\Model\User', 'id','invite_userid');
+    }
 }
