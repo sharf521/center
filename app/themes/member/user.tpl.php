@@ -111,7 +111,7 @@
             <?php elseif($this->func=='bank'): ?>
             <div class="box">
                 <h3>我的银行卡：</h3>
-                <? if($this->user->name=='') :?>
+                <? if($userInfo->card_status!=2) : ?>
                     <div class="alert-warning" role="alert">您还没有完成实名认证，请先完成<?=$this->anchor('user/realName','>>实名认证>>');?></div>
                 <?php else : ?>
                     <? if($bank->account==""){  ?>

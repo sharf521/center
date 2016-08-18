@@ -22,4 +22,9 @@ class AccountBank extends Model
     {
         return $this->hasOne('\App\Model\User','id','user_id');
     }
+
+    public function UserInfo()
+    {
+        return $this->hasOne('\App\Model\UserInfo','user_id','user_id');
+    }
 }
