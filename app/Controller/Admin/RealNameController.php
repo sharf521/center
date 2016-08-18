@@ -48,9 +48,13 @@ class RealNameController extends AdminController
         $userInfo=$userInfo->findOrFail($id);
         if($_POST){
             $remark=$request->post(verify_remark);
-            $status=$request->post(card_status);
+            $status=(int)$request->post(card_status);
             if($userInfo->card_status!=1){
                 redirect()->back()->with('error','状态异常，请勿重复审核！');
+            }
+
+            if($status==0){
+                redirect()->back()->with('error','请选择审核状态！');
             }
             if(empty($remark)){
                 redirect()->back()->with('error','审核备注不能为空！');

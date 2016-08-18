@@ -39,11 +39,11 @@ class UserController  extends MemberController
         $userInfo=$user->UserInfo();
         if($_POST){
             $name=$request->post('name');
-            $sex=$request->post('sex');
+            $sex=(int)$request->post('sex');
             $card_no=$request->post('card_no');
-            $province=$request->post('province');
-            $city=$request->post('city');
-            $county=$request->post('county');
+            $province=(int)$request->post('province');
+            $city=(int)$request->post('city');
+            $county=(int)$request->post('county');
             $card_pic1=$request->post('card_pic1');
             $card_pic2=$request->post('card_pic2');
             if(empty($name)){
