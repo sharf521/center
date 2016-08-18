@@ -17,6 +17,7 @@ $sex_array=array('','男','女');
                 }
                 //己审核
                 if ($userInfo->card_status == 2) : ?>
+                    <div class="alert-warning" role="alert">您己经通过实名认证！</div>
                     <table class="table_from">
                         <tr><td>真实姓名：</td><td><?=$userInfo->name?></td></tr>
                         <tr><td>性别：</td><td><?=$sex_array[$userInfo->sex]?></td></tr>

@@ -30,6 +30,9 @@ class MemberController extends BaseController
         }
         $user=new User();
         $this->user=$user->findOrFail($this->user_id);
+        if(trim($this->user->headimgurl)==''){
+            $this->user->headimgurl='/themes/member/images/no-img.jpg';
+        }
     }
 
     public function error()
