@@ -13,4 +13,13 @@ class AccountBank extends Model
 {
     protected $table='account_bank';
     protected $primaryKey='user_id';
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function User()
+    {
+        return $this->hasOne('\App\Model\User','id','user_id');
+    }
 }

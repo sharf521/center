@@ -36,8 +36,8 @@ class UserController  extends MemberController
     public function realName(Request $request,Region $region)
     {
         $user= $this->user;
+        $userInfo=$user->UserInfo();
         if($_POST){
-            $userInfo=new UserInfo();
             $name=$request->post('name');
             $sex=$request->post('sex');
             $card_no=$request->post('card_no');
@@ -53,7 +53,6 @@ class UserController  extends MemberController
                 redirect()->back()->with('error', '请输入正确的身份证号！');
             }
 
-
             $userInfo->name=$name;
             $userInfo->sex=$sex;
             $userInfo->card_no=$card_no;
@@ -67,7 +66,6 @@ class UserController  extends MemberController
             $userInfo->save();
             redirect()->back()->with('msg', '操作成功，等待管理员审核！');
         }else{
-            $userInfo=$user->UserInfo();
             $userInfo->provinceName=$region->getName($userInfo->province);
             $userInfo->cityName=$region->getName($userInfo->city);
             $userInfo->countyName=$region->getName($userInfo->county);
@@ -95,6 +93,7 @@ class UserController  extends MemberController
         }else{
             $bank->selBank=$linkPage->echoLink('account_bank',$bank->bank,array('name'=>'bank'));
             $data['bank']=$bank;
+            $data['user']=$bank->User();
             $data['title_herder']='我的银行卡';
             $this->view('user',$data);
         }

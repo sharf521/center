@@ -1,4 +1,8 @@
-<?php require 'header.php'; ?>
+<?php require 'header.php';
+
+$region=new \App\Model\Region();
+$sex_array=array('','男','女');
+?>
     <div class="warpcon">
         <?php require 'left.php'; ?>
         <div class="warpright">
@@ -8,49 +12,30 @@
                     <div class="alert-warning" role="alert">您己经上传资料，请等待审核！</div>
                 <? } ?>
                 <?
+                if($userInfo->card_status == 3){
+                    echo '<div class="alert-warning" role="alert">审核不通过，请查看审核意见后重新提交！</div>';
+                }
                 //己审核
                 if ($userInfo->card_status == 2) : ?>
-                    <form method="post" onSubmit="return setdisabled();">
-                        <table class="table_from">
-                            <tr>
-                                <td>用户名：</td>
-                                <td><?= $this->username ?></td>
-                            </tr>
-                            <tr>
-                                <td>可提现金额：</td>
-                                <td><?= '￥' . $account->funds_available ?></td>
-                            </tr>
-                            <tr>
-                                <td>姓名：</td>
-                                <td><?= $this->user->name ?></td>
-                            </tr>
-                            <tr>
-                                <td>提现银行：</td>
-                                <td><?= $bank->bank ?></td>
-                            </tr>
-                            <tr>
-                                <td>开户支行：</td>
-                                <td><?= $bank->branch ?></td>
-                            </tr>
-                            <tr>
-                                <td>银行账号：</td>
-                                <td><?= $bank->card_no ?></td>
-                            </tr>
-                            <tr>
-                                <td>提现金额：</td>
-                                <td><input name="total" type="text" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/>&nbsp;&nbsp;元
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>支付密码：</td>
-                                <td><input name="zf_password" type="password"/></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><input type="submit" value="提交"/></td>
-                            </tr>
-                        </table>
-                    </form>
+                    <table class="table_from">
+                        <tr><td>真实姓名：</td><td><?=$userInfo->name?></td></tr>
+                        <tr><td>性别：</td><td><?=$sex_array[$userInfo->sex]?></td></tr>
+                        <tr><td>身份证号：</td><td><?=$userInfo->card_no?></td></tr>
+                        <tr><td>籍贯：</td><td><?=$region->getName($userInfo->province)?> <?=$region->getName($userInfo->city)?> <?=$region->getName($userInfo->county)?></td></tr>
+                        <tr>
+                            <td align="right">身份证正面：</td>
+                            <td><a href="<?= $userInfo->card_pic1 ?>" target="_blank"><img src="<?= $userInfo->card_pic1 ?>" align="absmiddle" width="100"/></a>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">身份证背面：</td>
+                            <td>
+                                <a href="<?= $userInfo->card_pic2 ?>" target="_blank"><img src="<?= $userInfo->card_pic2 ?>" align="absmiddle" width="100"/></a>
+
+                            </td>
+                        </tr>
+                    </table>
                 <?php else : ?>
                     <script src="/plugin/js/ajaxfileupload.js?111"></script>
                     <form method="post">
@@ -130,10 +115,10 @@
                                     </div>
                                 </td>
                             </tr>
-                            <? if ($userInfo->card_remark != "") { ?>
+                            <? if ($userInfo->verify_remark != "") { ?>
                                 <tr>
                                     <td>审核意见：</td>
-                                    <td><?= $userInfo->card_remark ?></td>
+                                    <td><?= nl2br($userInfo->verify_remark) ?></td>
                                 </tr>
                             <? } ?>
                             <tr>

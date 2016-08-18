@@ -7,8 +7,8 @@
     </ul>
     <h3>我的资金</h3>
     <ul>
-        <li><a href="<?=url('account/recharge')?>" <? if($this->func=='recharge' || $this->func=='rechargeLog'){echo 'class="whover"';}?>>充值管理</a></li>
-        <li><a href="<?=url('account/cash')?>" <? if($this->func=='cash' || $this->func=='cashLog'){echo 'class="whover"';}?>>提现管理</a></li>
+        <li><a href="<?=url('account/recharge')?>" <? if($this->func=='recharge' || $this->func=='rechargeLog'){echo 'class="whover"';}?>>我要充值</a></li>
+        <li><a href="<?=url('account/cash')?>" <? if($this->func=='cash' || $this->func=='cashLog'){echo 'class="whover"';}?>>申请提现</a></li>
         <li><a href="<?=url('account/log')?>" <? if($this->func=='log'){echo 'class="whover"';}?>>资金记录</a></li>
         <li><a href="useralldd.html">积分兑换现金</a></li>
     </ul>
