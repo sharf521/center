@@ -52,6 +52,12 @@ class UserController  extends MemberController
             if(! $userInfo->isIdCard($card_no)){
                 redirect()->back()->with('error', '请输入正确的身份证号！');
             }
+            if(empty($province) || empty($city) || empty($county)){
+                redirect()->back()->with('error', '请选择籍贯！');
+            }
+            if(empty($card_pic1) || empty($card_pic2)){
+                redirect()->back()->with('error', '请上传身份证照片！');
+            }
 
             $userInfo->name=$name;
             $userInfo->sex=$sex;
