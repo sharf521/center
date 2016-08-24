@@ -13,5 +13,34 @@
         </form>
     </div>
 </div>
+    <script>
+        $(document).ready(function () {
+            $('#login_form').validate({
+                onkeyup: false,
+                errorPlacement: function (error, element) {
+                    element.nextAll('b').first().after(error);
+                },
+                submitHandler: function (form) {
+                    ajaxpost('login_form', '', '', 'onerror');
+                },
+                rules: {
+                    username: {
+                        required: true
+                    },
+                    password: {
+                        required: true
+                    },
+                },
+                messages: {
+                    username: {
+                        required: '请填写账号'
+                    },
+                    password: {
+                        required: '请填写密码'
+                    },
+                }
+            });
+        });
+    </script>
 <div class="lo_copy">&copy; 远途网 2016</div>
 <?php require 'footer.php';?>
