@@ -11,7 +11,7 @@ class MemberController extends BaseController
     {
         parent::__construct();
         global $_G;
-        $this->base_url='/index.php/member/';
+        $this->base_url='/member/';
         if (strpos(strtolower($_SERVER['HTTP_HOST']), 'wap.') === false) {
             $this->is_wap = false;
             $this->template = 'member';
