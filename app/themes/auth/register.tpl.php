@@ -11,7 +11,7 @@
                 <p><input type="text" name="username"  placeholder="请输入账号"/><b></b></p>
                 <p><input type="text" name="email"  placeholder="请输入邮箱"/><b></b></p>
                 <p><input type="text" name="invite_user"  placeholder="推荐人" value="<?=$r?>"/><b></b></p>
-                <p><input type="password" name="password"  placeholder="请输入密码" /><b></b></p>
+                <p><input type="password" name="password" id="field"  placeholder="请输入密码" /><b></b></p>
                 <p><input type="password" name="sure_password"  placeholder="确认密码"/><b></b></p>
             </div>
             <p class="tip_most"><span>没有账号？<a href="<?=$_url?>">去登陆</a></span></p>
@@ -61,7 +61,8 @@
                     rangelength:[6,15]
                 },
                 sure_password:{
-                    equalTo: "#password"
+                    required: true,
+                    equalTo: "#field"
                 }
             },
             messages: {
@@ -83,6 +84,7 @@
                     rangelength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
                 },
                 sure_password:{
+                    required: '<i class="fa fa-exclamation-circle"></i>请确认密码',
                     equalTo: '<i class="fa fa-exclamation-circle"></i>两次输入密码不一致',
                 }
             }
