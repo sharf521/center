@@ -22,33 +22,37 @@
 <script src="/plugin/js/jquery.js"></script>
 <script src="/plugin/js/jquery.validation.min.js"></script>
 <script>
-    $(document).ready(function(){
-
+    $(document).ready(function () {
         $('#login_form').validate({
             onkeyup: false,
-            errorPlacement: function(error, element){
+            errorPlacement: function (error, element) {
                 element.nextAll('b').first().after(error);
             },
-            submitHandler:function(form){
+            submitHandler: function (form) {
                 ajaxpost('login_form', '', '', 'onerror');
             },
             rules: {
-                email: {
+                username: {
                     required: true,
-//                    email:true,
+                    minlength: 6,
+                    maxlength: 15
                 },
                 password: {
                     required: true,
+                    minlength: 6,
+                    maxlength: 15
                 },
-
             },
             messages: {
                 username: {
                     required: '<i class="fa fa-exclamation-circle"></i>请填写账号',
-                    email: '<i class="fa fa-exclamation-circle"></i>请填写正确的邮箱',
+                    minlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
+                    maxlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位'
                 },
                 password: {
                     required: '<i class="fa fa-exclamation-circle"></i>请填写密码',
+                    minlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
+                    maxlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位'
                 },
             }
         });

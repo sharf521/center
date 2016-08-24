@@ -53,6 +53,7 @@ class AccountController extends MemberController
                 redirect()->back()->with('msg', '操作成功，等待财务审核！');
             }
         } else {
+            $data['title_herder']='我要充值';
             $data['user']=$this->user;
             $this->view('accountRecharge',$data);
         }
@@ -79,6 +80,7 @@ class AccountController extends MemberController
             $where.=" and created_at<".strtotime($endtime);
         }
         $data['result']=$recharge->where($where)->orderBy('id desc')->pager($page);
+        $data['title_herder']='充值记录';
         $this->view('accountRecharge',$data);
     }
 

@@ -11,7 +11,7 @@
                 <p><input type="text" name="username"  placeholder="请输入账号"/><b></b></p>
                 <p><input type="text" name="email"  placeholder="请输入邮箱"/><b></b></p>
                 <p><input type="text" name="invite_user"  placeholder="推荐人"/><b></b></p>
-                <p><input type="password" name="password"  placeholder="请输入密码" /><b></b></p>
+                <p><input type="password" name="password"  id="password" placeholder="请输入密码" /><b></b></p>
                 <p><input type="password" name="sure_password"  placeholder="确认密码"/><b></b></p>
             </div>
             <p class="tip_most"><span>没有账号？<a href="/login">去登陆</a></span></p>
@@ -26,7 +26,6 @@
 <script src="/plugin/js/jquery.validation.min.js"></script>
 <script>
     $(document).ready(function(){
-
         $('#login_form').validate({
             onkeyup: false,
             errorPlacement: function(error, element){
@@ -36,23 +35,56 @@
                 ajaxpost('login_form', '', '', 'onerror');
             },
             rules: {
+                username: {
+                    required: true,
+                    rangelength:[6,15],
+                    remote:"/index.php/register/checkUserName/"
+                },
                 email: {
                     required: true,
-//                    email:true,
+                    email:true,
+                    remote:"/index.php/register/checkEmail/"
+                },
+                invite_user:{
+                    remote:{
+                        url:"/index.php/register/checkInviteUser/",
+                        data: {
+                            'invite_user': function(){
+                                return $('input[name="invite_user"]').val();
+                            },
+                            'app_id':'<?=$_GET['appid']?>'
+                        }
+                    }
                 },
                 password: {
                     required: true,
+                    rangelength:[6,15]
                 },
-
+                sure_password:{
+                    equalTo: "#password"
+                }
             },
             messages: {
                 username: {
                     required: '<i class="fa fa-exclamation-circle"></i>请填写账号',
+                    rangelength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
+                    remote:'<i class="fa fa-exclamation-circle"></i>该用户名己存在'
+                },
+                email:{
+                    required: '<i class="fa fa-exclamation-circle"></i>邮箱不能为空',
                     email: '<i class="fa fa-exclamation-circle"></i>请填写正确的邮箱',
+                    remote:'<i class="fa fa-exclamation-circle"></i>该邮箱不可用'
+                },
+                invite_user:{
+                    remote:'<i class="fa fa-exclamation-circle"></i>推荐人不存在'
                 },
                 password: {
                     required: '<i class="fa fa-exclamation-circle"></i>请填写密码',
+                    rangelength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
                 },
+                sure_password:{
+                    equalTo: '<i class="fa fa-exclamation-circle"></i>两次输入密码不一致',
+                }
             }
         });
     });

@@ -33,4 +33,36 @@ class RegisterController extends Controller
             $this->view('register',$data);
         }
     }
+    
+    public function checkUserName(Request $request,User $user)
+    {
+        $return=$user->checkUserName($request->get('username'));
+        if($return===true){
+            echo 'true';
+        }else{
+            echo 'false';
+        }
+    }
+    
+    public function checkInviteUser(Request $request,User $user)
+    {
+        $invite_arr=$user->checkInvetUser($request->get('invite_user'),$request->get('app_id'));
+        if($invite_arr['status']===true){
+            echo 'true';
+        }else{
+            echo 'false';
+        }
+    }
+    
+    public function checkEmail(Request $request,User $user)
+    {
+        $return=$user->checkEmail($request->get('email'));
+        if($return===true){
+            echo 'true';
+        }else{
+            echo 'false';
+        }
+    }
+    
+
 }
