@@ -5,7 +5,6 @@ use System\Lib\DB;
 
 class LinkPage extends Model
 {
-
     private $result=null;
     function __construct()
     {

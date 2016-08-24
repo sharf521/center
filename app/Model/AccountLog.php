@@ -14,6 +14,10 @@ use System\Lib\DB;
 class AccountLog extends Model
 {
     protected $table='account_log';
+    public function __construct()
+    {
+        parent::__construct();
+    }
     function addLog($data)
     {
         $insert=false;

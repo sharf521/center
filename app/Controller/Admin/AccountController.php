@@ -7,6 +7,10 @@ use System\Lib\Request;
 
 class AccountController extends AdminController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function log(AccountLog $accountLog,Request $request)
     {

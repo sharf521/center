@@ -9,6 +9,4 @@ class Model extends BaseModel
     {
         parent::__construct();
     }
-
-
 }

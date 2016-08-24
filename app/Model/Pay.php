@@ -12,4 +12,8 @@ namespace App\Model;
 class Pay extends Model
 {
     protected $table='pay';
+    public function __construct()
+    {
+        parent::__construct();
+    }
 }

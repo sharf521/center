@@ -9,15 +9,24 @@
 namespace App\Controller;
 
 use App\Model\AccountLog;
+use App\Model\System;
 use System\Lib\DB;
 use System\Lib\Request;
 
 class PayController extends Controller
 {
-    private $pid = 32;
-    private $md5Key = 'bf2049cfe3b249f7148f4dd65fdcd06b';
+    private $pid = 0;
+    private $md5Key = '';
 
     public function __construct()
+    {
+        parent::__construct();
+        $system=new System();
+        $this->pid=$system->getCode('pay_pid');
+        $this->md5Key=$system->getCode('pay_key');
+    }
+
+    public function index()
     {
 
     }

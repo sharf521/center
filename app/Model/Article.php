@@ -4,6 +4,10 @@ namespace App\Model;
 class Article extends Model
 {
     protected $table = 'article';
+    public function __construct()
+    {
+        parent::__construct();
+    }
     
     public function ArticleData()
     {

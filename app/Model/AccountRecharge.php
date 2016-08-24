@@ -12,7 +12,10 @@ namespace App\Model;
 class AccountRecharge extends Model
 {
     protected $table='account_recharge';
-
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function user()
     {

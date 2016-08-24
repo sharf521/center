@@ -13,11 +13,6 @@ class AjaxController extends Controller
         parent::__construct();
     }
 
-    public function aa()
-    {
-        echo 111;
-    }
-
     public function getFbbTree()
     {
         /*
