@@ -33,12 +33,10 @@
             },
             rules: {
                 username: {
-                    required: true,
+                    required: true
                 },
                 password: {
-                    required: true,
-                    minlength: 6,
-                    maxlength: 15
+                    required: true
                 },
             },
             messages: {

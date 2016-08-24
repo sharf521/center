@@ -52,7 +52,7 @@
                             'invite_user': function(){
                                 return $('input[name="invite_user"]').val();
                             },
-                            'app_id':'<?=$_GET['appid']?>'
+                            'appid':'<?=$_GET['appid']?>'
                         }
                     }
                 },

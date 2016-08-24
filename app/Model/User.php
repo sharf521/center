@@ -106,14 +106,14 @@ class User extends Model
         }
     }
 
-    public function checkInvetUser($username,$app_id='')
+    public function checkInvetUser($username,$appid='')
     {
         $invite_userid=0;
         $invite_path='';
         $return=array();
         $return['status']=false;
         if(!empty($username) ){
-            if(empty($app_id)){
+            if(empty($appid)){
                 $invite_user=DB::table('user')->select('id,invite_path')->where("username=?")->bindValues($username)->row();
                 if($invite_user){
                     $invite_userid=$invite_user['id'];
@@ -123,6 +123,7 @@ class User extends Model
                     return $return;
                 }
             }else{
+                $app_id=DB::table('app')->where('appid=?')->bindValues($appid)->value('id');
                 $invite_user=DB::table('user u')->select('u.id,u.invite_path')
                     ->leftJoin('app_user au',"u.id=au.user_id")
                     ->where("u.username=? and au.app_id=?")
