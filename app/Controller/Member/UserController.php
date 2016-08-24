@@ -30,6 +30,7 @@ class UserController  extends MemberController
             redirect()->back()->with('msg', '保存成功！');
         } else {
             $data['user'] = $this->user;
+            $data['title_herder']='个人信息';
             $this->view('user', $data);
         }
     }
