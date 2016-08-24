@@ -33,26 +33,18 @@
             },
             rules: {
                 username: {
-                    required: true,
-                    minlength: 6,
-                    maxlength: 15
+                    required: true
                 },
                 password: {
-                    required: true,
-                    minlength: 6,
-                    maxlength: 15
+                    required: true
                 },
             },
             messages: {
                 username: {
-                    required: '<i class="fa fa-exclamation-circle"></i>请填写账号',
-                    minlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
-                    maxlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位'
+                    required: '<i class="fa fa-exclamation-circle"></i>请填写账号'
                 },
                 password: {
-                    required: '<i class="fa fa-exclamation-circle"></i>请填写密码',
-                    minlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
-                    maxlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位'
+                    required: '<i class="fa fa-exclamation-circle"></i>请填写密码'
                 },
             }
         });

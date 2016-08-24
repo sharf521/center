@@ -34,8 +34,6 @@
             rules: {
                 username: {
                     required: true,
-                    minlength: 6,
-                    maxlength: 15
                 },
                 password: {
                     required: true,
@@ -46,13 +44,9 @@
             messages: {
                 username: {
                     required: '<i class="fa fa-exclamation-circle"></i>请填写账号',
-                    minlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
-                    maxlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位'
                 },
                 password: {
                     required: '<i class="fa fa-exclamation-circle"></i>请填写密码',
-                    minlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
-                    maxlength: '<i class="fa fa-exclamation-circle"></i>长度6至15位'
                 },
             }
         });
