@@ -59,11 +59,11 @@
                         <td><input type="password" name="old_password" class="nam_inpou"/></td>
                     </tr>
                     <tr>
-                        <td align="right" style="width:12rem;">新支付密码：</td>
+                        <td align="right" style="width:12rem;">新密码：</td>
                         <td><input type="password" name="zf_password" class="nam_inpou"/></td>
                     </tr>
                     <tr>
-                        <td align="right" style="width:12rem;">确认新密码：</td>
+                        <td align="right" style="width:12rem;">确认密码：</td>
                         <td><input type="password" name="sure_password" class="nam_inpou"/></td>
                     </tr>
                     <tr>
@@ -116,11 +116,11 @@
                 <div class="ca_d_table">
                     <table width="100%">
                         <tr>
-                            <td align="right" style="width:12rem;">新支付密码：</td>
+                            <td align="right" style="width:12rem;">新密码：</td>
                             <td><input type="password" name="zf_password" class="nam_inpou"/></td>
                         </tr>
                         <tr>
-                            <td align="right" style="width:12rem;">确认新密码：</td>
+                            <td align="right" style="width:12rem;">确认密码：</td>
                             <td><input type="password" name="sure_password" class="nam_inpou"/></td>
                         </tr>
                         <tr>
