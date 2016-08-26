@@ -1,8 +1,7 @@
 <?php require 'header.php';?>
 <?php if($this->func=='changePwd'):?>
     <nav>
-        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" /></a></span>
-        <p>首页</p>
+        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />首页</a></span>
     </nav>
     <div class="m_regtilinde">密码修改</div>
     <div class="view">
@@ -39,8 +38,7 @@
     </div>
 <?php elseif($this->func=='changePayPwd') : ?>
     <nav>
-        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" /></a></span>
-        <p>首页</p>
+        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />首页</a></span>
     </nav>
     <div class="m_regtilinde">修改支付密码</div>
     <div class="view">
@@ -76,8 +74,7 @@
 <?php elseif ($this->func == 'getPayPwd') : ?>
     <div class="box">
         <nav>
-            <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" /></a></span>
-            <p>首页</p>
+            <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />首页</a></span>
         </nav>
         <div class="m_regtilinde">找回支付密码</div>
         <div class="view">

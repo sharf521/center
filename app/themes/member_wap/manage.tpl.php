@@ -2,8 +2,7 @@
 
 
 <nav>
-    <span><img src="/themes/member_wap/images/icon_close.png"/></span>
-    <p>首页</p>
+    <span><img src="/themes/member_wap/images/icon_close.png"/>首页</span>
 </nav>
 <div class="m_user_title">
     <a href="<?= url('user/userInfo'); ?>">
