@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Member;
 
+use App\Model\Account;
 use App\Model\AccountCash;
 use App\Model\AccountLog;
 use App\Model\AccountRecharge;
@@ -15,9 +16,10 @@ class AccountController extends MemberController
         parent::__construct();
     }
     
-    public function index()
+    public function index(Account $account)
     {
-
+        $data['account'] =$account->find($this->user_id);
+        $this->view('account',$data);
     }
 
     //线下冲值

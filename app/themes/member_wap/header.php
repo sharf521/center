@@ -14,5 +14,6 @@
     <link href="/themes/member_wap/css/common.css" type="text/css" rel="stylesheet"/>
     <link href="/themes/member_wap/css/account.css" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="/themes/member_wap/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/themes/member_wap/member.js"></script>
 </head>
 <body>

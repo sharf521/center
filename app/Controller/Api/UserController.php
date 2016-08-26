@@ -24,7 +24,7 @@ class UserController extends ApiController
             $user=array(
                 'openid' => $data['openid'],
                 'username' => $row['username'],
-                'headimgurl' => $row['headimgurl'],
+                'headimgurl' => 'http://'.$_SERVER['HTTP_HOST'].$row['headimgurl'],
                 'nickname' => $row['nickname'],
                 'qq' => $row['qq'],
                 'tel' => $row['tel'],

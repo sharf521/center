@@ -20,6 +20,7 @@
 .view{height: 8rem; line-height: 8rem; font-size: 2.6rem; width: 90%; margin: 0 auto;}
 .view li{ float: left; width: 33.33%; text-align: center; border-bottom: 2px solid #ddd;}
 .view li.cur{ border-bottom: 2px solid #f60; color: #f60;}
+.view li.cur a{color: #f60;}
 .show_now{ display: none;}
 /*账户余额*/
 .mode{ padding: 5rem 2rem 5rem 2rem; background: #e00; color: #fff; text-align: center;}
@@ -32,7 +33,7 @@
 .lump li:nth-child(2){ border-top: none;}
 .lump li:nth-child(2n-1){ border-left: none;}
 .lump li span{ color: #FF4B00; font-size: 4rem; line-height: 8rem;}
-.mode_foot{ position: fixed; width: 100%; left: 0; bottom: 0; border-top: 1px solid #ddd; padding: 1rem 0; height: 8rem; line-height: 8rem; text-align: center; }
+.mode_foot{ position: fixed; width: 100%; left: 0; bottom: 0; background-color: #fff; border-top: 1px solid #ddd; padding: 1rem 0; height: 8rem; line-height: 8rem; text-align: center; }
 .mode_foot li{ width: 50%; font-size: 3rem; display: inline-block; float: left; }
 .mode_foot p{ width: 100%; font-size: 3rem; display: inline-block; float: left; }
 .mode_foot a{ color: #e00; display: block;}

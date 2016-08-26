@@ -14,8 +14,8 @@
     </ul>
     <h3>密码管理</h3>
     <ul>
-        <li><a href="<?=url('user/changePwd')?>" <? if($this->func=='changePwd'){echo 'class="whover"';}?>>修改密码</a></li>
-        <li><a href="<?=url('user/changePayPwd')?>" <? if($this->func=='changePayPwd'){echo 'class="whover"';}?>>修改支付密码</a></li>
-        <li class="active"><a href="<?=url('user/getPayPwd')?>" <? if($this->func=='getPayPwd'){echo 'class="whover"';}?>>找回支付密码</a></li>
+        <li><a href="<?=url('password/changePwd')?>" <? if($this->func=='changePwd'){echo 'class="whover"';}?>>修改密码</a></li>
+        <li><a href="<?=url('password/changePayPwd')?>" <? if($this->func=='changePayPwd'){echo 'class="whover"';}?>>修改支付密码</a></li>
+        <li class="active"><a href="<?=url('password/getPayPwd')?>" <? if($this->func=='getPayPwd'){echo 'class="whover"';}?>>找回支付密码</a></li>
     </ul>
 </div>
