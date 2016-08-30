@@ -53,6 +53,11 @@ class ApiController extends BaseController
         if (isset($data['sign'])) {
             unset($data['sign']);
         }
+        if (isset($data['data'])) {
+            foreach ($data['data'] as $i => $v) {
+                ksort($data['data'][$i]);
+            }
+        }
         ksort($data);
         $jsonStr = json_encode($data);
         $str = strtoupper(md5($jsonStr . $this->appsecret));
