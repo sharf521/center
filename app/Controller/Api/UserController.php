@@ -85,6 +85,7 @@ class UserController extends ApiController
     {
         $data=$this->data;
         $pay_order=array(
+            'order_no'=>time().rand(10000,90000),
             'app_id'=>$this->app_id,
             'openid'=>$data['openid'],
             'user_id'=>(int)$data['user_id'],
@@ -105,7 +106,7 @@ class UserController extends ApiController
             $pay_order_id=DB::table('pay_order')->insertGetId($pay_order);
             foreach ($data['data'] as $item){
                 $item['pay_order_id']=$pay_order_id;
-                $item['app_order_no']=$data['app_order_no'];
+                $item['app_order_no']=$data['order_no'];
                 $item['label']=$data['label'];
                 $accountLog->addLog($item);
             }
@@ -116,7 +117,66 @@ class UserController extends ApiController
             DB::rollBack();
             return $this->returnError("Failed: " .$e->getMessage());
         }
-        return $this->returnSuccess();
+        return $this->returnSuccess(array('order_no'=>$pay_order['order_no']));
+    }
+
+    // 退款
+    public function refund(AccountLog $accountLog)
+    {
+        $data=$this->data;
+        $pay_order=array(
+            'order_no'=>time().rand(10000,90000),
+            'app_id'=>$this->app_id,
+            'openid'=>$data['openid'],
+            'user_id'=>(int)$data['user_id'],
+            'body'=>$data['body'].'退款',
+            'app_order_no'=>$data['order_no'],
+            'type'=>$data['type'],
+            'status'=>0,
+            'remark'=>$data['remark'],
+            'label'=>$data['label'],
+            'data'=>json_encode($data['data']),
+            'signature'=>$data['sign'],
+            'addip'=>ip(),
+            'created_at'=>time()
+        );
+        try {
+            DB::beginTransaction();
+
+            $pay_order_id=DB::table('pay_order')->insertGetId($pay_order);
+            //多个订单
+            foreach ($data['data'] as $order_no_old){
+                //获取单个旧订单
+                $pay_order=DB::table('pay_order')->where('order_no=?')->bindValues($order_no_old)->row();
+                if($pay_order['status']==1){
+                    $pay_order_data=json_decode($pay_order['data'],true);
+                    if(is_array($pay_order_data)){
+                        $arr_col=array('funds_available','funds_freeze','integral_available','integral_freeze','security_deposit','turnover_available','turnover_credit');
+                        //多个人的资金变化
+                        foreach ($pay_order_data as $item){
+                            foreach ($item as $i=>$v){
+                                if(in_array($i,$arr_col)){
+                                    $item[$i]='-'.$v;
+                                }
+                            }
+                            $item['pay_order_id']=$pay_order_id;
+                            $item['app_order_no']=$data['order_no'];
+                            $item['label']=$pay_order['label'];
+                            $accountLog->addLog($item);
+                        }
+                    }
+                    //更改旧订单为2
+                    DB::table('pay_order')->where("id={$order_no_old}")->limit(1)->update(array('status'=>2));
+                }
+            }
+            DB::table('pay_order')->where("id={$pay_order_id}")->limit(1)->update(array('status'=>1));
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->returnError("Failed: " .$e->getMessage());
+        }
+        return $this->returnSuccess(array('order_no'=>$pay_order['order_no']));
     }
 }
 

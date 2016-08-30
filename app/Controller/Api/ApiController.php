@@ -55,7 +55,9 @@ class ApiController extends BaseController
         }
         if (isset($data['data'])) {
             foreach ($data['data'] as $i => $v) {
-                ksort($data['data'][$i]);
+                if (is_array($v)) {
+                    ksort($data['data'][$i]);
+                }
             }
         }
         ksort($data);
