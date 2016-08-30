@@ -166,7 +166,7 @@ class UserController extends ApiController
                         }
                     }
                     //更改旧订单为2
-                    DB::table('pay_order')->where("id={$order_no_old}")->limit(1)->update(array('status'=>2));
+                    DB::table('pay_order')->where('order_no=?')->bindValues($order_no_old)->limit(1)->update(array('status'=>2));
                 }
             }
             DB::table('pay_order')->where("id={$pay_order_id}")->limit(1)->update(array('status'=>1));
