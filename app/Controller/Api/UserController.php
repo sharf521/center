@@ -84,7 +84,7 @@ class UserController extends ApiController
     public function receivables(AccountLog $accountLog)
     {
         $data=$this->data;
-        $pay_order=array(
+        $pay_arr=array(
             'pay_no'=>time().rand(10000,90000),
             'app_id'=>$this->app_id,
             'openid'=>$data['openid'],
@@ -103,10 +103,10 @@ class UserController extends ApiController
         try {
             DB::beginTransaction();
 
-            $pay_order_id=DB::table('pay_order')->insertGetId($pay_order);
+            $pay_order_id=DB::table('pay_order')->insertGetId($pay_arr);
             foreach ($data['data'] as $item){
-                $item['pay_no']=$pay_order['pay_no'];
-                $item['app_order_no']=$data['order_no'];
+                $item['pay_no']=$pay_arr['pay_no'];
+                $item['app_order_no']=$pay_arr['app_order_no'];
                 $item['label']=$data['label'];
                 $accountLog->addLog($item);
             }
@@ -117,14 +117,14 @@ class UserController extends ApiController
             DB::rollBack();
             return $this->returnError("Failed: " .$e->getMessage());
         }
-        return $this->returnSuccess(array('pay_no'=>$pay_order['pay_no']));
+        return $this->returnSuccess(array('pay_no'=>$pay_arr['pay_no']));
     }
 
     // 退款
     public function refund(AccountLog $accountLog)
     {
         $data=$this->data;
-        $pay_order=array(
+        $pay_arr=array(
             'pay_no'=>time().rand(10000,90000),
             'app_id'=>$this->app_id,
             'openid'=>$data['openid'],
@@ -143,7 +143,7 @@ class UserController extends ApiController
         try {
             DB::beginTransaction();
 
-            $pay_order_id=DB::table('pay_order')->insertGetId($pay_order);
+            $pay_order_id=DB::table('pay_order')->insertGetId($pay_arr);
             //多个订单
             foreach ($data['data'] as $pay_no_old){
                 //获取单个旧订单
@@ -159,8 +159,8 @@ class UserController extends ApiController
                                     $item[$i]='-'.$v;
                                 }
                             }
-                            $item['pay_no']=$pay_order['pay_no'];
-                            $item['app_order_no']=$data['order_no'];
+                            $item['pay_no']=$pay_arr['pay_no'];
+                            $item['app_order_no']=$pay_arr['app_order_no'];
                             $item['label']=$pay_order['label'];
                             $accountLog->addLog($item);
                         }
@@ -176,7 +176,7 @@ class UserController extends ApiController
             DB::rollBack();
             return $this->returnError("Failed: " .$e->getMessage());
         }
-        return $this->returnSuccess();
+        return $this->returnSuccess(array('pay_no'=>$pay_arr['pay_no']));
     }
 }
 
