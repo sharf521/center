@@ -104,7 +104,13 @@ class UserController extends ApiController
             DB::beginTransaction();
 
             $pay_order_id=DB::table('pay_order')->insertGetId($pay_arr);
+            if(!is_array($data['data'])){
+                throw new \Exception("data is not a array!");
+            }
             foreach ($data['data'] as $item){
+                if(!is_array($item)){
+                    throw new \Exception("data item is not a array!");
+                }
                 $item['pay_no']=$pay_arr['pay_no'];
                 $item['app_order_no']=$pay_arr['app_order_no'];
                 $item['label']=$data['label'];
@@ -144,6 +150,10 @@ class UserController extends ApiController
             DB::beginTransaction();
 
             $pay_order_id=DB::table('pay_order')->insertGetId($pay_arr);
+
+            if(!is_array($data['data'])){
+                throw new \Exception("data is not a array!");
+            }
             //多个订单
             foreach ($data['data'] as $pay_no_old){
                 //获取单个旧订单
