@@ -129,7 +129,7 @@ class UserController extends ApiController
             'app_id'=>$this->app_id,
             'openid'=>$data['openid'],
             'user_id'=>(int)$data['user_id'],
-            'body'=>$data['body'].'退款',
+            'body'=>$data['body'].'[退款]',
             'app_order_no'=>$data['order_no'],
             'type'=>$data['type'],
             'status'=>0,
@@ -176,7 +176,7 @@ class UserController extends ApiController
             DB::rollBack();
             return $this->returnError("Failed: " .$e->getMessage());
         }
-        return $this->returnSuccess(array('order_no'=>$pay_order['order_no']));
+        return $this->returnSuccess();
     }
 }
 
