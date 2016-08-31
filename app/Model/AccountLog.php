@@ -47,7 +47,7 @@ class AccountLog extends Model
                 }
                 $log=array(
                     'user_id'=>$user_id,
-                    'pay_order_id'=>(int)$data['pay_order_id'],
+                    'pay_no'=>$data['pay_no'],
                     'app_order_no'=>$data['app_order_no'],
                     'type'=>$data['type'],
                     'remark'=>$data['remark'],
