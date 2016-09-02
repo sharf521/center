@@ -5,6 +5,7 @@ class Model
 {
     //属性必须在这里声明
     protected $table;
+    protected $dates=array('created_at');
     protected $fields = array();
     protected $attributes = array();
     protected $cols;
@@ -22,9 +23,13 @@ class Model
         if (isset($this->attributes[$key])) {
             $val= $this->attributes[$key];
         } else {
-            $val= $this->cols->$key;
+            if(isset($this->cols->$key)){
+                $val= $this->cols->$key;
+            }else{
+                $val=null;
+            }
         }
-        if($key=='created_at'){
+        if(in_array($key,$this->dates)){
             return date('Y-m-d H:i:s',$val);
         }else{
             return $val;
@@ -61,7 +66,11 @@ class Model
         }
         return $post;
     }
-    
+
+    /**
+     * @param null int array $id
+     * @return mixed
+     */
     public function delete($id=null)
     {
         if($id==null){
@@ -114,13 +123,13 @@ class Model
     {
         if(empty($o)){
             $this->attributes=array();
-            $this->cols = array();
+            $this->cols =null;
             $this->is_exist = false;
             return $this;
         }else{
             $obj = clone $this;
             $id = $obj->primaryKey;
-            $obj->attributes[$obj->primaryKey] = $obj->$id;
+            $obj->attributes[$obj->primaryKey] = $o->$id;
             $obj->is_exist = true;
             $obj->cols = $o;
             return $obj;
@@ -168,7 +177,7 @@ class Model
         if ($this->is_exist) {
             $primaryKey = $this->primaryKey;
             $id = $this->$primaryKey;
-            unset($this->$primaryKey);
+            unset($this->attributes[$this->$primaryKey]);
             return DB::table($this->table)->where("{$primaryKey}=?")->bindValues($id)->limit('1')->update($this->attributes);
         } else {
             $this->attributes['created_at']=time();
