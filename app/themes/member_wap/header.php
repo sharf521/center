@@ -14,6 +14,6 @@
     <link href="/themes/member_wap/css/common.css?<?=rand(10000,99999)?>" type="text/css" rel="stylesheet"/>
     <link href="/themes/member_wap/css/account.css?<?=rand(10000,99999)?>" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="/themes/member_wap/js/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="/themes/member_wap/member.js"></script>
+    <script type="text/javascript" src="/themes/member_wap/member.js?<?=rand(10000,99999)?>"></script>
 </head>
 <body>

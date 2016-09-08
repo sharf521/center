@@ -54,7 +54,7 @@ function upload_image(id,type)
             if(result.status == 'success'){
                 var path=result.data+'?'+Math.random();
                 $('#'+id).val(path);
-                var _str="<img src='"+path+"'/>";
+                var _str="<a href='"+path+"' target='_blank'><img src='"+path+"' height='100'/></a>";
                 $('#upload_span_'+id).html(_str);
             }else{
                 alert(result.data);
