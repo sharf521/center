@@ -147,8 +147,6 @@ input[type=text],input[type=password],select {vertical-align: middle; background
 textarea {vertical-align: middle; line-height:30px; width: 100%; background:#fdfdfd; border:1px solid #e4e4e4;border-radius:3px; padding:0 0.6rem;box-sizing:border-box; }
 textarea:focus{ border:1px solid #2baab1;}
 input:focus{ border:1px solid #2baab1;}
-
-
 input[type=radio],input[type=checkbox]{ width:2.4rem; height:2.4rem;}
 .table_from{border-collapse: collapse; width: 100%;}
 .table_from td{ padding: 1rem 0.5rem; text-align: left; line-height:6rem; font-size:2.8rem; border-bottom: 1px solid #f1f1f1;}
