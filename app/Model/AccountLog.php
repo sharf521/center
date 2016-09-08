@@ -143,59 +143,59 @@ class AccountLog extends Model
             $now='';
             if($value->funds_available!=0){
                 if($value->funds_available>0){
-                    $change.="可用资金：+{$value->funds_available}<br>";
+                    $change.="可用资金：+".(float)$value->funds_available."<br>";
                 }else{
-                    $change.="可用资金：{$value->funds_available}<br>";
+                    $change.="可用资金：".(float)$value->funds_available."<br>";
                 }
-                $now.="当前可用资金：{$value->funds_available_now}<br>";
+                $now.="当前可用资金：".(float)$value->funds_available_now."<br>";
             }
             if($value->funds_freeze!=0){
                 if($value->funds_freeze>0){
-                    $change.="冻结资金：+{$value->funds_freeze}<br>";
+                    $change.="冻结资金：+".(float)$value->funds_freeze."<br>";
                 }else{
-                    $change.="冻结资金：{$value->funds_freeze}<br>";
+                    $change.="冻结资金：".(float)$value->funds_freeze."<br>";
                 }
-                $now.="当前冻结资金：{$value->funds_freeze_now}<br>";
+                $now.="当前冻结资金：".(float)$value->funds_freeze_now."<br>";
             }
             if($value->integral_available!=0){
                 if($value->integral_available>0){
-                    $change.="可用积分：+{$value->integral_available}<br>";
+                    $change.="可用积分：+".(float)$value->integral_available."<br>";
                 }else{
-                    $change.="可用积分：{$value->integral_available}<br>";
+                    $change.="可用积分：".(float)$value->integral_available."<br>";
                 }
-                $now.="当前可用积分：{$value->integral_available_now}<br>";
+                $now.="当前可用积分：".(float)$value->integral_available_now."<br>";
             }
             if($value->integral_freeze!=0){
                 if($value->integral_freeze>0){
-                    $change.="冻结积分：+{$value->integral_freeze}<br>";
+                    $change.="冻结积分：+".(float)$value->integral_freeze."<br>";
                 }else{
-                    $change.="冻结积分：{$value->integral_freeze}<br>";
+                    $change.="冻结积分：".(float)$value->integral_freeze."<br>";
                 }
-                $now.="当前冻结积分：{$value->integral_freeze_now}<br>";
+                $now.="当前冻结积分：".(float)$value->integral_freeze_now."<br>";
             }
             if($value->security_deposit!=0){
                 if($value->security_deposit>0){
-                    $change.="保证金：+{$value->security_deposit}<br>";
+                    $change.="保证金：+".(float)$value->security_deposit."<br>";
                 }else{
-                    $change.="保证金：{$value->security_deposit}<br>";
+                    $change.="保证金：".(float)$value->security_deposit."<br>";
                 }
-                $now.="当前保证金：{$value->security_deposit}<br>";
+                $now.="当前保证金：".(float)$value->security_deposit."<br>";
             }
             if($value->turnover_available!=0){
                 if($value->turnover_available>0){
-                    $change.="可用周转金：+{$value->turnover_available}.<br>";
+                    $change.="可用周转金：+".(float)$value->turnover_available."<br>";
                 }else{
-                    $change.="可用周转金：{$value->turnover_available}.<br>";
+                    $change.="可用周转金：".(float)$value->turnover_available."<br>";
                 }
                 $now.="可用周转金：{$value->turnover_available_now}<br>";
             }
             if($value->turnover_credit!=0){
                 if($value->turnover_credit){
-                    $change.="周转金额度：+{$value->turnover_credit}.<br>";
+                    $change.="周转金额度：+".(float)$value->turnover_credit."<br>";
                 }else{
-                    $change.="周转金额度：{$value->turnover_credit}.<br>";
+                    $change.="周转金额度：".(float)$value->turnover_credit."<br>";
                 }
-                $now.="当前周转金额度：{$value->turnover_credit_now}<br>";
+                $now.="当前周转金额度：".(float)$value->turnover_credit_now."<br>";
             }
             $result['list'][$index]->change=$change;
             $result['list'][$index]->now=$now;

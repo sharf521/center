@@ -41,7 +41,7 @@
                         src="/themes/member_wap/images/icon_password.png"></b><span>密码修改</span></a></li>
     </ul>
     <ul>
-        <li><a href="bill_list.html"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
+        <li><a href="<?= url('account/log'); ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/icon_bill.png"></b><span>账单记录</span></a></li>
     </ul>
 </div>

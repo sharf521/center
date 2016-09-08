@@ -104,8 +104,8 @@ label.error { color: #f00; position:absolute; bottom:0; left:0; font-size:2rem;}
 .bill_top .now_pay{ color: #f60;}
 .bill_top .yes_pay{ color: #28D496;}
 .bill_top .down{ display: inline-block; float: right; width: 4rem; height: 4rem; text-align: center; margin: 2rem 0 2rem 2rem; background: url(../images/icon_top.png) no-repeat center; background-size: 4rem; }
-.bill_show{ padding: 1rem 2rem 0; display: none; background: #eee; border-top: 1px solid #ccc; margin-top: 2rem;}
-.bill_show p{ padding: 1rem 0; font-size: 3rem;}
+.bill_show{ padding: 1rem 2rem 0; display: none; background: #eee; border-top: 1px solid #ccc; margin-top: 2rem;font-size: 3rem;}
+.bill_show p{ padding: 1rem 0; font-size: 3rem; line-height: 140%;}
 .bill_show p i{ font-style: normal;}
 .bill_show p span{ font-size: 3rem; display: inline-block;}
 .bill_show b{ font-weight: normal;}
@@ -117,7 +117,7 @@ label.error { color: #f00; position:absolute; bottom:0; left:0; font-size:2rem;}
 .bill_list.show .bill_top .down{ transform:rotate(180deg); -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); }
 .date_box{ margin-top: 2rem; line-height: 6rem; font-size: 2.6rem; border-bottom: 1px solid #ddd; padding: 2rem;}
 .date_box input[type=text]{ width: 15rem; height: 6rem; border:1px solid #ddd; font-size: 2.6rem; text-align: center;}
-.date_box input[type=submit]{ border: none; background: #00adfe; border-radius: .5rem; -webkit-border-radius: .5rem; -moz-border-radius: .5rem; height: 6rem; color: #fff;font-size: 2.6rem; padding: 0 1rem; float: right;}
+.date_box input[type=submit]{ border: none; background: #00adfe; border-radius: .5rem; height: 6rem; color: #fff;font-size: 2.6rem; padding: 0 1.5rem; }
 /*操作成功失败警告提示*/
 .point{ position: fixed; width: 80%; background: rgba(0,0,0,.6); color: #fff; text-align: center; padding: 2rem; box-sizing: border-box; border-radius: .5rem; -webkit-border-radius: .5rem; -moz-border-radius: .5rem;  left: 10%; top: 40%; z-index: 888}
 .point span{ display: block; width: 8rem; height: 8rem; margin: 0 auto;}

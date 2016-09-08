@@ -15,7 +15,6 @@
                                 <input type="file" id="upload_headimgurl" name="files" onchange="upload_image('headimgurl','headimgurl')">
                             </span></td>
                         </tr>
-
                         <tr><td align="right" style="width:12rem;">联系电话：</td><td><input type="text" name="tel" value="<?=$user->tel?>" class="nam_inpou" /></td></tr>
                         <tr><td align="right" style="width:12rem;">联系QQ： </td><td><input type="text" name="qq" class="nam_inpou" value="<?=$user->qq?>" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/></td></tr>
                         <tr><td align="right" style="width:12rem;">联系地址：</td><td><input type="text" name="address" class="nam_inpou" value="<?=$user->address?>"/></td></tr>
@@ -52,7 +51,7 @@
                             <tr><td align="right">银行账号：</td><td><?=$bank->card_no?></td></tr>
                         </table>
                     <? }?>
-                <? endif?>
+                <? endif ?>
             </div>
         <?php endif;?>
 <?php require 'footer.php';?>
