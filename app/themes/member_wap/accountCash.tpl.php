@@ -13,7 +13,7 @@
                     <tr><td>提现银行：</td><td><?=$bank->bank?></td></tr>
                     <tr><td>开户支行：</td><td><?=$bank->branch?></td></tr>
                     <tr><td>银行账号：</td><td><?=$bank->card_no?></td></tr>
-                    <tr><td>提现金额：</td><td><input  name="total" style="width: 90%" type="text" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/> 元</td></tr>
+                    <tr><td>提现金额：</td><td><input  name="total" style="width: 80%" type="text" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/> 元</td></tr>
                     <tr><td>支付密码：</td><td><input  name="zf_password" type="password"/></td></tr>
                     <tr><td colspan="2"><input type="submit" class="submit" value="提交" /></td></tr>
                 </table>
