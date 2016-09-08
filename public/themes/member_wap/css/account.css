@@ -154,7 +154,7 @@ input[type=radio],input[type=checkbox]{ width:2.4rem; height:2.4rem;}
 .table_from td{ padding: 1rem 0.5rem; text-align: left; line-height:6rem; font-size:2.8rem; border-bottom: 1px solid #f1f1f1;}
 .table_from>tbody>tr>td:first-child{text-align: right;}
 .table_from tr:hover{ background:#f9f9f9}
-.alert-warning{color: #8a6d3b;background-color: #fcf8e3;border-color: #faebcc;padding: 2rem;margin:4rem; font-size: 3rem; line-height: 1.4; border-radius: .6rem;}
+.alert-warning{color: #8a6d3b;background-color: #fcf8e3;border-color: #faebcc;padding: 2rem;margin:4rem; font-size: 3rem; line-height: 140%; border-radius: .6rem;}
 
 /*上传按钮*/
 .upload-upimg{height:6rem;width:20rem;position:relative; overflow:hidden; margin:0 1px;display:inline-block;border-radius: 0.3rem;}
