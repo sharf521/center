@@ -163,4 +163,4 @@ input[type=radio],input[type=checkbox]{ width:2.4rem; height:2.4rem;}
 
 /*提现说明*/
 .cash_prompt{ overflow:hidden; font-size:2.4rem; margin:3rem 1rem; color:#ff675c;}
-.cash_prompt li{ line-height:140%; color:#900; font-size:2rem;}
+.cash_prompt li{ line-height:140%; color:#900; font-size:2rem;max-height: 2000rem;}
