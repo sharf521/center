@@ -132,7 +132,7 @@ label.error { color: #f00; position:absolute; bottom:0; left:0; font-size:2rem;}
 /* add */
 select, input, button, textarea {font: 100% "Microsoft YaHei";padding: 0;}
 :focus {outline: 0 none;}
-input[type=text],select {vertical-align: middle; background:#fdfdfd; border:1px solid #e4e4e4;border-radius:3px;
+input[type=text],input[type=password],select {vertical-align: middle; background:#fdfdfd; border:1px solid #e4e4e4;border-radius:3px;
     width: 100%;
     box-sizing: border-box;
     height: 6rem;
@@ -162,3 +162,7 @@ input[type=radio],input[type=checkbox]{ width:2.4rem; height:2.4rem;}
     color: #FFF; font-size:2.4rem; line-height:6rem; text-align:center}
 .upload-upimg:hover{background-color:#F00;}
 .upload-upimg input{width: 100%; height: 100%;cursor: pointer;filter:alpha(opacity=0); -moz-opacity:0;	position:absolute;opacity:0;left:0px;top: 0px;}
+
+/*提现说明*/
+.cash_prompt{ overflow:hidden; font-size:2.4rem; margin:3rem; color:#ff675c;}
+.cash_prompt li{ line-height:140%; color:#900; font-size:2.4rem;}

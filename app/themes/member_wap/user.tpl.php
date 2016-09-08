@@ -28,7 +28,7 @@
             </div>
             <?php elseif($this->func=='bank'): ?>
             <div class="m_regtilinde">我的银行卡：</div>
-            <div class="ca_d_table input_right">
+            <div class="ca_d_table">
                 <? if($userInfo->card_status!=2) : ?>
                     <div class="alert-warning" role="alert">您还没有完成实名认证，请先完成<?=$this->anchor('user/realName','>>实名认证>>');?></div>
                 <?php else : ?>
