@@ -58,7 +58,7 @@ class Request
             exit;
         }
     }
-    
+
     public function user()
     {
         $user=app('\App\Model\User');

@@ -4,18 +4,20 @@
     <ul class="nav">
         <?
         //输出一级菜单
-        $num = 0;
+        $num = 1;
         foreach ($menu as $i => $m) {
-            $num++;
-            if ($num == 1)
+            if ($num == 1) {
                 echo "<li class='checkit'>{$m['name']}</li>";
-            else
+            } else {
                 echo "<li>{$m['name']}</li>";
+            }
+            $num++;
         }
         ?>
     </ul>
     <ul class="topnav">
         <li class="nihao">您好，<?= $this->username ?>！</li>
+        <li class="tuichu"><a href="<?=url('/member')?>" target="_blank">用户中心</a> </li>
         <li class="tuichu"><?= $this->anchor('changepwd', '[修改密码]', 'target="iframe_main"') ?></li>
         <li class="tuichu"><?= $this->anchor('logout', '[退出]') ?></li>
     </ul>
@@ -36,7 +38,6 @@
                     <?php
                     //显示左侧二级菜单
                     if (isset($m['son']) && is_array($m['son'])) {
-                        //$num1=0;
                         foreach ($m['son'] as $li) {
                             ?>
                             <li><a href="<?= url($li['url']) ?>" target="iframe_main"><?= $li['name'] ?></a></li>

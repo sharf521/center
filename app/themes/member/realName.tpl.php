@@ -8,10 +8,10 @@ $sex_array=array('','男','女');
         <div class="warpright">
             <div class="box">
                 <h3>实名认证</h3>
-                <? if ($userInfo->card_status == 1) { ?>
-                    <div class="alert-warning" role="alert">您己经上传资料，请等待审核！</div>
-                <? } ?>
-                <?
+                <? 
+                if ($userInfo->card_status == 1) { 
+                    echo '<div class="alert-warning" role="alert">您己经上传资料，请等待审核！</div>';
+                } 
                 if($userInfo->card_status == 3){
                     echo '<div class="alert-warning" role="alert">审核不通过，请查看审核意见后重新提交！</div>';
                 }

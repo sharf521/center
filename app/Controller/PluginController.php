@@ -127,4 +127,30 @@ class PluginController extends Controller
             }
         }
     }
+
+    public function kuaidi(Request $request)
+    {
+        $postid=700239322274;
+        $url="https://www.kuaidi100.com/autonumber/autoComNum?text={$postid}";
+        $html=curl_url($url);
+        $html=json_decode($html,true);
+        $coms=$html['auto'];
+        if(is_array($coms)){
+            foreach ($coms as $com){
+                $type=$com['comCode'];
+            }
+        }
+
+
+
+        $url="https://www.kuaidi100.com/query?type=yuantong&postid={$postid}";
+        $html=curl_url($url);
+        $html=json_decode($html,true);
+        if(is_array($html['data'])){
+            print_r($html['data']);
+        }
+
+    }
+    
+    
 }

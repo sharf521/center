@@ -53,6 +53,7 @@ class Application
                 array_push($dependencies, null);
             }
         }
+        //set_error_handler(array('System\Lib\Application', 'errorHandler'));
         return call_user_func_array(array($class, $method), $dependencies);
     }
 }

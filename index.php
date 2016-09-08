@@ -15,6 +15,25 @@ session_start();
 date_default_timezone_set('Asia/Shanghai');//时区配置
 set_time_limit($set_time = 3600);
 
+set_error_handler('errorHandler');
+function errorHandler($errno, $errstr, $errfile, $errline)
+{
+    if($errno ==E_NOTICE){
+        return true;
+    }
+    $file_path = ROOT . "/public/data/logs/";
+    if (!is_dir($file_path)) {
+        mkdir($file_path, 0777, true);
+    }
+    $filename = $file_path . date("Ym") . ".log";
+    $handler = null;
+    if (($handler = fopen($filename, 'ab+')) !== false) {
+        fwrite($handler, date('r') . "\t[$errno]$errstr\t$errfile\t$errline\n");
+        fclose($handler);
+    }
+}
+
+
 define('ROOT', __DIR__);
 $_G = array();
 require ROOT . '/vendor/autoload.php';
