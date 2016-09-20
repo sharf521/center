@@ -43,7 +43,7 @@
                         <td class="fl"><?=$row->body?></td>
                         <td><?=$row->getLinkPageName('account_type',$row->type);?></td>
                         <td class="fl"><?=$row->label?></td>
-                        <td class="fl"><?=$row->data?></td>
+                        <td class="fl" width="200"><?=$row->data?></td>
                         <td class="fl" width="200"><?=nl2br($row->remark)?></td>
                         <td><?=$row->created_at?></td>
                         <td><?=$status_arr[$row->status]?></td>
