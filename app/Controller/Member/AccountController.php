@@ -5,6 +5,7 @@ use App\Model\Account;
 use App\Model\AccountCash;
 use App\Model\AccountLog;
 use App\Model\AccountRecharge;
+use App\Model\Rebate;
 use App\Model\System;
 use System\Lib\DB;
 use System\Lib\Request;
@@ -104,7 +105,7 @@ class AccountController extends MemberController
             if($checkPwd!==true){
                 redirect()->back()->with('error','支付密码错误！');
             }
-            $fee=round_money(math($total,$cash_rate,'*',2),1);
+            $fee=round_money(math($total,$cash_rate,'*',3),2,2);
             if($fee<5){$fee=5;}
             $accountCash->user_id=$this->user_id;
             $accountCash->name=$this->user->name;
@@ -166,5 +167,57 @@ class AccountController extends MemberController
         $data['result']=$accountLog->getList($arr);
         $data['title_herder']='资金流水';
         $this->view('account',$data);
+    }
+
+    //积分换现金
+    public function convert(Account $account,Request $request,AccountLog $accountLog,Rebate $rebate)
+    {
+        $user_id=$this->user_id;
+        $account =$account->find($user_id);
+        if($_POST){
+            $total=(float)$request->post('total');
+            if($total < 50){
+                redirect()->back()->with('error','最少兑换50积分！');
+            }
+            if($total > $account->integral_available){
+                redirect()->back()->with('error','要兑换的积分少于您的可用积分！');
+            }
+            $checkPwd=$this->user->checkPayPwd($request->post('zf_password'),$this->user);
+            if($checkPwd!==true){
+                redirect()->back()->with('error','支付密码错误！');
+            }
+            $money=math($total,2.52,'/',3);
+            $money=round_money(math($money,0.69,'*',3),1,2);
+            try {
+                DB::beginTransaction();
+
+                $log = array(
+                    'user_id' => $user_id,
+                    'type' => 'convertFunds',
+                    'integral_available' =>'-'.$total,
+                    'funds_available' => $money,
+                    'remark' => '积分兑换现金'
+                );
+                $accountLog->addLog($log);
+                //加入对列
+                $arr = array(
+                    'site_id' => 0,
+                    'typeid' => 3,
+                    'user_id' =>$user_id,
+                    'money' =>$total,
+                );
+                $rebate->addRebate($arr);
+
+                DB::commit();
+                redirect('account/log')->with('msg','兑换完成！');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                $error= "Failed: " . $e->getMessage();
+                redirect()->back()->with('error',$error);
+            }
+        }else{
+            $data['account']=$account;
+            $this->view('account',$data);
+        }
     }
 }

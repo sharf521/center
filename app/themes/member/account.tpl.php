@@ -2,7 +2,7 @@
 <div class="warpcon">
     <?php require 'left.php';?>
     <div class="warpright">
-        <?php if ($this->func=='log'): ?>
+        <?php if ($this->func=='log') : ?>
             <div class="box">
                 <h3>资金记录：</h3>
                 <div class="search">
@@ -38,6 +38,28 @@
                     <div class="alert-warning" role="alert">无记录！</div>
                 <? }?>
                 <?=$result['page'];?>
+            </div>
+        <? elseif($this->func=='convert') : ?>
+            <div class="box">
+                <ul class="nav-tabs">
+                    <li class="active"><span>积分兑换现金</span></li>
+                </ul>
+                <form method="post" onSubmit="return setdisabled();">
+                    <table class="table_from">
+                        <tr><td>用户名：</td><td><?=$this->username?></td></tr>
+                        <tr><td>可用资金：</td><td><?='￥'.$account->funds_available?></td></tr>
+                        <tr><td>可用积分：</td><td><?=$account->integral_available?></td></tr>
+                        <tr><td>兑换积分：</td><td><input  name="total" type="text" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/></td></tr>
+                        <tr><td>支付密码：</td><td><input  name="zf_password" type="password"/></td></tr>
+                        <tr><td></td><td><input type="submit" value="立即兑换" onclick="return confirm('确认要兑换吗？')"/></td></tr>
+                    </table>
+                </form>
+                <ul class="prompt">
+                    <h4>温馨提示：</h4>
+                    <li>1、50积分起兑。</li>
+                    <li>2、兑换比例：2.52积分=1元。</li>
+                    <li>3、扣除31%用于长成积分。</li>
+                </ul>
             </div>
         <?php endif;?>
     </div>

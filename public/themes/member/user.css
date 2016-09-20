@@ -81,11 +81,12 @@ input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
 .table_from tr:hover{ background:#f9f9f9}
 
 .nav-tabs{border-bottom: 1px solid #ddd;padding-left: 30px; padding-top: 15px;}
-.nav-tabs li{  float: left;  position: relative; margin-bottom: -1px; border-radius: 4px 4px 0 0; margin-right: 2px;}
-.nav-tabs li.active{ border: 1px solid #ddd; border-bottom: 0px; font-size: 14px;}
+.nav-tabs li{  float: left;  position: relative; margin-bottom: -1px; border-radius: 4px 4px 0 0; margin-right: 2px;line-height: 38px;color: #555;}
+.nav-tabs li.active{ border: 1px solid #ddd; border-bottom: 0px; font-size: 14px;color:#ff665b}
 .nav-tabs li.active a{color:#ff665b}
 .nav-tabs li.active a:hover{background-color:#fff;}
-.nav-tabs li a{color: #555; background-color: #fff; border-radius: 4px 4px 0 0; display: block; line-height: 38px; padding: 0px 15px;}
+.nav-tabs li span{ background-color: #fff; border-radius: 4px 4px 0 0; display: block;padding: 0px 15px; }
+.nav-tabs li a{background-color: #fff; border-radius: 4px 4px 0 0; display: block;padding: 0px 15px; }
 .nav-tabs li a:hover{background-color: #EFEFEF; color:#ff665b;}
 .nav-tabs:after{clear:both;display:block;visibility:hidden;height:0;line-height:0;content:'';}
 
