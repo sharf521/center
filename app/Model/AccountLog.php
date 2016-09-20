@@ -137,6 +137,12 @@ class AccountLog extends Model
         if(!empty($data['user_id'])){
             $where.=" and user_id='{$data['user_id']}'";
         }
+        if(!empty($data['pay_no'])){
+            $where.=" and pay_no='{$data['pay_no']}'";
+        }
+        if(!empty($data['app_order_no'])){
+            $where.=" and app_order_no='{$data['app_order_no']}'";
+        }
         $result=$this->where($where)->orderBy('id desc')->pager(intval($_GET['page']));
         foreach ($result['list'] as $index=>$value){
             $change='';

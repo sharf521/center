@@ -16,6 +16,8 @@ class AccountController extends AdminController
     {
         $_GET['user_id']=(int)$request->get('user_id');
         $arr=array(
+            'pay_no'=>$request->get('pay_no'),
+            'app_order_no'=>$request->get('app_order_no'),
             'user_id'=>$_GET['user_id'],
             'label'=>$request->get('label'),
             'starttime'=>$request->get('starttime'),
