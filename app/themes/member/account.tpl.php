@@ -51,7 +51,7 @@
                         <tr><td>可用积分：</td><td><?=$account->integral_available?></td></tr>
                         <tr><td>兑换积分：</td><td><input  name="total" type="text" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/></td></tr>
                         <tr><td>支付密码：</td><td><input  name="zf_password" type="password"/></td></tr>
-                        <tr><td></td><td><input type="submit" value="立即兑换" onclick="return confirm('确认要兑换吗？')"/></td></tr>
+                        <tr><td></td><td><input type="submit" value="立即兑换"/></td></tr>
                     </table>
                 </form>
                 <ul class="prompt">
