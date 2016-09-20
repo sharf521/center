@@ -9,7 +9,6 @@
                     <li><a href="<?=url('account/rechargeLog')?>">充值记录</a></li>
                 </ul>
                 <form id="formpay" method="post" onSubmit="return card();" action="/pay/recharge" target="_blank">
-                    <input type="hidden" name="user_id" value="<?=$user->id?>">
                     <table class="table_from">
                         <tr>
                             <td align="right">用户名：</td><td><?=$user->username?></td>

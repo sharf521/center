@@ -52,7 +52,7 @@ class AccountController extends MemberController
                     'addip' => ip()
                 );
                 DB::table('account_recharge')->insert($data);
-                redirect()->back()->with('msg', '操作成功，等待财务审核！');
+                redirect('account/rechargeLog')->with('msg', '操作成功，等待财务审核！');
             }
         } else {
             $data['title_herder']='我要充值';

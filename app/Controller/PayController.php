@@ -33,7 +33,7 @@ class PayController extends Controller
 
     public function recharge(Request $request)
     {
-        $user_id = (int)$request->post('user_id');
+        $user_id = (int)$this->user_id;
         $host = $_SERVER['HTTP_HOST'];
         $money = (float)$request->post('money');
         if ($user_id == 0) {
