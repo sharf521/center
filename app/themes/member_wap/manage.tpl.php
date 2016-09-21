@@ -21,8 +21,8 @@
     </ul>
     <ul>
 
-        <li><a href="recharge.html"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
-                        src="/themes/member_wap/images/icon_recharge.png"></b><span>账户充值</span></a></li>
+<!--        <li><a href="recharge.html"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img-->
+<!--                        src="/themes/member_wap/images/icon_recharge.png"></b><span>账户充值</span></a></li>-->
         <li><a href="<?=url('account/cash')?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/icon_cash.png"></b><span>账户提现</span></a></li>
     </ul>

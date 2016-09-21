@@ -3,7 +3,7 @@
     <div class="mode">
         <p>可用资金</p>
         <h3><?=(float)$account->funds_available?></h3>
-        <a href="bill_list.html" class="link_bill">查看记录</a>
+        <a href="<?= url('account/log'); ?>" class="link_bill">查看记录</a>
     </div>
     <div class="lump">
         <ul>
@@ -46,10 +46,11 @@
                 <div class="bill_top">
                     <span class="date"><?=str_replace(' ','<br>',$row->created_at);?></span>
                     <b class="down"></b>
-                    <div class="still"><p class="add"></p><p><?=$row->getLinkPageName('account_type',$row->type);?></p></div>
+                    <div class="still"><p><?=$row->change?></p></div>
                 </div>
                 <div class="bill_show">
-                    <p><?=$row->change?></p>
+
+                    <p><?=$row->getLinkPageName('account_type',$row->type);?></p>
                     <p><span>备注：</span><i><?=nl2br($row->remark)?></i></p>
                 </div>
             </div>

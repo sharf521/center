@@ -43,57 +43,21 @@
             <div class="bill_top">
                 <span class="date"><?=$row->created_at?></span>
                 <b class="down"></b>
-                <div class="still"><p class="add">￥<?=$row->total?></p><p>转账</p></div>
+                <div class="still"><p class="add">￥<?=$row->total?></p><p><?=$row->getLinkPageName('check_status',$row->status)?></p></div>
             </div>
             <div class="bill_show">
-                <p><span>交易类型：</span><i>转账</i></p>
-                <p><span>交易周转金：</span><i>200.00</i></p>
-                <p><span>交易积分：</span><i>3000.00</i></p>
-                <p><span>支付操作：</span><i></i></p>
-                <p><span>备注：</span><i>这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，</i></p>
+                <p><span>手续费：</span><i>￥<?=$row->fee?></i></p>
+                <p><span>提现银行：</span><i><?=$row->bank?></i></p>
+                <p><span>开户支行：</span><i><?=$row->branch?></i></p>
+                <p><span>银行账户：</span><i><?=$row->card_no?></i></p>
+                <p><span>审核备注：</span><i><?=$row->verify_remark?></i></p>
+                <p><span>打款备注：</span><i><?=$row->remittance_remark?></i></p>
             </div>
         </div>
         <? endforeach;?>
-        <div class="bill_list">
-            <div class="bill_top">
-                <span class="date">2015-03-26<br/>13:03:13</span>
-                <b class="down"></b>
-                <div class="still"><p class="add">+5000</p><p>转账</p></div>
-            </div>
-            <div class="bill_show">
-                <p><span>交易类型：</span><i>转账</i></p>
-                <p><span>交易周转金：</span><i>200.00</i></p>
-                <p><span>交易积分：</span><i>3000.00</i></p>
-                <p><span>支付操作：</span><i></i></p>
-                <p><span>备注：</span><i>这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，</i></p>
-            </div>
-        </div>
-        <div class="bill_list">
-            <div class="bill_top">
-                <span class="date">2015-03-26<br/>13:03:13</span>
-                <b class="down"></b>
-                <div class="still"><p class="add">+5000</p><p>转账</p></div>
-            </div>
-            <div class="bill_show">
-                <p><span>交易类型：</span><i>转账</i></p>
-                <p><span>交易周转金：</span><i>200.00</i></p>
-                <p><span>交易积分：</span><i>3000.00</i></p>
-                <p><span>支付操作：</span><i></i></p>
-                <p><span>备注：</span><i>这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，</i></p>
-            </div>
-        </div>
     </div>
-    <!--pagination-->
     <div class="pag_main">
-        <ul class="pagination">
-            <li><a href="#"><span aria-hidden="true">&laquo;</span></a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#"><span aria-hidden="true">&raquo;</span></a></li>
-        </ul>
+        <?=$result['page'];?>
     </div>
     <link href="/plugin/date/css/mobiscroll_002.css" rel="stylesheet" type="text/css">
     <link href="/plugin/date/css/mobiscroll.css" rel="stylesheet" type="text/css">
