@@ -18,10 +18,10 @@ bcsub — 减法
 
 class ZJ extends Model
 {
+    protected $table='zj';
     public function __construct()
     {
         parent::__construct();
-        $this->table = $this->dbfix . 'zj';
         $this->fields = array('id', 'site_id', 'user_id', 'money', 'income', 'pid', 'pids', 'position', 'addtime', 'status');
     }
 
@@ -287,115 +287,4 @@ class ZJ extends Model
         }
         return $flag;
     }
-
-    function getZjByPage($data)
-    {
-        $_select = "r.*";
-        $where = "where 1=1";
-        if (!empty($data['user_id'])) {
-            $where .= " and r.user_id={$data['user_id']}";
-        }
-        if (!empty($data['money'])) {
-            $where .= " and r.money={$data['money']}";
-        }
-        if (!empty($data['plate'])) {
-            $where .= " and r.plate={$data['plate']}";
-        }
-        if (!empty($data['id'])) {
-            $pids = DB::table('zj')->where('id=?')->bindValues($data['id'])->value('pids');
-            $where .= " and  r.pids like '{$pids}%'";
-        }
-        if (!empty($data['subsite_id'])) {
-            $where .= " and u.subsite_id={$data['subsite_id']}";
-        }
-
-
-        $sql = "select SELECT from {$this->dbfix}zj r left join {$this->dbfix}user u on r.user_id=u.id {$where} ORDER LIMIT";
-
-        $_order = isset($data['order']) ? ' order by ' . $data['order'] : 'order by r.id desc';
-        //总条数
-        $row = DB::get_one(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array('count(1) as num', '', ''), $sql));
-        $total = $row['num'];
-
-        $epage = empty($data['epage']) ? 10 : $data['epage'];
-        $page = $data['page'];
-        if (!empty($page)) {
-            $index = $epage * ($page - 1);
-        } else {
-            $index = 0;
-            $page = 1;
-        }
-        if ($index > $total) {
-            $index = 0;
-            $page = 1;
-        }
-        $limit = " limit {$index}, {$epage}";
-        // echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
-        $list = DB::get_all(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql));
-        global $pager;
-        $pager->page = $page;
-        $pager->epage = $epage;
-        $pager->total = $total;
-        return array(
-            'list' => $list,
-            'total' => $total,
-            'page' => $pager->show()
-        );
-    }
-
-    function getZjLogByPage($data)
-    {
-        $_select = "zl.*";
-        $where = "where 1=1";
-        if (!empty($data['user_id'])) {
-            $where .= " and zl.user_id={$data['user_id']}";
-        }
-        if (!empty($data['money'])) {
-            $where .= " and zl.money={$data['money']}";
-        }
-        if (!empty($data['plate'])) {
-            $where .= " and zl.plate={$data['plate']}";
-        }
-        if (!empty($data['zj_id'])) {
-            $where .= " and zl.zj_id={$data['zj_id']}";
-        }
-        if (!empty($data['in_zj_id'])) {
-            $where .= " and zl.in_zj_id={$data['in_zj_id']}";
-        }
-        if (!empty($data['typeid'])) {
-            $where .= " and zl.typeid='{$data['typeid']}'";
-        }
-        $sql = "select SELECT from {$this->dbfix}zj_log zl {$where} ORDER LIMIT";
-        $_order = isset($data['order']) ? ' order by ' . $data['order'] : 'order by zl.id desc';
-        //总条数
-        $row = DB::get_one(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array('count(1) as num', '', ''), $sql));
-        $total = $row['num'];
-
-        $epage = empty($data['epage']) ? 10 : $data['epage'];
-        $page = $data['page'];
-        if (!empty($page)) {
-            $index = $epage * ($page - 1);
-        } else {
-            $index = 0;
-            $page = 1;
-        }
-        if ($index > $total) {
-            $index = 0;
-            $page = 1;
-        }
-        $limit = " limit {$index}, {$epage}";
-        // echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
-        $list = DB::get_all(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql));
-        global $pager;
-        $pager->page = $page;
-        $pager->epage = $epage;
-        $pager->total = $total;
-        return array(
-            'list' => $list,
-            'total' => $total,
-            'page' => $pager->show()
-        );
-    }
-
-
 }

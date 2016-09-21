@@ -48,15 +48,15 @@ if ($this->func == 'index') {
         foreach ($result['list'] as $row) {
             ?>
             <tr>
-                <td><?= $row['id'] ?></td>
-                <td><?= $row['site_id'] ?></td>
-                <td><?= $row['user_id'] ?></td>
-                <td><?= $arr_typeid[$row["typeid"]] ?></td>
-                <td><?= (float)$row['money'] ?></td>
-                <td><?= (float)$row['money_rebate'] ?></td>
-                <td><?= $row['addtime'] ?></td>
-                <td><?= $arr_status[$row["status"]] ?></td>
-                <td><?= $row["success_time"] ?></td>
+                <td><?= $row->id ?></td>
+                <td><?= $row->site_id ?></td>
+                <td><?= $row->user_id ?></td>
+                <td><?= $arr_typeid[$row->typeid] ?></td>
+                <td><?= (float)$row->money ?></td>
+                <td><?= (float)$row->money_rebate ?></td>
+                <td><?= $row->addtime ?></td>
+                <td><?= $arr_status[$row->status] ?></td>
+                <td><?= $row->success_time ?></td>
                 <td>
                     <?
                     //echo $this->anchor('rebate/edit/?id='.$row['id'],'编辑');
@@ -148,22 +148,23 @@ if ($this->func == 'index') {
         $arr_typeid = array('', '500队列', '100队列');
         $arr_status = array('0', '正常', '己结束');
         foreach ($result['list'] as $row) {
+            $rebate=$row->Rebate();
             ?>
             <tr>
-                <td><?= $row['id'] ?></td>
-                <td><?= $row['user_id'] ?></td>
-                <td><?= $row['rebate_id'] ?></td>
-                <td><?= (float)$row['money'] ?></td>
-                <td><?= (float)$row['money_rebate'] ?></td>
-                <td><?= $arr_typeid[$row["typeid"]] ?></td>
-                <td><?= $row['position_quantity'] ?></td>
-                <td><?= $row['position_start'] ?></td>
-                <td><?= $row['position_end'] ?></td>
-                <td><?= $row['addtime'] ?></td>
-                <td><?= $row['position_last'] ?></td>
-                <td><?= floatval($row['money_last']) ?></td>
-                <td><?= $arr_status[$row["status"]] ?></td>
-                <td><?= $row["success_time"] ?></td>
+                <td><?= $row->id ?></td>
+                <td><?= $row->user_id ?></td>
+                <td><?= $row->rebate_id ?></td>
+                <td><?= (float)$rebate->money ?></td>
+                <td><?= (float)$rebate->money_rebate ?></td>
+                <td><?= $arr_typeid[$row->typeid] ?></td>
+                <td><?= $row->position_quantity ?></td>
+                <td><?= $row->position_start ?></td>
+                <td><?= $row->position_end ?></td>
+                <td><?= $row->addtime ?></td>
+                <td><?= $row->position_last ?></td>
+                <td><?= floatval($row->money_last) ?></td>
+                <td><?= $arr_status[$row->status] ?></td>
+                <td><?= $row->success_time ?></td>
             </tr>
         <? } ?>
     </table>
@@ -231,14 +232,14 @@ if ($this->func == 'index') {
         foreach ($result['list'] as $row) {
             ?>
             <tr>
-                <td><?= $row['id'] ?></td>
-                <td><?= $row['user_id'] ?></td>
-                <td><?= $row['rebate_id'] ?></td>
-                <td><?= (float)$row['money'] ?></td>
-                <td><?= $arr_typeid[$row["typeid"]] ?></td>
-                <td><?= $row['rebate_list_in'] != 0 ? $row['rebate_list_in'] : '' ?></td>
-                <td><?= $row['rebate_list_out'] != 0 ? $row['rebate_list_out'] : '' ?></td>
-                <td><?= $row['addtime'] ?></td>
+                <td><?= $row->id ?></td>
+                <td><?= $row->user_id ?></td>
+                <td><?= $row->rebate_id ?></td>
+                <td><?= (float)$row->money ?></td>
+                <td><?= $arr_typeid[$row->typeid] ?></td>
+                <td><?= $row->rebate_list_in != 0 ? $row->rebate_list_in : '' ?></td>
+                <td><?= $row->rebate_list_out != 0 ? $row->rebate_list_out : '' ?></td>
+                <td><?= $row->addtime ?></td>
             </tr>
         <? } ?>
     </table>

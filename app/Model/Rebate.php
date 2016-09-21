@@ -5,12 +5,12 @@ use System\Lib\DB;
 
 class Rebate extends Model
 {
+    protected $table='rebate';
     public function __construct()
     {
         ini_set("max_execution_time", "1800000");
         ini_set('default_socket_timeout', 600000);
         parent::__construct();
-        $this->table = $this->dbfix . 'rebate';
         $this->fields = array('id', 'site_id', 'user_id', 'typeid', 'money', 'addtime', 'status', 'money_rebate', 'success_time');
         /**
          * [rebate_date] => 2016-02-04
@@ -53,8 +53,6 @@ class Rebate extends Model
     //计算
     function calRebate()
     {
-        //global $_G;
-        //$rebate_date=$_G['system']['rebate_date'];
         $rebate_date = $this->config['rebate_date'];
         $today = date('Y-m-d');
         $i = 0;
@@ -416,172 +414,5 @@ class Rebate extends Model
         }
         return true;
     }
-
-    function getRebateAll()
-    {
-
-    }
-
-    function getRebateByPage($data)
-    {
-        $_select = "r.*";
-        $where = "where 1=1";
-        if (!empty($data['typeid'])) {
-            $where .= " and r.typeid={$data['typeid']}";
-        }
-        if (!empty($data['startdate'])) {
-            $where .= " and r.addtime>='{$data['startdate']}'";
-        }
-        if (!empty($data['enddate'])) {
-            $where .= " and r.addtime<'{$data['enddate']}'";
-        }
-        if (!empty($data['user_id'])) {
-            $where .= " and r.user_id={$data['user_id']}";
-        }
-        if ($data['status'] != '') {
-            $where .= " and r.status={$data['status']}";
-        }
-        $sql = "select SELECT from {$this->dbfix}rebate r left join {$this->dbfix}user u on r.user_id=u.id {$where} ORDER LIMIT";
-
-        $_order = isset($data['order']) ? ' order by ' . $data['order'] : 'order by r.id desc';
-        //总条数
-        $row = DB::get_one(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array('count(1) as num,sum(money) as moneys', '', ''), $sql));
-        $total = $row['num'];
-        $moneys = $row['moneys'];
-
-        $epage = empty($data['epage']) ? 10 : $data['epage'];
-        $page = $data['page'];
-        if (!empty($page)) {
-            $index = $epage * ($page - 1);
-        } else {
-            $index = 0;
-            $page = 1;
-        }
-        if ($index > $total) {
-            $index = 0;
-            $page = 1;
-        }
-        $limit = " limit {$index}, {$epage}";
-        //echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
-        $list = DB::get_all(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql));
-        global $pager;
-        $pager->page = $page;
-        $pager->epage = $epage;
-        $pager->total = $total;
-        return array(
-            'list' => $list,
-            'moneys' => $moneys,
-            'total' => $total,
-            'page' => $pager->show()
-        );
-    }
-
-    function getRebateListByPage($data)
-    {
-        $_select = "rl.*,r.money,r.money_rebate";
-        $where = "where 1=1";
-        if (!empty($data['typeid'])) {
-            $where .= " and rl.typeid={$data['typeid']}";
-        }
-        if (!empty($data['user_id'])) {
-            $where .= " and rl.user_id={$data['user_id']}";
-        }
-        if (!empty($data['startdate'])) {
-            $where .= " and rl.addtime>='{$data['startdate']}'";
-        }
-        if (!empty($data['enddate'])) {
-            $where .= " and rl.addtime<'{$data['enddate']}'";
-        }
-        $sql = "select SELECT from {$this->dbfix}rebate_list rl left join {$this->dbfix}rebate r on rl.rebate_id=r.id
- left join {$this->dbfix}user u on rl.user_id=u.id {$where} ORDER LIMIT";
-
-        $_order = isset($data['order']) ? ' order by ' . $data['order'] : 'order by rl.id desc';
-        //总条数
-        $row = DB::get_one(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array('count(1) as num', '', ''), $sql));
-        $total = $row['num'];
-
-        $epage = empty($data['epage']) ? 10 : $data['epage'];
-        $page = $data['page'];
-        if (!empty($page)) {
-            $index = $epage * ($page - 1);
-        } else {
-            $index = 0;
-            $page = 1;
-        }
-        if ($index > $total) {
-            $index = 0;
-            $page = 1;
-        }
-        $limit = " limit {$index}, {$epage}";
-        //echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
-        $list = DB::get_all(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql));
-        global $pager;
-        $pager->page = $page;
-        $pager->epage = $epage;
-        $pager->total = $total;
-        return array(
-            'list' => $list,
-            'total' => $total,
-            'page' => $pager->show()
-        );
-    }
-
-    function getRebateLogByPage($data)
-    {
-        $_select = "rl.*";
-        $where = "where 1=1";
-        if (!empty($data['typeid'])) {
-            $where .= " and rl.typeid like '{$data['typeid']}%'";
-        }
-        if (!empty($data['user_id'])) {
-            $where .= " and rl.user_id={$data['user_id']}";
-        }
-        if (!empty($data['money'])) {
-            $where .= " and rl.money={$data['money']}";
-        }
-        if (!empty($data['startdate'])) {
-            $where .= " and rl.addtime>='{$data['startdate']}'";
-        }
-        if (!empty($data['enddate'])) {
-            $where .= " and rl.addtime<'{$data['enddate']}'";
-        }
-        if (!empty($data['rebate_id'])) {
-            $where .= " and rl.rebate_id={$data['rebate_id']}";
-        }
-        $sql = "select SELECT from {$this->dbfix}rebate_log rl  left join {$this->dbfix}user u on rl.user_id=u.id {$where} ORDER LIMIT";
-
-        $_order = isset($data['order']) ? ' order by ' . $data['order'] : 'order by rl.id desc';
-        //总条数
-        $row = DB::get_one(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array('count(1) as num,sum(money) as moneys', '', ''), $sql));
-        $total = $row['num'];
-        $moneys = $row['moneys'];
-
-        $epage = empty($data['epage']) ? 10 : $data['epage'];
-        $page = $data['page'];
-        if (!empty($page)) {
-            $index = $epage * ($page - 1);
-        } else {
-            $index = 0;
-            $page = 1;
-        }
-        if ($index > $total) {
-            $index = 0;
-            $page = 1;
-        }
-        $limit = " limit {$index}, {$epage}";
-        //echo str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql);
-        $list = DB::get_all(str_replace(array('SELECT', 'ORDER', 'LIMIT'), array($_select, $_order, $limit), $sql));
-        global $pager;
-        $pager->page = $page;
-        $pager->epage = $epage;
-        $pager->total = $total;
-        return array(
-            'list' => $list,
-            'moneys' => $moneys,
-            'total' => $total,
-            'page' => $pager->show()
-        );
-    }
-
 }
 

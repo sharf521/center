@@ -6,7 +6,7 @@ if($this->func=='index')
     <div class="main_title">
         <span>增进管理</span>列表<?=$this->anchor('zj/add','新增','class="but1"');?>
         <?=$this->anchor('zj/calZj','计算','class="but1"')?>
-        <?=$this->anchor('zj/calAdd1000','添加10个','class="but1"')?>
+<?//=$this->anchor('zj/calAdd1000','添加10个','class="but1"')?>
     </div>
 
     <form method="get">
@@ -39,20 +39,20 @@ if($this->func=='index')
         {
             ?>
             <tr>
-                <td><?=$row['id']?></td>
-                <td><?=$row['user_id']?></td>
-                <td><?=(float)$row['money']?></td>
+                <td><?=$row->id?></td>
+                <td><?=$row->user_id?></td>
+                <td><?=(float)$row->money?></td>
 
-                <td><?=$row['income']?></td>
-                <td><?=$row['pid']?></td>
-                <td class="l"><?=str_replace(',','->',rtrim($row['pids'],','))?></td>
-                <td><?=$row['plate']?></td>
-                <td><?=$row['index']?></td>
-                <td><?=$row['dayplan']?></td>
-                <td>￥<?=(float)$row['dayplan_income']?></td>
-                <td>￥<?=(float)$row['dayplan_last']?></td>
-                <td><?=$arr_status[$row["status"]]?></td>
-                <td><?=$row['addtime']?></td>
+                <td><?=$row->income?></td>
+                <td><?=$row->pid?></td>
+                <td class="l"><?=str_replace(',','->',rtrim($row->pids,','))?></td>
+                <td><?=$row->plate?></td>
+                <td><?=$row->index?></td>
+                <td><?=$row->dayplan?></td>
+                <td>￥<?=(float)$row->dayplan_income?></td>
+                <td>￥<?=(float)$row->dayplan_last?></td>
+                <td><?=$arr_status[$row->status]?></td>
+                <td><?=$row->addtime?></td>
             </tr>
         <? }?>
     </table>
@@ -74,10 +74,7 @@ if($this->func=='index')
     <?
     }
     ?>
-
-
     <div><div class="drawContent" id="drawContent"></div></div>
-
 <?
 }
 elseif($this->func=='add'||$this->func=='edit')
@@ -145,13 +142,13 @@ elseif($this->func=='add'||$this->func=='edit')
         {
             ?>
             <tr>
-                <td><?=$row['id']?></td>
-                <td><?=$row['zj_id']?>/<?=$row['user_id']?></td>
-                <td><?=$row['in_user_id']?>/<?=$row['in_zj_id']?></td>
-                <td><?=(float)$row['money']?></td>
-                <td><?=$row['plate']?></td>
-                <td><?=$arr_typeid[$row["typeid"]]?></td>
-                <td><?=$row['addtime']?></td>
+                <td><?=$row->id?></td>
+                <td><?=$row->zj_id?>/<?=$row->user_id?></td>
+                <td><?=$row->in_user_id?>/<?=$row->in_zj_id?></td>
+                <td><?=(float)$row->money?></td>
+                <td><?=$row->plate?></td>
+                <td><?=$arr_typeid[$row->typeid]?></td>
+                <td><?=$row->addtime?></td>
             </tr>
         <? }?>
     </table>

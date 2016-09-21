@@ -34,15 +34,15 @@ if($this->func=='index')
         {
             ?>
             <tr>
-                <td><?=$row['id']?></td>
-                <td><?=$row['user_id']?></td>
-                <td><?=(float)$row['money']?></td>
-                <td><?=(float)$row['income']?></td>
-                <td><?=$row['pid']?></td>
-                <td><?=$row['position']?></td>
-                <td class="l"><?=str_replace(',','->',rtrim($row['pids'],','))?></td>
-                <td><?=$arr_status[$row["status"]]?></td>
-                <td><?=$row['addtime']?></td>
+                <td><?=$row->id?></td>
+                <td><?=$row->user_id?></td>
+                <td><?=(float)$row->money?></td>
+                <td><?=(float)$row->income?></td>
+                <td><?=$row->pid?></td>
+                <td><?=$row->position?></td>
+                <td class="l"><?=str_replace(',','->',rtrim($row->pids,','))?></td>
+                <td><?=$arr_status[$row->status]?></td>
+                <td><?=$row->addtime?></td>
             </tr>
         <? }?>
     </table>
@@ -123,12 +123,12 @@ elseif($this->func=='add'||$this->func=='edit')
         {
             ?>
             <tr>
-                <td><?=$row['id']?></td>
-                <td><?=$row['fbb_id']?>/<?=$row['user_id']?></td>
-                <td><?=$row['in_user_id']?>/<?=$row['in_fbb_id']?></td>
-                <td><?=(float)$row['money']?></td>
-                <td><?=$row['layer']?></td>
-                <td><?=$row['addtime']?></td>
+                <td><?=$row->id?></td>
+                <td><?=$row->fbb_id?>/<?=$row->user_id?></td>
+                <td><?=$row->in_user_id?>/<?=$row->in_fbb_id?></td>
+                <td><?=(float)$row->money?></td>
+                <td><?=$row->layer?></td>
+                <td><?=$row->addtime?></td>
             </tr>
         <? }?>
     </table>

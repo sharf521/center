@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller\Admin;
 
+use App\Model\ZjLog;
+use System\Lib\DB;
 use App\Model\ZJ;
 
 class ZjController extends AdminController
@@ -11,17 +13,30 @@ class ZjController extends AdminController
         $this->model = new ZJ();
     }
 
-    function index()
+    function index(ZJ $ZJ)
     {
         $arr=array(
             'user_id'		=>(int)$_GET['user_id'],
             'id'		=>(int)$_GET['id'],
             'money'		=>(int)$_GET['money'],
             'plate'		=>(int)$_GET['plate'],
-            'page'			=>(int)$_REQUEST['page'],
-            'epage'			=>10
         );
-        $data['result']=$this->model->getZjByPage($arr);
+        $where = " 1=1";
+        if (!empty($arr['user_id'])) {
+            $where .= " and user_id={$arr['user_id']}";
+        }
+        if (!empty($arr['money'])) {
+            $where .= " and money={$arr['money']}";
+        }
+        if (!empty($arr['plate'])) {
+            $where .= " and plate={$arr['plate']}";
+        }
+        if (!empty($arr['id'])) {
+            $pids = DB::table('zj')->where('id=?')->bindValues($arr['id'])->value('pids');
+            $where .= " and  pids like '{$pids}%'";
+        }
+
+        $data['result']=$ZJ->where($where)->orderBy('id desc')->pager($_GET['page'],10);
         $this->view('zj',$data);
     }
     function add($data)
@@ -62,18 +77,37 @@ class ZjController extends AdminController
             show_msg(array('失败！！'));
         }
     }
-    function  zjlog(){
+    function  zjlog(ZjLog $zjLog){
         $arr=array(
             'typeid'		=>$_GET['typeid'],
             'user_id'		=>(int)$_GET['user_id'],
             'zj_id'		=>(int)$_GET['zj_id'],
             'in_zj_id'		=>(int)$_GET['in_zj_id'],
             'money'		=>(int)$_GET['money'],
-            'plate'		=>(int)$_GET['plate'],
-            'page'			=>(int)$_REQUEST['page'],
-            'epage'			=>10
+            'plate'		=>(int)$_GET['plate']
         );
-        $data['result']=$this->model->getZjLogByPage($arr);
+
+        $where = " 1=1";
+        if (!empty($arr['user_id'])) {
+            $where .= " and user_id={$arr['user_id']}";
+        }
+        if (!empty($arr['money'])) {
+            $where .= " and money={$arr['money']}";
+        }
+        if (!empty($arr['plate'])) {
+            $where .= " and plate={$arr['plate']}";
+        }
+        if (!empty($arr['zj_id'])) {
+            $where .= " and zj_id={$arr['zj_id']}";
+        }
+        if (!empty($arr['in_zj_id'])) {
+            $where .= " and in_zj_id={$arr['in_zj_id']}";
+        }
+        if (!empty($arr['typeid'])) {
+            $where .= " and typeid='{$arr['typeid']}'";
+        }
+
+        $data['result']=$zjLog->where($where)->orderBy('id desc')->pager($_GET['page'],10);
         $this->view('zj',$data);
     }
 }

@@ -5,10 +5,10 @@ use System\Lib\DB;
 
 class FBB extends Model
 {
+    protected $table='fbb';
     public function __construct()
     {
         parent::__construct();
-        $this->table=$this->dbfix.'fbb';
         $this->fields=array('id','site_id','user_id','money','income','pid','pids','position','addtime','status');
     }
 
@@ -182,7 +182,7 @@ class FBB extends Model
     }
 
     ///////////////////////////////////////////////////
-    function getFbbByPage($data)
+/*    function getFbbByPage($data)
     {
         $_select="r.*";
         $where="1=1";
@@ -253,6 +253,6 @@ class FBB extends Model
         );
     }
 
-
+*/
 
 }

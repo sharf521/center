@@ -2,6 +2,9 @@
 namespace App\Controller\Admin;
 
 use App\Model\FBB;
+use App\Model\FbbLog;
+use System\Lib\DB;
+use System\Lib\Request;
 
 class FbbController extends AdminController
 {
@@ -11,16 +14,23 @@ class FbbController extends AdminController
         $this->model = new FBB();
     }
 
-    function index()
+    function index(Request $request, FBB $fbb)
     {
-        $arr = array(
-            'user_id' => (int)$_GET['user_id'],
-            'id' => (int)$_GET['id'],
-            'money' => (float)$_GET['money'],
-            'page' => (int)$_REQUEST['page'],
-            'epage' => 10
-        );
-        $data['result'] = $this->model->getFbbByPage($arr);
+        $user_id = (int)$request->get('user_id');
+        $id = (int)$request->get('id');
+        $money = (int)$request->get('money');
+        $where = "1=1";
+        if (!empty($user_id)) {
+            $where .= " and user_id={$user_id}";
+        }
+        if (!empty($money)) {
+            $where .= " and money={$money}";
+        }
+        if (!empty($id)) {
+            $pids = DB::table('fbb')->where("id=?")->bindValues($id)->value('pids');
+            $where .= " and  pids like '{$pids}%'";
+        }
+        $data['result'] = $fbb->where($where)->orderBy('id desc')->pager($_GET['page'], 10);
         $this->view('fbb', $data);
     }
 
@@ -54,18 +64,29 @@ class FbbController extends AdminController
         }
     }
 
-    function  fbblog()
+    function fbblog(FbbLog $fbbLog)
     {
         $arr = array(
             'typeid' => $_GET['typeid'],
             'user_id' => (int)$_GET['user_id'],
             'fbb_id' => (int)$_GET['fbb_id'],
             'in_fbb_id' => (int)$_GET['in_fbb_id'],
-            'money' => (float)$_GET['money'],
-            'page' => (int)$_REQUEST['page'],
-            'epage' => 10
+            'money' => (float)$_GET['money']
         );
-        $data['result'] = $this->model->getFbbLogByPage($arr);
+        $where = " 1=1";
+        if (!empty($arr['user_id'])) {
+            $where .= " and user_id={$arr['user_id']}";
+        }
+        if (!empty($arr['money'])) {
+            $where .= " and money={$arr['money']}";
+        }
+        if (!empty($arr['fbb_id'])) {
+            $where .= " and fbb_id={$arr['fbb_id']}";
+        }
+        if (!empty($arr['in_fbb_id'])) {
+            $where .= " and in_fbb_id={$arr['in_fbb_id']}";
+        }
+        $data['result'] = $fbbLog->where($where)->orderBy('id desc')->pager($_GET['page'], 10);
         $this->view('fbb', $data);
     }
 }
