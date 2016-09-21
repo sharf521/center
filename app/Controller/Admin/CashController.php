@@ -8,8 +8,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Model\Account;
 use App\Model\AccountCash;
-use App\Model\AccountLog;
 use App\Model\LinkPage;
 use App\Model\User;
 use System\Lib\Request;
@@ -51,7 +51,7 @@ class CashController extends AdminController
         $this->view('cash',$data);
     }
 
-    public function check(AccountCash $accountCash,Request $request)
+    public function check(AccountCash $accountCash,Request $request,Account $account)
     {
         $id=$request->id;
         $cash = $accountCash->findOrFail($id);
@@ -73,7 +73,6 @@ class CashController extends AdminController
                 $cash->verify_remark=$verify_remark;
                 $cash->save();
             } else {
-                $accountLog = new AccountLog();
                 $log = array(
                     'user_id' => $cash->user_id,
                     'type' => 'cash_fail',
@@ -82,7 +81,7 @@ class CashController extends AdminController
                     'label'=>"cash_{$cash->id}",
                     'remark' => '提现ID：' . $cash->id
                 );
-                $accountLog->addLog($log);
+                $account->addLog($log);
             }
             redirect("cash/?page={$request->page}")->with('msg', '操作成功！！');
         } else {
@@ -92,7 +91,7 @@ class CashController extends AdminController
     }
 
     //打款
-    public function checkEnd(AccountCash $accountCash,Request $request)
+    public function checkEnd(AccountCash $accountCash,Request $request,Account $account)
     {
         $id=$request->id;
         $cash = $accountCash->findOrFail($id);
@@ -114,7 +113,6 @@ class CashController extends AdminController
                 $cash->remittance_remark=$verify_remark;
                 $cash->save();
 
-                $accountLog = new AccountLog();
                 $log = array(
                     'user_id' => $cash->user_id,
                     'type' => 'cash_success',
@@ -122,7 +120,7 @@ class CashController extends AdminController
                     'label'=>"cash_{$cash->id}",
                     'remark' => '提现ID：' . $cash->id
                 );
-                $accountLog->addLog($log);
+                $account->addLog($log);
             } else {
                 $cash->status = 1;
                 $cash->save();

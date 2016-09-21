@@ -8,7 +8,7 @@
 
 namespace App\Controller;
 
-use App\Model\AccountLog;
+use App\Model\Account;
 use App\Model\System;
 use System\Lib\DB;
 use System\Lib\Request;
@@ -76,7 +76,7 @@ class PayController extends Controller
         echo $sHtml;
     }
 
-    public function result(Request $request, AccountLog $accountLog)
+    public function result(Request $request, Account $account)
     {
         $MerPriv = $request->post('MerPriv');
         $OrdAmt = (float)$request->post('OrdAmt');
@@ -115,9 +115,8 @@ class PayController extends Controller
                     $log['type'] = 1;
                     $log['funds_available'] = $row['money'] - $row['fee'];
                     $log['remark'] = "在线充值：" . $row['id'];
-                    $accountLog->addLog($log);
+                    $account->addLog($log);
                 }
-
             }
             echo "<!--";
             echo "RECV_ORD_ID_" . $UsrSn;

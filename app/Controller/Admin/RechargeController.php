@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/7/27
- * Time: 23:12
- */
 
 namespace App\Controller\Admin;
 
-
-use App\Model\AccountLog;
+use App\Model\Account;
 use App\Model\AccountRecharge;
 use App\Model\User;
 use System\Lib\DB;
@@ -51,7 +44,7 @@ class RechargeController extends AdminController
         $this->view('recharge',$data);
     }
 
-    public function edit(AccountRecharge $accountRecharge,Request $request,AccountLog $accountLog)
+    public function edit(AccountRecharge $accountRecharge,Request $request,Account $account)
     {
         $row=$accountRecharge->findOrFail($request->id);
         if ($_POST) {
@@ -76,7 +69,7 @@ class RechargeController extends AdminController
                         'funds_available' => math($row->money, $row->fee, '-'),
                         'remark' => '审核充值：' . $row->id
                     );
-                    $accountLog->addLog($log);
+                    $account->addLog($log);
                 }
                 redirect('recharge/?page='.$request->page)->with('msg', '操作成功！');
             } else {

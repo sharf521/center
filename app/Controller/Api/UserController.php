@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller\Api;
 
-use App\Model\AccountLog;
+use App\Model\Account;
 use System\Lib\DB;
 
 class UserController extends ApiController
@@ -81,7 +81,7 @@ class UserController extends ApiController
     }
 
     //支出、收入 改变用户资金
-    public function receivables(AccountLog $accountLog)
+    public function receivables(Account $account)
     {
         $data=$this->data;
         $pay_arr=array(
@@ -114,20 +114,20 @@ class UserController extends ApiController
                 $item['pay_no']=$pay_arr['pay_no'];
                 $item['app_order_no']=$pay_arr['app_order_no'];
                 $item['label']=$data['label'];
-                $accountLog->addLog($item);
+                $account->addLog($item);
             }
             DB::table('pay_order')->where("id={$pay_order_id}")->limit(1)->update(array('status'=>1));
 
             DB::commit();
+            return $this->returnSuccess(array('pay_no'=>$pay_arr['pay_no']));
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->returnError("Failed: " .$e->getMessage());
         }
-        return $this->returnSuccess(array('pay_no'=>$pay_arr['pay_no']));
     }
 
     // 退款
-    public function refund(AccountLog $accountLog)
+    public function refund(Account $account)
     {
         $data=$this->data;
         $pay_arr=array(
@@ -172,7 +172,7 @@ class UserController extends ApiController
                             $item['pay_no']=$pay_arr['pay_no'];
                             $item['app_order_no']=$pay_arr['app_order_no'];
                             $item['label']=$pay_order['label'];
-                            $accountLog->addLog($item);
+                            $account->addLog($item);
                         }
                     }
                     //更改旧订单为2
@@ -182,11 +182,11 @@ class UserController extends ApiController
             DB::table('pay_order')->where("id={$pay_order_id}")->limit(1)->update(array('status'=>1));
 
             DB::commit();
+            return $this->returnSuccess(array('pay_no'=>$pay_arr['pay_no']));
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->returnError("Failed: " .$e->getMessage());
         }
-        return $this->returnSuccess(array('pay_no'=>$pay_arr['pay_no']));
     }
 }
 

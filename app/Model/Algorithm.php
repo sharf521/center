@@ -60,7 +60,7 @@ class Algorithm extends Model
         }
         $enddate=date('Y-m-d',strtotime($date)+3600*24);
         $result = DB::table('algorithm_log')->select('id,user_id,money')->where("status=0 and addtime>=? and addtime<?")->bindValues(array($date,$enddate))->all();
-        $accountLog=new AccountLog();
+        $account=new Account();
         foreach($result as $row){
             $_arr=array(
                 'user_id' => $row['user_id'],
@@ -69,7 +69,7 @@ class Algorithm extends Model
                 'remark'=>$date,
                 'label'=>''
             );
-            $accountLog->addLog($_arr);
+            $account->addLog($_arr);
             //更新状态
             $_arr=array(
                 'send_money'=>$row['money'],
@@ -80,9 +80,4 @@ class Algorithm extends Model
         }
         return true;
     }
-
-
-
-
-
 }

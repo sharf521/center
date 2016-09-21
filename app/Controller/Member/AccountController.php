@@ -119,7 +119,7 @@ class AccountController extends MemberController
             $accountCash->addip=ip();
             $insertId=$accountCash->save(true);
 
-            $accountLog=new AccountLog();
+            $account=new Account();
             $log = array();
             $log['user_id'] = $this->user_id;
             $log['type'] = 'cash_frost';
@@ -127,7 +127,7 @@ class AccountController extends MemberController
             $log['funds_freeze']=$total;
             $log['label'] = "cash_{$insertId}";
             $log['remark'] = "提现ID：{$insertId}";
-            $accountLog->addLog($log);
+            $account->addLog($log);
             redirect('account/cashLog')->with('msg','申请提现成功，静等审核！');
         } else {
             $data['cash_rate']=$cash_rate;
@@ -198,7 +198,7 @@ class AccountController extends MemberController
                     'funds_available' => $money,
                     'remark' => '积分兑换现金'
                 );
-                $accountLog->addLog($log);
+                $account->addLog($log);
                 //加入对列
                 $arr = array(
                     'site_id' => 0,
