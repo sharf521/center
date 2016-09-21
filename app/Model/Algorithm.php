@@ -5,10 +5,10 @@ use System\Lib\DB;
 
 class Algorithm extends Model
 {
+    protected $table='algorithm_log';
     public function __construct()
     {
         parent::__construct();
-        $this->table=$this->dbfix.'algorithm_log';
     }
 
     public function collectLog()
@@ -52,60 +52,24 @@ class Algorithm extends Model
         return true;
     }
 
-    ///////////////////////////////////////////////////
-    public function getLogByPage($data)
+    public function send($date)
     {
-        $_select = "*";
-        $where = "1=1";
-        if (!empty($data['user_id'])) {
-            $where .= " and user_id={$data['user_id']}";
+        if(empty($date)){
+            throw new \Exception('结算日期不能为空！');
+            exit;
         }
-        if (!empty($data['money'])) {
-            $where .= " and money={$data['money']}";
-        }
-        if (!empty($data['startdate'])) {
-            $where .= " and addtime>='{$data['startdate']}'";
-        }
-        if (!empty($data['enddate'])) {
-            $where .= " and addtime<'{$data['enddate']}'";
-        }
-        $result = DB::table('algorithm_log')->select($_select)->where($where)->orderBy("id desc")->page($data['page'], $data['epage']);
-        $result['money_total']=DB::table('algorithm_log')->where($where)->value("sum(money)");
-        return $result;
-    }
-
-
-    //按天统计
-    public function listByDays($data)
-    {
-        $where = "1=1";
-        if (!empty($data['startdate'])) {
-            $where .= " and addtime>='{$data['startdate']}'";
-        }
-        if (!empty($data['enddate'])) {
-            $where .= " and addtime<'{$data['enddate']}'";
-        }
-        $result = DB::table('algorithm_log')->select("substring(addtime,1,10) as date,sum(money) as money,status")->where($where)->groupBy('date')->all();
-        return $result;
-    }
-
-    /**
-     * 结算
-     * @param $data
-     * @return bool
-     */
-    public function send_do($data)
-    {
-        global $_G;
-        $post=array();
-        $post['remark']=$data['date'];
-        $post['users']=array();
-        $startdate=$data['date'];
-        $enddate=date('Y-m-d',strtotime($startdate)+3600*24);
-        $result = DB::table('algorithm_log')->select('id,user_id,money')->where("status=0 and addtime>=? and addtime<?")->bindValues(array($startdate,$enddate))->all();
-        $i=0;
+        $enddate=date('Y-m-d',strtotime($date)+3600*24);
+        $result = DB::table('algorithm_log')->select('id,user_id,money')->where("status=0 and addtime>=? and addtime<?")->bindValues(array($date,$enddate))->all();
+        $accountLog=new AccountLog();
         foreach($result as $row){
-            array_push($post['users'], array('user_id' => $row['user_id'], 'fund' => 0, 'integral' => $row['money']));
+            $_arr=array(
+                'user_id' => $row['user_id'],
+                'integral_available' => $row['money'],
+                'type'=>'webservice',
+                'remark'=>$date,
+                'label'=>''
+            );
+            $accountLog->addLog($_arr);
             //更新状态
             $_arr=array(
                 'send_money'=>$row['money'],
@@ -114,53 +78,10 @@ class Algorithm extends Model
             );
             DB::table('algorithm_log')->where("id={$row['id']}")->limit(1)->update($_arr);
         }
-        /* $data = [
-             'remark' => 'sss',
-            'users' =>[
-                [
-                    'user_id' => 1,
-                    'fund' => 0,
-                    'integral' => 20,
-                ],
-                [
-                    'user_id' => 2,
-                    'fund' => 0,
-                    'integral' => 200,
-                ],
-            ],
-        ];*/
-        ksort($post);
-        foreach ($post['users'] as $i=>$u){
-            ksort($post['users'][$i]);
-        }
-        $post['sign'] = strtoupper(md5(json_encode($post)));
-
-        $html=curl_url($_G['system']['payurl'].'/open/accept',array('data'=>json_encode($post)));
-        $result=json_decode($html,true);
-        if($result['status']!='success'){
-            return $html;
-        }
         return true;
     }
 
-    public function send($data)
-    {
-        try {
-            DB::beginTransaction();
-            $return = $this->send_do($data);
-            if ($return === true) {
-                DB::commit();
-            } else {
-                DB::rollBack();
-            }
-            return $return;
-        } catch (\Exception $e) {
-            DB::rollBack();
-            echo "Failed: " . $e->getMessage();
-            return false;
-        }
-        return true;
-    }
+
 
 
 

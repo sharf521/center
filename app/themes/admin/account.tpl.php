@@ -9,6 +9,7 @@
             商户订单号：<input type="text" size="15" name="app_order_no" value="<?=$_GET['app_order_no']?>">
             用户ID：<input type="text" size="5" name="user_id" value="<?=$_GET['user_id']?>">
             Label：<input type="text" size="8" name="label" value="<?=$_GET['label']?>">
+            类型：<?=$account_type?>
             记录时间：
             <input  name="starttime" type="text" value="<?=$_GET['starttime']?>" onClick="javascript:WdatePicker();" class="Wdate">
             到

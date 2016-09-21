@@ -33,11 +33,11 @@ if ($this->func == 'index') {
         foreach ($result['list'] as $row) {
             ?>
             <tr>
-                <td><?= $row['id'] ?></td>
-                <td><?= $row['user_id'] ?></td>
-                <td><?= (float)$row['money'] ?></td>
-                <td><?= $row['addtime'] ?></td>
-                <td><?= $arr_status[$row["status"]] ?></td>
+                <td><?= $row->id ?></td>
+                <td><?= $row->user_id ?></td>
+                <td><?= (float)$row->money ?></td>
+                <td><?= $row->addtime ?></td>
+                <td><?= $arr_status[$row->status] ?></td>
             </tr>
         <? } ?>
     </table>
@@ -74,18 +74,18 @@ if ($this->func == 'index') {
         <?php
         $arr_status = array('未处理', '己处理');
         foreach ($result as $row) {
+            $date=$row->date;
             ?>
             <tr>
-                <td><?= $row['date'] ?></td>
-                <td><?= (float)$row['money'] ?></td>
-                <td><?= $arr_status[$row["status"]] ?></td>
+                <td><?= $date ?></td>
+                <td><?= (float)$row->money ?></td>
+                <td><?= $arr_status[$row->status] ?></td>
                 <td>
                     <?php
-                    $date=$row['date'];
-                    $date1=date('Y-m-d',strtotime($date)+3600*24);
-                    echo $this->anchor('algorithm/index?startdate='.$date.'&enddate='.$date1, '查看');
+                    $enddate=date('Y-m-d',strtotime($date)+3600*24);
+                    echo $this->anchor('algorithm/index?startdate='.$date.'&enddate='.$enddate, '查看');
                     echo ' | ';
-                    if($row['status']==0 && $row['date']<=date('Y-m-d')){
+                    if($row->status==0 && $date<=date('Y-m-d')){
                         echo "<a href=\"javascript:algorithmSend('{$date}')\">结算</a>";
                     }
                     ?>

@@ -134,6 +134,9 @@ class AccountLog extends Model
         if(!empty($data['label'])){
             $where.=" and label='{$data['label']}'";
         }
+        if(!empty($data['type'])){
+            $where.=" and type='{$data['type']}'";
+        }
         if(!empty($data['user_id'])){
             $where.=" and user_id='{$data['user_id']}'";
         }

@@ -122,13 +122,16 @@ class AjaxController extends Controller
 
     public function algorithmSend()
     {
-        $data['date']=$_POST['date'];
-        $algorith=new Algorithm();
-        $return=$algorith->send($data);
-        if($return===true){
+        $date = $_POST['date'];
+        try {
+            DB::beginTransaction();
+            $algorith = new Algorithm();
+            $algorith->send($date);
+            DB::commit();
             echo '完成';
-        }else{
-            echo $return;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            echo "Failed: " . $e->getMessage();
         }
     }
 
