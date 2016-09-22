@@ -106,8 +106,8 @@ class ZJ extends Model
 
     function calAdd1000()
     {
-        DB::get_all('TRUNCATE TABLE  `plf_zj`');
-        DB::get_all('TRUNCATE TABLE  `plf_zj_log`');
+        DB::query('TRUNCATE TABLE  `plf_zj`');
+        DB::query('TRUNCATE TABLE  `plf_zj_log`');
         for ($i = 1; $i <= 100; $i++) {
             $this->add(array('user_id' => $i, 'plate' => 1));
         }
