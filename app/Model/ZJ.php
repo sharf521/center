@@ -51,12 +51,14 @@ class ZJ extends Model
                     'dayplan_last' => 0,
                     'status' => 0
                 );
-                if ($index == 1) {
-                    $arr['status'] = 1;
-                }
                 $id = DB::table('zj')->insertGetId($arr);
-                if ($index == 1) {//每一盘的第一个
-                    DB::table('zj')->where("id={$id}")->limit(1)->update(array('pids' => "{$id},"));
+                //每一盘的第一个
+                if ($index == 1) {
+                    $arr=array(
+                        'status'=>1,
+                        'pids' => "{$id},"
+                    );
+                    DB::table('zj')->where("id={$id}")->limit(1)->update($arr);
                 }
             } else {
                 break;
@@ -68,11 +70,12 @@ class ZJ extends Model
     function add($data)
     {
         $plate = (int)$data['plate'];
+        $user_id=(int)$data['user_id'];
         if ($plate == 0) {
             $plate = 1;
         }
-        if (empty($data['user_id'])) {
-            $return = array('code' => 0, 'msg' => '参数错误！');
+        if ($user_id==0 && $plate==1) {
+                throw new \Exception('参数错误！');
         } else {
             /*
             $row=$this->mysql->one('zj',array('user_id'=>$data['user_id']));
@@ -84,7 +87,7 @@ class ZJ extends Model
             $nums = DB::table('zj')->where("plate={$plate}")->orderBy('id desc')->value('`index`');
             $arr = array(
                 'site_id' => 1,
-                'user_id' => (int)$data['user_id'],
+                'user_id' =>$user_id,
                 'pid' => 0,
                 'index' => intval($nums) + 1,
                 'money' => bcmul(800, pow(2, $plate - 1)),
@@ -97,20 +100,15 @@ class ZJ extends Model
                 'status' => 0
             );
             $result = DB::table('zj')->insert($arr);
-            if ($result == true) {
-                $return = array('code' => 200, 'msg' => 'ok');
-            } else {
-                $return = array('code' => 0, 'msg' => '内部错误');
-            }
+            return $result;
         }
-        return json_encode($return);
     }
 
     function calAdd1000()
     {
-        //$this->mysql->query('TRUNCATE TABLE  `plf_zj`');
-        //$this->mysql->query('TRUNCATE TABLE  `plf_zj_log`');
-        for ($i = 1; $i <= 10; $i++) {
+        DB::get_all('TRUNCATE TABLE  `plf_zj`');
+        DB::get_all('TRUNCATE TABLE  `plf_zj_log`');
+        for ($i = 1; $i <= 100; $i++) {
             $this->add(array('user_id' => $i, 'plate' => 1));
         }
         return true;

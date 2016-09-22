@@ -9,6 +9,7 @@ class Algorithm extends Model
     public function __construct()
     {
         parent::__construct();
+        $this->config = DB::table('rebate_config')->lists('v', 'k');
     }
 
     public function collectLog()
@@ -24,6 +25,13 @@ class Algorithm extends Model
                 foreach($result as $row){
                     if ($table != 'rebate_log') {
                         $row['money'] = bcmul($row['money'], 2.52, 5);
+                    }
+                    if($table=='fbb_log'){
+                        $fbb_rate=(float)$this->config['fbb_rate'];
+                        if(empty($fbb_rate)){
+                            $fbb_rate=1;
+                        }
+                        $row['money'] = bcmul($row['money'], $fbb_rate, 5);
                     }
                     $arr=array(
                         'user_id'=>$row['user_id'],

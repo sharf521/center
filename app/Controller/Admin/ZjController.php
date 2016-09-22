@@ -46,13 +46,20 @@ class ZjController extends AdminController
             $post=array(
                 'user_id'=>$_POST['user_id']
             );
-            $return=$this->model->add($post);
-            $return=json_decode($return,true);
-            if($return['code']==200){
-                show_msg(array('添加成功','',$this->base_url('zj')));
-            }
-            else{
-                show_msg(array($return['msg']));
+
+
+            try {
+                DB::beginTransaction();
+
+                $this->model->add($post);
+
+                DB::commit();
+
+                redirect('Zj/')->with('msg','添加成功！');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                $error= "Failed: " . $e->getMessage();
+                redirect()->back()->with('error',$error);
             }
         }
         else
@@ -60,15 +67,15 @@ class ZjController extends AdminController
             $this->view('zj',$data);
         }
     }
-//    function calAdd1000()
-//    {
-//        $return=$this->model->calAdd1000();
-//        if($return===true){
-//            show_msg(array('完成','',$this->base_url('zj')));
-//        }else{
-//            show_msg(array('失败！！'));
-//        }
-//    }
+    function calAdd1000()
+    {
+        $return=$this->model->calAdd1000();
+        if($return===true){
+            show_msg(array('完成','',$this->base_url('zj')));
+        }else{
+            show_msg(array('失败！！'));
+        }
+    }
     function calZj(){
         $return=$this->model->calZj();
         if($return===true){

@@ -19,6 +19,7 @@ class Rebate extends Model
          * [rabate2_dividend_ratio] => 0.05
          * [rabate2_dividend_equity] => 120
          * [rebate_probability] => 0
+         * [fbb_rate] => 1
          */
         $this->config = DB::table('rebate_config')->lists('v', 'k');
     }

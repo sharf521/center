@@ -187,7 +187,7 @@ class AccountController extends MemberController
                 redirect()->back()->with('error','支付密码错误！');
             }
             $money=math($total,2.52,'/',3);
-            $money=round_money(math($money,0.69,'*',3),1,2);
+            $money=math($money,0.69,'*',2);//保留两位小数，第三位舍去
             try {
                 DB::beginTransaction();
 
