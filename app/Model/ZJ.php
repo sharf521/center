@@ -89,6 +89,7 @@ class ZJ extends Model
                 'site_id' => 1,
                 'user_id' =>$user_id,
                 'pid' => 0,
+                'pids' => '',
                 'index' => intval($nums) + 1,
                 'money' => bcmul(800, pow(2, $plate - 1)),
                 'income' => 0,
