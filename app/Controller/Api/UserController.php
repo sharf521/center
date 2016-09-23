@@ -70,11 +70,17 @@ class UserController extends ApiController
             ->bindValues(array($this->app_id, $data['openid']))
             ->row();
         if($row){
-            unset($row['user_id']);
-            unset($row['signature']);
-            unset($row['created_at']);
-            $row['openid']=$data['openid'];
-            return $this->returnSuccess($row);
+            $return=array(
+                'funds_available'=>(float)$row['funds_available'],
+                'funds_freeze'=>(float)$row['funds_freeze'],
+                'integral_available'=>(float)$row['integral_available'],
+                'integral_freeze'=>(float)$row['integral_freeze'],
+                'security_deposit'=>(float)$row['security_deposit'],
+                'turnover_available'=>(float)$row['turnover_available'],
+                'turnover_credit'=>(float)$row['turnover_credit'],
+                'openid'=>$data['openid']
+            );
+            return $this->returnSuccess($return);
         }else{
             return $this->returnError('not find openid：'.$data['openid']);
         }
