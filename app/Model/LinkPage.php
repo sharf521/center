@@ -27,6 +27,12 @@ class LinkPage extends Model
         }
     }
 
+    public function getLink($code)
+    {
+        $linkPage = $this->getLinkPage();
+        return $linkPage[$code];
+    }
+
     public function echoLink($code,$val='',$data=array())
     {
         $linkpage = $this->getLinkPage();
@@ -49,7 +55,7 @@ class LinkPage extends Model
                 if ($index==0 || "$i" == "$val"){
                     $_chk = 'checked';
                 }
-                $html.= "<label><input type='radio' name='{$name}' {$_chk} value='{$i}'>{$v}</label>&nbsp;&nbsp;";
+                $html.= "<label><input type='radio' name='{$name}' {$_chk} value='{$i}'>{$v}</label><br>";
                 $index++;
             }
         } else {

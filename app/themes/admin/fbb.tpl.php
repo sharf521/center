@@ -68,32 +68,29 @@ if($this->func=='index')
 
 <?
 }
-elseif($this->func=='add'||$this->func=='edit')
+elseif($this->func=='add')
 {
     ?>
     <div class="main_title">
         <span>FBB管理</span><? if($this->func=='add'){?>新增<? }else{ ?>编辑<? }?>
-        <?=$this->anchor('usertype','列表','class="but1"');?>
+        <?=$this->anchor('fbb','列表','class="but1"');?>
     </div>
-    <form method="post">
-        <input type="hidden" name="id" value="<?=$row['id']?>"/>
-        <div class="form1">
-            <ul>
-                <li><label>用户id：</label><input type="text" name="user_id" value="<?=$row['user_id']?>"/><span></span></li>
-                <li><label>金额：</label>
-                    <select name="money">
-                        <option value="200">200</option>
-                        <option value="2000">2000</option>
-                        <option value="20000">20000</option>
-                        <option value="200000">200000</option>
-                    </select>
-                    <span></span></li>
-                <li><label>上层id：</label><input type="text" name="pid" value="<?=$row['pid']?>"/><span></span></li>
-            </ul>
-            <input type="submit" class="but3" value="保存" />
-            <input type="button" class="but3" value="返回" onclick="window.history.go(-1)"/>
-        </div>
-    </form>
+    <div class="main_content">
+        <form method="post">
+            <table class="table_from">
+                <tr><td>用户id：</td><td><input type="text" name="user_id" value="<?=$row['user_id']?>"/></td></tr>
+                <tr><td>金额：</td><td><select name="money">
+                            <option value="200">200</option>
+                            <option value="2000">2000</option>
+                            <option value="20000">20000</option>
+                            <option value="200000">200000</option>
+                        </select></td></tr>
+                <tr><td>推荐人id：</td><td><input type="text" name="p_userid" value=""/></td></tr>
+                <tr><td></td><td><input type="submit" class="but3" value="保存" />
+                        <input type="button" class="but3" value="返回" onclick="window.history.go(-1)"/></td></tr>
+            </table>
+        </form>
+    </div>
 <?
 }elseif($this->func=='fbblog'){
     ?>

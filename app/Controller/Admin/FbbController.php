@@ -37,17 +37,22 @@ class FbbController extends AdminController
     function add($data)
     {
         if ($_POST) {
-            $post = array(
-                'user_id' => $_POST['user_id'],
-                'pid' => (int)$_POST['pid'],
-                'money' => $_POST['money']
-            );
-            $return = $this->model->add($post);
-            $return = json_decode($return, true);
-            if ($return['code'] == 200) {
-                show_msg(array('添加成功', '', $this->base_url('fbb')));
-            } else {
-                show_msg(array($return['msg']));
+            try{
+                DB::beginTransaction();
+
+                $post = array(
+                    'user_id' => $_POST['user_id'],
+                    'p_userid' => (int)$_POST['p_userid'],
+                    'money' => $_POST['money']
+                );
+                $this->model->add($post);
+
+                DB::commit();
+                redirect('fbb')->with('msg','添加成功！');
+            }catch(\Exception $e){
+                DB::rollBack();
+                $error= "Failed: " . $e->getMessage();
+                redirect()->back()->with('error',$error);
             }
         } else {
             $this->view('fbb', $data);

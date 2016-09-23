@@ -122,7 +122,7 @@ class AccountController extends MemberController
             $account=new Account();
             $log = array();
             $log['user_id'] = $this->user_id;
-            $log['type'] = 'cash_frost';
+            $log['type'] = 'cash_apply';
             $log['funds_available'] ='-'.$total;
             $log['funds_freeze']=$total;
             $log['label'] = "cash_{$insertId}";

@@ -15,52 +15,49 @@ class FBB extends Model
     function add($data)
     {
         if(empty($data['user_id']) || empty($data['money'])){
-            $return=array('code'=>0,'msg'=>'参数错误！');
+            throw new \Exception('参数错误！');
+            exit;
         }
-        else{
-            $pid=(int)$data['pid'];
-            $arr=array(
-                'site_id' => 1,
-                'user_id' => (int)$data['user_id'],
-                'pid' => $pid,
-                'pids'=>'',
-                'money' => (float)($data['money']),
-                'income'=>0,
-                'addtime' => date('Y-m-d H:i:s'),
-                'status' => 0
-            );
-            $row=DB::table('fbb')->where('user_id=?')->bindValues($data['user_id'])->row();
-            if($row){
-                $return=array('code'=>1,'msg'=>'用户己购买！');
-                return json_encode($return);
-            }
-            $pids='';
-            if ($pid != 0) {
-                $row=DB::table('fbb')->where('id=?')->bindValues($pid)->row();
-                if (!$row) {
-                    $return = array('code' => 2, 'msg' => 'pid错误！');
-                    return json_encode($return);
-                } else {
-                    $pids = $row['pids'];
-                    //$_row = $this->mysql->get_one("select count(id) as count1 from {$this->dbfix}fbb where pid={$pid}");
-                    //$arr['position'] = $_row['count1'] + 1;
-                    $count1 = DB::table('fbb')->where("pid={$pid}")->value('count(id) as count1');
-                    $arr['position'] = intval($count1) + 1;
-                }
-            }
-            //$result=$this->mysql->insert("fbb",$arr);
-            //$id=$this->mysql->insert_id();
-            $id=DB::table('fbb')->insertGetId($arr);
-            $pids=$pids.$id.',';
-            DB::table('fbb')->where("id={$id}")->limit(1)->update(array('pids'=>$pids));
-            if($id){
-                $return=array('code'=>200,'msg'=>'ok');
-            }
-            else{
-                $return=array('code'=>0,'msg'=>'内部错误');
+        $p_userid=(int)$data['p_userid'];
+        $arr=array(
+            'site_id' => 1,
+            'user_id' => (int)$data['user_id'],
+            'pid' => 0,
+            'pids'=>'',
+            'money' => (float)($data['money']),
+            'income'=>0,
+            'addtime' => date('Y-m-d H:i:s'),
+            'status' => 0
+        );
+        $row=DB::table('fbb')->where('user_id=?')->bindValues($data['user_id'])->row();
+        if($row){
+            throw new \Exception('用户己购买！');
+            exit;
+        }
+        $pids='';
+        if ($p_userid != 0) {
+            $row=DB::table('fbb')->where('user_id=?')->orderBy("id desc")->bindValues($p_userid)->row();
+            if (!$row) {
+                throw new \Exception('p_userid错误！');
+                exit;
+            } else {
+                $pid=$row['id'];
+                $pids = $row['pids'];
+                $count1 = DB::table('fbb')->where("pid={$pid}")->value('count(id) as count1');
+                $arr['pid']=$pid;
+                $arr['position'] = intval($count1) + 1;
             }
         }
-        return json_encode($return);
+        $id=DB::table('fbb')->insertGetId($arr);
+        $pids=$pids.$id.',';
+        DB::table('fbb')->where("id={$id}")->limit(1)->update(array('pids'=>$pids));
+        return true;
+    }
+
+    public function isExist($user_id)
+    {
+        $fbb=$this->where('user_id=?')->bindValues($user_id)->first();
+        return $fbb->is_exist;
     }
 
     function calFbb()

@@ -26,7 +26,7 @@ class AlgorithmController extends ApiController
         $fbb = new FBB();
         $post = array(
             'user_id' => $_POST['user_id'],
-            'pid' => (int)$_POST['pid'],
+            'p_userid' => (int)$_POST['p_userid'],
             'money' => $_POST['money']
         );
         $return = $fbb->add($post);
@@ -58,19 +58,6 @@ class AlgorithmController extends ApiController
         $return = $zj->add(array('user_id' => $_POST['user_id'], 'plate' => 1));
         echo $return;
     }
-
-//    function zj_log_get()
-//    {
-//        $id = (int)$_POST['id'];
-//        $size = (int)$_POST['size'];
-//        if ($size == 0) {
-//            $size = 100;
-//        }
-//        $result = DB::table('zj_log')->select('id,user_id,money*2.52 as money,addtime')->where('id>?')->orderBy('id')->bindValues($id)->limit("0,{$size}")->all();
-//        $result = json_encode($result);
-//        echo $result;
-//    }
-
 
     function rebate_do()
     {
