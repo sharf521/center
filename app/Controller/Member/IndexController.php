@@ -40,11 +40,17 @@ class IndexController extends MemberController
         }
         $params=array(
             'openid'=>$openid,
-            'url'=>'/wap/user',
             'time'=>time()
         );
+        if($id==5){
+            $params['url']='/wap/user';
+            $url=$app->domain."/wap/index";
+        }elseif($id==9){
+            $params['url']='/user';
+            $url=$app->domain."/jump";
+        }
         $sign=$this->getSign($params,$app->appsecret);
-        $url=$app->domain."/wap/index/?openid={$params['openid']}&url={$params['url']}&time={$params['time']}&sign={$sign}";
+        $url=$url."/?openid={$params['openid']}&url={$params['url']}&time={$params['time']}&sign={$sign}";
         redirect($url);
     }
 
