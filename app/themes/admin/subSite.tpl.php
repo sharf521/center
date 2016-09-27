@@ -23,7 +23,7 @@
                         <td><?= $row->id ?></td>
                         <td><?= $row->name ?></td>
                         <td><?= $row->domain ?></td>
-                        <td><?= $row->logo ?></td>
+                        <td><img src="<?=$row->logo?>" height="50"></td>
                         <td><?= $row->title ?></td>
                         <td><?= $row->keywords ?></td>
                         <td><?= $row->description ?></td>
