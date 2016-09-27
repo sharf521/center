@@ -1,6 +1,6 @@
 <?php require 'header.php';?>
 <div class="login_contc">
-    <div class="logoslog"><img src="/themes/default_wap/images/m_logo.png"></div>
+    <div class="logoslog"><img src="<?=$this->site['logo']?>"></div>
     <div class="login_form">
         <form id="login_form" method="post">
         <ul>

@@ -39,7 +39,7 @@
 <? elseif ($this->func == 'add' || $this->func == 'edit') : ?>
     <div class="main_title">
         <span>管理</span><? if ($this->func == 'add') { ?>新增<? } else { ?>编辑<? } ?>
-        <a href="<?= url('category') ?>" class="but1">返回列表</a>
+        <a href="<?= url('app') ?>" class="but1">返回列表</a>
     </div>
     <div class="main_content">
         <form method="post">

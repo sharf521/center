@@ -213,7 +213,7 @@ function upload_image(id, type) {
         fileElementId: 'upload_' + id,
         dataType: 'json',
         success: function (result, status) {
-            if (result.status == 1) {
+            if (result.status == 'success') {
                 var path = result.data;
                 $('#' + id).val(path);
                 var _str = "<a href='" + path + "' target='_blank'><img src='" + path + "' height='100'/></a>";
