@@ -6,7 +6,7 @@ use System\Lib\DB;
 
 class AuthController extends BaseController
 {
-    protected $app_id;
+    protected $app_id;//app表里的id（int）
     protected $appsecret;
     public function __construct()
     {

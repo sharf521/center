@@ -4,8 +4,7 @@
     <div class="login_form">
         <form id="add_acon" method="post">
             <ul>
-
-                <li><i class="usename"></i><input name="username" type="text" placeholder="请输入账号"><span></span></li>
+                <li><i class="tjuser"></i><input name="username" type="text" placeholder="请输入账号"><span></span></li>
                 <li><i class="usename"></i><input name="email" type="text" placeholder="请输入邮箱"><span></span></li>
                 <li><i class="paswod"></i><input id="field" name="password" type="password" placeholder="请输入密码"><span></span></li>
                 <li><i class="paswod"></i><input name="sure_password" type="password" placeholder="请确认密码"><span></span></li>

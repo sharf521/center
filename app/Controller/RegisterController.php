@@ -46,7 +46,11 @@ class RegisterController extends Controller
     
     public function checkInviteUser(Request $request,User $user)
     {
-        $invite_arr=$user->checkInvetUser($request->get('invite_user'),$request->get('appid'));
+        $data=array(
+            'username'=>$request->get('invite_user'),
+            'appid'=>$request->get('appid')
+        );
+        $invite_arr=$user->checkInvetUser($data);
         if($invite_arr['status']===true){
             echo 'true';
         }else{

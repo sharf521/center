@@ -14,9 +14,8 @@ class IndexController extends Controller
         parent::__construct();
     }
 
-    public function index()
+    public function index(User $user)
     {
         redirect('member/');
-
     }
 }

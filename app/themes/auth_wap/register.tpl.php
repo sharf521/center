@@ -5,7 +5,7 @@
         <form id="add_acon" method="post">
             <ul>
 
-                <li><i class="usename"></i><input name="username" type="text" placeholder="请输入账号"><span></span></li>
+                <li><i class="tjuser"></i><input name="username" type="text" placeholder="请输入账号"><span></span></li>
                 <li><i class="usename"></i><input name="email" type="text" placeholder="请输入邮箱"><span></span></li>
                 <li><i class="paswod"></i><input id="field" name="password" type="password" placeholder="请输入密码"><span></span></li>
                 <li><i class="paswod"></i><input name="sure_password" type="password" placeholder="请确认密码"><span></span></li>
@@ -19,48 +19,67 @@
 </div>
 <script>
     $(document).ready(function(){
-
         $('#add_acon').validate({
             onkeyup: false,
             errorPlacement: function(error, element){
-                element.nextAll('span').first().after(error);
+                element.nextAll('b').first().after(error);
             },
             submitHandler:function(form){
-                ajaxpost('add_acon', '', '', 'onerror');
+                ajaxpost('login_form', '', '', 'onerror');
             },
             rules: {
                 username: {
-                    required: true
+                    required: true,
+                    rangelength:[6,15],
+                    remote:"/index.php/register/checkUserName/"
                 },
                 email: {
                     required: true,
                     email:true,
+                    remote:"/index.php/register/checkEmail/"
+                },
+                invite_user:{
+                    remote:{
+                        url:"/index.php/register/checkInviteUser/",
+                        data: {
+                            'invite_user': function(){
+                                return $('input[name="invite_user"]').val();
+                            },
+                            'appid':'<?=$_GET['appid']?>'
+                        }
+                    }
                 },
                 password: {
                     required: true,
-                    rangelength:[6,12],
+                    rangelength:[6,15]
                 },
-                sure_password: {
+                sure_password:{
                     required: true,
-                    equalTo:"#field"
-                },
+                    equalTo: "#field"
+                }
             },
             messages: {
                 username: {
-                    required: '请输入用户名',
+                    required: '<i class="fa fa-exclamation-circle"></i>请填写账号',
+                    rangelength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
+                    remote:'<i class="fa fa-exclamation-circle"></i>该用户名己存在'
                 },
-                email: {
-                    required: '请输入您的常用邮箱',
-                    email: '请输入正确格式的邮箱地址',
+                email:{
+                    required: '<i class="fa fa-exclamation-circle"></i>邮箱不能为空',
+                    email: '<i class="fa fa-exclamation-circle"></i>请填写正确的邮箱',
+                    remote:'<i class="fa fa-exclamation-circle"></i>该邮箱不可用'
+                },
+                invite_user:{
+                    remote:'<i class="fa fa-exclamation-circle"></i>推荐人不存在'
                 },
                 password: {
-                    required: '请输入密码',
-                    rangelength:'密码长度请保持在6-12位之间',
+                    required: '<i class="fa fa-exclamation-circle"></i>请填写密码',
+                    rangelength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
                 },
-                sure_password: {
-                    required: '请确认密码',
-                    equalTo:'密码输入不一致'
-                },
+                sure_password:{
+                    required: '<i class="fa fa-exclamation-circle"></i>请确认密码',
+                    equalTo: '<i class="fa fa-exclamation-circle"></i>两次输入密码不一致',
+                }
             }
         });
     });
