@@ -47,7 +47,7 @@
 </div>
 <footer>
     <ul>
-        <li class="cur"><a href="<?= url('goApp/5') ?>">
+        <li><a href="<?= url('goApp/5') ?>">
                 <b><img src="/themes/member_wap/images/icon_shop.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
                 <p>商城</p>
@@ -57,7 +57,7 @@
                 <i><img src="/themes/member_wap/images/icon_pos_cor.png"/></i>
                 <p>POS机</p>
             </a></li>
-        <li><a href="#">
+        <li class="cur"><a href="<?=url('')?>">
                 <b><img src="/themes/member_wap/images/icon_user.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_user_cor.png"/></i>
                 <p>账户</p>
