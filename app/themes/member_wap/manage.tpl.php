@@ -44,10 +44,6 @@
         <li><a href="<?= url('account/log'); ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/icon_bill.png"></b><span>账单记录</span></a></li>
     </ul>
-    <ul>
-        <li><a href="<?= url('goApp/9'); ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
-                        src="/themes/member_wap/images/icon_bill.png"></b><span>POS代理</span></a></li>
-    </ul>
 </div>
 <footer>
     <ul>
@@ -56,11 +52,11 @@
                 <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
                 <p>商城</p>
             </a></li>
-        <li><a href="#">
+        <li><a href="<?= url('goApp/9'); ?>">
                 <b><img src="/themes/member_wap/images/icon_pos.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_pos_cor.png"/></i>
 
-                <p>pos机</p>
+                <p>POS机</p>
             </a></li>
         <li><a href="#">
                 <b><img src="/themes/member_wap/images/icon_user.png"/></b>
