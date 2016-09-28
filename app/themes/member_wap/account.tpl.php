@@ -33,6 +33,7 @@
         </ul>
     </div>
 <? elseif ($this->func=='log') : ?>
+    <div class="m_regtilinde">资金明细</div>
     <div class="date_box">
         <form method="get">
             时间： <input type="text" readonly="readonly" name="starttime" id="beginDate" value="<?=$_GET['starttime']?>"/> -
