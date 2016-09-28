@@ -1,6 +1,9 @@
 <?php require 'header.php';?>
 <?php if($this->func=='index') : ?>
-    <div class="mode">
+    <nav>
+        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />首页</a></span>
+    </nav>
+    <div class="mode" style="display: none">
         <p>可用资金</p>
         <h3><?=(float)$account->funds_available?></h3>
         <a href="<?= url('account/log'); ?>" class="link_bill">查看记录</a>
@@ -25,7 +28,7 @@
     <br><br><br><br><br><br><br><br>
     <div class="mode_foot">
         <ul>
-            <li><a href="<?=url('account/recharge')?>">充值</a></li>
+            <li><a href="<?=url('account/log')?>">查看记录</a></li>
             <li><a href="<?=url('account/cash')?>">提现</a></li>
         </ul>
     </div>
