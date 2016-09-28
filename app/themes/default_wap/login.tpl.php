@@ -4,7 +4,7 @@
     <div class="login_form">
         <form id="login_form" method="post">
         <ul>
-            <li><i class="usename"></i><input type="text" name="username" placeholder="帐号/邮箱"></li>
+            <li><i class="usename"></i><input type="text" name="username" placeholder="用户名"></li>
             <li><i class="paswod"></i><input type="password" name="password" placeholder="密码"></li>
             <li class="lo_subtb"><input type="submit" class="log_sumb" value="登录"></li>
         </ul>

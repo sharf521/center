@@ -9,7 +9,7 @@
                 <li><i class="usename"></i><input name="email" type="text" placeholder="请输入邮箱"><span></span></li>
                 <li><i class="paswod"></i><input id="field" name="password" type="password" placeholder="请输入密码"><span></span></li>
                 <li><i class="paswod"></i><input name="sure_password" type="password" placeholder="请确认密码"><span></span></li>
-                <li><i class="tjuser"></i><input type="text" name="invite_user"  placeholder="您的推荐人"></li>
+                <li><i class="tjuser"></i><input type="text" name="invite_user"  placeholder="您的推荐人" value="<?=$r?>"></li>
                 <li class="lo_subtb"><input type="submit" class="log_sumb" value="注册"></li>
             </ul>
             <input type="hidden" name="_token"  value="<?=_token();?>"/>
