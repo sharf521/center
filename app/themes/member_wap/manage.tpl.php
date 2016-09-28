@@ -1,9 +1,9 @@
 <?php require 'header.php'; ?>
 
 
-<nav>
-    <span><img src="/themes/member_wap/images/icon_close.png"/>首页</span>
-</nav>
+<!--<nav>-->
+<!--    <span><img src="/themes/member_wap/images/icon_close.png"/>首页</span>-->
+<!--</nav>-->
 <div class="m_user_title">
     <a href="<?= url('user/userInfo'); ?>">
         <img src="<?= $this->user->headimgurl; ?>">
@@ -55,7 +55,6 @@
         <li><a href="<?= url('goApp/9'); ?>">
                 <b><img src="/themes/member_wap/images/icon_pos.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_pos_cor.png"/></i>
-
                 <p>POS机</p>
             </a></li>
         <li><a href="#">
