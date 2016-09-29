@@ -1,4 +1,7 @@
 <?php require 'header.php';?>
+    <nav>
+        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />返回</a></span>
+    </nav>
 <?php if($this->func=='cash') :  ?>
     <div class="m_regtilinde">我要提现  <a href="<?=url('account/cashLog')?>">提现记录</a></div>
     <div class="show_box">

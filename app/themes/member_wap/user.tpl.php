@@ -1,4 +1,7 @@
 <?php require 'header.php';?>
+<nav>
+    <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />返回</a></span>
+</nav>
         <?php if($this->func=='userInfo'): ?>
             <script src="/plugin/js/ajaxfileupload.js"></script>
             <div class="m_regtilinde">编辑个人资料</div>

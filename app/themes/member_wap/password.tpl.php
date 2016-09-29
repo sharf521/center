@@ -1,7 +1,7 @@
 <?php require 'header.php';?>
 <?php if($this->func=='changePwd'):?>
     <nav>
-        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />首页</a></span>
+        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />返回</a></span>
     </nav>
     <div class="m_regtilinde">密码修改</div>
     <div class="view">

@@ -98,7 +98,7 @@ class UserController  extends MemberController
         }else{
             $bank->selBank=$linkPage->echoLink('account_bank',$bank->bank,array('name'=>'bank'));
             $data['bank']=$bank;
-            $data['userInfo']=$bank->UserInfo();
+            $data['userInfo']=$this->user->UserInfo();
             $data['title_herder']='我的银行卡';
             $this->view('user',$data);
         }

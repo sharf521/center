@@ -3,7 +3,9 @@ require 'header.php';
 $region = new \App\Model\Region();
 $sex_array = array('', '男', '女');
 ?>
-
+<nav>
+    <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />返回</a></span>
+</nav>
 <script src="/plugin/js/ajaxfileupload.js"></script>
 <div class="m_regtilinde">实名认证</div>
 <?
