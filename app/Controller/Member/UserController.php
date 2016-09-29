@@ -87,6 +87,7 @@ class UserController  extends MemberController
     {
         $bank=$accountBank->find($this->user->id);
         if($_POST){
+            $bank->user_id=$this->user->id;
             $bank->bank = $request->post('bank');
             $bank->branch = $request->post('branch');
             $bank->card_no = $request->post('card_no');
