@@ -6,6 +6,7 @@
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>首页</title>
+    <link rel="stylesheet" href="/plugin/iconfont/iconfont.css">
     <style>
         /*@charset "utf-8";*/
         *{max-height: 9999999px;}
@@ -15,20 +16,18 @@
         .header{
             height: 4rem;
             line-height: 4rem;
+            font-size: 1.4rem;
             background: #FF4B00;
             z-index: 30;
             overflow: hidden;
             position: relative;
         }
+        .header a{text-decoration:none}
         .header .header_left{
-            width: 3rem;
-            height: 3rem;
+            left: 0.5rem;
+            line-height: 4rem;
             display: inline-block;
-            margin: .5rem;
             color: #fff;
-            font-size: 1.4rem;
-            line-height: 3rem;
-            text-align: center;
             position: absolute;
         }
         .header h1{
@@ -40,13 +39,23 @@
             white-space: nowrap;
             font-weight: normal;
         }
+        .header .header_right{
+            right: 0.5rem;
+            display: inline-block;
+            color: #fff;
+            position: absolute;
+            top:0;
+        }
     </style>
 </head>
 <body>
 <div class="header">
-    <a class="header_left icon-angle-left" href="/"></a>
+    <a class="header_left" href="/" ><i class="iconfont">&#xe603;</i>返回</a>
     <h1>产品众筹</h1>
-    <span class="header_right icon-search"></span>
+    <span class="header_right"><i class="iconfont">&#xe603;</i>返回</span>
 </div>
+
+
+
 </body>
 </html>
