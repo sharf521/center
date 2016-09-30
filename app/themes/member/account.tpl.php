@@ -78,7 +78,7 @@
                         <tr><td>转出金额：</td><td><input  name="total" type="text" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/></td></tr>
                         <tr><td>备注：</td><td><textarea cols="50" rows="2" name="remark"></textarea></td></tr>
                         <tr><td>支付密码：</td><td><input  name="zf_password" type="password"/></td></tr>
-                        <tr><td></td><td><input type="submit" value="立即兑换"/></td></tr>
+                        <tr><td></td><td><input type="submit" value="立即转帐"/></td></tr>
                     </table>
                 </form>
             </div>
