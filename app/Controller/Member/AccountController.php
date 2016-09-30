@@ -7,6 +7,7 @@ use App\Model\AccountLog;
 use App\Model\AccountRecharge;
 use App\Model\Rebate;
 use App\Model\System;
+use App\Model\User;
 use System\Lib\DB;
 use System\Lib\Request;
 
@@ -210,6 +211,92 @@ class AccountController extends MemberController
 
                 DB::commit();
                 redirect('account/log')->with('msg','兑换完成！');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                $error= "Failed: " . $e->getMessage();
+                redirect()->back()->with('error',$error);
+            }
+        }else{
+            $data['account']=$account;
+            $this->view('account',$data);
+        }
+    }
+
+    //站内转帐
+    public function playToUser(Account $account,Request $request,User $user)
+    {
+        $user_id=$this->user_id;
+        $account =$account->find($user_id);
+        if($_POST){
+            $total=(float)$request->post('total');
+            $type=(int)$request->post('type');
+            $to_username=$request->post('to_username');
+            $remark=$request->post('remark');
+            if($total < 0 || !in_array($type,array(1,2))){
+                redirect()->back()->with('error','输入错误！');
+            }
+            if($this->username==$to_username){
+                redirect()->back()->with('error','不能给自己转帐！');
+            }
+            if(empty($to_username)){
+                redirect()->back()->with('error','输入对方用户名！');
+            }else{
+                $to_uid=$user->where('username=?')->bindValues($to_username)->value('id','int');
+                if($to_uid==0){
+                    redirect()->back()->with('error','对方用户名不存在！');
+                }
+            }
+            if($type==1){
+                if($total > $account->funds_available){
+                    redirect()->back()->with('error','可用资金不足！');
+                }
+            }else{
+                if($total > $account->integral_available){
+                    redirect()->back()->with('error','可用积分不足！');
+                }
+            }
+
+            $checkPwd=$this->user->checkPayPwd($request->post('zf_password'),$this->user);
+            if($checkPwd!==true){
+                redirect()->back()->with('error','支付密码错误！');
+            }
+            try {
+                DB::beginTransaction();
+
+                if($type==1){
+                    $log = array(
+                        'user_id' => $user_id,
+                        'type' => 'sendToUser',
+                        'funds_available' =>'-'.$total,
+                        'remark' => "转出现金给：{$to_username}，备注：{$remark}"
+                    );
+                    $account->addLog($log);
+                    $log = array(
+                        'user_id' => $to_uid,
+                        'type' => 'getFromUser',
+                        'funds_available' =>$total,
+                        'remark' => "{$this->username}：转入现金，备注：{$remark}"
+                    );
+                    $account->addLog($log);
+                }else{
+                    $log = array(
+                        'user_id' => $user_id,
+                        'type' => 'sendToUser',
+                        'integral_available' =>'-'.$total,
+                        'remark' => "转出现金给：{$to_username}，备注：{$remark}"
+                    );
+                    $account->addLog($log);
+                    $log = array(
+                        'user_id' => $to_uid,
+                        'type' => 'getFromUser',
+                        'integral_available' =>$total,
+                        'remark' => "{$this->username}：转入积分，备注：{$remark}"
+                    );
+                    $account->addLog($log);
+                }
+
+                DB::commit();
+                redirect('account/log')->with('msg','站内转帐完成！');
             } catch (\Exception $e) {
                 DB::rollBack();
                 $error= "Failed: " . $e->getMessage();
