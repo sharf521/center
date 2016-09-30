@@ -12,7 +12,7 @@
         <li><a href="<?=url('account/cash')?>" <? if($this->func=='cash' || $this->func=='cashLog'){echo 'class="whover"';}?>>申请提现</a></li>
         <li><a href="<?=url('account/log')?>" <? if($this->func=='log'){echo 'class="whover"';}?>>资金记录</a></li>
         <li><a href="<?=url('account/convert')?>" <? if($this->func=='convert'){echo 'class="whover"';}?>>积分兑换现金</a></li>
-        <li><a href="<?=url('account/playToUser')?>" <? if($this->func=='playToUser'){echo 'class="whover"';}?>>站内转帐</a></li>
+        <li><a href="<?=url('account/playToUser')?>" <? if($this->func=='playToUser'){echo 'class="whover"';}?>>站内转账</a></li>
     </ul>
     <h3>密码管理</h3>
     <ul>
