@@ -10,10 +10,7 @@ class AuthController extends BaseController
     protected $appsecret;
     public function __construct()
     {
-        global $_G;
         parent::__construct();
-        $this->control	=$_G['class'];
-        $this->func		=$_G['func'];
         if (strpos(strtolower($_SERVER['HTTP_HOST']), 'wap.') === false) {
             $this->is_wap = false;
             $this->template = 'auth';

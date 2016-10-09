@@ -12,11 +12,7 @@ class ApiController extends BaseController
 
     public function __construct()
     {
-        global $_G;
         parent::__construct();
-        $this->control = $_G['class'];
-        $this->func = $_G['func'];
-
         $this->data = json_decode($_POST['data'], true);
         $msg = $this->checkSign($this->data);
         if ($msg !== true) {

@@ -15,75 +15,25 @@ session_start();
 date_default_timezone_set('Asia/Shanghai');//时区配置
 set_time_limit($set_time = 3600);
 
-set_error_handler('errorHandler');
-function errorHandler($errno, $errstr, $errfile, $errline)
-{
-    if($errno ==E_NOTICE){
-        return true;
-    }
-    $file_path = ROOT . "/public/data/logs/";
-    if (!is_dir($file_path)) {
-        mkdir($file_path, 0777, true);
-    }
-    $filename = $file_path . date("Ym") . ".log";
-    $handler = null;
-    if (($handler = fopen($filename, 'ab+')) !== false) {
-        fwrite($handler, date('r') . "\t[$errno]$errstr\t$errfile\t$errline\n");
-        fclose($handler);
-    }
-}
-
-
 define('ROOT', __DIR__);
+
+require 'vendor/autoload.php';
+require 'function.php';
+
+
 $_G = array();
-require ROOT . '/vendor/autoload.php';
-require ROOT . '/system/Autoloader.php';
-use System\Lib\DB;
-DB::instance('db1');
-require ROOT . '/system/function.php';
-require ROOT . '/system/helper.php';
+
+\System\Lib\DB::instance(\App\Config::$db1);
+
 $pager = app('\System\Lib\Page');
-$request=app('\System\Lib\Request');
 
 
 
-
-
-
-
-$_G['system'] = DB::table('system')->orderBy("`showorder`,id")->lists('value', 'code');
-//$houtai=app('\App\Model\System')->getCode('houtai');
-$_G['class'] = ($request->get(0) != '') ? $request->get(0) : 'index';
-$_G['func'] = ($request->get(1) != '') ? $request->get(1) : 'index';
-$_path='';
-if ($_G['class'] == 'api') {
-    $_path='Api';
-}elseif ($_G['class'] == 'auth'){
-    $_path='Auth';
-}elseif ($_G['class'] == 'member') {
-    $_path='Member';
-} elseif ($_G['class'] == $_G['system']['houtai']) {
-    $_path='Admin';
-}
-if($_path==''){
-    if (file_exists(ROOT . '/app/Controller/' . ucfirst($_G['class']) . 'Controller.php')) {
-        $_classpath = "\\App\\Controller\\" . ucfirst($_G['class']) . "Controller";
-        $method = $_G['func'];
-    } else {
-        $_classpath='\App\Controller\IndexController';
-        $method = $_G['class'];
-    }
-}else{
-    $_G['class'] = ($request->get(1) != '') ? $request->get(1) : 'index';
-    $_G['func'] = ($request->get(2) != '') ? $request->get(2) : 'index';
-    if (file_exists(ROOT . '/app/Controller/'.$_path.'/' . ucfirst($_G['class']) . 'Controller.php')) {
-        $_classpath = "\\App\\Controller\\" .$_path.'\\'. ucfirst($_G['class']) . "Controller";
-        $method = $_G['func'];
-    } else {
-        $_classpath = "\\App\\Controller\\" .$_path."\\IndexController";
-        $method = $_G['class'];
-    }
-}
-\System\Lib\Application::start($_classpath,$method);
+$routes=array(
+    'api'=>'Api',
+    'auth'=>'Auth',
+    'member'=>'Member',
+);
+\System\Lib\Application::start($routes);
 $t2 = microtime(true);
 //echo '<hr>耗时'.round($t2-$t1,3).'秒';
