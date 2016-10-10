@@ -1,8 +1,10 @@
 <?php require 'header.php';?>
 <?php if($this->func=='index') : ?>
-    <nav>
-        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />返回</a></span>
-    </nav>
+    <div class="header">
+        <a class="header_left" href="<?=url('')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+        <h1>我的资金</h1>
+        <span class="header_right"></span>
+    </div>
     <div class="mode" style="display: none">
         <p>可用资金</p>
         <h3><?=(float)$account->funds_available?></h3>
@@ -33,8 +35,12 @@
         </ul>
     </div>
 <? elseif ($this->func=='log') : ?>
-    <div class="m_regtilinde">资金明细</div>
-    <div class="date_box">
+    <div class="header">
+        <a class="header_left" href="<?=url('account')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+        <h1>资金明细</h1>
+        <span class="header_right"></span>
+    </div>
+    <div class="date_box" style="margin-top: 6rem">
         <form method="get">
             时间： <input type="text" readonly="readonly" name="starttime" id="beginDate" value="<?=$_GET['starttime']?>"/> -
             <input type="text" readonly="readonly" name="endtime" id="endDate" value="<?=$_GET['endtime']?>"/>

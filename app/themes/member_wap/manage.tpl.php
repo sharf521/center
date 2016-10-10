@@ -41,10 +41,6 @@
                         src="/themes/member_wap/images/icon_password.png"></b><span>密码修改</span></a></li>
     </ul>
     <ul>
-        <li><a href="<?= url('account/log'); ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
-                        src="/themes/member_wap/images/icon_bill.png"></b><span>账单记录</span></a></li>
-    </ul>
-    <ul>
         <li><a href="<?= url('logout'); ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/icon_bill.png"></b><span>退出</span></a></li>
     </ul>
