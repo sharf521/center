@@ -74,7 +74,7 @@ footer li p{ line-height: 4rem; font-size: 3rem;}
 .p_curpage {border:1px solid #337ab7; border-left: 0px;background:#337ab7;color:#fff; padding:4px 10px;}
 
 
-.header{ height: 8rem;line-height: 8rem;font-size: 3rem;background: #fff;z-index: 30;overflow: hidden;position:fixed;border-bottom: .1rem solid #ddd;color: #666; width: 100%; left: 0; top:0;}
+.header{ height: 8rem;line-height: 8rem;font-size: 3rem;background: #fff;z-index: 30;overflow: hidden;border-bottom: .1rem solid #ddd;color: #666; width: 100%; left: 0; top:0;position:fixed;}
 .header .iconfont{font-size: 3rem}
 .header a{text-decoration:none; color: #666;}
 .header .header_left{  padding:0 1rem; display: inline-block; float: left}
