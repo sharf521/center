@@ -10,7 +10,7 @@
         <h3><?=(float)$account->funds_available?></h3>
         <a href="<?= url('account/log'); ?>" class="link_bill">查看记录</a>
     </div>
-    <div class="lump">
+    <div class="lump" style="margin-top: 10rem">
         <ul>
             <li>可用资金<br/><span><?=(float)$account->funds_available?></span></li>
             <li>冻结资金<br/><span><?=(float)$account->funds_freeze?></span></li>
@@ -40,7 +40,7 @@
         <h1>资金明细</h1>
         <span class="header_right"></span>
     </div>
-    <div class="date_box" style="margin-top: 6rem">
+    <div class="date_box" style="margin-top: 10rem">
         <form method="get">
             时间： <input type="text" readonly="readonly" name="starttime" id="beginDate" value="<?=$_GET['starttime']?>"/> -
             <input type="text" readonly="readonly" name="endtime" id="endDate" value="<?=$_GET['endtime']?>"/>
