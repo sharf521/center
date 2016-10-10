@@ -52,7 +52,7 @@
                 </tr>
                 <tr>
                     <td>域名：</td>
-                    <td><input type="text" name="domain" size="50" value="<?= $row->domain ?>"/></td>
+                    <td><input type="text" name="domain" size="50" value="<?= $row->domain ?>"/> |分隔，以|结尾</td>
                 </tr>
                 <tr>
                     <td>LOGO：</td>
@@ -74,6 +74,38 @@
                 <tr>
                     <td>描述：</td>
                     <td><textarea name="description" cols="50" rows="3"><?=$row->description?></textarea></td>
+                </tr>
+                <tr>
+                    <td>云购网址：</td>
+                    <td><input type="text" name="cloud_url" value="<?= $row->cloud_url ?>" size="50"/>http://开始 结尾不要/</td>
+                </tr>
+                <tr>
+                    <td>云购wap网址：</td>
+                    <td><input type="text" name="cloud_url_wap" value="<?= $row->cloud_url_wap ?>" size="50"/></td>
+                </tr>
+                <tr>
+                    <td>POS代理网址：</td>
+                    <td><input type="text" name="pos_url" value="<?= $row->pos_url ?>" size="50"/></td>
+                </tr>
+                <tr>
+                    <td>POS代理wap网址：</td>
+                    <td><input type="text" name="pos_url_wap" value="<?= $row->pos_url_wap ?>" size="50"/></td>
+                </tr>
+                <tr>
+                    <td>商城网址：</td>
+                    <td><input type="text" name="mall_url" value="<?= $row->mall_url ?>" size="50"/></td>
+                </tr>
+                <tr>
+                    <td>商城wap网址：</td>
+                    <td><input type="text" name="mall_url_wap" value="<?= $row->mall_url_wap ?>" size="50"/></td>
+                </tr>
+                <tr>
+                    <td>众筹网址：</td>
+                    <td><input type="text" name="crowd_url" value="<?= $row->crowd_url ?>" size="50"/></td>
+                </tr>
+                <tr>
+                    <td>众筹wap网址：</td>
+                    <td><input type="text" name="crowd_url_wap" value="<?= $row->crowd_url_wap ?>" size="50"/></td>
                 </tr>
                 <tr>
                     <td></td>

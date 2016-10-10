@@ -33,6 +33,9 @@
 
             </div>
         </div>
+
+
+        <a href="<?= url('goApp/8'); ?>">进入我的云购</a>
     </div>
 </div>
 

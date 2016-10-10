@@ -10,7 +10,7 @@
     <meta http-equiv="Expires" content="-1">
     <meta http-equiv="pragram" content="no-cache">
     <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
-    <title><?=$title_herder?></title>
+    <title><?php if(!empty($title_herder)){echo $title_herder.'-';}?><?=$this->site['name']?></title>
     <link href="/themes/default_wap/css/web_style.css" type="text/css" rel="stylesheet"/>
     <link href="/themes/default_wap/css/web_login.css" type="text/css" rel="stylesheet"/>
     <!-- Jquery -->

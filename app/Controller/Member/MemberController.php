@@ -3,6 +3,7 @@ namespace App\Controller\Member;
 
 use App\Model\User;
 use System\Lib\Controller as BaseController;
+use System\Lib\DB;
 
 class MemberController extends BaseController
 {
@@ -10,7 +11,9 @@ class MemberController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        if (strpos(strtolower($_SERVER['HTTP_HOST']), 'wap.') === false) {
+        $host = strtolower($_SERVER['HTTP_HOST']);
+        $this->site=DB::table('subsite')->where("domain like '%{$host}|%'")->row();
+        if (strpos($host, 'wap.') === false) {
             $this->is_wap = false;
             $this->template = 'member';
         } else {

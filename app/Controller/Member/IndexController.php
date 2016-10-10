@@ -31,23 +31,38 @@ class IndexController extends MemberController
     //http://www.yuantuwang.com/wap/index/?openid=69504699757a452ff4fd03260609431&url=/wap/user&time=1470386943&sign=D8056A48C067364E38A251297087587B
     public function goApp(Request $request,App $app,AppUser $appUser)
     {
-        $id=$request->get(2);
-        $app=$app->findOrFail($id);
-
-        $openid=$appUser->getOpenId($this->user_id,$id);
+        $app_id=$request->get(2);
+        $isGoWap=$request->get(3)=='wap'?true:false;
+        $app=$app->findOrFail($app_id);
+        $openid=$appUser->getOpenId($this->user_id,$app_id);
         if($openid==''){
-            $openid=$appUser->create($this->user_id,$id);
+            $openid=$appUser->create($this->user_id,$app_id);
         }
         $params=array(
             'openid'=>$openid,
             'time'=>time()
         );
-        if($id==5){
-            $params['url']='/wap/user';
-            $url=$app->domain."/wap/index";
-        }elseif($id==9){
-            $params['url']='/user';
-            $url=$app->domain."/jump";
+        if($app_id==5){
+            if($isGoWap){
+                $params['url']='/wap/user';
+                $url=$this->site[$app->subsite_field.'_wap']."/wap/index";
+            }
+        }elseif($app_id==8){  //一元云购
+            if($isGoWap){
+                $params['url']='/user';
+                $url=$this->site[$app->subsite_field.'_wap']."/jump";
+            }else{
+                $params['url']='/user';
+                $url=$this->site[$app->subsite_field]."/jump";
+            }
+        }elseif($app_id==9){  //pos代理
+            if($isGoWap){
+                $params['url']='/user';
+                $url=$this->site[$app->subsite_field.'_wap']."/jump";
+            }else{
+                $params['url']='/user';
+                $url=$this->site[$app->subsite_field]."/jump";
+            }
         }
         $sign=$this->getSign($params,$app->appsecret);
         $url=$url."/?openid={$params['openid']}&url={$params['url']}&time={$params['time']}&sign={$sign}";

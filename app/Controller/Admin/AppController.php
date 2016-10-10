@@ -25,7 +25,8 @@ class AppController extends AdminController
             $app->name=$request->post('name');
             $app->appid=$request->post('appid');
             $app->appsecret=$request->post('appsecret');
-            $app->domain=$request->post('domain');
+            $app->subsite_field=$request->post('subsite_field');
+            $app->updated_at=time();
             $app->save();
             redirect('app')->with('msg','添加成功！');
         }else{
@@ -39,7 +40,8 @@ class AppController extends AdminController
             $app->name=$request->post('name');
             $app->appid=$request->post('appid');
             $app->appsecret=$request->post('appsecret');
-            $app->domain=$request->post('domain');
+            $app->subsite_field=$request->post('subsite_field');
+            $app->updated_at=time();
             $app->save();
             redirect('app')->with('msg','保存成功！');
         }else{

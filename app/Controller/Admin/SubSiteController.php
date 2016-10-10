@@ -27,6 +27,14 @@ class SubSiteController extends AdminController
             $site->title=$request->post('title');
             $site->keywords=$request->post('keywords');
             $site->description=$request->post('description');
+            $site->cloud_url=$request->post('cloud_url');
+            $site->cloud_url_wap=$request->post('cloud_url_wap');
+            $site->pos_url=$request->post('pos_url');
+            $site->pos_url_wap=$request->post('pos_url_wap');
+            $site->mall_url=$request->post('mall_url');
+            $site->mall_url_wap=$request->post('mall_url_wap');
+            $site->crowd_url=$request->post('crowd_url');
+            $site->crowd_url_wap=$request->post('crowd_url_wap');
             $site->save();
             redirect('subSite')->with('msg','添加成功！');
         }else{
@@ -43,6 +51,14 @@ class SubSiteController extends AdminController
             $site->title=$request->post('title');
             $site->keywords=$request->post('keywords');
             $site->description=$request->post('description');
+            $site->cloud_url=$request->post('cloud_url');
+            $site->cloud_url_wap=$request->post('cloud_url_wap');
+            $site->pos_url=$request->post('pos_url');
+            $site->pos_url_wap=$request->post('pos_url_wap');
+            $site->mall_url=$request->post('mall_url');
+            $site->mall_url_wap=$request->post('mall_url_wap');
+            $site->crowd_url=$request->post('crowd_url');
+            $site->crowd_url_wap=$request->post('crowd_url_wap');
             $site->save();
             redirect('subSite')->with('msg','保存成功！');
         }else{

@@ -1,5 +1,4 @@
-<div class="footer">Copyright 2012-2020 Inc.,All rights reserved. 豫ICP备11027012号<br>
-    技术支持：郑州璞胜金投电子商务科技有限公司</div>
+<div class="footer">Copyright 2012-2020 Inc.,All rights reserved. 豫ICP备11027012号<br></div>
 <script charset="utf-8" src="/plugin/layer/layer.js"></script>
 <script>
     <?php if (session('msg')){?>

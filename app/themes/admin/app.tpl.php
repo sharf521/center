@@ -12,7 +12,7 @@
                     <th>名称</th>
                     <th>appid</th>
                     <th>appsecret</th>
-                    <th>域名</th>
+                    <th>分站对应字段</th>
                     <th>添加时间</th>
                     <th>修改时间</th>
                     <th>操作</th>
@@ -23,7 +23,7 @@
                         <td><?= $row->name ?></td>
                         <td><?= $row->appid ?></td>
                         <td><?= $row->appsecret ?></td>
-                        <td><?= $row->domain ?></td>
+                        <td><?= $row->subsite_field ?></td>
                         <td><?= $row->created_at ?></td>
                         <td><?= $row->updated_at ?></td>
                         <td>
@@ -58,8 +58,8 @@
                     <td><input type="text" name="appsecret" value="<?= $row->appsecret ?>" size="50"/></td>
                 </tr>
                 <tr>
-                    <td>域名：</td>
-                    <td><input type="text" name="domain" value="<?= $row->domain ?>" size="50"/></td>
+                    <td>分站对应字段：</td>
+                    <td><input type="text" name="subsite_field" value="<?= $row->subsite_field ?>" size="50"/></td>
                 </tr>
                 <tr>
                     <td></td>
