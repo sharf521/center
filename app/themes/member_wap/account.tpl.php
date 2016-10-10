@@ -2,8 +2,8 @@
 <?php if($this->func=='index') : ?>
     <div class="header">
         <a class="header_left" href="<?=url('')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+        <span class="header_right">aaaa</span>
         <h1>我的资金</h1>
-        <span class="header_right"></span>
     </div>
     <div class="mode" style="display: none">
         <p>可用资金</p>
