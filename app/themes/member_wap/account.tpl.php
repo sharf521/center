@@ -2,7 +2,7 @@
 <?php if($this->func=='index') : ?>
     <div class="header">
         <a class="header_left" href="<?=url('')?>" ><i class="iconfont">&#xe603;</i>返回</a>
-        <span class="header_right"></span>
+        <span class="header_right">&nbsp;</span>
         <h1>我的资金</h1>
     </div>
     <div class="mode" style="display: none">
@@ -37,6 +37,7 @@
 <? elseif ($this->func=='log') : ?>
     <div class="header">
         <a class="header_left" href="<?=url('account')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+        <span class="header_right">&nbsp;</span>
         <h1>资金明细</h1>
     </div>
     <div class="date_box" style="margin-top: 10rem">
