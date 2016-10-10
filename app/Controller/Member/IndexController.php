@@ -53,7 +53,7 @@ class IndexController extends MemberController
                 $url=$this->site[$app->subsite_field.'_wap']."/jump";
             }else{
                 $params['url']='/user';
-                $url=$this->site[$app->subsite_field]."/jump";
+                $url=$this->site[$app->subsite_field]."/auth/result";
             }
         }elseif($app_id==9){  //pos代理
             if($isGoWap){
