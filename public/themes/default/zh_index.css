@@ -209,7 +209,7 @@ a:hover{ color: inherit;}
 .regist_type li.cur{ background:#444; color:#fff;}
 .type_cont{ display:none;}
 .left_reason{ width:339px; height: 200px; position: absolute; top: 50%; margin-top: -100px; border-right: 1px dashed #bbb;  }
-.left_reason img{ position: absolute; top: 50%; margin-top: -50px; left: 50px; }
+.left_reason img{ position: absolute; top: 50%; margin-top: -50px; left: 50px;  max-width: 250px;}
 .back_link{ color: #F60; display: block; position: absolute; left: 50px; top: 50px; line-height: 20px;}
 .back_link:hover{ text-decoration: underline; color: #f60;}
 
