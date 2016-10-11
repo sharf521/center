@@ -17,7 +17,7 @@ class AuthController extends BaseController
             echo 'The site was not found！';
             exit;
         }
-        $this->checkSign($_GET);
+        //$this->checkSign($_GET);
         if (strpos($host, 'wap.') === false) {
             $this->is_wap = false;
             $this->template = 'auth';
