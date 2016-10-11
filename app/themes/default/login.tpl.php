@@ -11,12 +11,12 @@
                 <p><input type="text" name="username"  placeholder="请输入账号"/><b></b></p>
                 <p><input type="password" name="password"  placeholder="请输入密码" /><b></b></p>
             </div>
-            <p class="tip_most"><span>没有账号？<a href="/register">去注册</a></span></p>
+            <p class="tip_most"><span>没有账号？<a href="/register">去注册</a></span>    <a href="/getPwd" style="float: right; margin-right: 10px;">忘记密码</a></p>
+
             <p class="smit_btn"><input type="submit" value="登&nbsp;&nbsp;录" /></p>
             <input type="hidden" name="_token"  value="<?=_token();?>"/>
         </form>
     </div>
-    <a class="back_link" href="/register">返回注册页</a>
     <p class="clear"></p>
 </div>
 <script src="/plugin/js/jquery.js"></script>

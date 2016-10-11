@@ -101,8 +101,8 @@ function GetpwdMsg($data = array())
     $webname = '找回密码';
     $email = $data['email'];
     $active_id = urlencode(authcode($user_id . "," . time(), "ENCODE"));
-    if ($data['type'] == 'getpwd') {
-        $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/getpwd/updatepwd?id={$active_id}";
+    if ($data['type'] == 'getPwd') {
+        $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/getPwd/updatePwd?id={$active_id}";
         $tital = "修改登录密码";
     } elseif ($data['type'] == 'getPayPwd') {
         $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/member/password/resetPayPwd?id={$active_id}";

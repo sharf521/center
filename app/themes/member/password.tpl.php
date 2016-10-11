@@ -57,7 +57,7 @@
                     <table class="table_from">
                         <tr><td >用户名：</td><td><?=$user->username?></td></tr>
                         <tr><td >邮箱地址：</td><td><?=$user->email?></td></tr>
-                        <tr><td >验证码：</td><td><input type="text" name="valicode" size="11" maxlength="4" value=""/><img src="/index.php/plugin/code" alt="点击刷新" onClick="this.src='/index.php/plugin/code/?t=' + Math.random();" align="absmiddle" style="cursor:pointer" /></td></tr>
+                        <tr><td >验证码：</td><td><input type="text" name="valicode" size="11" maxlength="4" value=""/><img src="/index.php/plugin/code/?<?=rand(1000,9999)?>" alt="点击刷新" onClick="this.src='/index.php/plugin/code/?t=' + Math.random();" align="absmiddle" style="cursor:pointer" /></td></tr>
                         <tr><td></td><td><input  value="保 存" type="submit"/></td></tr>
                     </table>
                 </form>
