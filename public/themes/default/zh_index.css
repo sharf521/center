@@ -186,7 +186,7 @@ a:hover{ color: inherit;}
 /*登录---注册*/
 .logobox{ height:36px; width:100%; padding:50px 0; }
 .logowarp{ width:1000px; margin:0 auto;}
-.mainbox{ width:800px; margin: 200px auto 0;  background:#fff; position: relative; }
+.mainbox{ width:800px; margin: 200px auto 0;  background:#fff; position: relative;  overflow: hidden}
 .mill{ width:360px; margin-left: 340px; }
 .loginbox{ padding:50px;}
 .loginbox h3{ line-height:40px; font-size:18px; font-weight:normal; text-align:center; color:#F60; width:200px; margin:0 auto 10px; border-bottom: 2px solid #F60; }
