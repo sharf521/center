@@ -17,12 +17,7 @@ class AuthController extends BaseController
             echo 'The site was not found！';
             exit;
         }
-
-        $get_data=$_GET;
-        unset($get_data[0]);//移除get里auth
-        unset($get_data[1]);//class
-        unset($get_data[2]);//func
-        $this->checkSign($get_data);
+        $this->checkSign($_GET);
 
         if (strpos($host, 'wap.') === false) {
             $this->is_wap = false;

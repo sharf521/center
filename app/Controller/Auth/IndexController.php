@@ -22,11 +22,13 @@ class IndexController extends AuthController
             'sign'=>$request->sign,
             'redirect_uri'=>$request->redirect_uri
         );
-        $_url="/auth/register/?appid={$get['appid']}&redirect_uri={$get['redirect_uri']}&sign={$get['sign']}";
+        $_url="?appid={$get['appid']}&redirect_uri={$get['redirect_uri']}&sign={$get['sign']}";
         if(isset($_GET['r'])){
             $get['r']=$request->get('r');
             $_url.="&r={$get['r']}";
         }
+        $regUrl="/auth/register/".$_url;
+        $getPwdUrl="/auth/getPwd/".$_url;
         //$this->checkSign($get);
         if($_POST){
             $request->checkToken();
@@ -53,7 +55,8 @@ class IndexController extends AuthController
             }
             redirect()->back()->with('error',$error);
         }else{
-            $data['_url']=$_url;
+            $data['regUrl']=$regUrl;
+            $data['getPwdUrl']=$getPwdUrl;
             $data['title_herder']='用户登陆';
             $this->view('login',$data);
         }
