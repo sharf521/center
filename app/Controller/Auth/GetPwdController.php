@@ -1,12 +1,10 @@
 <?php
-
-namespace App\Controller;
-
+namespace App\Controller\Auth;
 
 use App\Model\User;
 use System\Lib\Request;
 
-class GetPwdController extends Controller
+class GetPwdController extends AuthController
 {
     public function __construct()
     {
