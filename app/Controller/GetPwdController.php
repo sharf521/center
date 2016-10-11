@@ -54,7 +54,7 @@ class GetPwdController extends Controller
             redirect()->back()->with('error',$error);
         }else{
             $data['title_herder']='找回密码';
-            $this->view('getpwd',$data);
+            $this->view('getPwd',$data);
         }
     }
 
@@ -102,7 +102,7 @@ class GetPwdController extends Controller
             }
             $data['title_herder']='重置密码';
             $data['user']=$user->findOrFail($user_id);
-            $this->view('getpwd', $data);
+            $this->view('getPwd', $data);
         }
     }
 }
