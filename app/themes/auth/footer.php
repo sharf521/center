@@ -7,7 +7,7 @@ if(session('msg'))
         layer.msg('<?=session('msg')?>', {
             offset: '200px',
             icon: 1,
-            time: 1000
+            time: 3000
         });
     </script>
     <?
@@ -19,7 +19,7 @@ if(session('error'))
         layer.msg('<?=session('error')?>', {
             offset: '200px',
             icon: 2,
-            time: 2000
+            time: 10000
         });
     </script>
     <?

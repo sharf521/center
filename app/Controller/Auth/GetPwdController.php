@@ -48,7 +48,7 @@ class GetPwdController extends AuthController
                 $data['msg'] = $this->getPwdMsg($data+$get);
 
                 $sendEmailTime=session()->get('sendEmailTime');
-                if(false && !empty($sendEmailTime) && $sendEmailTime+60*2>time()){
+                if(!empty($sendEmailTime) && $sendEmailTime+60*2>time()){
                     $error="请2分钟后再次请求。";
                 }else{
                     $result = mail_send($data['email'],'用户找回密码',$data['msg']);
