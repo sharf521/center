@@ -27,7 +27,7 @@ class IndexController extends AuthController
             $get['r']=$request->get('r');
             $_url.="&r={$get['r']}";
         }
-        $this->checkSign($get);
+        //$this->checkSign($get);
         if($_POST){
             $request->checkToken();
             $data = array(
@@ -72,7 +72,7 @@ class IndexController extends AuthController
             $data['r']=$get['r'];
             $_url.="&r={$get['r']}";
         }
-        $this->checkSign($get);
+        //$this->checkSign($get);
         if($_POST){
             $request->checkToken();
             $data = array(
