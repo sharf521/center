@@ -21,6 +21,9 @@ class UserController extends ApiController
             ->bindValues(array($this->app_id, $data['openid']))
             ->row();
         if($row){
+            if($row['headimgurl']==''){
+                $row['headimgurl']='/themes/member/images/no-img.jpg';
+            }
             $user=array(
                 'openid' => $data['openid'],
                 'username' => $row['username'],
