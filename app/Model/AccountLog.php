@@ -46,6 +46,9 @@ class AccountLog extends Model
         if(!empty($data['app_order_no'])){
             $where.=" and app_order_no='{$data['app_order_no']}'";
         }
+        if(!empty($data['app_id'])){
+            $where.=" and app_id='{$data['app_id']}'";
+        }
         $result=$this->where($where)->orderBy('id desc')->pager(intval($_GET['page']));
         foreach ($result['list'] as $index=>$value){
             $change='';
@@ -115,5 +118,10 @@ class AccountLog extends Model
     public function user()
     {
        return $this->hasOne('User','id','user_id');
+    }
+
+    public function App()
+    {
+        return $this->hasOne('\App\Model\App','id','app_id');
     }
 }

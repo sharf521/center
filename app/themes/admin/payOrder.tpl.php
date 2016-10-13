@@ -5,6 +5,12 @@
     </div>
     <div class="search">
         <form  method="get">
+            应用：<select name="app_id">
+                <option value="">请选择</option>
+                <? foreach($apps as $app) :?>
+                <option value="<?=$app->id?>" <? if($_GET['app_id']==$app->id){echo 'selected';}?>><?=$app->name?></option>
+                <? endforeach;?>
+            </select>
             支付单号：<input type="text" size="15" name="pay_no" value="<?=$_GET['pay_no']?>">
             商户订单号：<input type="text" size="15" name="app_order_no" value="<?=$_GET['app_order_no']?>">
             Label：<input type="text" size="8" name="label" value="<?=$_GET['label']?>">
