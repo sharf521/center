@@ -121,6 +121,7 @@ class UserController extends ApiController
                     throw new \Exception("data item is not a array!");
                 }
                 $item['pay_no']=$pay_arr['pay_no'];
+                $item['app_id']=$pay_arr['app_id'];
                 $item['app_order_no']=$pay_arr['app_order_no'];
                 $item['label']=$data['label'];
                 $account->addLog($item);
@@ -179,6 +180,7 @@ class UserController extends ApiController
                                 }
                             }
                             $item['pay_no']=$pay_arr['pay_no'];
+                            $item['app_id']=$pay_arr['app_id'];
                             $item['app_order_no']=$pay_arr['app_order_no'];
                             $item['label']=$pay_order['label'];
                             $account->addLog($item);
