@@ -56,6 +56,7 @@ class CashController extends AdminController
         $id=$request->id;
         $cash = $accountCash->findOrFail($id);
         if ($_POST) {
+            $status=(int)$request->post('status');
             $verify_remark=$request->post('verify_remark');
             if (empty($_POST['status'])) {
                 redirect()->back()->with('error', '审核状态必选');
@@ -66,13 +67,13 @@ class CashController extends AdminController
             if ($cash->status != 1) {
                 redirect()->back()->with('error', '己处理，勿重复处理！');
             }
-            if ($request->post('status') == 2) {
-                $cash->status = 2;
-                $cash->verify_userid=$this->user_id;
-                $cash->verify_at=time();
-                $cash->verify_remark=$verify_remark;
-                $cash->save();
-            } else {
+            $cash->status = $status;
+            $cash->verify_userid=$this->user_id;
+            $cash->verify_at=time();
+            $cash->verify_remark=$verify_remark;
+            $cash->save();
+            if($status==3){
+                //提现失败
                 $log = array(
                     'user_id' => $cash->user_id,
                     'type' => 'cash_fail',
@@ -96,6 +97,7 @@ class CashController extends AdminController
         $id=$request->id;
         $cash = $accountCash->findOrFail($id);
         if ($_POST) {
+            $status=(int)$request->post('status');
             $verify_remark=$request->post('verify_remark');
             if (empty($_POST['status'])) {
                 redirect()->back()->with('error', '审核状态必选');
@@ -106,13 +108,13 @@ class CashController extends AdminController
             if ($cash->status != 2) {
                 redirect()->back()->with('error', '己处理，勿重复处理！');
             }
-            if ($request->post('status') == 4) {
-                $cash->status = 4;
-                $cash->remittance_userid=$this->user_id;
-                $cash->remittance_at=time();
-                $cash->remittance_remark=$verify_remark;
-                $cash->save();
-
+            $cash->status = $status;
+            $cash->remittance_userid=$this->user_id;
+            $cash->remittance_at=time();
+            $cash->remittance_remark=$verify_remark;
+            $cash->save();
+            if ($status == 4) {
+                //提现成功
                 $log = array(
                     'user_id' => $cash->user_id,
                     'type' => 'cash_success',
@@ -121,9 +123,6 @@ class CashController extends AdminController
                     'remark' => '提现ID：' . $cash->id
                 );
                 $account->addLog($log);
-            } else {
-                $cash->status = 1;
-                $cash->save();
             }
             redirect("cash/?page={$request->page}")->with('msg', '操作成功！！');
         } else {

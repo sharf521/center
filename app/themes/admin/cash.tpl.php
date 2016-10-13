@@ -86,6 +86,13 @@
                 <tr><td>审核：</td><td>
                         <label><input type="radio" name="status" value="2"/>审核通过</label>
                         <label><input type="radio" name="status" value="3"/>审核不通过</label></td></tr>
+
+                <? if($row->verify_remark!='') : ?>
+                    <tr><td>原审核备注：</td><td><?=nl2br($row->verify_remark)?></td></tr>
+                <? endif ?>
+                <? if($row->verify_remark!='') : ?>
+                    <tr><td>原打款审核备注：</td><td><?=nl2br($row->remittance_remark)?></td></tr>
+                <? endif ?>
                 <tr><td>审核备注：</td><td><textarea name="verify_remark" cols="45" rows="5"></textarea></td></tr>
                 <tr><td></td><td><input type="submit" value="确认审核" />
                         <input type="button" class="but3" value="返回" onclick="window.history.go(-1)"/></td></tr>
@@ -115,7 +122,7 @@
                 <tr><td></td><td></td></tr>
                 <tr><td>审核：</td><td>
                         <label><input type="radio" name="status" value="4"/>打款成功</label>
-                        <label><input type="radio" name="status" value="5"/>返回待审核</label></td></tr>
+                        <label><input type="radio" name="status" value="1"/>返回待审核</label></td></tr>
                 <tr><td>审核备注：</td><td><textarea name="verify_remark" cols="45" rows="5"></textarea></td></tr>
                 <tr><td></td><td><input type="submit" value="确认操作" />
                         <input type="button" class="but3" value="返回" onclick="window.history.go(-1)"/></td></tr>
