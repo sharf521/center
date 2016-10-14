@@ -57,7 +57,7 @@ class IndexController extends MemberController
             }
         }elseif($app_id==9){  //pos代理
             if($isGoWap){
-                $params['url']='/user';
+                $params['url']='/';
                 $url=$this->site[$app->subsite_field.'_wap']."/jump";
             }else{
                 $params['url']='/user';
