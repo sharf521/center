@@ -6,7 +6,7 @@
         <?php if($this->func=='userInfo'): ?>
             <div class="box">
                 <h3>个人信息：</h3>
-                <form method="post">
+                <form method="post" >
                     <table class="table_from">
                         <tr><td>用户名：</td><td><?=$user->username?></td></tr>
                         <tr><td>注册邮箱：</td><td><?=$user->email?></td></tr>

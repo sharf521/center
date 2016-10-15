@@ -43,9 +43,13 @@ class IndexController extends MemberController
             'time'=>time()
         );
         if($app_id==5){
+            //商城
             if($isGoWap){
                 $params['url']='/wap/user';
                 $url=$this->site[$app->subsite_field.'_wap']."/wap/index";
+            }else{
+                $params['url']='/user';
+                $url=$this->site[$app->subsite_field]."/jump";
             }
         }elseif($app_id==8){  //一元云购
             if($isGoWap){
