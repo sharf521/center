@@ -1,4 +1,3 @@
-<script charset="utf-8" src="/plugin/layer.mobile/layer.js"></script>
 <?php
 if(session('msg'))
 {

@@ -46,8 +46,18 @@
     </ul>
 </div>
 <footer>
+    <script>
+        function mAlert()
+        {
+            layer.open({
+                content: '暂不开放，敬请期待',
+                style: '',
+                time:10000
+            });
+        }
+    </script>
     <ul>
-        <li><a href="<?= url('goApp/5/wap') ?>">
+        <li><a href="javascript:mAlert();"><!--<?= url('goApp/5/wap') ?>-->
                 <b><img src="/themes/member_wap/images/icon_shop.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
                 <p>商城</p>
