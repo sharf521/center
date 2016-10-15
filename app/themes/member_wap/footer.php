@@ -6,7 +6,7 @@ if(session('msg'))
         layer.open({
             content: '<?=session('msg')?>'
             ,skin: 'msg'
-            ,time: 5
+            //,time: 5
         });
     </script>
     <?
