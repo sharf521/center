@@ -33,10 +33,8 @@
 
             </div>
         </div>
-
-
-        <a href="<?= url('goApp/5'); ?>">进入我的商城</a>
-        <a href="<?= url('goApp/8'); ?>">进入我的云购</a>
+        <a href="<?= url('goApp/5'); ?>" target="_blank" class="layui-btn">进入我的商城</a>
+        <a href="<?= url('goApp/8'); ?>" target="_blank" class="layui-btn">进入我的云购</a>
     </div>
 </div>
 
