@@ -6,31 +6,27 @@
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>首页</title>
-    <link rel="stylesheet" href="/plugin/iconfont/iconfont.css">
     <style>
         /*@charset "utf-8";*/
         *{max-height: 9999999px;}
-        html{ font-size: 62.5%; height: 100%; }
-        body {color: #666; font-family:"Microsoft YaHei"; font-size:1.4rem; width:100%; height:100%; background:#fff;}
-        html,body,h1,h2,h3{margin: 0; padding: 0;}
-
-        .header{ height: 6rem;line-height: 6rem;font-size: 1.6rem;background: #fff;z-index: 30;overflow: hidden;position: relative;border-bottom: .1rem solid #ddd;color: #666;
-        }
-        .header .iconfont{font-size: 1.6rem}
-        .header a{text-decoration:none; color: #666;}
-        .header .header_left{  padding:0 1rem; display: inline-block;position: absolute; }
-        .header h1{text-align: center;font-size: 2rem;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;font-weight: normal;}
-        .header .header_right{ right: 0;top:0; display: inline-block; position: absolute; padding:0 1rem;}
+        html,body{font-size: 62.5% !important;  height: 100%;}
     </style>
+    <script type="text/javascript" src="/themes/member_wap/js/jquery-1.11.1.min.js"></script>
+    <script charset="utf-8" src="/plugin/layer_mobile2/layer.js"></script>
 </head>
 <body>
-<div class="header">
-    <a class="header_left" href="/" ><i class="iconfont">&#xe603;</i>返回</a>
-    <h1>产品众筹</h1>
-    <span class="header_right"><i class="iconfont">&#xe603;</i>返回</span>
-</div>
 
+<script>
+    //底部对话框
+    layer.open({
+        content: '这是一个底部弹出的询问提示'
+        ,btn: ['删除', '取消']
+        ,skin: 'footer'
+        ,yes: function(index){
+            layer.open({content: '执行删除操作'})
+        }
+    });
 
-
+</script>
 </body>
 </html>
