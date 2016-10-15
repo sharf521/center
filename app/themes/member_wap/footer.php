@@ -4,9 +4,9 @@ if(session('msg'))
     ?>
     <script>
         layer.open({
-            content: '<?=session('msg')?>',
-            style: '',
-            time:10000
+            content: '<?=session('msg')?>'
+            ,skin: 'msg'
+            ,time: 5
         });
     </script>
     <?
@@ -16,8 +16,9 @@ if(session('error'))
     ?>
     <script>
         layer.open({
-            content: '<?=session('error')?>',
-            style: ''
+            content: '<?=session('error')?>'
+            ,skin: 'msg'
+            ,time: 200 //200秒后自动关闭
         });
     </script>
     <?
