@@ -2,6 +2,7 @@
 namespace App\Controller\Api;
 
 use App\Model\Account;
+use App\Model\PayOrder;
 use System\Lib\DB;
 
 class UserController extends ApiController
@@ -90,7 +91,7 @@ class UserController extends ApiController
     }
 
     //支出、收入 改变用户资金
-    public function receivables(Account $account)
+    public function receivables(Account $account,PayOrder $payOrder)
     {
         $data=$this->data;
         $pay_arr=array(
@@ -101,7 +102,7 @@ class UserController extends ApiController
             'body'=>$data['body'],
             'app_order_no'=>$data['order_no'],
             'type'=>$data['type'],
-            'status'=>0,
+            'status'=>1,//成功，如果失败会回滚
             'remark'=>$data['remark'],
             'label'=>$data['label'],
             'data'=>json_encode($data['data']),
@@ -112,7 +113,12 @@ class UserController extends ApiController
         try {
             DB::beginTransaction();
 
-            $pay_order_id=DB::table('pay_order')->insertGetId($pay_arr);
+            //不要重复支付
+            $payOrder=$payOrder->where('app_order_no=?')->bindValues($data['order_no'])->first();
+            if($payOrder->is_exist && $payOrder->status==1){
+                throw new \Exception("Don't repeat the payment!");
+            }
+            DB::table('pay_order')->insert($pay_arr);
             if(!is_array($data['data'])){
                 throw new \Exception("data is not a array!");
             }
@@ -126,7 +132,6 @@ class UserController extends ApiController
                 $item['label']=$data['label'];
                 $account->addLog($item);
             }
-            DB::table('pay_order')->where("id={$pay_order_id}")->limit(1)->update(array('status'=>1));
 
             DB::commit();
             return $this->returnSuccess(array('pay_no'=>$pay_arr['pay_no']));
@@ -148,7 +153,7 @@ class UserController extends ApiController
             'body'=>$data['body'].'[退款]',
             'app_order_no'=>$data['order_no'],
             'type'=>$data['type'],
-            'status'=>0,
+            'status'=>1,//成功，如果失败会回滚
             'remark'=>$data['remark'],
             'label'=>$data['label'],
             'data'=>json_encode($data['data']),
@@ -159,8 +164,7 @@ class UserController extends ApiController
         try {
             DB::beginTransaction();
 
-            $pay_order_id=DB::table('pay_order')->insertGetId($pay_arr);
-
+            DB::table('pay_order')->insert($pay_arr);
             if(!is_array($data['data'])){
                 throw new \Exception("data is not a array!");
             }
@@ -190,7 +194,6 @@ class UserController extends ApiController
                     DB::table('pay_order')->where('pay_no=?')->bindValues($pay_no_old)->limit(1)->update(array('status'=>2));
                 }
             }
-            DB::table('pay_order')->where("id={$pay_order_id}")->limit(1)->update(array('status'=>1));
 
             DB::commit();
             return $this->returnSuccess(array('pay_no'=>$pay_arr['pay_no']));
