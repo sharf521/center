@@ -16,12 +16,16 @@ function changetype(type) {
 }
 function card() {
     if (document.getElementById("money").value == "") {
-        alert("充值金额不能为空!");
+        layer.alert('充值金额不能为空！', {icon: 2});
         return false;
     }
     if (document.getElementById("type1").checked == true) {
         if (document.getElementById("money").value < 50) {
-            alert("充值金额不能小于50元");
+            layer.alert('充值金额不能小于50元', {icon: 2});
+            return false;
+        }
+        if(document.getElementById("money").value >50000){
+            layer.alert('单笔充值金额不能大于5万元', {icon: 2});
             return false;
         }
     }

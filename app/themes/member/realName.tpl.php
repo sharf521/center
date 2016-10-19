@@ -145,4 +145,6 @@ $sex_array=array('','男','女');
             </div>
         </div>
     </div>
+
+
 <?php require 'footer.php'; ?>

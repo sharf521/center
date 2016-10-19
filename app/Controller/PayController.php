@@ -36,7 +36,7 @@ class PayController extends Controller
         $user_id = (int)$this->user_id;
         $host = $_SERVER['HTTP_HOST'];
         $money = (float)$request->post('money');
-        if ($user_id == 0) {
+        if ($user_id == 0 || $money<=0 || $money>50000) {
             echo '参数错误';
             exit();
         }

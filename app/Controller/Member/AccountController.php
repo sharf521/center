@@ -25,15 +25,16 @@ class AccountController extends MemberController
     }
 
     //线下冲值
-    public function recharge()
+    public function recharge(Request $request)
     {
         if ($_POST) {
             $error = "";
-            if (empty($_POST['money'])) {
+            $money=(float)$request->post('money');
+            if (empty($money==0)) {
                 $error .= "充值金额不能为空<br>";
             }
-            if ($_POST['money'] < 1000) {
-                $error .= "充值金额不能低于1000元<br>";
+            if ($money < 1000 || $money>50000) {
+                $error .= "线下充值金额在1千至5万之间<br>";
             }
             if (empty($_POST['remark'])) {
                 $error .= "充值备注必填<br>";
@@ -45,7 +46,7 @@ class AccountController extends MemberController
                     'trade_no' => time() . rand(1000, 9999),
                     'user_id' =>$this->user_id,
                     'status' => 0,
-                    'money' => sprintf("%.2f", (float)$_POST['money']),
+                    'money' => sprintf("%.2f",$money),
                     'fee' => 0,
                     'payment' => $_POST['payment'],
                     'type' => 2,

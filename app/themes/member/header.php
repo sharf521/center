@@ -7,8 +7,10 @@
     <link href="/themes/member/user.css" rel="stylesheet" type="text/css" />
     <script language="javascript" src="/plugin/js/jquery.js"></script>
     <script charset="utf-8" src="/plugin/js/My97DatePicker/WdatePicker.js"></script>
+    <link rel="stylesheet" href="/plugin/layui/css/layui.css" />
+    <script src="/plugin/layui/layui.js"></script>
+    <script src="/plugin/layui/lay/dest/layui.all.js"></script>
     <script src="/themes/member/member.js"></script>
-    <link rel="stylesheet" href="/plugin/layui/css/layui.css">
 </head>
 <body style="background:#ededed">
 <div class="usernav">
