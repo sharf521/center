@@ -207,9 +207,11 @@ function mail_send($to, $title, $body)
     $mail->Port = 25;                    // set the SMTP port for the GMAIL server
     $mail->Username = "353889718@qq.com"; // SMTP account username
     $mail->Password = "qqww112233";        // SMTP account password
-    $mail->SetFrom('353889718@qq.com', '服务平台');
+    $mail->CharSet = "UTF-8"; //核心代码，可以解决乱码问题
+    $mail->SetFrom('353889718@qq.com','服务平台');
     $mail->AddReplyTo("353889718@qq.com", "AddReplyTo");
-    $mail->Subject = "=?utf-8?B?" . base64_encode($title) . "?=";
+    //$mail->Subject = "=?utf-8?B?" . base64_encode($title) . "?=";
+    $mail->Subject =  $title;
     $mail->MsgHTML($body);
     $mail->AddAddress($to, "");
     if (!$mail->Send()) {

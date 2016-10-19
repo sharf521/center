@@ -1,4 +1,10 @@
 <div class="footer">Copyright 2012-2020 Inc.,All rights reserved. 豫ICP备11027012号<br></div>
+<span class="layui-breadcrumb" lay-separator="-">
+  <a href="">首页</a>
+  <a href="">国际新闻</a>
+  <a href="">亚太地区</a>
+  <a><cite>正文</cite></a>
+</span>
 <script>
     <?php if (session('msg')){?>
     layer.msg('<?= session('msg') ?>', {
