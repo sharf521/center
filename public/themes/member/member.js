@@ -1,7 +1,8 @@
-layui.use(['layer', 'util', 'laydate'], function(){
+layui.use(['layer', 'util', 'laydate','form'], function(){
     var layer = layui.layer
         ,util = layui.util
         ,laydate = layui.laydate;
+    var form = layui.form();
     util.fixbar();
 
 
