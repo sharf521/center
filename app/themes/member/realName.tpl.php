@@ -38,7 +38,6 @@ $sex_array=array('','男','女');
                         </tr>
                     </table>
                 <?php else : ?>
-                    <script src="/plugin/js/ajaxfileupload.js?111"></script>
                     <form method="post">
                         <table class="table_from">
                             <tr>
@@ -93,7 +92,7 @@ $sex_array=array('','男','女');
                                         src="<?= $userInfo->card_pic1 ?>" align="absmiddle" width="100"/></a>
                             <? } ?>
                         </span>
-                                    <input type="file" name="files" class="layui-upload-file" upload_id="card1" upload_type="card1">
+                                    <input type="file" name="file" class="layui-upload-file" upload_id="card1" upload_type="card1">
                                 </td>
                             </tr>
                             <tr>
@@ -107,7 +106,7 @@ $sex_array=array('','男','女');
                                         src="<?= $userInfo->card_pic2 ?>" align="absmiddle" width="100"/></a>
                             <? } ?>
                         </span>
-                                    <input type="file" name="files" class="layui-upload-file" upload_id="card2" upload_type="card2">
+                                    <input type="file" name="file" class="layui-upload-file" upload_id="card2" upload_type="card2">
                                 </td>
                             </tr>
                             <? if ($userInfo->verify_remark != "") { ?>

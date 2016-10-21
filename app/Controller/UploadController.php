@@ -18,7 +18,7 @@ class UploadController extends Controller
 
     public function save()
     {
-        if($_FILES['files']['size']<=0){
+        if($_FILES['file']['size']<=0){
             return $this->_error('error');
         }
         $type = $_GET['type'];
@@ -44,26 +44,26 @@ class UploadController extends Controller
                 return $this->_error('Can not create directory');
             }
         }
-        if (empty($_FILES['files']['tmp_name'])) {
+        if (empty($_FILES['file']['tmp_name'])) {
             return $this->_error('文件大小超过最大限额');
         }
-        if ($_FILES['files']['size'] > 1048576 * 5) {
+        if ($_FILES['file']['size'] > 1048576 * 5) {
             return $this->_error('文件超过限额，最大5M');
         }
-        if ($_FILES['files']['name'] != '') {
+        if ($_FILES['file']['name'] != '') {
             if (function_exists('exif_imagetype')) {
-                if (exif_imagetype($_FILES['files']['tmp_name']) < 1) {
+                if (exif_imagetype($_FILES['file']['tmp_name']) < 1) {
                     return $this->_error('not a imagetype');
                 }
             } else {
-                $ext = $this->getext($_FILES['files']['name']);
+                $ext = $this->getext($_FILES['file']['name']);
                 if (!in_array($ext, array(".gif", ".png", ".jpg", ".jpeg", ".bmp"))) {
                     return $this->_error('type error');
                 }
             }
         }
         $filename = $name . $ext;
-        if (!move_uploaded_file($_FILES['files']['tmp_name'], $_path . $filename)) {
+        if (!move_uploaded_file($_FILES['file']['tmp_name'], $_path . $filename)) {
             $this->_error('can not move to tempath');
         } else {
             $data = array(
