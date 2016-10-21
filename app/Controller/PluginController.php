@@ -73,8 +73,8 @@ class PluginController extends Controller
         $user_id=$this->user_id;
         if(empty($user_id)){
             $data = array(
-                'status' => 'fail',
-                'data' => '超时，请重新登陆'
+                'code' => 'fail',
+                'msg' => '超时，请重新登陆'
             );
             echo json_encode($data);
             exit;
@@ -94,8 +94,8 @@ class PluginController extends Controller
         if (!file_exists($_path)) {
             if (!mkdir($_path, 0777, true)) {
                 $data = array(
-                    'status' => 'fail',
-                    'data' => '失败：Can not create directory'
+                    'code' => 'fail',
+                    'msg' => '失败：Can not create directory'
                 );
                 echo json_encode($data);
                 exit;
@@ -112,15 +112,15 @@ class PluginController extends Controller
             ));
             try {
                 if($file->upload()){
-                    $data['data']=$path.$file->getNameWithExtension();
-                    $data['status'] = 'success';
+                    $data['url']=$path.$file->getNameWithExtension();
+                    $data['code'] = '0';
                     echo json_encode($data);
                 }
             } catch (\Exception $e) {
                 $errors = $file->getErrors();
                 $data = array(
-                    'status' => 'fail',
-                    'data' => '失败：'.json_encode($errors)
+                    'code' => 'fail',
+                    'msg' => '失败：'.json_encode($errors)
                 );
                 echo json_encode($data);
                 exit;

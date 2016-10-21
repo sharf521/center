@@ -4,9 +4,10 @@
     <div class="warpright">
         <?php if($this->func=='index') : ?>
             <div class="box">
-                <ul class="nav-tabs">
-                    <li class="active"><span>申请合伙人</span></li>
-                </ul>
+                <br>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>申请合伙人</legend>
+                </fieldset>
                 <? if($userInfo->card_status!=2) : ?>
                     <div class="alert-warning" role="alert">您还没有完成实名认证，请先完成<?=$this->anchor('user/realName','>>实名认证>>');?></div>
                 <? else : ?>

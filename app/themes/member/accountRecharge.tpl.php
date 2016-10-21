@@ -99,9 +99,9 @@
                 <div class="search">
                     <form  method="get">
                         记录时间：
-                        <input  name="starttime" type="text" value="<?=$_GET['starttime']?>" onClick="javascript:WdatePicker();" class="Wdate">
+                        <input autocomplete="off" class="layui-input" name="starttime" type="text" lay-verify="date" value="<?=$_GET['starttime']?>" placeholder="开始日期" onclick="layui.laydate({elem: this})" style="width: 100px; display: inline-block">
                         到
-                        <input  name="endtime" type="text" value="<?=$_GET['endtime']?>" onClick="javascript:WdatePicker();" class="Wdate">
+                        <input autocomplete="off" class="layui-input" name="endtime" type="text" lay-verify="date" value="<?=$_GET['endtime']?>" placeholder="结束日期" onclick="layui.laydate({elem: this})" style="width: 100px; display: inline-block">
                         <input  type="submit" value="查询" />
                     </form>
                 </div>

@@ -6,13 +6,11 @@
     <title><?php if(!empty($title_herder)){echo $title_herder.'-';}?><?=$this->site['name'];?></title>
     <link href="/themes/member/user.css" rel="stylesheet" type="text/css" />
     <script language="javascript" src="/plugin/js/jquery.js"></script>
-    <script charset="utf-8" src="/plugin/js/My97DatePicker/WdatePicker.js"></script>
     <link rel="stylesheet" href="/plugin/layui/css/layui.css" />
     <script src="/plugin/layui/layui.js"></script>
-    <script src="/plugin/layui/lay/dest/layui.all.js"></script>
     <script src="/themes/member/member.js"></script>
 </head>
-<body style="background:#ededed">
+<body>
 <div class="usernav">
     <div class="userlogo">
         <div class="logoleft">

@@ -1,3 +1,45 @@
+layui.use(['layer', 'util', 'laydate'], function(){
+    var layer = layui.layer
+        ,util = layui.util
+        ,laydate = layui.laydate;
+    util.fixbar();
+
+
+    //上传文件
+    if ($('.layui-upload-file').length>0){
+        layui.use(['upload'], function(){
+            var index;
+            $('.layui-upload-file').each(function(index,obj){
+                var id=obj.getAttribute('upload_id');
+                var type=obj.getAttribute('upload_type');
+                layui.upload({
+                    url: '/index.php/upload/save?type='+type
+                    ,elem:obj
+                    ,before: function(input){
+                        index=layer.msg('上传中', {icon: 16,time:1000000});
+                    }
+                    ,success: function(res){
+                        layer.close(index);
+                        if(res.code=='0'){
+                            var path=res.url+'?'+Math.random();
+                            $('#'+id).val(path);
+                            var _str="<a href='"+path+"' target='_blank'><img src='"+path+"' height='50'/></a>";
+                            $('#upload_span_'+id).html(_str);
+                        }else{
+                            alert(res.msg);
+                        }
+                    }
+                });
+            });
+        });
+    }
+
+    var test=function(a)
+    {
+        alert(a);
+    }
+});
+
 function changetype(type) {
     if (type == 1) {
         document.getElementById("formpay").action = "/pay/recharge";
@@ -51,17 +93,18 @@ function upload_image(id,type)
 {
     $('#upload_span_'+id).html('上传中...');
     $.ajaxFileUpload({
-        url:'/index.php/plugin/ajaxFileUpload?type='+type,
+        //url:'/index.php/plugin/ajaxFileUpload?type='+type,
+        url:'/index.php/upload/save?type='+type,
         fileElementId :'upload_'+id,
         dataType:'json',
         success: function (result,status){
-            if(result.status == 'success'){
-                var path=result.data+'?'+Math.random();
+            if(result.code == '0'){
+                var path=result.url+'?'+Math.random();
                 $('#'+id).val(path);
                 var _str="<a href='"+path+"' target='_blank'><img src='"+path+"' height='50'/></a>";
                 $('#upload_span_'+id).html(_str);
             }else{
-                alert(result.data);
+                alert(result.msg);
             }
         },
         error: function (result, status, e){
@@ -107,3 +150,5 @@ function changeSel(sel,id)
     });
 }
 //userInfo   end
+
+

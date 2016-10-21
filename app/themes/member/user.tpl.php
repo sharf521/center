@@ -5,16 +5,18 @@
     <div class="warpright">
         <?php if($this->func=='userInfo'): ?>
             <div class="box">
-                <h3>个人信息：</h3>
+                <br>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>个人信息</legend>
+                </fieldset>
                 <form method="post" >
                     <table class="table_from">
                         <tr><td>用户名：</td><td><?=$user->username?></td></tr>
                         <tr><td>注册邮箱：</td><td><?=$user->email?></td></tr>
                         <tr><td>头像：</td><td>
-                                <script src="/plugin/js/ajaxfileupload.js"></script>
                                 <span id="upload_span_headimgurl"><img src="<?=$user->headimgurl?>" height="50"></span>
                                 <input type="hidden" name="headimgurl" value="<?=$user->headimgurl?>" id="headimgurl">
-                                <input type="file" id="upload_headimgurl" name="files" onchange="upload_image('headimgurl','headimgurl')">
+                                <input type="file" name="files" class="layui-upload-file" upload_id="headimgurl" upload_type="headimgurl">
                             </td></tr>
                         <tr><td>联系电话：</td><td><input type="text" name="tel" value="<?=$user->tel?>"/></td></tr>
                         <tr><td>联系QQ： </td><td><input type="text" name="qq" class="form-control" value="<?=$user->qq?>" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/></td></tr>

@@ -92,7 +92,7 @@ input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
 
 
 
-.usernav{ height:80px; clear:both; background:#fff}
+.usernav{ height:80px; clear:both; background:#fff;border-bottom: 3px solid #ca1b38;}
 .userlogo{ width:1140px; margin:0 auto; clear:both; height:80px;}
 .logoleft{ width:300px; height:80px; display:inline-block; float:left}
 .logoleft a img{ padding-top:10px}
@@ -101,21 +101,20 @@ input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
 .usermenu ul li a{ font-size:14px; color:#000; width:100px; height:40px; display:block}
 .usermenu ul li a:hover{ background:#ebc5c5; color:#333}
 
-.footer{background-color: #fff; margin-top: 20px; line-height:25px; padding: 20px; text-align: center;}
+.footer{padding: 30px 0;    line-height: 30px;    text-align: center;    background-color: #eee;    color: #666;    font-weight: 300;}
 
 /*warpcon*/
-.warpcon{ width:1140px; margin:20px auto; clear:both; overflow:hidden; min-height: 700px;}
+.warpcon{ width:1140px; margin:0px auto; clear:both; overflow:hidden; min-height: 700px;}
 /*左侧导航*/
-.warpleft{ width:185px; height:auto; display:inline-block; float:left; background:#fff}
-.warpleft h3{ width:150px; height:40px; line-height:40px; display:block; font-size:16px; color:#e45050; background:url(images/suox.jpg) no-repeat 15px 13px; padding-left:35px;}
-.warpleft ul{ width:185px; margin-bottom:10px}
-.warpleft ul li{ width:185px; height:36px; line-height:36px; font-size:14px;}
-.warpleft ul li a{ width:150px; height:36px; line-height:36px; display:block; border-left:4px solid #fff; padding-left:31px; font-size:14px; background:#fff}
-.warpleft ul li a:hover{ border-left:4px solid #e45050; background:#f1f1f1; font-weight:bold}
-.warpleft ul li a.whover{border-left:4px solid #e45050; background:#f1f1f1; font-weight:bold}
+.warpleft{ width:175px; overflow: hidden; height:auto; display:inline-block; float:left; background:#fff;  border-right: 1px solid #eee; padding-top: 15px;}
+.warpleft h3{ border-left:5px solid #e45050; background:#f1f1f1; font-weight:normal;line-height: 40px;padding-left:10px;}
+.warpleft ul{ margin-bottom:10px}
+.warpleft ul li{ height:36px; line-height:36px; font-size:14px;}
+.warpleft ul li a{ width:150px; height:36px; line-height:36px; display:block; border-left:4px solid #fff; padding-left:20px; font-size:14px; background:#fff}
+.warpleft ul li a.whover{color: #c00}
 
 /*右侧内容*/
-.warpright{ width:935px; float:right; display:block}
+.warpright{ width:940px; float:right; display:block}
 
 .box{ background-color: #fff; margin-bottom: 10px; padding-bottom: 20px;}
 .box > h3 {    font-size: 15px;    color: #c00;    padding-left: 20px;    line-height: 50px;}

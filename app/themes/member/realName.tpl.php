@@ -83,6 +83,8 @@ $sex_array=array('','男','女');
                             <tr>
                                 <td align="right">身份证正面：</td>
                                 <td>
+
+
                                     <input type="hidden" name="card_pic1" id="card1"
                                            value="<?= $userInfo->card_pic1 ?>"/>
 						<span id="upload_span_card1">
@@ -91,11 +93,7 @@ $sex_array=array('','男','女');
                                         src="<?= $userInfo->card_pic1 ?>" align="absmiddle" width="100"/></a>
                             <? } ?>
                         </span>
-                                    <div class="upload-upimg">
-                                        <span class="_upload_f">上传文件</span>
-                                        <input type="file" id="upload_card1" name="files"
-                                               onchange="upload_image('card1','card1')"/>
-                                    </div>
+                                    <input type="file" name="files" class="layui-upload-file" upload_id="card1" upload_type="card1">
                                 </td>
                             </tr>
                             <tr>
@@ -109,11 +107,7 @@ $sex_array=array('','男','女');
                                         src="<?= $userInfo->card_pic2 ?>" align="absmiddle" width="100"/></a>
                             <? } ?>
                         </span>
-                                    <div class="upload-upimg">
-                                        <span class="_upload_f">上传文件</span>
-                                        <input type="file" id="upload_card2" name="files"
-                                               onchange="upload_image('card2','card2')"/>
-                                    </div>
+                                    <input type="file" name="files" class="layui-upload-file" upload_id="card2" upload_type="card2">
                                 </td>
                             </tr>
                             <? if ($userInfo->verify_remark != "") { ?>
