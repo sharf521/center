@@ -57,30 +57,36 @@ class Tea extends Model
                 $arr['invite_path']=$invite_arr['invite_path'].$invite_arr['id'].',';
             }
         }
-        DB::table('tea')->insert($arr);
+        $id=DB::table('tea')->insertGetId($arr);
+
+        //第一个设为正常
+        $count= DB::table('tea')->value('count(*)');
+        if($count==1){
+            $arr=array(
+                'status'=>1,
+                'pids' => "{$id},"
+            );
+            DB::table('tea')->where("id={$id}")->limit(1)->update($arr);
+        }
     }
 
     public function call()
     {
         $where = "status=0 and addtime<'" . date('Y-m-d') . "'";
-        $where = "status=0 ";
-        $result = DB::table('tea')->select('id,user_id')->where($where)->orderBy('id')->all();
+        $where = " status=0 ";
+        $result = $this->where($where)->orderBy('id')->get();
         //加入一个新点
-        foreach ($result as $row) {
+        foreach ($result as $newTea) {
             //获取一个没有两个分支的点
-            $_row = DB::table('tea')->select('id,user_id,pids,childsize')->where("childsize!=2")->orderBy('id')->row();
-            $arr = array(
-                'status' => 1,
-                'pid' => $_row['id'],
-                'pids' => $_row['pids'] . $row['id'] . ','
-            );
-            DB::table('tea')->where("id={$row['id']}")->limit(1)->update($arr);
+            $pTea = $this->select('id,user_id,pids,childsize')->where("childsize!=2")->orderBy('id')->first();
 
+            $newTea->status=1;
+            $newTea->pid=$pTea->id;
+            $newTea->pids=$pTea->pids . $newTea->id . ',';
+            $newTea->save();
 
-            $_arr = array(
-                'childsize' => $_row['childsize'] + 1
-            );
-            DB::table('tea')->where("id={$_row['id']}")->limit(1)->update($_arr);
+            $pTea->childsize=$pTea->childsize+1;
+            $pTea->save();
         }
     }
 }
