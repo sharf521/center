@@ -5,7 +5,6 @@ if($this->func=='index')
     ?>
     <div class="main_title">
         <span>管理</span>列表<?=$this->anchor('tea/add','新增','class="but1"');?>
-        <?=$this->anchor('tea/call','计算','class="but1"')?>
         <?=$this->anchor('tea/calAdd1000','添加10个','class="but1"')?>
     </div>
 
@@ -25,11 +24,10 @@ if($this->func=='index')
             <th>收入</th>
             <th>上层id</th>
             <th>路径</th>
-            <th>盘数</th>
-            <th>位置</th>
-            <th>25天计划</th>
-            <th>25天发放</th>
-            <th>提前发放</th>
+            <th>组ID号</th>
+            <th>推荐人</th>
+            <th>推荐PATH</th>
+            <th>推荐个数</th>
             <th>状态</th>
             <th>添加时间</th>
         </tr>
@@ -42,39 +40,69 @@ if($this->func=='index')
                 <td><?=$row->id?></td>
                 <td><?=$row->user_id?></td>
                 <td><?=(float)$row->money?></td>
-
                 <td><?=$row->income?></td>
                 <td><?=$row->pid?></td>
                 <td class="l"><?=str_replace(',','->',rtrim($row->pids,','))?></td>
-                <td><?=$row->plate?></td>
-                <td><?=$row->index?></td>
-                <td><?=$row->dayplan?></td>
-                <td>￥<?=(float)$row->dayplan_income?></td>
-                <td>￥<?=(float)$row->dayplan_last?></td>
+                <td><?=$row->group_id?></td>
+                <td><?=$row->invite_id?></td>
+                <td><?=$row->invite_path?></td>
+                <td><?=$row->invite_count?></td>
                 <td><?=$arr_status[$row->status]?></td>
-                <td><?=$row->addtime?></td>
+                <td><?=$row->created_at?></td>
             </tr>
         <? }?>
     </table>
     <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
+    <div id="main" style="height:400px;"></div>
+    <script src="/plugin/echarts/echarts-all.js"></script>
+    <script>
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            title: {
+                text: '树图',
+                subtext: ''
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{b}: {c}"
+            },
+            calculable: false,
+            series: [{
+                    name: '树图',
+                    type: 'tree',
+                    orient: 'horizontal',  // vertical horizontal
+                    rootLocation: {x: 50, y: 'center'}, // 根节点位置  {x: 100, y: 'center'}
+                    symbolSize: 10,
+                    layerPadding: 100,
+                    nodePadding: 15,
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true,
+                                position: 'right',
+                                formatter: "{b}",
+                                textStyle: {
+                                    color: '#000',
+                                    fontSize: 5
+                                }
+                            },
+                            lineStyle: {
+                                color: '#999',
+                                type: 'curve' // 'curve'|'broken'|'solid'|'dotted'|'dashed'
 
-    <?
-    if ((int)$_GET['plate']>0) {
-        ?>
-        <script>
-            mxBasePath = '/themes/admin/js/mxgraph/src';
-        </script>
-        <script src="/themes/admin/js/mxgraph/src/js/mxClient.js"></script>
-        <script src="/themes/admin/js/tea.js"></script>
-        <script>
-            $(document).ready(function () {
-                main(<?=(int)$_GET['user_id']?>, <?=(int)$_GET['id']?>, <?=(int)$_GET['plate']?>);
-            });
-        </script>
-        <?
-    }
-    ?>
-    <div><div class="drawContent" id="drawContent"></div></div>
+                            }
+                        },
+                        emphasis: {
+                            label: {
+                                show: true
+                            }
+                        }
+                    },
+                    data: [<?=$data1?>]
+            }]
+        };
+        myChart.setOption(option);
+    </script>
     <?
 }
 elseif($this->func=='add'||$this->func=='edit')
@@ -82,7 +110,7 @@ elseif($this->func=='add'||$this->func=='edit')
     ?>
     <div class="main_title">
         <span>管理</span><? if($this->func=='add'){?>新增<? }else{ ?>编辑<? }?>
-        <?=$this->anchor('usertype','列表','class="but1"');?>
+        <?=$this->anchor('tea','列表','class="but1"');?>
     </div>
     <form method="post">
         <table class="table_from">
@@ -157,6 +185,14 @@ elseif($this->func=='add'||$this->func=='edit')
         <? }?>
     </table>
     <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
+
+
+
     <?
 }
+
+
+
 require 'footer.php';
+
+

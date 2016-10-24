@@ -86,7 +86,7 @@ if ($this->func == 'index') {
     ?>
     <div class="main_title">
         <span>对列管理</span><? if ($this->func == 'add') { ?>新增<? } else { ?>编辑<? } ?>
-        <?= $this->anchor('usertype', '列表', 'class="but1"'); ?>
+        <?= $this->anchor('rebate', '列表', 'class="but1"'); ?>
     </div>
     <form method="post">
         <input type="hidden" name="id" value="<?= $row['id'] ?>"/>

@@ -30,7 +30,7 @@ class AccountController extends MemberController
         if ($_POST) {
             $error = "";
             $money=(float)$request->post('money');
-            if (empty($money==0)) {
+            if ($money==0) {
                 $error .= "充值金额不能为空<br>";
             }
             if ($money < 1000 || $money>50000) {

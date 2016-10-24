@@ -100,7 +100,7 @@ class AjaxController extends Controller
 //        $first_row = $this->mysql->one('zj', array('id' => $first_id));
 //        $path = $first_row['pids'];
 
-        $where = "where 1=1";
+        $where = " 1=1";
         if (!empty($data['user_id'])) {
             $where .= " and user_id={$data['user_id']}";
         }
@@ -111,10 +111,7 @@ class AjaxController extends Controller
             $pids = DB::table('zj')->where('id=?')->bindValues($data['id'])->value('pids');
             $where .= " and  pids like '{$pids}%'";
         }
-
-        //$sql="select id,user_id,money,pid,addtime from {$this->dbfix}zj where pids like '{$path}%' order by id";
-        $sql = "select id,user_id,money,pid,addtime from {$this->dbfix}zj {$where} order by id";
-        $result2 = DB::get_all($sql);
+        $result2=DB::table('zj')->select('id,user_id,money,pid,addtime')->where($where)->orderBy('id')->all();
         //print_r($result2);
         echo json_encode($result2);
 

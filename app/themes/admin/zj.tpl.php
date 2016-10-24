@@ -82,7 +82,7 @@ elseif($this->func=='add'||$this->func=='edit')
     ?>
     <div class="main_title">
         <span>增进管理</span><? if($this->func=='add'){?>新增<? }else{ ?>编辑<? }?>
-        <?=$this->anchor('usertype','列表','class="but1"');?>
+        <?=$this->anchor('zj','列表','class="but1"');?>
     </div>
     <form method="post">
         <input type="hidden" name="id" value="<?=$row['id']?>"/>

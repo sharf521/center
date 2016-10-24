@@ -19,74 +19,100 @@ class Tea extends Model
         parent::__construct();
     }
 
+    private function add_getOneGroup($group_id=0)
+    {
+        $tGroup=new TeaGroup();
+        if($group_id!=0){
+            $where="status=1 and level=1 and child_count<15 and id={$group_id}";
+        }else{
+            $where="status=1 and level=1 and child_count<7";
+        }
+        $tGroup=$tGroup->where($where)->orderBy('id')->first();
+        if(! $tGroup->is_exist){
+            $tGroup->level=1;
+            $tGroup->leader=0;
+            $tGroup->child_count=0;
+            $tGroup->child_ids='';
+            $tGroup->status=1;
+            $groupId=$tGroup->save(true);
+            $tGroup=$tGroup->findOrFail($groupId);
+        }
+        return $tGroup;
+    }
+
     public function add($data)
     {
         if(empty($data['user_id']) || empty($data['money'])){
             throw new \Exception('参数错误！');
-            exit;
         }
         $p_userid=(int)$data['p_userid'];
+        $tea=(new Tea())->where('user_id=?')->bindValues($data['user_id'])->first();
+        if($tea->is_exist){
+            throw new \Exception('用户己购买！');
+        }
+
+        $invite_id=0;
+        $invite_path='';
+        if ($p_userid != 0) {
+            $p_tea=$this->where('user_id=?')->bindValues($p_userid)->first();
+            if ($p_tea->is_exist) {
+                $invite_id=$p_tea->id;
+                $invite_path=$p_tea->invite_path.$p_tea->id.',';
+                $p_tea->invite_count=$p_tea->invite_count+1;
+                $p_tea->save();
+                $group= $this->add_getOneGroup($p_tea->group_id);
+            } else {
+                throw new \Exception('p_userid错误！');
+            }
+        }else{
+            $group= $this->add_getOneGroup();
+        }
+
+
         $arr=array(
             'site_id' => 1,
             'user_id' => (int)$data['user_id'],
             'pid' => 0,
             'pids'=>'',
-            'invite_id'=>0,
-            'invite_path'=>'',
+            'invite_id'=>$invite_id,
+            'invite_path'=>$invite_path,
             'money' => (float)($data['money']),
             'childsize'=>0,
-            'index'=>0,
-            'plate'=>0,
+            'group_id'=>$group->id,
             'income'=>0,
             'level'=>1,
-            'addtime' => date('Y-m-d H:i:s'),
+            'created_at' =>time(),
             'status' => 0
         );
-        $row=DB::table('tea')->where('user_id=?')->bindValues($data['user_id'])->row();
-        if($row){
-            throw new \Exception('用户己购买！');
-            exit;
-        }
-        if ($p_userid != 0) {
-            $invite_arr=DB::table('tea')->where('user_id=?')->orderBy("id desc")->bindValues($p_userid)->row();
-            if (!$invite_arr) {
-                throw new \Exception('p_userid错误！');
-                exit;
-            } else {
-                $arr['invite_id']=$invite_arr['id'];
-                $arr['invite_path']=$invite_arr['invite_path'].$invite_arr['id'].',';
-            }
-        }
-        $id=DB::table('tea')->insertGetId($arr);
-
+        $id=$this->insertGetId($arr);
+        $tea=$this->find($id);
         //第一个设为正常
-        $count= DB::table('tea')->value('count(*)');
-        if($count==1){
-            $arr=array(
-                'status'=>1,
-                'pids' => "{$id},"
-            );
-            DB::table('tea')->where("id={$id}")->limit(1)->update($arr);
+        if($group->child_count==0){
+            $tea->status=1;
+            $tea->pids = "{$id},";
+            $tea->save();
+            $group->leader=$id;
+        }else{
+            $this->add_setParentTree($tea);
         }
+        $group->child_count=$group->child_count+1;
+        $group->child_ids=$group->child_ids.$id.',';
+        $group->save();
     }
 
-    public function call()
+
+    //设置隶属关系
+    private function add_setParentTree($tea)
     {
-        $where = "status=0 and addtime<'" . date('Y-m-d') . "'";
-        $where = " status=0 ";
-        $result = $this->where($where)->orderBy('id')->get();
-        //加入一个新点
-        foreach ($result as $newTea) {
-            //获取一个没有两个分支的点
-            $pTea = $this->select('id,user_id,pids,childsize')->where("childsize!=2")->orderBy('id')->first();
+        //获取一个没有两个分支的点
+        $pTea = $this->select('id,user_id,pids,childsize')->where("childsize!=2 and level=1")->orderBy('id')->first();
 
-            $newTea->status=1;
-            $newTea->pid=$pTea->id;
-            $newTea->pids=$pTea->pids . $newTea->id . ',';
-            $newTea->save();
+        $tea->status=1;
+        $tea->pid=$pTea->id;
+        $tea->pids=$pTea->pids . $tea->id . ',';
+        $tea->save();
 
-            $pTea->childsize=$pTea->childsize+1;
-            $pTea->save();
-        }
+        $pTea->childsize=$pTea->childsize+1;
+        $pTea->save();
     }
 }
