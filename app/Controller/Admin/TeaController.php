@@ -46,7 +46,6 @@ class TeaController extends AdminController
             $teas=DB::table('tea')->select("id,user_id,pid,invite_count")->where("group_id={$group->id}")->orderBy('id')->all();
             $teas= $this->genTree($teas);
             $teas= $this->returnChatData($teas);
-            //$groups[$i]['datas']=$teas;
             $groups[$i]->datas=$teas;
         }
         $data['groups']=$groups;
@@ -81,7 +80,6 @@ class TeaController extends AdminController
         foreach ($data as $row) {
             $items[$row['id']] = $row;
         }
-
         $tree = array(); //格式化好的树
         foreach ($items as $item){
             if (isset($items[$item['pid']]))
