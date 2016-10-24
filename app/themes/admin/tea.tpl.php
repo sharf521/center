@@ -53,56 +53,58 @@ if($this->func=='index')
         <? }?>
     </table>
     <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
-    <div id="main" style="height:400px;"></div>
     <script src="/plugin/echarts/echarts-all.js"></script>
+    <?php  foreach($groups as $group) : ?>
+    <div id="chart_<?=$group->id?>" style="height:120px; border: 1px solid #ccc;"></div>
     <script>
-        var myChart = echarts.init(document.getElementById('main'));
+        var myChart_<?=$group->id?> = echarts.init(document.getElementById('chart_<?=$group->id?>'));
         var option = {
             title: {
-                text: '树图',
+                text: '小组<?=$group->id?>',
                 subtext: ''
             },
             tooltip : {
                 trigger: 'item',
-                formatter: "{b}: {c}"
+                formatter: "推荐{c}人"
             },
             calculable: false,
             series: [{
-                    name: '树图',
-                    type: 'tree',
-                    orient: 'horizontal',  // vertical horizontal
-                    rootLocation: {x: 50, y: 'center'}, // 根节点位置  {x: 100, y: 'center'}
-                    symbolSize: 10,
-                    layerPadding: 100,
-                    nodePadding: 15,
-                    itemStyle: {
-                        normal: {
-                            label: {
-                                show: true,
-                                position: 'right',
-                                formatter: "{b}",
-                                textStyle: {
-                                    color: '#000',
-                                    fontSize: 5
-                                }
-                            },
-                            lineStyle: {
-                                color: '#999',
-                                type: 'curve' // 'curve'|'broken'|'solid'|'dotted'|'dashed'
-
+                name: '树图',
+                type: 'tree',
+                orient: 'horizontal',  // vertical horizontal
+                rootLocation: {x: 50, y: 'center'}, // 根节点位置  {x: 100, y: 'center'}
+                symbolSize: 10,
+                layerPadding: 100,
+                nodePadding: 15,
+                roam: true,
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true,
+                            position: 'right',
+                            formatter: "{b}",
+                            textStyle: {
+                                color: '#000',
+                                fontSize: 5
                             }
                         },
-                        emphasis: {
-                            label: {
-                                show: true
-                            }
+                        lineStyle: {
+                            color: '#999',
+                            type: 'curve' // 'curve'|'broken'|'solid'|'dotted'|'dashed'
                         }
                     },
-                    data: [<?=$data1?>]
+                    emphasis: {
+                        label: {
+                            show: true
+                        }
+                    }
+                },
+                data: [<?=$group->datas?>]
             }]
         };
-        myChart.setOption(option);
+        myChart_<?=$group->id?>.setOption(option);
     </script>
+    <? endforeach;?>
     <?
 }
 elseif($this->func=='add'||$this->func=='edit')

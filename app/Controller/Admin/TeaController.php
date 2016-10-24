@@ -10,11 +10,12 @@ namespace App\Controller\Admin;
 
 
 use App\Model\Tea;
+use App\Model\TeaGroup;
 use System\Lib\DB;
 
 class TeaController extends AdminController
 {
-    public function index(Tea $tea)
+    public function index(Tea $tea,TeaGroup $group)
     {
         $arr=array(
             'user_id'		=>(int)$_GET['user_id'],
@@ -40,20 +41,19 @@ class TeaController extends AdminController
         $data['result']=$tea->where($where)->orderBy('id desc')->pager($_GET['page'],10);
 
 
-        $group1=DB::table('tea')->select("id,user_id,pid,invite_count")->where("group_id=1")->orderBy('id')->all();
-
-        //结果转换为特定格式
-        $items = array();
-        foreach ($group1 as $row) {
-            $items[$row['id']] = $row;
+        $groups=$group->orderBy('id')->get();
+        foreach($groups as $i=>$group){
+            $teas=DB::table('tea')->select("id,user_id,pid,invite_count")->where("group_id={$group->id}")->orderBy('id')->all();
+            $teas= $this->genTree($teas);
+            $teas= $this->returnChatData($teas);
+            //$groups[$i]['datas']=$teas;
+            $groups[$i]->datas=$teas;
         }
-        $group1= $this->genTree($items);
-
-        $data['data1']= $this->getChatData($group1);
+        $data['groups']=$groups;
         $this->view('tea',$data);
     }
 
-    private function getChatData($datas)
+    private function returnChatData($datas)
     {
         $string = '';
         foreach ($datas as $data) {
@@ -62,11 +62,11 @@ class TeaController extends AdminController
             } else {
                 $string .= ',{';
             }
-            $string .= "name:'{$data['user_id']}',value:{$data['invite_count']}";
+            $string .= "name:'用户ID：{$data['user_id']}',value:{$data['invite_count']}";
             if (isset($data['children']) && is_array($data['children'])) {
                 $string .= ',children:';
                 $string .= ' [';
-                $string .= $this->getChatData($data['children']);
+                $string .= $this->returnChatData($data['children']);
                 $string .= ']';
             }
             $string .= '}';
@@ -74,11 +74,11 @@ class TeaController extends AdminController
         return $string;
     }
 
-    private function genTree($items)
+    private function genTree($data)
     {
         //结果转换为特定格式
         $items = array();
-        foreach ($group1 as $row) {
+        foreach ($data as $row) {
             $items[$row['id']] = $row;
         }
 
