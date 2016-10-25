@@ -12,7 +12,8 @@ if($this->func=='index')
         <div class="search">
             用户ID：<input type="text" size="10" name="user_id" value="<?=$_GET['user_id']?>">&nbsp;&nbsp;
             TeaID：<input type="text" size="10" name="id" value="<?=$_GET['id']?>">&nbsp;&nbsp;
-            盘数：<input type="text" size="10" name="plate" value="<?=$_GET['plate']?>">&nbsp;&nbsp;
+            小组ID：<input type="text" size="10" name="group_id" value="<?=$_GET['group_id']?>">&nbsp;&nbsp;
+            推荐人uID:<input type="text" size="10" name="group_id" value="<?=$_GET['group_id']?>">&nbsp;&nbsp;
             <input type="submit" class="but2" value="查询" />
         </div>
     </form>
@@ -55,7 +56,7 @@ if($this->func=='index')
     <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
     <script src="/plugin/echarts/echarts-all.js"></script>
     <?php  foreach($groups as $group) : ?>
-    <div id="chart_<?=$group->id?>" style="height:120px; border: 1px solid #ccc;"></div>
+    <div id="chart_<?=$group->id?>" style="height:200px; border: 1px solid #ccc;"></div>
     <script>
         var myChart_<?=$group->id?> = echarts.init(document.getElementById('chart_<?=$group->id?>'));
         var option = {

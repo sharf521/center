@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/10/22
- * Time: 17:06
- */
 
 namespace App\Model;
-
 
 use System\Lib\DB;
 
@@ -19,6 +12,10 @@ class Tea extends Model
         parent::__construct();
     }
 
+    /**
+     * @param int $group_id
+     * @return TeaGroup
+     */
     private function add_getOneGroup($group_id=0)
     {
         $tGroup=new TeaGroup();
@@ -29,15 +26,22 @@ class Tea extends Model
         }
         $tGroup=$tGroup->where($where)->orderBy('id')->first();
         if(! $tGroup->is_exist){
-            $tGroup->level=1;
-            $tGroup->leader=0;
-            $tGroup->child_count=0;
-            $tGroup->child_ids='';
-            $tGroup->status=1;
-            $groupId=$tGroup->save(true);
-            $tGroup=$tGroup->findOrFail($groupId);
+            $tGroup=$tGroup->create(1);
         }
         return $tGroup;
+    }
+    //设置隶属关系
+    public function setParentTree()
+    {
+        //获取一个没有两个分支的点
+        $pTea = $this->select('id,user_id,pids,childsize')->where("childsize!=2 and group_id={$this->group_id}")->orderBy('id')->first();
+        $pTea->childsize=$pTea->childsize+1;
+        $pTea->save();
+
+        $this->status=1;
+        $this->pid=$pTea->id;
+        $this->pids=$pTea->pids . $this->id . ',';
+        $this->save();
     }
 
     public function add($data)
@@ -50,7 +54,6 @@ class Tea extends Model
         if($tea->is_exist){
             throw new \Exception('用户己购买！');
         }
-
         $invite_id=0;
         $invite_path='';
         if ($p_userid != 0) {
@@ -67,52 +70,123 @@ class Tea extends Model
         }else{
             $group= $this->add_getOneGroup();
         }
-
-
         $arr=array(
-            'site_id' => 1,
             'user_id' => (int)$data['user_id'],
-            'pid' => 0,
-            'pids'=>'',
             'invite_id'=>$invite_id,
             'invite_path'=>$invite_path,
             'money' => (float)($data['money']),
-            'childsize'=>0,
             'group_id'=>$group->id,
+            'level'=>1
+        );
+        $tea=$this->create($arr);
+        $group=$group->putTea($tea);
+        if($group->child_count==15){
+            $this->splitGroup($group);
+        }
+    }
+
+    //分组
+    private function splitGroup($group)
+    {
+        $group->status=2;
+        $group->save();
+        $this->split_setLeader($group->leader);//升级组长
+        $tGroup=new TeaGroup();
+        $group1=$tGroup->create(1);
+        $group2=$tGroup->create(1);
+
+        (new Tea())->where("group_id={$group->id}")->update(array('status'=>2));
+
+        $teas=$group->Teas();
+        $i=1;
+        foreach ($teas as $tea){
+            if($tea->id!=$group->leader){
+                $i++;
+                if($i % 2==0){
+                    $arr=array(
+                        'user_id' => $tea->user_id,
+                        'invite_count'=>$tea->invite_count,
+                        'group_id'=>$group1->id,
+                        'level'=>$group1->level
+                    );
+                    $_tea=$this->create($arr);
+                    $group1->putTea($_tea);
+                }else{
+                    $arr=array(
+                        'user_id' => $tea->user_id,
+                        'invite_count'=>$tea->invite_count,
+                        'group_id'=>$group2->id,
+                        'level'=>$group2->level
+                    );
+                    $_tea=$this->create($arr);
+                    $group2->putTea($_tea);
+                }
+            }
+        }
+    }
+
+    private function create($data=array())
+    {
+        $arr=array(
+            'site_id' => 1,
+            'user_id' => $data['user_id'],
+            'pid' => 0,
+            'pids'=>'',
+            'invite_id'=>(int)$data['invite_id'],
+            'invite_path'=>$data['invite_path'],
+            'invite_count'=>(int)$data['invite_count'],
+            'money' =>(float)$data['money'],
+            'childsize'=>0,
+            'group_id'=>$data['group_id'],
             'income'=>0,
-            'level'=>1,
+            'level'=>$data['level'],
             'created_at' =>time(),
             'status' => 0
         );
         $id=$this->insertGetId($arr);
-        $tea=$this->find($id);
-        //第一个设为正常
-        if($group->child_count==0){
-            $tea->status=1;
-            $tea->pids = "{$id},";
-            $tea->save();
-            $group->leader=$id;
-        }else{
-            $this->add_setParentTree($tea);
-        }
-        $group->child_count=$group->child_count+1;
-        $group->child_ids=$group->child_ids.$id.',';
-        $group->save();
+        return $this->find($id);
     }
-
-
-    //设置隶属关系
-    private function add_setParentTree($tea)
+    //升级组长
+    private function split_setLeader($leader_id)
     {
-        //获取一个没有两个分支的点
-        $pTea = $this->select('id,user_id,pids,childsize')->where("childsize!=2 and level=1")->orderBy('id')->first();
-
-        $tea->status=1;
-        $tea->pid=$pTea->id;
-        $tea->pids=$pTea->pids . $tea->id . ',';
-        $tea->save();
-
-        $pTea->childsize=$pTea->childsize+1;
-        $pTea->save();
+        $oldTea=$this->find($leader_id);
+        $oldTea->status=2;//己升级
+        $oldTea->save();
+        $group=$this->split_getLeaderGroup($leader_id);
+        $arr=array(
+            'user_id' => $oldTea->user_id,
+            'group_id'=>$group->id,
+            'invite_count'=>0,
+            'level'=>2
+        );
+        $tea=$this->create($arr);
+        $group=$group->putTea($tea);
+        if($group->child_count==15){
+            echo '进入第三盘了';
+            exit;
+        }
     }
+    /**
+     * @param $tea_id
+     * @return TeaGroup
+     */
+    private function split_getLeaderGroup($tea_id)
+    {
+        $tGroup=new TeaGroup();
+        //第一盘所在的组(多个)的组长
+        $leader_ids=$tGroup->where("level=1 and child_ids like '%,{$tea_id},%'")->orderBy('id')->lists('leader');
+        $tag=false;
+        foreach ($leader_ids as $leader_id){
+            $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$leader_id},%'")->first();
+            if($tGroup->is_exist){
+                return $tGroup;
+                break;
+            }
+        }
+        if(!$tag){
+            return $tGroup->create(2);
+        }
+    }
+
+
 }

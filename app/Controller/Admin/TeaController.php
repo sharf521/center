@@ -61,7 +61,7 @@ class TeaController extends AdminController
             } else {
                 $string .= ',{';
             }
-            $string .= "name:'用户ID：{$data['user_id']}',value:{$data['invite_count']}";
+            $string .= "name:'{$data['id']}_user:{$data['user_id']}',value:{$data['invite_count']}";
             if (isset($data['children']) && is_array($data['children'])) {
                 $string .= ',children:';
                 $string .= ' [';
