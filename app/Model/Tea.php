@@ -57,7 +57,7 @@ class Tea extends Model
         $invite_id=0;
         $invite_path='';
         if ($p_userid != 0) {
-            $p_tea=$this->where('user_id=?')->bindValues($p_userid)->first();
+            $p_tea=$this->where('user_id=? and status=1')->bindValues($p_userid)->first();
             if ($p_tea->is_exist) {
                 $invite_id=$p_tea->id;
                 $invite_path=$p_tea->invite_path.$p_tea->id.',';
