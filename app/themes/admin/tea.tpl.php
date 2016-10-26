@@ -13,7 +13,7 @@ if($this->func=='index')
             用户ID：<input type="text" size="10" name="user_id" value="<?=$_GET['user_id']?>">&nbsp;&nbsp;
             TeaID：<input type="text" size="10" name="id" value="<?=$_GET['id']?>">&nbsp;&nbsp;
             小组ID：<input type="text" size="10" name="group_id" value="<?=$_GET['group_id']?>">&nbsp;&nbsp;
-            推荐人uID:<input type="text" size="10" name="group_id" value="<?=$_GET['group_id']?>">&nbsp;&nbsp;
+            推荐人uID:<input type="text" size="10" name="invite_uid" value="<?=$_GET['invite_uid']?>">&nbsp;&nbsp;
             <input type="submit" class="but2" value="查询" />
         </div>
     </form>
@@ -33,7 +33,7 @@ if($this->func=='index')
             <th>添加时间</th>
         </tr>
         <?
-        $arr_status=array('未计算','正常','己滑落');
+        $arr_status=array('未计算','正常','无效，己分组');
         foreach($result['list'] as $row)
         {
             ?>
@@ -55,13 +55,24 @@ if($this->func=='index')
     </table>
     <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
     <script src="/plugin/echarts/echarts-all.js"></script>
-    <?php  foreach($groups as $group) : ?>
-    <div id="chart_<?=$group->id?>" style="height:200px; border: 1px solid #ccc;"></div>
+    <?php
+        foreach($groups as $group) :
+            if($group->level==1){
+                $chartTitle="消费组：";
+            }elseif($group->level==2){
+                $chartTitle="经营组：";
+            }
+            $chartTitle.="{$group->id}";
+            if($group->status==2){
+                $chartTitle.='（无效，己重新分组）';
+            }
+    ?>
+    <div id="chart_<?=$group->id?>" style="height:200px; border: 1px solid #ccc;width: 90%;"></div>
     <script>
         var myChart_<?=$group->id?> = echarts.init(document.getElementById('chart_<?=$group->id?>'));
         var option = {
             title: {
-                text: '小组<?=$group->id?>',
+                text: '<?=$chartTitle?>',
                 subtext: ''
             },
             tooltip : {
@@ -74,10 +85,10 @@ if($this->func=='index')
                 type: 'tree',
                 orient: 'horizontal',  // vertical horizontal
                 rootLocation: {x: 50, y: 'center'}, // 根节点位置  {x: 100, y: 'center'}
-                symbolSize: 10,
+                symbolSize: 15,
                 layerPadding: 100,
-                nodePadding: 15,
-                roam: true,
+                nodePadding: 5,
+                roam: 'move',
                 itemStyle: {
                     normal: {
                         label: {
@@ -124,7 +135,7 @@ elseif($this->func=='add'||$this->func=='edit')
                         <option value="20000">20000</option>
                         <option value="200000">200000</option>
                     </select></td></tr>
-            <tr><td>推荐人id：</td><td><input type="text" name="p_userid" value=""/></td></tr>
+            <tr><td>推荐人用户id：</td><td><input type="text" name="p_userid" value=""/></td></tr>
             <tr><td></td><td><input type="submit" class="but3" value="保存" />
                     <input type="button" class="but3" value="返回" onclick="window.history.go(-1)"/></td></tr>
         </table>
@@ -188,14 +199,6 @@ elseif($this->func=='add'||$this->func=='edit')
         <? }?>
     </table>
     <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
-
-
-
     <?
 }
-
-
-
 require 'footer.php';
-
-

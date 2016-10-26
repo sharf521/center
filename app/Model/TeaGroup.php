@@ -19,11 +19,13 @@ class TeaGroup extends Model
 
     public function create($level=1)
     {
+        $arr=array();
         $arr['level']=$level;
         $arr['leader']=0;
         $arr['child_count']=0;
         $arr['child_ids']=',';
         $arr['status']=1;
+        $arr['created_at']=time();
         $id=$this->insertGetId($arr);
         return $this->find($id);
     }
@@ -37,12 +39,12 @@ class TeaGroup extends Model
             $tea->status=1;
             $tea->pids = "{$tea_id},";
             $tea->save();
-            $this->leader=$tea_id;
+            $this->leader=$tea->user_id;
         }else{
             $tea->setParentTree();
         }
         $this->child_count=$this->child_count+1;
-        $this->child_ids=$this->child_ids.$tea_id.',';
+        $this->child_ids=$this->child_ids.$tea->user_id.',';
         $this->save();
         return $this;
     }

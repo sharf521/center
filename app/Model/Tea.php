@@ -12,24 +12,28 @@ class Tea extends Model
         parent::__construct();
     }
 
-    /**
-     * @param int $group_id
-     * @return TeaGroup
-     */
-    private function add_getOneGroup($group_id=0)
+    private function create($data=array())
     {
-        $tGroup=new TeaGroup();
-        if($group_id!=0){
-            $where="status=1 and level=1 and child_count<15 and id={$group_id}";
-        }else{
-            $where="status=1 and level=1 and child_count<7";
-        }
-        $tGroup=$tGroup->where($where)->orderBy('id')->first();
-        if(! $tGroup->is_exist){
-            $tGroup=$tGroup->create(1);
-        }
-        return $tGroup;
+        $arr=array(
+            'site_id' => 1,
+            'user_id' => $data['user_id'],
+            'pid' => 0,
+            'pids'=>'',
+            'invite_id'=>(int)$data['invite_id'],
+            'invite_path'=>$data['invite_path'],
+            'invite_count'=>(int)$data['invite_count'],
+            'money' =>(float)$data['money'],
+            'childsize'=>0,
+            'group_id'=>$data['group_id'],
+            'income'=>0,
+            'level'=>$data['level'],
+            'created_at' =>time(),
+            'status' => 0
+        );
+        $id=$this->insertGetId($arr);
+        return $this->find($id);
     }
+
     //设置隶属关系
     public function setParentTree()
     {
@@ -42,6 +46,26 @@ class Tea extends Model
         $this->pid=$pTea->id;
         $this->pids=$pTea->pids . $this->id . ',';
         $this->save();
+    }
+
+    /**
+     * 获取一个消费组
+     * @param int $group_id
+     * @return TeaGroup
+     */
+    private function getLevel1Group($group_id=0)
+    {
+        $tGroup=new TeaGroup();
+        if($group_id!=0){
+            $where="status=1 and level=1 and child_count<15 and id={$group_id}";
+        }else{
+            $where="status=1 and level=1 and child_count<7";
+        }
+        $tGroup=$tGroup->where($where)->orderBy('id')->first();
+        if(! $tGroup->is_exist){
+            $tGroup=$tGroup->create(1);
+        }
+        return $tGroup;
     }
 
     public function add($data)
@@ -63,12 +87,12 @@ class Tea extends Model
                 $invite_path=$p_tea->invite_path.$p_tea->id.',';
                 $p_tea->invite_count=$p_tea->invite_count+1;
                 $p_tea->save();
-                $group= $this->add_getOneGroup($p_tea->group_id);
+                $group= $this->getLevel1Group($p_tea->group_id);
             } else {
                 throw new \Exception('p_userid错误！');
             }
         }else{
-            $group= $this->add_getOneGroup();
+            $group= $this->getLevel1Group();
         }
         $arr=array(
             'user_id' => (int)$data['user_id'],
@@ -91,16 +115,17 @@ class Tea extends Model
         $group->status=2;
         $group->save();
         $this->split_setLeader($group->leader);//升级组长
+        //原来设为不可用
+        (new Tea())->where("group_id={$group->id}")->update(array('status'=>2));
+
         $tGroup=new TeaGroup();
         $group1=$tGroup->create(1);
         $group2=$tGroup->create(1);
 
-        (new Tea())->where("group_id={$group->id}")->update(array('status'=>2));
-
         $teas=$group->Teas();
         $i=1;
         foreach ($teas as $tea){
-            if($tea->id!=$group->leader){
+            if($tea->user_id!=$group->leader){
                 $i++;
                 if($i % 2==0){
                     $arr=array(
@@ -125,60 +150,42 @@ class Tea extends Model
         }
     }
 
-    private function create($data=array())
-    {
-        $arr=array(
-            'site_id' => 1,
-            'user_id' => $data['user_id'],
-            'pid' => 0,
-            'pids'=>'',
-            'invite_id'=>(int)$data['invite_id'],
-            'invite_path'=>$data['invite_path'],
-            'invite_count'=>(int)$data['invite_count'],
-            'money' =>(float)$data['money'],
-            'childsize'=>0,
-            'group_id'=>$data['group_id'],
-            'income'=>0,
-            'level'=>$data['level'],
-            'created_at' =>time(),
-            'status' => 0
-        );
-        $id=$this->insertGetId($arr);
-        return $this->find($id);
-    }
     //升级组长
-    private function split_setLeader($leader_id)
+    private function split_setLeader($leader_uid)
     {
-        $oldTea=$this->find($leader_id);
-        $oldTea->status=2;//己升级
-        $oldTea->save();
-        $group=$this->split_getLeaderGroup($leader_id);
+        $group=$this->getLevel2Group($leader_uid);
         $arr=array(
-            'user_id' => $oldTea->user_id,
+            'user_id' => $leader_uid,
+            'invite_id'=>(int)$group->tea_invite_id,
             'group_id'=>$group->id,
             'invite_count'=>0,
             'level'=>2
         );
         $tea=$this->create($arr);
+        unset($group->tea_invite_id);//去除自定义的属性
         $group=$group->putTea($tea);
         if($group->child_count==15){
             echo '进入第三盘了';
             exit;
         }
     }
+
     /**
-     * @param $tea_id
+     * 获取一个经营组
+     * @param $user_id
      * @return TeaGroup
      */
-    private function split_getLeaderGroup($tea_id)
+    private function getLevel2Group($user_id)
     {
         $tGroup=new TeaGroup();
         //第一盘所在的组(多个)的组长
-        $leader_ids=$tGroup->where("level=1 and child_ids like '%,{$tea_id},%'")->orderBy('id')->lists('leader');
+        $leader_ids=$tGroup->where("level=1 and child_ids like '%,{$user_id},%'")->orderBy('id')->lists('leader');
         $tag=false;
         foreach ($leader_ids as $leader_id){
             $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$leader_id},%'")->first();
             if($tGroup->is_exist){
+                $tea=(new Tea())->where("user_id={$leader_id} and status=1")->first();
+                $tGroup->tea_invite_id=$tea->id;//把推荐的点id带出去
                 return $tGroup;
                 break;
             }
@@ -187,6 +194,4 @@ class Tea extends Model
             return $tGroup->create(2);
         }
     }
-
-
 }

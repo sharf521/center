@@ -12,17 +12,19 @@ namespace App\Controller\Admin;
 use App\Model\Tea;
 use App\Model\TeaGroup;
 use System\Lib\DB;
+use System\Lib\Request;
 
 class TeaController extends AdminController
 {
-    public function index(Tea $tea,TeaGroup $group)
+    public function index(Tea $tea,TeaGroup $group,Request $request)
     {
         $arr=array(
             'user_id'		=>(int)$_GET['user_id'],
             'id'		=>(int)$_GET['id'],
             'money'		=>(int)$_GET['money'],
-            'plate'		=>(int)$_GET['plate'],
+            'group_id'		=>(int)$_GET['group_id'],
         );
+        $invite_uid=(int)$request->get('invite_uid');
         $where = " 1=1";
         if (!empty($arr['user_id'])) {
             $where .= " and user_id={$arr['user_id']}";
@@ -30,14 +32,21 @@ class TeaController extends AdminController
         if (!empty($arr['money'])) {
             $where .= " and money={$arr['money']}";
         }
-        if (!empty($arr['plate'])) {
-            $where .= " and plate={$arr['plate']}";
+        if (!empty($arr['group_id'])) {
+            $where .= " and group_id={$arr['group_id']}";
         }
         if (!empty($arr['id'])) {
-            $pids = DB::table('zj')->where('id=?')->bindValues($arr['id'])->value('pids');
-            $where .= " and  pids like '{$pids}%'";
+            $where .= " and  id={$arr['id']}";
         }
-
+        if($invite_uid!=0){
+            $ids = $tea->where("user_id=?")->bindValues($invite_uid)->lists('id');
+            if(count($ids)>0){
+                $ids=implode(',',$ids);
+                $where .= " and  invite_id in({$ids})";
+            }else{
+                $where.=' and invite_id=-1';
+            }
+        }
         $data['result']=$tea->where($where)->orderBy('id desc')->pager($_GET['page'],10);
 
 
@@ -62,12 +71,12 @@ class TeaController extends AdminController
                 $string .= ',{';
             }
             $string .= "name:'{$data['id']}_user:{$data['user_id']}',value:{$data['invite_count']}";
-            if (isset($data['children']) && is_array($data['children'])) {
+            //if (isset($data['children'])){
                 $string .= ',children:';
                 $string .= ' [';
                 $string .= $this->returnChatData($data['children']);
                 $string .= ']';
-            }
+            //}
             $string .= '}';
         }
         return $string;
