@@ -114,13 +114,18 @@ class Tea extends Model
     {
         $group->status=2;
         $group->save();
-        $this->split_setLeader($group->leader);//升级组长
+        if($group->level==1){
+            $this->upLeaderToLevel2($group->leader);//升级组长到营经组
+        }elseif($group->level==2){
+            $this->upLeaderToLevel3($group->leader);//升级组长到level3
+        }
+
         //原来设为不可用
         (new Tea())->where("group_id={$group->id}")->update(array('status'=>2));
 
         $tGroup=new TeaGroup();
-        $group1=$tGroup->create(1);
-        $group2=$tGroup->create(1);
+        $group1=$tGroup->create($group->level);
+        $group2=$tGroup->create($group->level);
 
         $teas=$group->Teas();
         $i=1;
@@ -150,24 +155,38 @@ class Tea extends Model
         }
     }
 
-    //升级组长
-    private function split_setLeader($leader_uid)
+    //升级组长到2盘
+    private function upLeaderToLevel2($leader_uid)
     {
         $group=$this->getLevel2Group($leader_uid);
+        $invite_id=(int)$group->tea_invite_id;
+        unset($group->tea_invite_id);//去除自定义的属性
         $arr=array(
             'user_id' => $leader_uid,
-            'invite_id'=>(int)$group->tea_invite_id,
+            'invite_id'=>$invite_id,
             'group_id'=>$group->id,
             'invite_count'=>0,
             'level'=>2
         );
         $tea=$this->create($arr);
-        unset($group->tea_invite_id);//去除自定义的属性
         $group=$group->putTea($tea);
         if($group->child_count==15){
-            echo '进入第三盘了';
-            exit;
+            $this->splitGroup($group);
         }
+    }
+    //升级组长到3盘
+    private function upLeaderToLevel3($leader_uid)
+    {
+        $group=(new TeaGroup())->create(3);
+        $arr=array(
+            'user_id' => $leader_uid,
+            'invite_id'=>0,
+            'group_id'=>$group->id,
+            'invite_count'=>0,
+            'level'=>3
+        );
+        $tea=$this->create($arr);
+        $group->putTea($tea);
     }
 
     /**
@@ -178,19 +197,36 @@ class Tea extends Model
     private function getLevel2Group($user_id)
     {
         $tGroup=new TeaGroup();
-        //第一盘所在的组(多个)的组长
-        $leader_ids=$tGroup->where("level=1 and child_ids like '%,{$user_id},%'")->orderBy('id')->lists('leader');
-        $tag=false;
-        foreach ($leader_ids as $leader_id){
-            $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$leader_id},%'")->first();
+        $invite_uid=0;//推荐人id
+        //如果他的直接推荐人的组没满时进入。
+        $tea=new Tea();
+        $invite_id=$tea->where("user_id={$user_id} and level=1")->value('invite_id');
+        if($invite_id!=0){
+            $user_id=$tea->find($invite_id)->user_id;
+            $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$user_id},%'")->first();
             if($tGroup->is_exist){
-                $tea=(new Tea())->where("user_id={$leader_id} and status=1")->first();
-                $tGroup->tea_invite_id=$tea->id;//把推荐的点id带出去
-                return $tGroup;
-                break;
+                $invite_uid=$user_id;
             }
         }
-        if(!$tag){
+        if($invite_uid==0){
+            //第一盘所在的组(多个)的组长
+            $leader_ids=$tGroup->where("level=1 and child_ids like '%,{$user_id},%'")->orderBy('id')->lists('leader');
+            foreach ($leader_ids as $user_id){
+                $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$user_id},%'")->first();
+                if($tGroup->is_exist){
+                    $invite_uid=$user_id;
+                    break;
+                }
+            }
+        }
+        if($invite_uid!=0){
+            //把推荐的点id带出去,推荐点的推荐总数加1
+            $tea=$tea->where("level=2 and status=1 and user_id={$invite_uid}")->first();
+            $tea->invite_count=$tea->invite_count+1;
+            $tea->save();
+            $tGroup->tea_invite_id=$tea->id;
+            return $tGroup;
+        }else{
             return $tGroup->create(2);
         }
     }

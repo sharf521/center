@@ -5,7 +5,6 @@ if($this->func=='index')
     ?>
     <div class="main_title">
         <span>管理</span>列表<?=$this->anchor('tea/add','新增','class="but1"');?>
-        <?=$this->anchor('tea/calAdd1000','添加10个','class="but1"')?>
     </div>
 
     <form method="get">
@@ -55,68 +54,44 @@ if($this->func=='index')
     </table>
     <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
     <script src="/plugin/echarts/echarts-all.js"></script>
-    <?php
-        foreach($groups as $group) :
+    <script src="/themes/admin/js/tea.js"></script>
+    <div style="float: left;width: 49%">
+        <?php foreach($groups as $group){
             if($group->level==1){
                 $chartTitle="消费组：";
-            }elseif($group->level==2){
+                $chartTitle.="{$group->id}";
+                if($group->status==2){
+                    $chartTitle.='（无效，己重新分组）';
+                }
+                echo "<div id='div_chart_{$group->id}' style='height:200px; border: 1px solid #ccc;width: 90%;'></div>";
+                echo "<script>drawChart('{$chartTitle}','div_chart_{$group->id}',[{$group->datas}]);</script>";
+            }
+        }
+        ?>
+    </div>
+    <div style="float: right;width: 49%">
+        <?php
+        foreach($groups as $group){
+            if($group->level==2){
                 $chartTitle="经营组：";
+                $chartTitle.="{$group->id}";
+                if($group->status==2){
+                    $chartTitle.='（无效，己重新分组）';
+                }
+                echo "<div id='div_chart_{$group->id}' style='height:200px; border: 1px solid #ccc;width: 90%;'></div>";
+                echo "<script>drawChart('{$chartTitle}','div_chart_{$group->id}',[{$group->datas}]);</script>";
+            }elseif($group->level==3){
+                $chartTitle="管理组：";
+                $chartTitle.="{$group->id}";
+                if($group->status==2){
+                    $chartTitle.='（无效，己重新分组）';
+                }
+                echo "<div id='div_chart_{$group->id}' style='height:200px; border: 1px solid #ccc;width: 90%;'></div>";
+                echo "<script>drawChart('{$chartTitle}','div_chart_{$group->id}',[{$group->datas}]);</script>";
             }
-            $chartTitle.="{$group->id}";
-            if($group->status==2){
-                $chartTitle.='（无效，己重新分组）';
-            }
-    ?>
-    <div id="chart_<?=$group->id?>" style="height:200px; border: 1px solid #ccc;width: 90%;"></div>
-    <script>
-        var myChart_<?=$group->id?> = echarts.init(document.getElementById('chart_<?=$group->id?>'));
-        var option = {
-            title: {
-                text: '<?=$chartTitle?>',
-                subtext: ''
-            },
-            tooltip : {
-                trigger: 'item',
-                formatter: "推荐{c}人"
-            },
-            calculable: false,
-            series: [{
-                name: '树图',
-                type: 'tree',
-                orient: 'horizontal',  // vertical horizontal
-                rootLocation: {x: 50, y: 'center'}, // 根节点位置  {x: 100, y: 'center'}
-                symbolSize: 15,
-                layerPadding: 100,
-                nodePadding: 5,
-                roam: 'move',
-                itemStyle: {
-                    normal: {
-                        label: {
-                            show: true,
-                            position: 'right',
-                            formatter: "{b}",
-                            textStyle: {
-                                color: '#000',
-                                fontSize: 5
-                            }
-                        },
-                        lineStyle: {
-                            color: '#999',
-                            type: 'curve' // 'curve'|'broken'|'solid'|'dotted'|'dashed'
-                        }
-                    },
-                    emphasis: {
-                        label: {
-                            show: true
-                        }
-                    }
-                },
-                data: [<?=$group->datas?>]
-            }]
-        };
-        myChart_<?=$group->id?>.setOption(option);
-    </script>
-    <? endforeach;?>
+        }
+        ?>
+    </div>
     <?
 }
 elseif($this->func=='add'||$this->func=='edit')
@@ -143,10 +118,7 @@ elseif($this->func=='add'||$this->func=='edit')
     <?
 }elseif($this->func=='tealog'){
     $arr_typeid=array(
-        '3,1,'=>'T1',
-        '3,2,'=>'T2',
-        '3,3,'=>'滑落',
-        '3,4,'=>'25天计划',
+
     );
     ?>
     <div class="main_title">
