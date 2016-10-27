@@ -225,7 +225,7 @@ class Tea extends Model
             $tea=$tea->where("level=2 and status=1 and user_id={$invite_uid}")->first();
             $tea->invite_count=$tea->invite_count+1;
             $tea->save();
-            $tGroup->tea_invite_id=$tea->id;
+            $tGroup->tea_invite_id=$tea->user_id;
             return $tGroup;
         }else{
             return $tGroup->create(2);
