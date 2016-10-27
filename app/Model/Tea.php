@@ -83,8 +83,8 @@ class Tea extends Model
         if ($p_userid != 0) {
             $p_tea=$this->where('user_id=? and status=1')->bindValues($p_userid)->first();
             if ($p_tea->is_exist) {
-                $invite_id=$p_tea->id;
-                $invite_path=$p_tea->invite_path.$p_tea->id.',';
+                $invite_id=$p_tea->user_id;
+                $invite_path=$p_tea->invite_path.$p_tea->user_id.',';
                 $p_tea->invite_count=$p_tea->invite_count+1;
                 $p_tea->save();
                 $group= $this->getLevel1Group($p_tea->group_id);
@@ -200,25 +200,26 @@ class Tea extends Model
         $invite_uid=0;//推荐人id
         //如果他的直接推荐人的组没满时进入。
         $tea=new Tea();
-        $invite_id=$tea->where("user_id={$user_id} and level=1")->value('invite_id');
-        if($invite_id!=0){
-            $user_id=$tea->find($invite_id)->user_id;
+        $invite_path=$tea->where("user_id={$user_id} and level=1")->value('invite_path');
+        $uids=explode(',',trim($invite_path,','));
+        foreach($uids as $user_id){
             $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$user_id},%'")->first();
             if($tGroup->is_exist){
                 $invite_uid=$user_id;
+                break;
             }
         }
-        if($invite_uid==0){
-            //第一盘所在的组(多个)的组长
-            $leader_ids=$tGroup->where("level=1 and child_ids like '%,{$user_id},%'")->orderBy('id')->lists('leader');
-            foreach ($leader_ids as $user_id){
-                $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$user_id},%'")->first();
-                if($tGroup->is_exist){
-                    $invite_uid=$user_id;
-                    break;
-                }
-            }
-        }
+//        if($invite_uid==0){
+//            //第一盘所在的组(多个)的组长
+//            $leader_ids=$tGroup->where("level=1 and child_ids like '%,{$user_id},%'")->orderBy('id')->lists('leader');
+//            foreach ($leader_ids as $user_id){
+//                $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$user_id},%'")->first();
+//                if($tGroup->is_exist){
+//                    $invite_uid=$user_id;
+//                    break;
+//                }
+//            }
+//        }
         if($invite_uid!=0){
             //把推荐的点id带出去,推荐点的推荐总数加1
             $tea=$tea->where("level=2 and status=1 and user_id={$invite_uid}")->first();
