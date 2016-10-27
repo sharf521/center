@@ -202,6 +202,7 @@ class Tea extends Model
         $tea=new Tea();
         $invite_path=$tea->where("user_id={$user_id} and level=1")->value('invite_path');
         $uids=explode(',',trim($invite_path,','));
+        $uids=array_reverse($uids);
         foreach($uids as $user_id){
             $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$user_id},%'")->first();
             if($tGroup->is_exist){
@@ -228,6 +229,10 @@ class Tea extends Model
             $tGroup->tea_invite_id=$tea->user_id;
             return $tGroup;
         }else{
+            $tGroup=$tGroup->where("level=2 and status=1 and child_count<7")->first();
+            if($tGroup->is_exist){
+                return $tGroup;
+            }
             return $tGroup->create(2);
         }
     }
