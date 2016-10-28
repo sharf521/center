@@ -53,8 +53,12 @@ class IndexController extends MemberController
             }
         }elseif($app_id==8){  //一元云购
             if($isGoWap){
-                $params['url']='/user';
-                $url=$this->site[$app->subsite_field.'_wap']."/jump";
+                $params['url']='/wap';
+                $url=$this->site[$app->subsite_field]."/auth/result";
+                $sign=$this->getSign($params,$app->appsecret);
+                $url=$url."/?openid={$params['openid']}&url={$params['url']}&redirect_uri={$params['url']}&time={$params['time']}&sign={$sign}";
+                redirect($url);
+                exit;
             }else{
                 $params['url']='/user';
                 $url=$this->site[$app->subsite_field]."/auth/result";
