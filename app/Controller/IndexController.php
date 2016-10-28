@@ -16,6 +16,7 @@ class IndexController extends Controller
 
     public function index(User $user)
     {
-        redirect('member/');
+        echo '首页';
+        //redirect('member/');
     }
 }
