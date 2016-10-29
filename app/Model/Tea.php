@@ -107,6 +107,32 @@ class Tea extends Model
         if($group->child_count==15){
             $this->splitGroup($group);
         }
+        //管理奖 按原始推荐人给
+        $uids=explode(',',trim($invite_path,','));
+        $uids=array_reverse($uids);
+        $i=0;
+        foreach($uids as $user_id){
+            $tea=$tea->where("level=3 and status=1 and invite_count>1 and user_id={$user_id}")->first();
+            if($tea->is_exist){
+                $i++;
+                switch($i){
+                    case 2:
+                        $money=math(5000,0.03);
+                        break;
+                    case 3:
+                        $money=math(5000,0.04);
+                        break;
+                    case 4:
+                        $money=math(5000,0.05);
+                        break;
+                    default:
+                        $money=math(5000,0.02);
+                        break;
+                }
+                echo $money;
+                exit;
+            }
+        }
     }
 
     //分组
@@ -160,10 +186,13 @@ class Tea extends Model
     {
         $group=$this->getLevelGroup($leader_uid,$toLevel);
         $invite_id=(int)$group->tea_invite_id;
+        $invite_path=$group->tea_invite_path;
         unset($group->tea_invite_id);//去除自定义的属性
+        unset($group->tea_invite_path);
         $arr=array(
             'user_id' => $leader_uid,
             'invite_id'=>$invite_id,
+            'invite_path'=>$invite_path,
             'group_id'=>$group->id,
             'invite_count'=>0,
             'level'=>$toLevel
@@ -200,6 +229,7 @@ class Tea extends Model
                 $tea->invite_count=$tea->invite_count+1;
                 $tea->save();
                 $tGroup->tea_invite_id=$tea->user_id;
+                $tGroup->tea_invite_path=$tea->invite_path.$tea->user_id.',';
                 return $tGroup;
                 break;
             }
