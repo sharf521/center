@@ -115,9 +115,9 @@ class Tea extends Model
         $group->status=2;
         $group->save();
         if($group->level==1){
-            $this->upLeaderToLevel2($group->leader);//升级组长到营经组
+            $this->upLeaderLevel($group->leader,2);//升级组长到营经组
         }elseif($group->level==2){
-            $this->upLeaderToLevel3($group->leader);//升级组长到level3
+            $this->upLeaderLevel($group->leader,3);//升级组长到level3
         }
 
         //原来设为不可用
@@ -155,10 +155,10 @@ class Tea extends Model
         }
     }
 
-    //升级组长到2盘
-    private function upLeaderToLevel2($leader_uid)
+    //升级组长
+    private function upLeaderLevel($leader_uid,$toLevel=2)
     {
-        $group=$this->getLevel2Group($leader_uid);
+        $group=$this->getLevelGroup($leader_uid,$toLevel);
         $invite_id=(int)$group->tea_invite_id;
         unset($group->tea_invite_id);//去除自定义的属性
         $arr=array(
@@ -166,50 +166,67 @@ class Tea extends Model
             'invite_id'=>$invite_id,
             'group_id'=>$group->id,
             'invite_count'=>0,
-            'level'=>2
+            'level'=>$toLevel
         );
         $tea=$this->create($arr);
         $group=$group->putTea($tea);
-        if($group->child_count==15){
+        if($toLevel==2 && $group->child_count==15){
             $this->splitGroup($group);
         }
     }
-    //升级组长到3盘
-    private function upLeaderToLevel3($leader_uid)
-    {
-        $group=(new TeaGroup())->create(3);
-        $arr=array(
-            'user_id' => $leader_uid,
-            'invite_id'=>0,
-            'group_id'=>$group->id,
-            'invite_count'=>0,
-            'level'=>3
-        );
-        $tea=$this->create($arr);
-        $group->putTea($tea);
-    }
 
     /**
-     * 获取一个经营组
+     * 获取一个组
      * @param $user_id
      * @return TeaGroup
      */
-    private function getLevel2Group($user_id)
+    private function getLevelGroup($user_id,$level=2)
     {
         $tGroup=new TeaGroup();
-        $invite_uid=0;//推荐人id
-        //如果他的直接推荐人的组没满时进入。
+        //如果他的推荐人的组没满时进入。
         $tea=new Tea();
         $invite_path=$tea->where("user_id={$user_id} and level=1")->value('invite_path');
         $uids=explode(',',trim($invite_path,','));
         $uids=array_reverse($uids);
         foreach($uids as $user_id){
-            $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$user_id},%'")->first();
+            if($level==2){
+                $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$user_id},%'")->first();
+            }elseif($level==3){
+                $tGroup=$tGroup->where("level=3 and status=1 and child_ids like '%,{$user_id},%'")->first();
+            }
             if($tGroup->is_exist){
-                $invite_uid=$user_id;
+                //把推荐的点id带出去,推荐点的推荐总数加1
+                $tea=$tea->where("level={$level} and status=1 and user_id={$user_id}")->first();
+                $tea->invite_count=$tea->invite_count+1;
+                $tea->save();
+                $tGroup->tea_invite_id=$tea->user_id;
+                return $tGroup;
                 break;
             }
         }
+        if($level==2){
+            $tGroup=$tGroup->where("level=2 and status=1 and child_count<7")->first();
+            if($tGroup->is_exist){
+                return $tGroup;
+            }
+            return $tGroup->create(2);
+        }elseif($level==3){
+            //创建管理组，管理组里放入公司为第一个元素
+            $tGroup=$tGroup->create(3);
+            $arr=array(
+                'user_id' => 0,
+                'invite_id'=>0,
+                'group_id'=>$tGroup->id,
+                'invite_count'=>0,
+                'level'=>3
+            );
+            $tea=$this->create($arr);
+            $tGroup=$tGroup->putTea($tea);
+            $tGroup->tea_invite_id=0;
+            return$tGroup;
+        }
+
+
 //        if($invite_uid==0){
 //            //第一盘所在的组(多个)的组长
 //            $leader_ids=$tGroup->where("level=1 and child_ids like '%,{$user_id},%'")->orderBy('id')->lists('leader');
@@ -221,19 +238,5 @@ class Tea extends Model
 //                }
 //            }
 //        }
-        if($invite_uid!=0){
-            //把推荐的点id带出去,推荐点的推荐总数加1
-            $tea=$tea->where("level=2 and status=1 and user_id={$invite_uid}")->first();
-            $tea->invite_count=$tea->invite_count+1;
-            $tea->save();
-            $tGroup->tea_invite_id=$tea->user_id;
-            return $tGroup;
-        }else{
-            $tGroup=$tGroup->where("level=2 and status=1 and child_count<7")->first();
-            if($tGroup->is_exist){
-                return $tGroup;
-            }
-            return $tGroup->create(2);
-        }
     }
 }
