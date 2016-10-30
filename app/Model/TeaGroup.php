@@ -40,7 +40,17 @@ class TeaGroup extends Model
             $tea->pids = "{$tea_id},";
             $tea->save();
             $this->leader=$tea->user_id;
-            if($this->level==2){
+            if($this->level==1){
+                $money_arr=array(
+                    'user_id'=>$this->leader,
+                    'money'=>800,
+                    'type'=>'leader',
+                    'remark'=>"组长奖",
+                    'label'=>''
+                );
+                (new TeaUser())->addLog($money_arr);
+            }
+            elseif($this->level==2){
                 $money_arr=array(
                     'user_id'=>$this->leader,
                     'money'=>10000,
