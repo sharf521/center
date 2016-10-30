@@ -21,7 +21,6 @@ if($this->func=='index')
             <th>ID</th>
             <th>用户ID</th>
             <th>金额</th>
-            <th>收入</th>
             <th>上层id</th>
             <th>路径</th>
             <th>组ID号</th>
@@ -40,7 +39,6 @@ if($this->func=='index')
                 <td><?=$row->id?></td>
                 <td><?=$row->user_id?></td>
                 <td><?=(float)$row->money?></td>
-                <td><?=$row->income?></td>
                 <td><?=$row->pid?></td>
                 <td class="l"><?=str_replace(',','->',rtrim($row->pids,','))?></td>
                 <td><?=$row->group_id?></td>
@@ -149,8 +147,11 @@ elseif($this->func=='add'||$this->func=='edit')
             <th>ID</th>
             <th>用户ID</th>
             <th>电子币</th>
+            <th>冻结</th>
             <th>类型</th>
             <th>添加时间</th>
+            <th>当前电子币</th>
+            <th>当前冻结</th>
             <th>备注</th>
         </tr>
         <?
@@ -161,8 +162,11 @@ elseif($this->func=='add'||$this->func=='edit')
                 <td><?=$row->id?></td>
                 <td><?=$row->user_id?></td>
                 <td><?=(float)$row->money?></td>
+                <td><?=(float)$row->money_freeze?></td>
                 <td><?=$arr_type[$row->type]?></td>
                 <td><?=$row->created_at?></td>
+                <td><?=(float)$row->money_now?></td>
+                <td><?=(float)$row->money_freeze_now?></td>
                 <td><?=$row->remark?></td>
             </tr>
         <? }?>
