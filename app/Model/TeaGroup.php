@@ -40,8 +40,28 @@ class TeaGroup extends Model
             $tea->pids = "{$tea_id},";
             $tea->save();
             $this->leader=$tea->user_id;
+            if($this->level==2){
+                $money_arr=array(
+                    'user_id'=>$this->leader,
+                    'money'=>10000,
+                    'type'=>'leader',
+                    'remark'=>"组长奖",
+                    'label'=>''
+                );
+                (new TeaUser())->addLog($money_arr);
+            }
         }else{
             $tea->setParentTree();
+            if($this->level==2 && $this->child_count>=7){
+                $money_arr=array(
+                    'user_id'=>$this->leader,
+                    'money'=>5000,
+                    'type'=>'dianjiang',
+                    'remark'=>"组长点奖",
+                    'label'=>''
+                );
+                (new TeaUser())->addLog($money_arr);
+            }
         }
         $this->child_count=$this->child_count+1;
         $this->child_ids=$this->child_ids.$tea->user_id.',';

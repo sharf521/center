@@ -11,6 +11,8 @@ namespace App\Controller\Admin;
 
 use App\Model\Tea;
 use App\Model\TeaGroup;
+use App\Model\TeaLog;
+use App\Model\TeaUser;
 use System\Lib\DB;
 use System\Lib\Request;
 
@@ -18,6 +20,7 @@ class TeaController extends AdminController
 {
     public function index(Tea $tea,TeaGroup $group,Request $request)
     {
+
         $arr=array(
             'user_id'		=>(int)$_GET['user_id'],
             'id'		=>(int)$_GET['id'],
@@ -125,18 +128,26 @@ class TeaController extends AdminController
         }
     }
 
-    public function call(Tea $tea)
+    public function log(TeaLog $teaLog)
     {
-        try {
-            DB::beginTransaction();
+        $arr=array(
+            'type'		=>$_GET['type'],
+            'user_id'		=>(int)$_GET['user_id'],
+            'money'		=>(int)$_GET['money']
+        );
 
-            $tea->call();
-            DB::commit();
-            redirect('tea/')->with('msg', '完成！');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            $error= "Failed: " . $e->getMessage();
-            redirect()->back()->with('error', $error);
+        $where = " 1=1";
+        if (!empty($arr['user_id'])) {
+            $where .= " and user_id={$arr['user_id']}";
         }
+        if (!empty($arr['money'])) {
+            $where .= " and money={$arr['money']}";
+        }
+        if (!empty($arr['type'])) {
+            $where .= " and type='{$arr['type']}'";
+        }
+
+        $data['result']=$teaLog->where($where)->orderBy('id desc')->pager($_GET['page'],10);
+        $this->view('tea',$data);
     }
 }

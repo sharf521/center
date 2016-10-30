@@ -88,12 +88,27 @@ class Tea extends Model
                 $p_tea->invite_count=$p_tea->invite_count+1;
                 $p_tea->save();
                 $group= $this->getLevel1Group($p_tea->group_id);
+
+                if($p_tea->invite_count==1){
+                    $money=800;
+                }else{
+                    $money=1600;
+                }
+                $arr=array(
+                    'user_id'=>$p_tea->user_id,
+                    'money'=>$money,
+                    'type'=>'invite',
+                    'remark'=>"邀请用户：{$data['user_id']}，第{$p_tea->invite_count}人",
+                    'label'=>''
+                );
+                (new TeaUser())->addLog($arr);
             } else {
                 throw new \Exception('p_userid错误！');
             }
         }else{
             $group= $this->getLevel1Group();
         }
+
         $arr=array(
             'user_id' => (int)$data['user_id'],
             'invite_id'=>$invite_id,
@@ -107,32 +122,56 @@ class Tea extends Model
         if($group->child_count==15){
             $this->splitGroup($group);
         }
+
+
         //管理奖 按原始推荐人给
-        $uids=explode(',',trim($invite_path,','));
-        $uids=array_reverse($uids);
-        $i=0;
-        foreach($uids as $user_id){
-            $tea=$tea->where("level=3 and status=1 and invite_count>1 and user_id={$user_id}")->first();
-            if($tea->is_exist){
-                $i++;
-                switch($i){
-                    case 2:
-                        $money=math(5000,0.03);
-                        break;
-                    case 3:
-                        $money=math(5000,0.04);
-                        break;
-                    case 4:
-                        $money=math(5000,0.05);
-                        break;
-                    default:
-                        $money=math(5000,0.02);
-                        break;
+        if($invite_path!=''){
+            $uids=explode(',',trim($invite_path,','));
+            $uids=array_reverse($uids);
+            $i=0;
+            $weight=array();//加权
+            $teaUser=new TeaUser();
+            foreach($uids as $user_id){
+                $tea=$tea->where("level=3 and status=1 and invite_count>1 and user_id={$user_id}")->first();
+                if($tea->is_exist){
+                    $i++;
+                    if($i<6){
+                        if($i==1 || $i==5){
+                            $money=math(5000,0.02);
+                        }elseif($i==2){
+                            $money=math(5000,0.03);
+                        }elseif($i==3){
+                            $money=math(5000,0.04);
+                        }elseif($i==4){
+                            $money=math(5000,0.05);
+                        }
+                        $money_arr=array(
+                            'user_id'=>$user_id,
+                            'money'=>$money,
+                            'type'=>'manage',
+                            'remark'=>"管理奖"
+                        );
+                        $teaUser->addLog($money_arr);
+                    }else{
+                        array_push($weight,$user_id);
+                    }
                 }
-                echo $money;
-                exit;
+            }
+            if(count($weight)>1){
+                $_money=math(4980,count($weight),2);
+                foreach ($weight as $u){
+                    $money_arr=array(
+                        'user_id'=>$u,
+                        'money'=>$_money,
+                        'type'=>'weight',
+                        'remark'=>"加权奖",
+                        'label'=>''
+                    );
+                    $teaUser->addLog($money_arr);
+                }
             }
         }
+
     }
 
     //分组
@@ -184,6 +223,16 @@ class Tea extends Model
     //升级组长
     private function upLeaderLevel($leader_uid,$toLevel=2)
     {
+        if($toLevel==2){
+            $money_arr=array(
+                'user_id'=>$leader_uid,
+                'money'=>55000,
+                'type'=>'count15',
+                'remark'=>"满员奖励",
+                'label'=>''
+            );
+            (new TeaUser())->addLog($money_arr);
+        }
         $group=$this->getLevelGroup($leader_uid,$toLevel);
         $invite_id=(int)$group->tea_invite_id;
         $invite_path=$group->tea_invite_path;

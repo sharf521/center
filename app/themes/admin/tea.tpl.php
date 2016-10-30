@@ -105,10 +105,7 @@ elseif($this->func=='add'||$this->func=='edit')
         <table class="table_from">
             <tr><td>用户id：</td><td><input type="text" name="user_id" value="<?=$row['user_id']?>"/></td></tr>
             <tr><td>金额：</td><td><select name="money">
-                        <option value="200">200</option>
-                        <option value="2000">2000</option>
-                        <option value="20000">20000</option>
-                        <option value="200000">200000</option>
+                        <option value="4980">4980</option>
                     </select></td></tr>
             <tr><td>推荐人用户id：</td><td><input type="text" name="p_userid" value=""/></td></tr>
             <tr><td></td><td><input type="submit" class="but3" value="保存" />
@@ -116,28 +113,30 @@ elseif($this->func=='add'||$this->func=='edit')
         </table>
     </form>
     <?
-}elseif($this->func=='tealog'){
-    $arr_typeid=array(
-
+}elseif($this->func=='log'){
+    $arr_type=array(
+        'invite'=>'邀请奖励',
+        'leader'=>'组长奖',
+        'dianjiang'=>'组长点奖',
+        'count15'=>'满员奖励',
+        'manage'=>'管理奖',
+        'weight'=>'管理加权奖',
     );
     ?>
     <div class="main_title">
-        <span>对列收益流水</span>列表
+        <span>收益流水</span>列表
     </div>
     <form method="get">
         <div class="search">
             金额：<input type="text" size="10" name="money" value="<?=$_GET['money']?>">&nbsp;&nbsp;
             用户ID：<input type="text" size="10" name="user_id" value="<?=$_GET['user_id']?>">&nbsp;&nbsp;
-            增进ID：<input type="text" size="10" name="tea_id" value="<?=$_GET['tea_id']?>">&nbsp;&nbsp;
-            进入增进ID：<input type="text" size="10" name="in_tea_id" value="<?=$_GET['in_tea_id']?>">&nbsp;&nbsp;
-            盘数：<input type="text" size="10" name="plate" value="<?=$_GET['plate']?>">&nbsp;&nbsp;
             类型：
-            <select name="typeid">
-                <option value=""<? if($_GET['typeid']==""){?> selected="selected"<? }?>>请选择</option>
+            <select name="type">
+                <option value=""<? if($_GET['type']==""){?> selected="selected"<? }?>>请选择</option>
                 <?
-                foreach($arr_typeid as $i=>$v){
+                foreach($arr_type as $i=>$v){
                     ?>
-                    <option value="<?=$i?>" <? if($_GET['typeid']==$i){?> selected="selected"<? }?>><?=$v?></option>
+                    <option value="<?=$i?>" <? if($_GET['type']==$i){?> selected="selected"<? }?>><?=$v?></option>
                     <?
                 }
                 ?>
@@ -148,12 +147,11 @@ elseif($this->func=='add'||$this->func=='edit')
     <table class="table">
         <tr class="bt">
             <th>ID</th>
-            <th>tea_id/用户ID</th>
-            <th>进入tea_id/进入用户ID</th>
-            <th>金额</th>
-            <th>盘数</th>
+            <th>用户ID</th>
+            <th>电子币</th>
             <th>类型</th>
             <th>添加时间</th>
+            <th>备注</th>
         </tr>
         <?
         foreach($result['list'] as $row)
@@ -161,12 +159,11 @@ elseif($this->func=='add'||$this->func=='edit')
             ?>
             <tr>
                 <td><?=$row->id?></td>
-                <td><?=$row->tea_id?>/<?=$row->user_id?></td>
-                <td><?=$row->in_user_id?>/<?=$row->in_tea_id?></td>
+                <td><?=$row->user_id?></td>
                 <td><?=(float)$row->money?></td>
-                <td><?=$row->plate?></td>
-                <td><?=$arr_typeid[$row->typeid]?></td>
-                <td><?=$row->addtime?></td>
+                <td><?=$arr_type[$row->type]?></td>
+                <td><?=$row->created_at?></td>
+                <td><?=$row->remark?></td>
             </tr>
         <? }?>
     </table>

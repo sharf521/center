@@ -19,7 +19,7 @@ if(session('error'))
         layer.msg('<?=addslashes(session('error'))?>', {
             offset: '200px',
             icon: 2,
-            time: 5000
+            time: 10000
         });
     </script>
     <?
