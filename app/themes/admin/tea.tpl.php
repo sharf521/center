@@ -175,5 +175,46 @@ elseif($this->func=='add'||$this->func=='edit')
     </table>
     <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
     <?
+}elseif($this->func=='user'){
+?>
+<div class="main_title">
+    <span>用户</span>列表
+</div>
+<form method="get">
+    <div class="search">
+        金额：<input type="text" size="10" name="money" value="<?=$_GET['money']?>">&nbsp;&nbsp;
+        用户ID：<input type="text" size="10" name="id" value="<?=$_GET['id']?>">&nbsp;&nbsp;
+        推荐人ID:<input type="text" size="10" name="invite_id" value="<?=$_GET['invite_id']?>">&nbsp;&nbsp;
+        <input type="submit" class="but2" value="查询" />
+    </div>
+</form>
+<table class="table">
+    <tr class="bt">
+        <th>用户ID</th>
+        <th>电子币</th>
+        <th>冻结</th>
+        <th>推荐人</th>
+        <th>推荐PATH</th>
+        <th>推荐个数</th>
+        <th>添加时间</th>
+    </tr>
+    <?
+    foreach($result['list'] as $row)
+    {
+        $account=$row->account();
+        ?>
+        <tr>
+            <td><?=$row->id?></td>
+            <td><?=(float)$account->money?></td>
+            <td><?=(float)$account->money_freeze?></td>
+            <td><?=$row->invite_id?></td>
+            <td><?=$row->invite_path?></td>
+            <td><?=$row->invite_count?></td>
+            <td><?=$row->created_at?></td>
+        </tr>
+    <? }?>
+</table>
+<? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
+<?php
 }
 require 'footer.php';

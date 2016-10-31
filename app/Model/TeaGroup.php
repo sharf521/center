@@ -44,9 +44,9 @@ class TeaGroup extends Model
             $tea->setParentTree();
         }
 
-        $teaUser=new TeaUser();
-        $leaderTea=(new Tea())->where("level=1 and user_id={$this->leader}")->first();
-        if($this->child_count==0 && $leaderTea->invite_count>=2) {
+        $teaMoney=new TeaMoney();
+        $leaderUser=(new TeaUser())->find($this->leader);
+        if($this->child_count==0 && $leaderUser->invite_count>=2) {
             if($this->level==1){
                 $money_arr=array(
                     'user_id'=>$this->leader,
@@ -55,7 +55,7 @@ class TeaGroup extends Model
                     'remark'=>"组长奖",
                     'label'=>''
                 );
-                $teaUser->addLog($money_arr);
+                $teaMoney->addLog($money_arr);
             }
             if($this->level==2){
                 $money_arr=array(
@@ -65,7 +65,7 @@ class TeaGroup extends Model
                     'remark'=>"组长奖",
                     'label'=>''
                 );
-                $teaUser->addLog($money_arr);
+                $teaMoney->addLog($money_arr);
             }
         }
 
@@ -77,13 +77,13 @@ class TeaGroup extends Model
                 'remark'=>"组长点奖",
                 'label'=>''
             );
-            $teaUser->addLog($money_arr);
+            $teaMoney->addLog($money_arr);
         }
 
         //替换组长
-        if($leaderTea->invite_count<2){
-            $tea_level1=(new Tea())->where("level=1 and user_id={$tea->user_id}")->first();
-            if($tea_level1->invite_count>=2){
+        if($leaderUser->invite_count<2){
+            $tea_user=(new TeaUser())->find($tea->user_id);
+            if($tea_user->invite_count>=2){
                 $this->leader=$tea->user_id;
             }
         }

@@ -150,4 +150,28 @@ class TeaController extends AdminController
         $data['result']=$teaLog->where($where)->orderBy('id desc')->pager($_GET['page'],10);
         $this->view('tea',$data);
     }
+
+    public function user(TeaUser $teaUser,Request $request)
+    {
+        $arr=array(
+            'type'		=>$_GET['type'],
+            'id'		=>(int)$_GET['id'],
+            'money'		=>(int)$_GET['money']
+        );
+
+        $where = " 1=1";
+        if (!empty($arr['id'])) {
+            $where .= " and id={$arr['id']}";
+        }
+        if (!empty($arr['money'])) {
+            $where .= " and money={$arr['money']}";
+        }
+
+        $invite_id=(int)$request->get('invite_id');
+        if($invite_id!=0){
+            $where.=" and invite_id={$invite_id}";
+        }
+        $data['result']=$teaUser->where($where)->orderBy('id desc')->pager($_GET['page'],10);
+        $this->view('tea',$data);
+    }
 }
