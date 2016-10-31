@@ -55,6 +55,7 @@ if($this->func=='index')
     <script src="/themes/admin/js/tea.js"></script>
     <div style="float: left;width: 49%">
         <?php foreach($groups as $group){
+            $subtext="组长：{$group->leader}";
             if($group->level==1){
                 $chartTitle="消费组：";
                 $chartTitle.="{$group->id}";
@@ -62,7 +63,7 @@ if($this->func=='index')
                     $chartTitle.='（无效，己重新分组）';
                 }
                 echo "<div id='div_chart_{$group->id}' style='height:200px; border: 1px solid #ccc;width: 90%;'></div>";
-                echo "<script>drawChart('{$chartTitle}','div_chart_{$group->id}',[{$group->datas}]);</script>";
+                echo "<script>drawChart('{$chartTitle}','{$subtext}','div_chart_{$group->id}',[{$group->datas}]);</script>";
             }
         }
         ?>
@@ -70,6 +71,7 @@ if($this->func=='index')
     <div style="float: right;width: 49%">
         <?php
         foreach($groups as $group){
+            $subtext="组长：{$group->leader}";
             if($group->level==2){
                 $chartTitle="经营组：";
                 $chartTitle.="{$group->id}";
@@ -77,7 +79,7 @@ if($this->func=='index')
                     $chartTitle.='（无效，己重新分组）';
                 }
                 echo "<div id='div_chart_{$group->id}' style='height:200px; border: 1px solid #ccc;width: 90%;'></div>";
-                echo "<script>drawChart('{$chartTitle}','div_chart_{$group->id}',[{$group->datas}]);</script>";
+                echo "<script>drawChart('{$chartTitle}','{$subtext}','div_chart_{$group->id}',[{$group->datas}]);</script>";
             }elseif($group->level==3){
                 $chartTitle="管理组：";
                 $chartTitle.="{$group->id}";
@@ -85,7 +87,7 @@ if($this->func=='index')
                     $chartTitle.='（无效，己重新分组）';
                 }
                 echo "<div id='div_chart_{$group->id}' style='height:200px; border: 1px solid #ccc;width: 90%;'></div>";
-                echo "<script>drawChart('{$chartTitle}','div_chart_{$group->id}',[{$group->datas}]);</script>";
+                echo "<script>drawChart('{$chartTitle}','{$subtext}','div_chart_{$group->id}',[{$group->datas}]);</script>";
             }
         }
         ?>

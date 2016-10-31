@@ -2,13 +2,13 @@
  * Created by Administrator on 2016/10/27.
  */
 
-function drawChart(title,id,datas)
+function drawChart(title,subtext,id,datas)
 {
     var myChart = echarts.init(document.getElementById(id));
     var option = {
         title: {
             text: title,
-            subtext: ''
+            subtext: subtext
         },
         tooltip : {
             trigger: 'item',

@@ -81,7 +81,7 @@ class Tea extends Model
         $invite_id=0;
         $invite_path='';
         if ($p_userid != 0) {
-            $p_tea=$this->where('user_id=? and status=1')->bindValues($p_userid)->first();
+            $p_tea=$this->where('user_id=? and level=1')->bindValues($p_userid)->first();
             if ($p_tea->is_exist) {
                 $invite_id=$p_tea->user_id;
                 $invite_path=$p_tea->invite_path.$p_tea->user_id.',';
@@ -223,25 +223,28 @@ class Tea extends Model
     //升级组长
     private function upLeaderLevel($leader_uid,$toLevel=2)
     {
-        if($toLevel==2){
-            $money_arr=array(
-                'user_id'=>$leader_uid,
-                'money'=>5000,
-                'type'=>'count15',
-                'remark'=>"1盘满员奖励",
-                'label'=>''
-            );
-            (new TeaUser())->addLog($money_arr);
-        }
-        if($toLevel==3){
-            $money_arr=array(
-                'user_id'=>$leader_uid,
-                'money'=>55000,
-                'type'=>'count15',
-                'remark'=>"2盘满员奖励",
-                'label'=>''
-            );
-            (new TeaUser())->addLog($money_arr);
+        $leaderTea=(new Tea())->where("level=1 and user_id={$leader_uid}")->first();
+        if($leaderTea->invite_count>=2){
+            if($toLevel==2){
+                $money_arr=array(
+                    'user_id'=>$leader_uid,
+                    'money'=>5000,
+                    'type'=>'count15',
+                    'remark'=>"1盘满员奖励",
+                    'label'=>''
+                );
+                (new TeaUser())->addLog($money_arr);
+            }
+            if($toLevel==3){
+                $money_arr=array(
+                    'user_id'=>$leader_uid,
+                    'money'=>55000,
+                    'type'=>'count15',
+                    'remark'=>"2盘满员奖励",
+                    'label'=>''
+                );
+                (new TeaUser())->addLog($money_arr);
+            }
         }
         $group=$this->getLevelGroup($leader_uid,$toLevel);
         $invite_id=(int)$group->tea_invite_id;
