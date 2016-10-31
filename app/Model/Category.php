@@ -59,6 +59,7 @@ class Category extends Model
 
     function add($data = array())
     {
+        $arr['path'] = '';
         $arr['pid'] = (int)$data['pid'];
         $arr['name'] = $data['name'];
         $arr['title'] = $data['title'];

@@ -223,12 +223,22 @@ class Tea extends Model
     //升级组长
     private function upLeaderLevel($leader_uid,$toLevel=2)
     {
+        if($toLevel==2){
+            $money_arr=array(
+                'user_id'=>$leader_uid,
+                'money'=>5000,
+                'type'=>'count15',
+                'remark'=>"1盘满员奖励",
+                'label'=>''
+            );
+            (new TeaUser())->addLog($money_arr);
+        }
         if($toLevel==3){
             $money_arr=array(
                 'user_id'=>$leader_uid,
                 'money'=>55000,
                 'type'=>'count15',
-                'remark'=>"满员奖励",
+                'remark'=>"2盘满员奖励",
                 'label'=>''
             );
             (new TeaUser())->addLog($money_arr);

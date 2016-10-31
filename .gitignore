@@ -2,3 +2,4 @@
 /app/Config.php
 /composer.lock
 /.idea
+/public/data/js

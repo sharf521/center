@@ -65,7 +65,7 @@ class ArticleController extends AdminController
             //添加文章信息
             $arr = array();
             $arr['user_id'] = $this->user_id;
-            $arr['subsite_id'] = $_POST['subsite_id'];
+            $arr['subsite_id'] = 0;
             $arr['title'] = $_POST['title'];
             $arr['typeid'] = (int)$_POST['typeid'];
             $arr['category_id'] = $categoryid;
@@ -125,9 +125,8 @@ class ArticleController extends AdminController
             //修改文章信息
             $arr = array();
             $arr['user_id'] = $this->user_id;
-            $arr['subsite_id'] = $_POST['subsite_id'];
             $arr['title'] = $_POST['title'];
-            $arr['typeid'] = $_POST['typeid'];
+            $arr['typeid'] = (int)$_POST['typeid'];
             $arr['category_id'] = $categoryid;
             $arr['category_path'] = $categorypath;
             $arr['lable'] = $_POST['lable'];
@@ -146,7 +145,7 @@ class ArticleController extends AdminController
             }
         } else {
             //一级分类
-            $data['cates'] = $category->getlist(array('pid' => 2));
+            $data['cates'] = $category->getlist(array('pid' => 1));
             $data['row'] = $article->findOrFail($id);
             $data['row']->content = $data['row']->ArticleData()->content;
             $categorypath = explode(',', $data['row']->category_path);
