@@ -70,8 +70,20 @@
                             <td align="right">线下充值：</td>
                             <td>
                                 <table cellpadding="4" cellspacing="1">
-                                    <tr>
-                                        <td><input type="radio" name="payment" value="建设银行" checked="checked"/></td><td>郑州璞胜金投电子商务有限公司  </td><td>中国建设银行郑州市金海支行</td><td>4100 1511 0100 5027 4673</td>
+                                    <tr><?
+                                        $system=new \App\Model\System();
+                                        $accounts=$system->getCode('pay_accounts');
+                                        $accounts=explode("\r\n",$accounts);
+                                        foreach($accounts as $account){
+                                            $val=explode('[#]',$account);
+                                            if(!empty($val[0])) :
+                                            ?>
+                                            <tr><td><input type="radio" name="payment" value="<?=$val[0]?>" checked="checked"/></td><td><?=$val[1]?></td></tr>
+                                            <?
+                                            endif;
+                                        }
+                                        ?>
+
                                     </tr>
                                 </table>
                             </td>
