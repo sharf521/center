@@ -149,24 +149,23 @@ class Tea extends Model
     private function managerMoney($user)
     {
         $uids=explode(',',trim($user->invite_path,','));
-        $uids=array_reverse($uids);
         $i=0;
         $weight=array();//加权
         $teaMoney=new TeaMoney();
-        $tea=new Tea();
-        foreach($uids as $user_id){
-            $tea=$tea->where("level=3 and status=1 and invite_count>1 and user_id={$user_id}")->first();
-            if($tea->is_exist){
+        $teas=(new Tea())->where("level=3 and status=1 and invite_count>1")->get();
+        foreach($teas as $tea){
+            $user_id=$tea->user_id;
+            if(in_array($user_id,$uids)){
                 $i++;
                 if($i<6){
                     if($i==1 || $i==5){
-                        $money=math(5000,0.02);
+                        $money=math($user->money,0.02,'*',2);
                     }elseif($i==2){
-                        $money=math(5000,0.03);
+                        $money=math($user->money,0.03,'*',2);
                     }elseif($i==3){
-                        $money=math(5000,0.04);
+                        $money=math($user->money,0.04,'*',2);
                     }elseif($i==4){
-                        $money=math(5000,0.05);
+                        $money=math($user->money,0.05,'*',2);
                     }
                     $money_arr=array(
                         'user_id'=>$user_id,
@@ -180,8 +179,17 @@ class Tea extends Model
                 }
             }
         }
-        if(count($weight)>1){
-            $_money=math($user->money,count($weight),2);
+/*
+        $uids=array_reverse($uids);
+        foreach($uids as $user_id){
+            $tea=$tea->where("level=3 and status=1 and invite_count>1 and user_id={$user_id}")->first();
+            if($tea->is_exist){
+
+            }
+        }*/
+        if(count($weight)>0){
+            $money=math($user->money,0.02,'*',2);
+            $_money=math($money,count($weight),'/',2);
             foreach ($weight as $u){
                 $money_arr=array(
                     'user_id'=>$u,
