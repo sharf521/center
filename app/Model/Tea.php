@@ -141,9 +141,6 @@ class Tea extends Model
         if($group->child_count==15){
             $this->splitGroup($group);
         }
-
-
-
         //管理奖 按原始推荐人给
         if ($p_userid != 0){
             $uids=explode(',',trim($user->invite_path,','));
@@ -177,7 +174,6 @@ class Tea extends Model
                     }
                 }
             }
-
             if(count($weight)>1){
                 $_money=math(floatval($data['money']),count($weight),2);
                 foreach ($weight as $u){
@@ -192,7 +188,6 @@ class Tea extends Model
                 }
             }
         }
-
         //管理奖end
     }
 
@@ -206,10 +201,7 @@ class Tea extends Model
         }elseif($group->level==2){
             $this->upLeaderLevel($group->leader,3);//升级组长到level3
         }
-
-        //原来设为不可用
-        (new Tea())->where("group_id={$group->id}")->update(array('status'=>2));
-
+        (new Tea())->where("group_id={$group->id}")->update(array('status'=>2));//原来设为不可用
         $tGroup=new TeaGroup();
         $group1=$tGroup->create($group->level);
         $group2=$tGroup->create($group->level);
@@ -268,7 +260,7 @@ class Tea extends Model
                 (new TeaMoney())->addLog($money_arr);
             }
         }
-        $group=$this->getLevelGroup($leader_uid,$toLevel);
+        $group=$this->getLevelGroup($leaderUser,$toLevel);
         $invite_id=(int)$group->tea_invite_id;
         $invite_path=$group->tea_invite_path;
         unset($group->tea_invite_id);//去除自定义的属性
@@ -290,17 +282,16 @@ class Tea extends Model
 
     /**
      * 获取一个组
-     * @param $user_id
+     * @param $leaderUser
      * @return TeaGroup
      */
-    private function getLevelGroup($user_id,$level=2)
+    private function getLevelGroup($leaderUser,$level=2)
     {
-        $tGroup=new TeaGroup();
         //如果他的推荐人的组没满时进入。
-        $tea=new Tea();
-        $invite_path=$tea->where("user_id={$user_id} and level=1")->value('invite_path');
-        $uids=explode(',',trim($invite_path,','));
+        $uids=explode(',',trim($leaderUser->invite_path,','));
         $uids=array_reverse($uids);
+        $tea=new Tea();
+        $tGroup=new TeaGroup();
         foreach($uids as $user_id){
             if($level==2){
                 $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$user_id},%'")->first();
@@ -339,18 +330,5 @@ class Tea extends Model
             $tGroup->tea_invite_id=0;
             return$tGroup;
         }
-
-
-//        if($invite_uid==0){
-//            //第一盘所在的组(多个)的组长
-//            $leader_ids=$tGroup->where("level=1 and child_ids like '%,{$user_id},%'")->orderBy('id')->lists('leader');
-//            foreach ($leader_ids as $user_id){
-//                $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$user_id},%'")->first();
-//                if($tGroup->is_exist){
-//                    $invite_uid=$user_id;
-//                    break;
-//                }
-//            }
-//        }
     }
 }
