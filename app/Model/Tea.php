@@ -152,7 +152,7 @@ class Tea extends Model
         $i=0;
         $weight=array();//加权
         $teaMoney=new TeaMoney();
-        $teas=(new Tea())->where("level=3 and status=1 and invite_count>1")->get();
+        $teas=(new Tea())->where("level=3 and status=1 and invite_count>1")->orderBy('id desc')->get();
         foreach($teas as $tea){
             $user_id=$tea->user_id;
             if(in_array($user_id,$uids)){
