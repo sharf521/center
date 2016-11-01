@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/plugin/layui/css/layui.css" />
     <script src="/plugin/layui/layui.js"></script>
     <link href="/themes/admin/css/admin.css" rel="stylesheet">
-    <script language="javascript" src="/themes/admin/js/base.js"></script>
+    <script src="/themes/admin/js/base.js"></script>
     <title>管理中心</title>
 </head>
 <body>

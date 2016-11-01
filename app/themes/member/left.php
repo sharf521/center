@@ -1,3 +1,4 @@
+<? if($_GET['from']!='hide') : ?>
 <div class="warpleft">
     <h3>我的信息</h3>
     <ul>
@@ -21,3 +22,4 @@
         <li class="active"><a href="<?=url('password/getPayPwd')?>" <? if($this->func=='getPayPwd'){echo 'class="whover"';}?>>找回支付密码</a></li>
     </ul>
 </div>
+<? endif;?>

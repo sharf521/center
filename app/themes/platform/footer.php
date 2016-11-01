@@ -1,28 +1,20 @@
-<?php
-if(session('msg'))
-{
-    ?>
-    <script>
-        layer.msg('<?=addslashes(session('msg'))?>', {
+<script>
+    window.onload=function(){
+        <?php if (session('msg')){?>
+        layer.msg('<?= addslashes(session('msg')) ?>', {
             offset: '200px',
             icon: 1,
             time: 1000
         });
-    </script>
-    <?
-}
-if(session('error'))
-{
-    ?>
-    <script>
-        layer.msg('<?=addslashes(session('error'))?>', {
+        <? }
+        if (session('error')){?>
+        layer.msg('<?= addslashes(session('error')) ?>', {
             offset: '200px',
             icon: 2,
-            time: 10000
+            time: 2000
         });
-    </script>
-    <?
-}
-?>
+        <?php } ?>
+    }
+</script>
 </body>
 </html>

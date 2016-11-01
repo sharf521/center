@@ -177,7 +177,7 @@ input   {
     BACKGROUND: url(images/di.jpg) ;
 }
 .YFTLeftmain_gj {
-    Z-INDEX: 2; BACKGROUND: url(images/leftMenu.jpg); BORDER-TOP: #b6c0c9 1px solid
+    Z-INDEX: 2; BACKGROUND: url(images/leftMenu.jpg);
 }
 .YFTLeftmain_gn {
     Z-INDEX: 2; BACKGROUND: url(images/leftMenu.jpg); BORDER-TOP: #b6c0c9 1px solid
@@ -186,7 +186,7 @@ input   {
     Z-INDEX: 2; BACKGROUND: url(images/leftMenu.jpg); BORDER-TOP: #b6c0c9 1px solid
 }
 .YFTLeftmainbg {
-    Z-INDEX: 1; BACKGROUND-COLOR: #fdfdfd; font-size:14px; height: 300px;
+    Z-INDEX: 1; BACKGROUND-COLOR: #fdfdfd; font-size:14px; border: 1px solid #b6c0c9; padding-bottom: 10px;
 }
 .YFTLeftmain_r1_c1_gj {
     BACKGROUND: #f7f7f7

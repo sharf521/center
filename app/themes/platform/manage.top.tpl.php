@@ -30,7 +30,7 @@
                     <tr>
                         <td height="30" width="100%">
                             <div style="float: right">
-                                <a target="_parent" href="index.php">  <div style="width: 64px; height: 26px; cursor: pointer; margin-right: 20px" id="ctl00_Header1_Div_maintop_outlogo"
+                                <a target="_parent" href="/index.php/member/logout">  <div style="width: 64px; height: 26px; cursor: pointer; margin-right: 20px" id="ctl00_Header1_Div_maintop_outlogo"
                                                                             class="YFTmaintop_outlogo_gj" >
                                     </div>
                             </div>
