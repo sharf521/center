@@ -24,6 +24,7 @@ $routes=array(
     'api'=>'Api',
     'auth'=>'Auth',
     'member'=>'Member',
+    'platform'=>'Platform',
 );
 \System\Lib\Application::start($routes);
 $t2 = microtime(true);
