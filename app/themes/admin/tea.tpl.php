@@ -208,7 +208,7 @@ elseif($this->func=='add'||$this->func=='edit')
             <td><?=(float)$account->money?></td>
             <td><?=(float)$account->money_freeze?></td>
             <td><?=$row->invite_id?></td>
-            <td><?=$row->invite_path?></td>
+            <td class="l"><?=$row->invite_path?></td>
             <td><?=$row->invite_count?></td>
             <td><?=$row->created_at?></td>
         </tr>
