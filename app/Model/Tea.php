@@ -141,54 +141,57 @@ class Tea extends Model
         if($group->child_count==15){
             $this->splitGroup($group);
         }
-        //管理奖 按原始推荐人给
-        if ($p_userid != 0){
-            $uids=explode(',',trim($user->invite_path,','));
-            $uids=array_reverse($uids);
-            $i=0;
-            $weight=array();//加权
-            $teaMoney=new TeaMoney();
-            foreach($uids as $user_id){
-                $tea=$tea->where("level=3 and status=1 and invite_count>1 and user_id={$user_id}")->first();
-                if($tea->is_exist){
-                    $i++;
-                    if($i<6){
-                        if($i==1 || $i==5){
-                            $money=math(5000,0.02);
-                        }elseif($i==2){
-                            $money=math(5000,0.03);
-                        }elseif($i==3){
-                            $money=math(5000,0.04);
-                        }elseif($i==4){
-                            $money=math(5000,0.05);
-                        }
-                        $money_arr=array(
-                            'user_id'=>$user_id,
-                            'money'=>$money,
-                            'type'=>'manage',
-                            'remark'=>"管理奖"
-                        );
-                        $teaMoney->addLog($money_arr);
-                    }else{
-                        array_push($weight,$user_id);
+        if ($user->invite_path!=''){
+            $this->managerMoney($user);    //管理奖
+        }
+    }
+
+    private function managerMoney($user)
+    {
+        $uids=explode(',',trim($user->invite_path,','));
+        $uids=array_reverse($uids);
+        $i=0;
+        $weight=array();//加权
+        $teaMoney=new TeaMoney();
+        $tea=new Tea();
+        foreach($uids as $user_id){
+            $tea=$tea->where("level=3 and status=1 and invite_count>1 and user_id={$user_id}")->first();
+            if($tea->is_exist){
+                $i++;
+                if($i<6){
+                    if($i==1 || $i==5){
+                        $money=math(5000,0.02);
+                    }elseif($i==2){
+                        $money=math(5000,0.03);
+                    }elseif($i==3){
+                        $money=math(5000,0.04);
+                    }elseif($i==4){
+                        $money=math(5000,0.05);
                     }
-                }
-            }
-            if(count($weight)>1){
-                $_money=math(floatval($data['money']),count($weight),2);
-                foreach ($weight as $u){
                     $money_arr=array(
-                        'user_id'=>$u,
-                        'money'=>$_money,
-                        'type'=>'weight',
-                        'remark'=>"加权奖",
-                        'label'=>''
+                        'user_id'=>$user_id,
+                        'money'=>$money,
+                        'type'=>'manage',
+                        'remark'=>"管理奖"
                     );
                     $teaMoney->addLog($money_arr);
+                }else{
+                    array_push($weight,$user_id);
                 }
             }
         }
-        //管理奖end
+        if(count($weight)>1){
+            $_money=math($user->money,count($weight),2);
+            foreach ($weight as $u){
+                $money_arr=array(
+                    'user_id'=>$u,
+                    'money'=>$_money,
+                    'type'=>'weight',
+                    'remark'=>"加权奖"
+                );
+                $teaMoney->addLog($money_arr);
+            }
+        }
     }
 
     //分组
