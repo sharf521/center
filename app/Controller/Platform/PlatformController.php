@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Platform;
 
+use App\Model\TeaUser;
 use System\Lib\Controller as BaseController;
 
 class PlatformController extends BaseController
@@ -18,6 +19,11 @@ class PlatformController extends BaseController
                 $this->redirect("login?url={$url}");
                 exit;
             }
+        }
+        $this->teaUser=(new TeaUser())->find($this->user_id);
+        if(!$this->teaUser->is_exist){
+            echo '<h2>无效用户！！</h2>';
+            exit;
         }
     }
 

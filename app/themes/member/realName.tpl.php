@@ -7,7 +7,10 @@ $sex_array=array('','男','女');
         <?php require 'left.php'; ?>
         <div class="warpright">
             <div class="box">
-                <h3>实名认证</h3>
+                <br>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>实名认证</legend>
+                </fieldset>
                 <? 
                 if ($userInfo->card_status == 1) { 
                     echo '<div class="alert-warning" role="alert">您己经上传资料，请等待审核！</div>';
@@ -138,6 +141,4 @@ $sex_array=array('','男','女');
             </div>
         </div>
     </div>
-
-
 <?php require 'footer.php'; ?>

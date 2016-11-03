@@ -1,0 +1,99 @@
+v, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+ caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+body {
+    font-family: verdana, Arial;
+    font-size: 12px;
+    line-height: 1;
+    background: #fff;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    color: #6c6c6c;
+}
+
+a:hover {
+    color: #f40;
+}
+
+.clear{ clear:both}
+.clearFix:after{
+    clear:both;
+    display:block;
+    visibility:hidden;
+    height:0;
+    line-height:0;
+    content:'';
+}
+
+fieldset, img {border: 0;vertical-align: middle;}
+select, input, button, textarea {font: 100% "Microsoft YaHei";padding: 0;}
+:focus {outline: 0 none;}
+input,select {vertical-align: middle;  height:30px; background:#fdfdfd; border:1px solid #e4e4e4;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px; padding:0px 3px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box; }
+textarea {vertical-align: middle; line-height:30px; background:#fdfdfd; border:1px solid #e4e4e4;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px; padding:0 6px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box; }
+
+input:focus{ border:1px solid #2baab1;}
+input[type=button],input[type=submit]{ background:#2baab1; color:#fff;border: 1px solid #26969c; cursor:pointer;padding:5px 10px; font-size: 12px;   }
+input[type=button]:hover,input[type=submit]:hover{ background:#32c5cd;}
+input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
+
+.but1{color:#FFF; background-color:#d9534f;border:1px solid #df4c43;padding:5px 10px; margin:0 1px;  font-size: 12px; line-height: 1.5; border-radius:3px;}
+.but1:hover{background-color:#c9302c; }
+
+.table{ width:100%; border-collapse: collapse; border:1px solid #dddddd;border-bottom:2px solid #dddddd;}
+.table .fl{ text-align: left; padding-left: 5px;}
+.table .fr{ text-align: right; padding-right: 5px;}
+.table th{line-height:36px;border-bottom:2px solid #dddddd; background:#f9f9f9;}
+.table td{padding:6px 0; line-height:36px; font-size:14px; text-align:center; border-bottom: 1px solid #f1f1f1;}
+.table tr:hover{ background:#f9f9f9}
+
+.table_from{width:100%; border-collapse: collapse; }
+.table_from td{padding:6px 0; text-align: left; line-height:36px; font-size:14px; border-bottom: 1px solid #f1f1f1;}
+.table_from>tbody>tr>td:first-child{text-align: right; padding-right: 10px; width: 200px;}
+.table_from tr:hover{ background:#f9f9f9}
+
+.package_box{border: 1px solid #ccc;float: left; width: 300px;}
+.package_box h3{line-height: 30px; background-color: #efefef; font-size: 14px; font-weight: 200; padding-left: 30px; }
+
+.package_box .package-name{ line-height: 30px; margin-left: 30px; cursor: pointer}
+
+.package-li{position: relative}
+.package-content{display: none; position: absolute;    top:20px; left: 100px; background-color: #fff}
+.table-package{border-collapse: collapse; float: left;}
+.table-package td{ border: 1px solid #ccc;}
+.table-package>tbody>tr>td:first-child{text-align: right; padding-right: 2px; width: 50px; line-height: 22px;}
+
+.table_order{float: left; width: 900px; margin-left: 10px;}
+.table_order h3{line-height: 30px; font-size: 14px; font-weight:200; background-color: #efefef;border-top:1px solid #ccc; margin-bottom: 20px; padding-left: 10px; }
+
+.table_order_total{line-height: 25px;text-align: right; padding-right: 5px; margin-top: 10px; border-top:1px solid #ccc; }
+.table_order_total span{color: red; padding: 0 2px;}
+.hand{cursor: pointer}

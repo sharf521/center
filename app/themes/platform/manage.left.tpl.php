@@ -17,8 +17,20 @@
     <ul>
         <li><a href="index.php?module=showping" target="middle">注册购物</a></li>
         <li><a href="<?=url('notice')?>" target="middle">最新通知</a></li>
+        <li><a href="<?=url('package')?>" target="middle">自购平台</a></li>
+        <li><a target="middle" href="/member/user/userInfo/?from=hide">个人信息</a></li>
+        <li><a target="middle" href="/member/user/bank/?from=hide">银行帐号</a></li>
+        <li><a target="middle" href="/member/user/realName/?from=hide">实名认证</a></li>
+    </ul>
+</div>
 
+<div class="leftbox">
+    <div class="leftbox_title">会员办公室</div>
+    <ul>
+        <li><a target="middle" href="/member/account/recharge/?from=hide">我要充值</a></li>
+        <li><a target="middle" href="/member/account/cash/?from=hide">我要提现</a></li>
         <li><a target="middle" href="/member/password/changePwd/?from=hide">修改密码</a></li>
+        <li><a target="middle" href="/member/password/changePayPwd/?from=hide">修改支付密码</a></li>
     </ul>
 </div>
 </body>

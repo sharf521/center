@@ -7,8 +7,8 @@
     <script language="javascript" src="/plugin/js/jquery.js"></script>
     <link rel="stylesheet" href="/plugin/layui/css/layui.css" />
     <script src="/plugin/layui/layui.js"></script>
-    <link href="/themes/platform/css.css" rel="stylesheet">
+    <link href="/themes/platform/base.css" rel="stylesheet">
     <script language="javascript" src="/themes/platform/base.js"></script>
     <title>管理中心</title>
 </head>
-<body>
+<body style="padding: 10px;">

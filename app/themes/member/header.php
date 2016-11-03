@@ -29,4 +29,13 @@
         </div>
     </div>
 </div>
-<? endif;?>
+<? else:
+?>
+    <style type="text/css">
+        .warpcon {
+            width: 1140px;
+            margin:0px;
+        }
+    </style>
+<?
+endif;?>

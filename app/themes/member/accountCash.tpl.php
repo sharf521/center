@@ -5,11 +5,11 @@
         <?php if($this->func=='cash') : ?>
             <div class="box">
                 <ul class="nav-tabs">
-                    <li class="active"><a href="<?=url('account/cash')?>">我要提现</a></li>
-                    <li><a href="<?=url('account/cashLog')?>">提现记录</a></li>
+                    <li class="active"><a href="<?=url('account/cash/?from='.$_GET['from'])?>">我要提现</a></li>
+                    <li><a href="<?=url('account/cashLog/?from='.$_GET['from'])?>">提现记录</a></li>
                 </ul>
                 <? if($bank->card_no ==""){?>
-                    <div class="alert-warning" role="alert">您还没有填写银行账户，请先填写<?=$this->anchor('user/bank','>>银行账户>>');?></div>
+                    <div class="alert-warning" role="alert">您还没有填写银行账户，请先填写<?=$this->anchor('user/bank/?from='.$_GET['from'],'>>银行账户>>');?></div>
                 <? }else{?>
                     <form method="post" onSubmit="return setdisabled();">
                         <table class="table_from">
@@ -35,8 +35,8 @@
         <?php elseif ($this->func=='cashLog'): ?>
             <div class="box">
                 <ul class="nav-tabs">
-                    <li><a href="<?=url('account/cash')?>">我要提现</a></li>
-                    <li class="active"><a href="<?=url('account/cashLog')?>">提现记录</a></li>
+                    <li><a href="<?=url('account/cash/?from='.$_GET['from'])?>">我要提现</a></li>
+                    <li class="active"><a href="<?=url('account/cashLog/?from='.$_GET['from'])?>">提现记录</a></li>
                 </ul>
                 <div class="search">
                     <form  method="get">

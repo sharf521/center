@@ -119,6 +119,7 @@ elseif($this->func=='add'||$this->func=='edit')
         'leader'=>'组长奖',
         'dianjiang'=>'组长点奖',
         'count15'=>'满员奖励',
+        'taxFee'=>'扣税',
         'manage'=>'管理奖',
         'weight'=>'管理加权奖',
     );

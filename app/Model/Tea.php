@@ -86,6 +86,7 @@ class Tea extends Model
         $user->money=(float)($data['money']);
         $user->status=1;
         $user->level=1;
+        $user->again=0;
 
         $invite_id=0;
         $invite_path='';
@@ -101,6 +102,16 @@ class Tea extends Model
                     $group= $this->getLevel1Group($p_tea->group_id);
                 }else{
                     $group= $this->getLevel1Group();
+                    //第三盘再推荐一个人进入轮回
+                    if($p_tea->level==3){
+                        $p_tea->status=2;
+                        $p_tea->save();
+                        $p_tea_user=(new TeaUser())->find($p_tea->user_id);
+                        $p_tea_user->invite_count=0;
+                        $p_tea_user->again=$p_tea_user->again+1;
+                        $p_tea_user->save();
+                        $this->upLeaderLevel($p_tea->user_id,2);//  进入轮回到营经组
+                    }
                 }
             } else {
                 throw new \Exception('p_userid错误！');
@@ -158,14 +169,10 @@ class Tea extends Model
             if(in_array($user_id,$uids)){
                 $i++;
                 if($i<6){
-                    if($i==1 || $i==5){
+                    if($i==1){
                         $money=math($user->money,0.02,'*',2);
-                    }elseif($i==2){
-                        $money=math($user->money,0.03,'*',2);
-                    }elseif($i==3){
-                        $money=math($user->money,0.04,'*',2);
-                    }elseif($i==4){
-                        $money=math($user->money,0.05,'*',2);
+                    }else{
+                        $money=math($user->money,0.01,'*',2);
                     }
                     $money_arr=array(
                         'user_id'=>$user_id,
@@ -188,7 +195,7 @@ class Tea extends Model
             }
         }*/
         if(count($weight)>0){
-            $money=math($user->money,0.02,'*',2);
+            $money=math($user->money,0.01,'*',2);
             $_money=math($money,count($weight),'/',2);
             foreach ($weight as $u){
                 $money_arr=array(
@@ -269,6 +276,14 @@ class Tea extends Model
                     'label'=>''
                 );
                 (new TeaMoney())->addLog($money_arr);
+                $money_arr=array(
+                    'user_id'=>$leader_uid,
+                    'money'=>-5000,
+                    'type'=>'taxFee',
+                    'remark'=>"扣税",
+                    'label'=>''
+                );
+                (new TeaMoney())->addLog($money_arr);
             }
         }
         $group=$this->getLevelGroup($leaderUser,$toLevel);
@@ -307,11 +322,16 @@ class Tea extends Model
             if($level==2){
                 $tGroup=$tGroup->where("level=2 and status=1 and child_count<15 and child_ids like '%,{$user_id},%'")->first();
             }elseif($level==3){
-                $tGroup=$tGroup->where("level=3 and status=1 and child_ids like '%,{$user_id},%'")->first();
+                //轮回status=2 资格保留
+                $tGroup=$tGroup->where("level=3 and child_ids like '%,{$user_id},%'")->first();
             }
             if($tGroup->is_exist){
                 //把推荐的点id带出去,推荐点的推荐总数加1
-                $tea=$tea->where("level={$level} and status=1 and user_id={$user_id}")->first();
+                if($level==2){
+                    $tea=$tea->where("level={$level} and status=1 and user_id={$user_id}")->first();
+                }elseif($level==3){
+                    $tea=$tea->where("level={$level} and user_id={$user_id}")->first();
+                }
                 $tea->invite_count=$tea->invite_count+1;
                 $tea->save();
                 $tGroup->tea_invite_id=$tea->user_id;

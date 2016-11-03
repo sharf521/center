@@ -5,8 +5,8 @@
         <?php if($this->func=='recharge') : ?>
             <div class="box">
                 <ul class="nav-tabs">
-                    <li class="active"><a href="<?=url('account/recharge')?>">我要充值</a></li>
-                    <li><a href="<?=url('account/rechargeLog')?>">充值记录</a></li>
+                    <li class="active"><a href="<?=url('account/recharge/?from='.$_GET['from'])?>">我要充值</a></li>
+                    <li><a href="<?=url('account/rechargeLog/?from='.$_GET['from'])?>">充值记录</a></li>
                 </ul>
                 <form id="formpay" method="post" onSubmit="return card();" action="/pay/recharge" target="_blank">
                     <table class="table_from">
@@ -105,8 +105,8 @@
         <?php elseif ($this->func=='rechargeLog'): ?>
             <div class="box">
                 <ul class="nav-tabs">
-                    <li><a href="<?=url('account/recharge')?>">我要充值</a></li>
-                    <li class="active"><a href="<?=url('account/rechargeLog')?>">充值记录</a></li>
+                    <li ><a href="<?=url('account/recharge/?from='.$_GET['from'])?>">我要充值</a></li>
+                    <li class="active"><a href="<?=url('account/rechargeLog/?from='.$_GET['from'])?>">充值记录</a></li>
                 </ul>
                 <div class="search">
                     <form  method="get">

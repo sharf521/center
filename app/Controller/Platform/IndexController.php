@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Platform;
 
+use App\Model\TeaUser;
 use App\Model\User;
 
 class IndexController extends PlatformController

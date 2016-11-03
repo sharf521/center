@@ -19,8 +19,6 @@ class PlatformController extends AdminController
             $id = $_POST['id'];
             $showorder = $_POST['showorder'];
             foreach ($id as $key => $val) {
-                //$sql = "update {$this->dbfix}platform_type set `name`='" . $name[$key] . "',`code`='" . $code[$key] . "',`showorder`='" . intval($showorder[$key]) . "' where id=$val limit 1";
-                //DB::query($sql);
                 $arr=array(
                     'showorder'=>intval($showorder[$key])
                 );
