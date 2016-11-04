@@ -114,15 +114,6 @@ elseif($this->func=='add'||$this->func=='edit')
     </form>
     <?
 }elseif($this->func=='log'){
-    $arr_type=array(
-        'invite'=>'邀请奖励',
-        'leader'=>'组长奖',
-        'dianjiang'=>'组长点奖',
-        'count15'=>'满员奖励',
-        'taxFee'=>'扣税',
-        'manage'=>'管理奖',
-        'weight'=>'管理加权奖',
-    );
     ?>
     <div class="main_title">
         <span>收益流水</span>列表
@@ -131,17 +122,7 @@ elseif($this->func=='add'||$this->func=='edit')
         <div class="search">
             金额：<input type="text" size="10" name="money" value="<?=$_GET['money']?>">&nbsp;&nbsp;
             用户ID：<input type="text" size="10" name="user_id" value="<?=$_GET['user_id']?>">&nbsp;&nbsp;
-            类型：
-            <select name="type">
-                <option value=""<? if($_GET['type']==""){?> selected="selected"<? }?>>请选择</option>
-                <?
-                foreach($arr_type as $i=>$v){
-                    ?>
-                    <option value="<?=$i?>" <? if($_GET['type']==$i){?> selected="selected"<? }?>><?=$v?></option>
-                    <?
-                }
-                ?>
-            </select>&nbsp;&nbsp;
+            类型：<?=$account_type?>&nbsp;&nbsp;
             <input type="submit" class="but2" value="查询" />
         </div>
     </form>
@@ -166,7 +147,7 @@ elseif($this->func=='add'||$this->func=='edit')
                 <td><?=$row->user_id?></td>
                 <td><?=(float)$row->money?></td>
                 <td><?=(float)$row->money_freeze?></td>
-                <td><?=$arr_type[$row->type]?></td>
+                <td><?=$row->getLinkPageName('tea_money_type',$row->type);?></td>
                 <td><?=$row->created_at?></td>
                 <td><?=(float)$row->money_now?></td>
                 <td><?=(float)$row->money_freeze_now?></td>
@@ -197,6 +178,7 @@ elseif($this->func=='add'||$this->func=='edit')
         <th>推荐人</th>
         <th>推荐PATH</th>
         <th>推荐个数</th>
+        <th>轮回次数</th>
         <th>添加时间</th>
     </tr>
     <?
@@ -209,8 +191,9 @@ elseif($this->func=='add'||$this->func=='edit')
             <td><?=(float)$account->money?></td>
             <td><?=(float)$account->money_freeze?></td>
             <td><?=$row->invite_id?></td>
-            <td class="l"><?=$row->invite_path?></td>
+            <td class="l" style="max-width: 400px; overflow: hidden"><?=$row->invite_path?></td>
             <td><?=$row->invite_count?></td>
+            <td><?=$row->again?></td>
             <td><?=$row->created_at?></td>
         </tr>
     <? }?>

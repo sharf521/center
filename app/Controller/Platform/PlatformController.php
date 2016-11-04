@@ -2,6 +2,7 @@
 namespace App\Controller\Platform;
 
 use App\Model\TeaUser;
+use App\Model\User;
 use System\Lib\Controller as BaseController;
 
 class PlatformController extends BaseController
@@ -25,6 +26,7 @@ class PlatformController extends BaseController
             echo '<h2>无效用户！！</h2>';
             exit;
         }
+        $this->user=(new User())->findOrFail($this->user_id);
     }
 
     public function error()

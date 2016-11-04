@@ -4,14 +4,14 @@
         layer.msg('<?= addslashes(session('msg')) ?>', {
             offset: '200px',
             icon: 1,
-            time: 1000
+            time: 2000
         });
         <? }
         if (session('error')){?>
         layer.msg('<?= addslashes(session('error')) ?>', {
             offset: '200px',
             icon: 2,
-            time: 2000
+            time: 5000
         });
         <?php } ?>
     }

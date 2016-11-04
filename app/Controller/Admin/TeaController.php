@@ -9,6 +9,7 @@
 namespace App\Controller\Admin;
 
 
+use App\Model\LinkPage;
 use App\Model\Tea;
 use App\Model\TeaGroup;
 use App\Model\TeaLog;
@@ -128,7 +129,7 @@ class TeaController extends AdminController
         }
     }
 
-    public function log(TeaLog $teaLog)
+    public function log(TeaLog $teaLog,LinkPage $linkPage)
     {
         $arr=array(
             'type'		=>$_GET['type'],
@@ -148,6 +149,7 @@ class TeaController extends AdminController
         }
 
         $data['result']=$teaLog->where($where)->orderBy('id desc')->pager($_GET['page'],10);
+        $data['account_type']=$linkPage->echoLink('tea_money_type',$_GET['type'],array('name'=>'type'));
         $this->view('tea',$data);
     }
 
