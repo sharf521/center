@@ -224,6 +224,7 @@
                 }
                 $.get('/index.php/register/checkInviteUser/?invite_user='+fields.username2,function(result){
                     if(result=='true'){
+                        alert(111);
                         return true;
                     }else{
                         layer.msg('该用户名不存在', { icon: 2,   time: 5000      });
