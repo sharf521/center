@@ -40,19 +40,23 @@ class PackageController extends PlatformController
                     throw new \Exception('支付密码错误！');
                 }
 
-                $data = array(
-                    'no_login'=>true,
-                    'username' => $request->post('username'),
-                    'email'=>$request->post('email'),
-                    'password' => $request->post('password'),
-                    'sure_password'=>$request->post('sure_password'),
-                    'invite_user'=>$this->username
-                );
-                $result = (new User())->register($data);
-                if ($result !== true) {
-                    throw new \Exception($result);
+                if($request->post('regType')==1){
+                    $data = array(
+                        'no_login'=>true,
+                        'username' => $request->post('username'),
+                        'email'=>$request->post('email'),
+                        'password' => $request->post('password'),
+                        'sure_password'=>$request->post('sure_password'),
+                        'invite_user'=>$this->username
+                    );
+                    $result = (new User())->register($data);
+                    if ($result !== true) {
+                        throw new \Exception($result);
+                    }
+                    $user=(new User())->where("username=?")->bindValues($request->post('username'))->first();
+                }else{
+                    $user=(new User())->where("username=?")->bindValues($request->post('username2'))->first();
                 }
-                $user=(new User())->where("username=?")->bindValues($request->post('username'))->first();
 
                 $_POST['user_id']=$this->user_id;
                 $_POST['username']=$this->username;
