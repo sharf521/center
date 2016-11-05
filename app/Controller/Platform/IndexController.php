@@ -56,7 +56,7 @@ class IndexController extends PlatformController
     {
         $this->view('manage.left');
     }
-    public function manage()
+    public function middle()
     {
         $this->view('manage.middle');
     }
