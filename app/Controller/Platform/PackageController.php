@@ -63,7 +63,7 @@ class PackageController extends PlatformController
 
 
                 DB::commit();
-                redirect('account/log')->with('msg','己成功下单！');
+                redirect('package/order')->with('msg','操作己完成！');
             } catch (\Exception $e) {
                 DB::rollBack();
                 $error= "Failed: " . $e->getMessage();
@@ -96,7 +96,7 @@ class PackageController extends PlatformController
 
 
                 DB::commit();
-                redirect('account/log')->with('msg','己成功下单！');
+                redirect('package/order')->with('msg','己成功下单！');
             } catch (\Exception $e) {
                 DB::rollBack();
                 $error= "Failed: " . $e->getMessage();
