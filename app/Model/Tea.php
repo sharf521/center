@@ -362,4 +362,9 @@ class Tea extends Model
             return$tGroup;
         }
     }
+
+    public function User()
+    {
+        return $this->hasOne('\App\Model\User','id','user_id');
+    }
 }

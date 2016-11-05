@@ -37,7 +37,7 @@ if($this->func=='index')
             ?>
             <tr>
                 <td><?=$row->id?></td>
-                <td><?=$row->user_id?></td>
+                <td><?=$row->user_id?>/<?=$row->User()->username?></td>
                 <td><?=(float)$row->money?></td>
                 <td><?=$row->pid?></td>
                 <td class="l"><?=str_replace(',','->',rtrim($row->pids,','))?></td>
@@ -144,7 +144,7 @@ elseif($this->func=='add'||$this->func=='edit')
             ?>
             <tr>
                 <td><?=$row->id?></td>
-                <td><?=$row->user_id?></td>
+                <td><?=$row->user_id?>/<?=$row->User()->username?></td>
                 <td><?=(float)$row->money?></td>
                 <td><?=(float)$row->money_freeze?></td>
                 <td><?=$row->getLinkPageName('tea_money_type',$row->type);?></td>
@@ -187,7 +187,7 @@ elseif($this->func=='add'||$this->func=='edit')
         $account=$row->account();
         ?>
         <tr>
-            <td><?=$row->id?></td>
+            <td><?=$row->id?>/<?=$row->User()->username?></td>
             <td><?=(float)$account->money?></td>
             <td><?=(float)$account->money_freeze?></td>
             <td><?=$row->invite_id?></td>

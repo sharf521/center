@@ -21,4 +21,9 @@ class TeaUser extends Model
     {
         return $this->hasOne('\App\Model\TeaMoney','user_id','id');
     }
+
+    public function User()
+    {
+        return $this->hasOne('\App\Model\User','id','id');
+    }
 }
