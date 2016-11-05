@@ -21,12 +21,14 @@ class PlatformController extends BaseController
                 exit;
             }
         }
-        $this->teaUser=(new TeaUser())->find($this->user_id);
-        if(!$this->teaUser->is_exist){
-            echo '<h2>无效用户！！</h2>';
-            exit;
+        if(!in_array($this->control,array('login','logout'))){
+            $this->teaUser=(new TeaUser())->find($this->user_id);
+            if(!$this->teaUser->is_exist){
+                echo '<h2>无效用户！！</h2>';
+                exit;
+            }
+            $this->user=(new User())->findOrFail($this->user_id);
         }
-        $this->user=(new User())->findOrFail($this->user_id);
     }
 
     public function error()

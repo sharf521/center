@@ -59,7 +59,7 @@ class User extends Model
         }
     }
 
-    function register($data)
+    public function register($data)
     {
         $check = $this->checkUserName($data['username']);
         if ($check !== true) {
@@ -103,8 +103,10 @@ class User extends Model
         );
         $id = DB::table('user')->insertGetId($data);
         if (is_numeric($id) && $id > 0) {
-            session()->set('user_id', $id);
-            session()->set('username', $data["username"]);
+            if($data['no_login']===true){  //不需要登陆
+                session()->set('user_id', $id);
+                session()->set('username', $data["username"]);
+            }
             return true;
         } else {
             return $id;

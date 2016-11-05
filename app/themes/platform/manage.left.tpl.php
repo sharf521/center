@@ -15,9 +15,10 @@
 <div class="leftbox">
     <div class="leftbox_title">会员大厅</div>
     <ul>
-        <li><a href="index.php?module=showping" target="middle">注册购物</a></li>
-        <li><a href="<?=url('notice')?>" target="middle">最新通知</a></li>
+        <li><a href="<?=url('package/register')?>" target="middle">注册购物</a></li>
+<!--        <li><a href="--><?//=url('notice')?><!--" target="middle">最新通知</a></li>-->
         <li><a href="<?=url('package')?>" target="middle">自购平台</a></li>
+        <li><a href="<?=url('package/order')?>" target="middle">我的订单</a></li>
         <li><a href="<?=url('account/convertIn')?>" target="middle">兑换电子币</a></li>
         <li><a href="<?=url('account/convertOut')?>" target="middle">兑换现金</a></li>
         <li><a href="<?=url('account/payToUser')?>" target="middle">电子币转帐</a></li>

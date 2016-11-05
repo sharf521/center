@@ -9,7 +9,12 @@
 namespace App\Controller\Platform;
 
 
+use App\Model\TeaMoney;
+use App\Model\TeaOrder;
+use App\Model\TeaOrderGoods;
 use App\Model\TeaPackage;
+use App\Model\User;
+use System\Lib\DB;
 use System\Lib\Request;
 
 class PackageController extends PlatformController
@@ -20,27 +25,95 @@ class PackageController extends PlatformController
         parent::__construct();
     }
 
-    public function index(TeaPackage $package,Request $request)
+    public function register(TeaPackage $package,Request $request,TeaMoney $teaMoney)
     {
+        $user_id=$this->user_id;
+        $teaMoney =$teaMoney->find($user_id);
         if($_POST){
             $ids = $request->post('id');
             $num = $request->post('num');
-            $total=0;
-            foreach ($ids as $key => $id) {
-                $id=(int)$id;
-                $_num=(int)$num[$key];
-                if($id>0 && $_num>0){
-                    $package=$package->find($id);
-                    $money=math($package->money,$package->discount,'*',2);
-                    $money=math($money,$_num,'*',2);
-                    $total=math($total,$money,'+',2);
+            try {
+                DB::beginTransaction();
+
+                $checkPwd=$this->user->checkPayPwd($request->post('zf_password'),$this->user);
+                if($checkPwd!==true){
+                    throw new \Exception('支付密码错误！');
                 }
+
+                $data = array(
+                    'no_login'=>true,
+                    'username' => $request->post('username'),
+                    'email'=>$request->post('email'),
+                    'password' => $request->post('password'),
+                    'sure_password'=>$request->post('sure_password'),
+                    'invite_user'=>$this->username
+                );
+                $result = (new User())->register($data);
+                if ($result !== true) {
+                    throw new \Exception($result);
+                }
+                $user=(new User())->where("username=?")->bindValues($request->post('username'))->first();
+
+                $_POST['user_id']=$this->user_id;
+                $_POST['username']=$this->username;
+
+                $_POST['regTeaUser']=true;
+                $_POST['tea_userid']=$user->id;
+                (new TeaOrder())->add($ids,$num,$_POST);
+
+
+                DB::commit();
+                redirect('account/log')->with('msg','己成功下单！');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                $error= "Failed: " . $e->getMessage();
+                redirect('package/register')->with('error',$error);
             }
-            echo $total;
         }else{
             $data['packages']=$package->where('status=1')->orderBy('showorder')->get();
+            $data['teaMoney']=$teaMoney;
+            $this->view('package_reg',$data);
+        }
+    }
+
+    public function index(TeaPackage $package,Request $request,TeaMoney $teaMoney)
+    {
+        $user_id=$this->user_id;
+        $teaMoney =$teaMoney->find($user_id);
+        if($_POST){
+            $ids = $request->post('id');
+            $num = $request->post('num');
+            try {
+                DB::beginTransaction();
+
+                $checkPwd=$this->user->checkPayPwd($request->post('zf_password'),$this->user);
+                if($checkPwd!==true){
+                    throw new \Exception('支付密码错误！');
+                }
+                $_POST['user_id']=$user_id;
+                $_POST['username']=$this->username;
+                (new TeaOrder())->add($ids,$num,$_POST);
+
+
+                DB::commit();
+                redirect('account/log')->with('msg','己成功下单！');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                $error= "Failed: " . $e->getMessage();
+                redirect('package')->with('error',$error);
+            }
+        }else{
+            $data['packages']=$package->where('status=1')->orderBy('showorder')->get();
+            $data['teaMoney']=$teaMoney;
             $this->view('package',$data);
         }
+    }
+
+    public function order(TeaOrder $teaOrder)
+    {
+        $where = " user_id={$this->user_id}";
+        $data['result']=$teaOrder->where($where)->orderBy('id desc')->pager($_GET['page'],10);
+        $this->view('order',$data);
     }
 
     public function get(Request $request,TeaPackage $package)

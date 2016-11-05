@@ -86,7 +86,7 @@ input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
 .package_box .package-name{ line-height: 30px; margin-left: 30px; cursor: pointer}
 
 .package-li{position: relative}
-.package-content{display: none; position: absolute;    top:20px; left: 100px; background-color: #fff}
+.package-content{display: none; position: absolute;  z-index: 999;   top:20px; left: 100px; background-color: #fff}
 .table-package{border-collapse: collapse; float: left;}
 .table-package td{ border: 1px solid #ccc;}
 .table-package>tbody>tr>td:first-child{text-align: right; padding-right: 2px; width: 50px; line-height: 22px;}

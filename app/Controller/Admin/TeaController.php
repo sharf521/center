@@ -13,6 +13,7 @@ use App\Model\LinkPage;
 use App\Model\Tea;
 use App\Model\TeaGroup;
 use App\Model\TeaLog;
+use App\Model\TeaOrder;
 use App\Model\TeaUser;
 use System\Lib\DB;
 use System\Lib\Request;
@@ -175,5 +176,40 @@ class TeaController extends AdminController
         }
         $data['result']=$teaUser->where($where)->orderBy('id desc')->pager($_GET['page'],10);
         $this->view('tea',$data);
+    }
+
+    public function order(TeaOrder $teaOrder)
+    {
+        $arr=array(
+            'type'		=>$_GET['type'],
+            'user_id'		=>(int)$_GET['user_id'],
+            'money'		=>(int)$_GET['money']
+        );
+
+        $where = " 1=1";
+        if (!empty($arr['user_id'])) {
+            $where .= " and user_id={$arr['user_id']}";
+        }
+        if (!empty($arr['money'])) {
+            $where .= " and money={$arr['money']}";
+        }
+
+        $data['result']=$teaOrder->where($where)->orderBy('id desc')->pager($_GET['page'],10);
+        $this->view('tea_order',$data);
+    }
+
+    public function order_shipping(TeaOrder $teaOrder,Request $request)
+    {
+        $teaOrder=$teaOrder->findOrFail($request->get('id'));
+        if($_POST){
+            $teaOrder->shipping_name=$request->post('shipping_name');
+            $teaOrder->shipping_no=$request->post('shipping_no');
+            $teaOrder->shipping_fee=(float)$request->post('shipping_fee');
+            $teaOrder->status=2;
+            $teaOrder->save();
+            redirect('tea/order')->with('msg','保存成功！');
+        }
+        $data['order']=$teaOrder;
+        $this->view('tea_order',$data);
     }
 }
