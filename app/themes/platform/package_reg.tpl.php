@@ -196,7 +196,7 @@
                     $('#password').focus();
                     return false;
                 }
-                t_user=false;
+                var t_user=false;
                 $.get('/index.php/register/checkUserName/?username='+fields.username,function(result){
                     if(result=='true'){
                         t_user=true;
@@ -205,7 +205,7 @@
                         $('#username').focus();
                     }
                 });
-                t_email=false;
+                var t_email=false;
                 $.get('/index.php/register/checkEmail/?email='+fields.email,function(result){
                     if(result=='true'){
                         t_email=true;
@@ -221,17 +221,21 @@
                 if(fields.username2==''){
                     layer.msg('会员ID号不能为空', { icon: 2,   time: 5000      });
                     $('#username2').focus();
+                    return false;
                 }
+                var t_user=false;
                 $.get('/index.php/register/checkInviteUser/?invite_user='+fields.username2,function(result){
                     if(result=='true'){
-                        alert(111);
-                        return true;
+                        t_user=true;
                     }else{
                         layer.msg('该用户名不存在', { icon: 2,   time: 5000      });
                         $('#username2').focus();
                         return false;
                     }
                 });
+                if(t_user){
+                    return true;
+                }
             }
             return false;
         });
