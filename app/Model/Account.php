@@ -21,8 +21,8 @@ class Account extends Model
             $user_id=DB::table('app_user')->where("openid=?")->bindValues($data['openid'])->value('user_id','int');
         }
         if($user_id>0){
-            $fp = fopen(ROOT."/public/data/money.txt" ,'w+');
-            if(flock($fp , LOCK_EX))
+            //$fp = fopen(ROOT."/public/data/money.txt" ,'w+');
+            //if(flock($fp , LOCK_EX))
             {
                 $account=DB::table('account')->where("user_id={$user_id}")->row();
                 if(empty($account)){
@@ -105,9 +105,9 @@ class Account extends Model
                 }
                 $log['signature']=$this->sign($log);
                 $return= DB::table('account_log')->insert($log);
-                flock($fp,LOCK_UN);
+                //flock($fp,LOCK_UN);
             }
-            fclose($fp);
+            //fclose($fp);
             return $return;
         }else{
             return 'no param user_id';
