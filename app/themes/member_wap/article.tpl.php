@@ -5,10 +5,10 @@
     <h1>下载APP</h1>
 </div>
 
-    <br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
     <div style=" margin: 20px; text-align: center">
         <img src="/themes/images/app.png" width="80%">
-        <div style="font-size: 3rem;">安卓</div>
+        <div style="font-size: 3rem; margin-top: 5px;">安卓</div>
     </div>
     <?php require 'footer.php';?>
