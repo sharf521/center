@@ -19,4 +19,6 @@ class IndexController extends Controller
         //echo '首页';
         redirect('member/');
     }
+
+
 }

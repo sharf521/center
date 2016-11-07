@@ -83,4 +83,9 @@ class IndexController extends MemberController
         $str = strtoupper(md5($jsonStr.$appsecret));
         return $str;
     }
+
+    public function app()
+    {
+        $this->view('article');
+    }
 }
