@@ -46,7 +46,7 @@ class IndexController extends MemberController
             //商城
             if($isGoWap){
                 $params['url']='/wap/user';
-                $url=$this->site[$app->subsite_field.'_wap']."/wap/index";
+                $url=$this->site[$app->subsite_field]."/wap/index";
             }else{
                 $params['url']='/user';
                 $url=$this->site[$app->subsite_field]."/jump";

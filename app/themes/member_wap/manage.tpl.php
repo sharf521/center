@@ -57,11 +57,11 @@
         }
     </script>
     <ul>
-<!--        <li><a href="javascript:mAlert();"><!----><?//= url('goApp/5/wap') ?><!---->-->
-<!--                <b><img src="/themes/member_wap/images/icon_shop.png"/></b>-->
-<!--                <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>-->
-<!--                <p>商城</p>-->
-<!--            </a></li>-->
+        <li><a href="javascript:mAlert();"><!--<?= url('goApp/5/wap') ?>-->
+                <b><img src="/themes/member_wap/images/icon_shop.png"/></b>
+                <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
+                <p>汽车</p>
+            </a></li>
         <li><a href="<?= url('goApp/8/wap') ?>">
                 <b><img src="/themes/member_wap/images/icon_shop.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>

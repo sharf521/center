@@ -47,7 +47,7 @@ nav span{ display: inline-block; line-height: 4rem; font-size:3rem; margin: 1rem
 nav span img{ height: 4rem; transform: rotate(180deg)}
 nav p{ line-height: 6rem; font-size:3rem;}
 footer{ width: 100%; position: fixed; height: 8rem; left: 0; bottom: 0; border-top: .1rem solid #ddd; background: #fff; z-index: 1000; padding: 1rem 0}
-footer li{ width: 33.33%; text-align: center; float: left;}
+footer li{ width: 25%; text-align: center; float: left;}
 footer li i{ display: none;}
 footer li.cur i,footer li b{ display: inline-block; width: 4rem; height: 4rem;}
 footer li.cur b{ display: none}
