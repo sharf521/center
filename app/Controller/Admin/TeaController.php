@@ -13,6 +13,7 @@ use App\Model\LinkPage;
 use App\Model\Tea;
 use App\Model\TeaGroup;
 use App\Model\TeaLog;
+use App\Model\TeaMoney;
 use App\Model\TeaOrder;
 use App\Model\TeaUser;
 use System\Lib\DB;
@@ -163,9 +164,12 @@ class TeaController extends AdminController
         );
 
         $where = " 1=1";
+        $where2=' 1=1';
         if (!empty($arr['id'])) {
             $where .= " and id={$arr['id']}";
+            $where2.=" and user_id={$arr['id']}";
         }
+
         if (!empty($arr['money'])) {
             $where .= " and money={$arr['money']}";
         }
@@ -175,6 +179,7 @@ class TeaController extends AdminController
             $where.=" and invite_id={$invite_id}";
         }
         $data['result']=$teaUser->where($where)->orderBy('id desc')->pager($_GET['page'],10);
+        $data['moneySum']=(new TeaMoney())->where($where2)->value('sum(money)');
         $this->view('tea',$data);
     }
 

@@ -197,6 +197,7 @@ elseif($this->func=='add'||$this->func=='edit')
             <td><?=$row->created_at?></td>
         </tr>
     <? }?>
+    <tr><td></td><td colspan="7" class="l">总计：￥<?=$moneySum?></td></tr>
 </table>
 <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
 <?php

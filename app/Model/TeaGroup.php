@@ -46,47 +46,47 @@ class TeaGroup extends Model
 
         $teaMoney=new TeaMoney();
         $leaderUser=(new TeaUser())->find($this->leader);
-        if($this->child_count==0 && $leaderUser->invite_count>=2) {
-            if($this->level==1){
+        if($leaderUser->invite_count>=2){
+            if($this->child_count==0) {
+                if($this->level==1){
+                    $money_arr=array(
+                        'user_id'=>$this->leader,
+                        'money'=>800,
+                        'type'=>'leader',
+                        'remark'=>"组长奖",
+                        'label'=>''
+                    );
+                    $teaMoney->addLog($money_arr);
+                }
+                if($this->level==2){
+                    $money_arr=array(
+                        'user_id'=>$this->leader,
+                        'money'=>10000,
+                        'type'=>'leader',
+                        'remark'=>"组长奖",
+                        'label'=>''
+                    );
+                    $teaMoney->addLog($money_arr);
+                }
+            }
+            if($this->level==2 && $this->child_count>=7){
                 $money_arr=array(
                     'user_id'=>$this->leader,
-                    'money'=>800,
-                    'type'=>'leader',
-                    'remark'=>"组长奖",
+                    'money'=>5000,
+                    'type'=>'dianjiang',
+                    'remark'=>"组长点奖",
                     'label'=>''
                 );
                 $teaMoney->addLog($money_arr);
             }
-            if($this->level==2){
-                $money_arr=array(
-                    'user_id'=>$this->leader,
-                    'money'=>10000,
-                    'type'=>'leader',
-                    'remark'=>"组长奖",
-                    'label'=>''
-                );
-                $teaMoney->addLog($money_arr);
-            }
-        }
-
-        if($this->level==2 && $this->child_count>=7){
-            $money_arr=array(
-                'user_id'=>$this->leader,
-                'money'=>5000,
-                'type'=>'dianjiang',
-                'remark'=>"组长点奖",
-                'label'=>''
-            );
-            $teaMoney->addLog($money_arr);
-        }
-
-        //替换组长
-        if($leaderUser->invite_count<2){
+        }else{
+            //替换组长
             $tea_user=(new TeaUser())->find($tea->user_id);
             if($tea_user->invite_count>=2){
                 $this->leader=$tea->user_id;
             }
         }
+
         $this->child_count=$this->child_count+1;
         $this->child_ids=$this->child_ids.$tea->user_id.',';
         $this->save();
