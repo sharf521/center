@@ -91,6 +91,7 @@
 
 <script src="/plugin/js/PCASClass.js"></script>
 <script type="text/javascript">
+    var myMoney=<?=$teaMoney->money?>;
     var mypcas=new PCAS("province,请选择省份","city,请选择城市","area,请选择地区");
     layui.use(['form'], function () {
         var form = layui.form();
@@ -113,6 +114,10 @@
             var total=Number($('#span_total').html());
             if(total<=0){
                 layer.msg('请选择套餐', { icon: 2,   time: 5000      });
+                return false;
+            }
+            if(total>myMoney){
+                layer.msg('您的电子币不足', { icon: 2,   time: 5000      });
                 return false;
             }
         });

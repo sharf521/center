@@ -14,9 +14,6 @@ time, mark, audio, video {
     padding: 0;
     border: 0;
     outline: 0;
-    font-size: 100%;
-    vertical-align: baseline;
-    background: transparent;
 }
 
 body {
@@ -98,7 +95,19 @@ input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
 .table_order_total span{color: red; padding: 0 2px;}
 .hand{cursor: pointer}
 
-
+/*订单列表*/
+.orderbox{border: 1px solid #dddddd; margin-bottom: 25px;}
+.orderbox:hover{border: 1px solid #999;}
+.orderbox dt{ line-height: 40px; background-color: #efefef; padding-left: 8px;}
+.orderbox dt b{margin-right: 30px;}
+.orderbox dd td{padding: 10px;border-collapse: collapse; border: 1px solid #efefef; line-height: 22px;}
+.orderbox .goodsImg{ margin-right: 10px;width: 100px; float: left}
+.orderbox .goodsDetail{float: left;}
+.orderbox .goodsDetail .name{float: left; width: 300px;}
+.orderbox .goodsDetail .price{float: left; width: 100px; text-align: center}
+.orderbox .goodsDetail .discount{float: left; width: 100px; text-align: center}
+.orderbox .goodsDetail .quantity{float: left; width: 50px; text-align: center}
+.orderbox .shipping{padding-left: 10px; line-height: 40px;}
 
 
 .page{padding-top:10px}

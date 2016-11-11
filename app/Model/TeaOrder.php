@@ -28,7 +28,7 @@ class TeaOrder extends Model
         $this->city=$post['city'];
         $this->area=$post['area'];
         $this->address=$post['address'];
-        $this->zipcode=$post['zipcode'];
+        $this->zipcode=(float)$post['zipcode'];
         $total=0;
         foreach ($ids as $key => $id) {
             $id=(int)$id;
@@ -43,6 +43,7 @@ class TeaOrder extends Model
                 $orderGoods->goods_id=$id;
                 $orderGoods->quantity=$_num;
                 $orderGoods->goods_name=$package->name;
+                $orderGoods->goods_title=$package->title;
                 $orderGoods->price=$package->money;
                 $orderGoods->discount=$package->discount;
                 $orderGoods->goods_image=$package->picture;
