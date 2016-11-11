@@ -256,7 +256,8 @@ class Tea extends Model
     private function upLeaderLevel($leader_uid,$toLevel=2)
     {
         $leaderUser=(new TeaUser())->find($leader_uid);
-        if($leaderUser->invite_count>=2){
+        $leaderTea=(new Tea())->where("status=1 and user_id={$leader_uid}")->first();
+        if($leaderUser->invite_count >=2 && $leaderTea->invite_count>=2){
             if($toLevel==2){
                 $money_arr=array(
                     'user_id'=>$leader_uid,
@@ -286,7 +287,7 @@ class Tea extends Model
                 (new TeaMoney())->addLog($money_arr);
             }
         }
-        $group=$this->getLevelGroup($leaderUser,$toLevel);
+        $group=$this->getLevelGroup($leaderUser,$leaderTea,$toLevel);
         $invite_id=(int)$group->tea_invite_id;
         $invite_path=$group->tea_invite_path;
         unset($group->tea_invite_id);//去除自定义的属性
@@ -311,7 +312,7 @@ class Tea extends Model
      * @param $leaderUser
      * @return TeaGroup
      */
-    private function getLevelGroup($leaderUser,$level=2)
+    private function getLevelGroup($leaderUser,$leaderTea,$level=2)
     {
         //如果他的推荐人的组没满时进入。
         $uids=explode(',',trim($leaderUser->invite_path,','));
@@ -334,12 +335,22 @@ class Tea extends Model
                 }
                 $tea->invite_count=$tea->invite_count+1;
                 $tea->save();
+
+                //替换组长
+                if($level==2 && $leaderUser->invite_count<2 || $leaderTea->invite_count<2){
+                    if($tea->invite_count>=2 && $tea->TeaUser()->invite_count>=2){
+                        $tGroup->leader=$tea->user_id;
+                        $tGroup->save();
+                    }
+                }
+
                 $tGroup->tea_invite_id=$tea->user_id;
                 $tGroup->tea_invite_path=$tea->invite_path.$tea->user_id.',';
                 return $tGroup;
                 break;
             }
         }
+        //没有找到推荐人所在的组
         if($level==2){
             $tGroup=$tGroup->where("level=2 and status=1 and child_count<7")->first();
             if($tGroup->is_exist){
@@ -366,5 +377,10 @@ class Tea extends Model
     public function User()
     {
         return $this->hasOne('\App\Model\User','id','user_id');
+    }
+
+    public function TeaUser()
+    {
+        return $this->hasOne('\App\Model\TeaUser','id','user_id');
     }
 }

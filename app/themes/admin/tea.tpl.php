@@ -200,6 +200,31 @@ elseif($this->func=='add'||$this->func=='edit')
     <tr><td></td><td colspan="7" class="l">总计：￥<?=$moneySum?></td></tr>
 </table>
 <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
+
+
+    <table class="table">
+        <tr class="bt">
+            <th>id</th>
+            <th>用户数量</th>
+            <th>收</th>
+            <th>支</th>
+            <th>支/收</th>
+            <th>添加时间</th>
+        </tr>
+        <?
+        foreach($profit as $row)
+        {
+            ?>
+            <tr>
+                <td><?=$row->id?></td>
+                <td><?=$row->user_count?></td>
+                <td><?=$row->received?></td>
+                <td><?=$row->support?></td>
+                <td><?=$row->rate?></td>
+                <td><?=$row->created_at?></td>
+            </tr>
+        <? }?>
+    </table>
 <?php
 }
 require 'footer.php';

@@ -15,6 +15,7 @@ use App\Model\TeaGroup;
 use App\Model\TeaLog;
 use App\Model\TeaMoney;
 use App\Model\TeaOrder;
+use App\Model\TeaProfit;
 use App\Model\TeaUser;
 use System\Lib\DB;
 use System\Lib\Request;
@@ -118,6 +119,14 @@ class TeaController extends AdminController
                 );
                 $tea->add($post);
 
+
+                $profit=new TeaProfit();
+                $profit->user_count=(new TeaUser())->value('count(*)');
+                $profit->received=math(4980,$profit->user_count,'*',2);
+                $profit->support=(new TeaMoney())->value('sum(money)');
+                $profit->rate=math($profit->support,$profit->received,'/',5);
+                $profit->save();
+
                 DB::commit();
 
                 redirect('tea/')->with('msg', '添加成功！');
@@ -180,6 +189,9 @@ class TeaController extends AdminController
         }
         $data['result']=$teaUser->where($where)->orderBy('id desc')->pager($_GET['page'],10);
         $data['moneySum']=(new TeaMoney())->where($where2)->value('sum(money)');
+
+
+        $data['profit']=(new TeaProfit())->orderBy('id')->get();
         $this->view('tea',$data);
     }
 
