@@ -29,7 +29,7 @@ class UploadController extends Controller
         }
         $path = '/data/upload/' . date('Ym') . '/';
         if ($type == 'article') {
-            $path = 'upload/article/' . date('Ym');
+            $path = '/data/upload/article/' . date('Ym').'/';
         } elseif ($type == 'headimgurl') {
             $name = 'face';
             $path = '/data/upload/' . ceil($user_id / 2000) . '/' . $user_id . '/';
