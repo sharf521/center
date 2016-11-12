@@ -40,9 +40,13 @@
             </table>
         </dd>
         <dd class="shipping">
-            物流公司：<?=$row->shipping_name?>
-            物流单号：<?=$row->shipping_no?>
-            物流费用：<?=$row->shipping_fee?>
+            <? if($row->status==1) : ?>
+                未发货
+            <? else : ?>
+                物流公司：<?=$row->shipping_name?>
+                物流单号：<?=$row->shipping_no?>
+                物流费用：<?=$row->shipping_fee?>
+            <? endif;?>
         </dd>
     </dl>
 <? endforeach;?>
