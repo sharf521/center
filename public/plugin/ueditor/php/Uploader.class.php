@@ -310,7 +310,7 @@ class Uploader
             $format = preg_replace("/\{rand\:[\d]*\}/i", substr($randNum, 0, $matches[1]), $format);
         }*/
         global $user_id;
-		$format="/data/upload/".intval($user_id/2000)."/".$user_id."/".date('Ym').'/'.rand(1, 10000000000) . rand(1, 10000000000);
+		$format="/data/upload/".ceil($user_id/2000)."/".$user_id."/".date('Ym').'/'.rand(1, 10000000000) . rand(1, 10000000000);
         $ext = $this->getFileExt();
         return $format . $ext;
     }

@@ -21,7 +21,7 @@ switch ($_GET['action']) {
         $allowFiles = $CONFIG['imageManagerAllowFiles'];
         $listSize = $CONFIG['imageManagerListSize'];
         //$path = $CONFIG['imageManagerListPath'].$user_id."/";
-        $path=$format="/data/upload/".intval($user_id/2000)."/".$user_id."/".date('Ym').'/';
+        $path=$format="/data/upload/".ceil($user_id/2000)."/".$user_id."/".date('Ym').'/';
 }
 $allowFiles = substr(str_replace(".", "|", join("", $allowFiles)), 1);
 
