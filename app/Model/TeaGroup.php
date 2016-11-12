@@ -43,34 +43,53 @@ class TeaGroup extends Model
         }else{
             $tea->setParentTree();
         }
+        $this->child_count=$this->child_count+1;
+        $this->child_ids=$this->child_ids.$tea->user_id.',';
+        $this->save();
+        if($this->child_count==1) {
+            $this->leaderReward(); //组长奖励
+        }
+        $this->pointReward();//点奖励
+        return $this;
+    }
 
-        $teaMoney=new TeaMoney();
-        //$leaderUser=(new TeaUser())->find($this->leader);
-        $leaderTea=(new Tea())->where("status=1 and user_id={$this->leader}")->first();
-        if($leaderTea->invite_count>=2 && $leaderTea->TeaUser()->invite_count>=2){
-            if($this->child_count==0) {
-                if($this->level==1){
-                    $money_arr=array(
-                        'user_id'=>$this->leader,
-                        'money'=>800,
-                        'type'=>'leader',
-                        'remark'=>"组长奖",
-                        'label'=>''
-                    );
-                    $teaMoney->addLog($money_arr);
-                }
-                if($this->level==2){
-                    $money_arr=array(
-                        'user_id'=>$this->leader,
-                        'money'=>10000,
-                        'type'=>'leader',
-                        'remark'=>"组长奖",
-                        'label'=>''
-                    );
-                    $teaMoney->addLog($money_arr);
-                }
+    //组长奖励
+    public function leaderReward()
+    {
+        $leaderUser=(new TeaUser())->find($this->leader);
+        $leaderTea=$leaderUser->getMyNowTea();
+        if($leaderTea->invite_count>=2 && $leaderUser->invite_count>=2){
+            $teaMoney=new TeaMoney();
+            if($this->level==1){
+                $money_arr=array(
+                    'user_id'=>$this->leader,
+                    'money'=>800,
+                    'type'=>'leader',
+                    'remark'=>"组长奖",
+                    'label'=>''
+                );
+                $teaMoney->addLog($money_arr);
             }
-            if($this->level==2 && $this->child_count>=7){
+            if($this->level==2){
+                $money_arr=array(
+                    'user_id'=>$this->leader,
+                    'money'=>10000,
+                    'type'=>'leader',
+                    'remark'=>"组长奖",
+                    'label'=>''
+                );
+                $teaMoney->addLog($money_arr);
+            }
+        }
+    }
+
+    //组长点奖励
+    public function pointReward()
+    {
+        if($this->level==2 && $this->child_count>=8){
+            $leaderUser=(new TeaUser())->find($this->leader);
+            $leaderTea=$leaderUser->getMyNowTea();
+            if($leaderTea->invite_count>=2 && $leaderUser->invite_count>=2) {
                 $money_arr=array(
                     'user_id'=>$this->leader,
                     'money'=>5000,
@@ -78,15 +97,27 @@ class TeaGroup extends Model
                     'remark'=>"组长点奖",
                     'label'=>''
                 );
-                $teaMoney->addLog($money_arr);
+                (new TeaMoney())->addLog($money_arr);
             }
         }
-
-        $this->child_count=$this->child_count+1;
-        $this->child_ids=$this->child_ids.$tea->user_id.',';
-        $this->save();
-        return $this;
     }
+
+    //替换组长
+    public function checkChangeLeader(Tea $tea)
+    {
+        if($this->level==1 || $this->leavel==2){
+            if($tea->invite_count>=2 && $tea->TeaUser()->invite_count>=2){
+                $leaderUser=(new TeaUser())->find($this->leader);
+                $leaderTea=$leaderUser->getMyNowTea();
+                if($leaderUser->invite_count<2 || $leaderTea->invite_count<2){
+                    $this->leader=$tea->user_id;
+                    $this->save();
+                    $this->leaderReward();
+                }
+            }
+        }
+    }
+
 
     public function Teas()
     {

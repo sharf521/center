@@ -91,7 +91,7 @@ class Tea extends Model
         $invite_id=0;
         $invite_path='';
         if ($p_userid != 0) {
-            $p_tea=$this->where('user_id=? and status=1')->bindValues($p_userid)->first();
+            $p_tea=(new TeaUser())->getMyNowTea($p_userid);
             if ($p_tea->is_exist) {
                 if($p_tea->level==1){
                     //同在第一盘时
@@ -116,7 +116,6 @@ class Tea extends Model
             } else {
                 throw new \Exception('p_userid错误！');
             }
-
             $p_user=(new TeaUser())->find($p_userid);
             $p_user->invite_count=$p_user->invite_count+1;
             $p_user->save();
@@ -149,6 +148,9 @@ class Tea extends Model
         );
         $tea=$this->create($arr);
         $group=$group->putTea($tea);
+        if($p_tea->is_exist){
+            $group->checkChangeLeader($p_tea);//替换组长
+        }
         if($group->child_count==15){
             $this->splitGroup($group);
         }
@@ -224,7 +226,10 @@ class Tea extends Model
         $group1=$tGroup->create($group->level);
         $group2=$tGroup->create($group->level);
 
-        $teas=$group->Teas();
+        //$teas=$group->Teas();
+
+        $teas=DB::table('tea t')->select("t.*")->leftJoin('tea_user u',"t.user_id=u.id")->where("t.group_id={$group->id}")->orderBy("t.invite_count desc,u.invite_count desc,t.id")->all(\PDO::FETCH_OBJ);
+
         $i=1;
         foreach ($teas as $tea){
             if($tea->user_id!=$group->leader){
@@ -336,13 +341,8 @@ class Tea extends Model
                 $tea->invite_count=$tea->invite_count+1;
                 $tea->save();
 
-                //替换组长
-                if($level==2 && $leaderUser->invite_count<2 || $leaderTea->invite_count<2){
-                    if($tea->invite_count>=2 && $tea->TeaUser()->invite_count>=2){
-                        $tGroup->leader=$tea->user_id;
-                        $tGroup->save();
-                    }
-                }
+
+                $tGroup->checkChangeLeader($tea);//替换组长
 
                 $tGroup->tea_invite_id=$tea->user_id;
                 $tGroup->tea_invite_path=$tea->invite_path.$tea->user_id.',';
@@ -382,5 +382,13 @@ class Tea extends Model
     public function TeaUser()
     {
         return $this->hasOne('\App\Model\TeaUser','id','user_id');
+    }
+
+    /**
+     * @return \App\Model\TeaGroup
+     */
+    public function getMyGroup()
+    {
+        return $this->hasOne('\App\Model\TeaGroup','id','group_id');
     }
 }

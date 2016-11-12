@@ -26,4 +26,12 @@ class TeaUser extends Model
     {
         return $this->hasOne('\App\Model\User','id','id');
     }
+
+    public function getMyNowTea($id=null)
+    {
+        if($id!=null){
+            $this->id=$id;
+        }
+        return (new Tea())->where("status=1 and user_id={$this->id}")->first();
+    }
 }

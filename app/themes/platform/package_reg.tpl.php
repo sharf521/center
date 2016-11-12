@@ -38,25 +38,25 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">会员ID号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="username" id="username" placeholder="请填写用户名" class="layui-input" autocomplete="off"/>
+                                <input type="text" name="username" id="username" placeholder="请填写用户名" class="layui-input" lay-verify="required" autocomplete="off"/>
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">email</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="email" id="email" placeholder="请输入邮箱" class="layui-input" autocomplete="off"/>
+                                <input type="text" name="email" id="email" placeholder="请输入邮箱" class="layui-input" lay-verify="email" autocomplete="off"/>
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">设置密码</label>
                             <div class="layui-input-inline">
-                                <input type="password" id="password" name="password" placeholder="请输入密码" class="layui-input"  autocomplete="off"/>
+                                <input type="password" id="password" name="password" placeholder="请输入密码" class="layui-input" lay-verify="required"  autocomplete="off"/>
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">确认密码</label>
                             <div class="layui-input-inline">
-                                <input type="password" id="sure_password" name="sure_password" placeholder="确认密码" class="layui-input"  autocomplete="off"/>
+                                <input type="password" id="sure_password" name="sure_password" placeholder="确认密码" class="layui-input" lay-verify="required"  autocomplete="off"/>
                             </div>
                         </div>
                         <div style="padding-left: 100px;">登陆密码和支付密码初始值一样</div>
