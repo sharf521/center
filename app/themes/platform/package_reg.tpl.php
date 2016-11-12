@@ -144,102 +144,100 @@
 <script type="text/javascript">
     var myMoney=<?=$teaMoney->money?>;
     var mypcas=new PCAS("province,请选择省份","city,请选择城市","area,请选择地区");
-    $(document).ready(function(){
-        layui.use(['form','element'], function () {
-            var form = layui.form();
-            var element = layui.element();
+    layui.use(['form','element'], function () {
+        var form = layui.form();
+        var element = layui.element();
 
+        form.render('select');
+        form.on('select(province)', function (data) {
+            province = data.value;
+            mypcas.SetValue(data.value, "", "");
             form.render('select');
-            form.on('select(province)', function (data) {
-                province = data.value;
-                mypcas.SetValue(data.value, "", "");
-                form.render('select');
-            });
-            form.on('select(city)', function (data) {
-                city = data.value;
-                mypcas.SetValue(province, data.value, "");
-                form.render('select');
-            });
-            form.on('select(area)', function (data) {
-                mypcas.SetValue(province, city, data.value);
-                form.render('select');
-            });
+        });
+        form.on('select(city)', function (data) {
+            city = data.value;
+            mypcas.SetValue(province, data.value, "");
+            form.render('select');
+        });
+        form.on('select(area)', function (data) {
+            mypcas.SetValue(province, city, data.value);
+            form.render('select');
+        });
 
-            element.on('tab(tab1)', function(data){
-                if(data.index==0){
-                    $('#regType').val(1);
-                }else{
-                    $('#regType').val(2);
-                }
-            });
+        element.on('tab(tab1)', function(data){
+            if(data.index==0){
+                $('#regType').val(1);
+            }else{
+                $('#regType').val(2);
+            }
+        });
 
-            form.on('submit(*)', function(data){
-                var fields=data.field;
-                var total=Number($('#span_total').html());
-                if(total<=0){
-                    layer.msg('请选择套餐', { icon: 2,   time: 5000      });
+        form.on('submit(*)', function(data){
+            var fields=data.field;
+            var total=Number($('#span_total').html());
+            if(total<=0){
+                layer.msg('请选择套餐', { icon: 2,   time: 5000      });
+                return false;
+            }
+            if(total>myMoney){
+                layer.msg('您的电子币不足', { icon: 2,   time: 5000      });
+                return false;
+            }
+
+            $.ajaxSetup({async: false});
+            if($('#regType').val()==1){
+                if(fields.password=='' || fields.sure_password==''){
+                    layer.msg('密码不能为空', { icon: 2,   time: 5000      });
+                    $('#password').focus();
                     return false;
                 }
-                if(total>myMoney){
-                    layer.msg('您的电子币不足', { icon: 2,   time: 5000      });
+                if(fields.sure_password != fields.password){
+                    layer.msg('两次密码不一致', { icon: 2,   time: 5000      });
+                    $('#password').focus();
                     return false;
                 }
-
-                $.ajaxSetup({async: false});
-                if($('#regType').val()==1){
-                    if(fields.password=='' || fields.sure_password==''){
-                        layer.msg('密码不能为空', { icon: 2,   time: 5000      });
-                        $('#password').focus();
-                        return false;
+                var t_user=false;
+                $.get('/index.php/register/checkUserName/?username='+fields.username,function(result){
+                    if(result=='true'){
+                        t_user=true;
+                    }else{
+                        layer.msg('该用户名不可用', { icon: 2,   time: 5000      });
+                        $('#username').focus();
                     }
-                    if(fields.sure_password != fields.password){
-                        layer.msg('两次密码不一致', { icon: 2,   time: 5000      });
-                        $('#password').focus();
-                        return false;
+                });
+                var t_email=false;
+                $.get('/index.php/register/checkEmail/?email='+fields.email,function(result){
+                    if(result=='true'){
+                        t_email=true;
+                    }else{
+                        layer.msg('该邮箱不可用', { icon: 2,   time: 5000      });
+                        $('#email').focus();
                     }
-                    var t_user=false;
-                    $.get('/index.php/register/checkUserName/?username='+fields.username,function(result){
-                        if(result=='true'){
-                            t_user=true;
-                        }else{
-                            layer.msg('该用户名不可用', { icon: 2,   time: 5000      });
-                            $('#username').focus();
-                        }
-                    });
-                    var t_email=false;
-                    $.get('/index.php/register/checkEmail/?email='+fields.email,function(result){
-                        if(result=='true'){
-                            t_email=true;
-                        }else{
-                            layer.msg('该邮箱不可用', { icon: 2,   time: 5000      });
-                            $('#email').focus();
-                        }
-                    });
-                    if(t_user && t_email){
-                        return true;
-                    }
-                }else{
-                    if(fields.username2==''){
-                        layer.msg('会员ID号不能为空', { icon: 2,   time: 5000      });
+                });
+                if(t_user && t_email){
+                    return true;
+                }
+            }else{
+                if(fields.username2==''){
+                    layer.msg('会员ID号不能为空', { icon: 2,   time: 5000      });
+                    $('#username2').focus();
+                    return false;
+                }
+                var t_user=false;
+                $.get('/index.php/register/checkInviteUser/?invite_user='+fields.username2,function(result){
+                    if(result=='true'){
+                        t_user=true;
+                    }else{
+                        layer.msg('该用户名不存在', { icon: 2,   time: 5000      });
                         $('#username2').focus();
                         return false;
                     }
-                    var t_user=false;
-                    $.get('/index.php/register/checkInviteUser/?invite_user='+fields.username2,function(result){
-                        if(result=='true'){
-                            t_user=true;
-                        }else{
-                            layer.msg('该用户名不存在', { icon: 2,   time: 5000      });
-                            $('#username2').focus();
-                            return false;
-                        }
-                    });
-                    if(t_user){
-                        return true;
-                    }
+                });
+                if(t_user){
+                    return true;
                 }
-                return false;
-            });
+            }
+            return false;
         });
     });
 </script>
