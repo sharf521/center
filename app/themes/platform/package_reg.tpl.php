@@ -143,8 +143,8 @@
 <script src="/plugin/js/PCASClass.js"></script>
 <script type="text/javascript">
     var myMoney=<?=$teaMoney->money?>;
+    var mypcas=new PCAS("province,请选择省份","city,请选择城市","area,请选择地区");
     $(document).ready(function(){
-        var mypcas=new PCAS("province,请选择省份","city,请选择城市","area,请选择地区");
         layui.use(['form','element'], function () {
             var form = layui.form();
             var element = layui.element();
