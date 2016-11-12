@@ -27,9 +27,9 @@ class UploadController extends Controller
         if (empty($user_id)) {
             return $this->_error('超时，请重新登陆');
         }
-        $path = '/data/upload/' . date('Ym') . '/';
+        $path="/data/upload/".ceil($user_id/2000)."/".$user_id."/".date('Ym').'/';
         if ($type == 'article') {
-            $path = '/data/upload/article/' . date('Ym').'/';
+            $path="/data/upload/".ceil($user_id/2000)."/".$user_id."/article/".date('Ym').'/';
         } elseif ($type == 'headimgurl') {
             $name = 'face';
             $path = '/data/upload/' . ceil($user_id / 2000) . '/' . $user_id . '/';
