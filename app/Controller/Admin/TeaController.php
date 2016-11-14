@@ -124,6 +124,7 @@ class TeaController extends AdminController
                 $profit->user_count=(new TeaUser())->value('count(*)');
                 $profit->received=math(4980,$profit->user_count,'*',2);
                 $profit->support=(float)(new TeaMoney())->value('sum(money)');
+                $profit->support=(new TeaLog())->where("type in('invite','leader','dianjiang','count15','taxFee','manage','weight')")->value('sum(money)');
                 $profit->rate=math($profit->support,$profit->received,'/',5);
                 $profit->save();
 
@@ -191,7 +192,7 @@ class TeaController extends AdminController
         $data['moneySum']=(new TeaMoney())->where($where2)->value('sum(money)');
 
 
-        $data['profit']=(new TeaProfit())->orderBy('id')->get();
+        $data['profit']=(new TeaProfit())->orderBy('id desc')->get();
         $this->view('tea',$data);
     }
 
