@@ -93,37 +93,35 @@
 <script type="text/javascript">
     var myMoney=<?=(float)$teaMoney->money?>;
     var mypcas=new PCAS("province,请选择省份","city,请选择城市","area,请选择地区");
-    window.onload=function(){
-        layui.use(['form'], function () {
-            var form = layui.form();
+    layui.use(['form'], function () {
+        var form = layui.form();
+        form.render('select');
+        form.on('select(province)', function (data) {
+            province = data.value;
+            mypcas.SetValue(data.value, "", "");
             form.render('select');
-            form.on('select(province)', function (data) {
-                province = data.value;
-                mypcas.SetValue(data.value, "", "");
-                form.render('select');
-            });
-            form.on('select(city)', function (data) {
-                city = data.value;
-                mypcas.SetValue(province, data.value, "");
-                form.render('select');
-            });
-            form.on('select(area)', function (data) {
-                mypcas.SetValue(province, city, data.value);
-                form.render('select');
-            });
-            form.on('submit(*)', function(data){
-                var total=Number($('#span_total').html());
-                if(total<=0){
-                    layer.msg('请选择套餐', { icon: 2,   time: 5000      });
-                    return false;
-                }
-                if(total>myMoney){
-                    layer.msg('您的电子币不足', { icon: 2,   time: 5000      });
-                    return false;
-                }
-            });
         });
-    }
+        form.on('select(city)', function (data) {
+            city = data.value;
+            mypcas.SetValue(province, data.value, "");
+            form.render('select');
+        });
+        form.on('select(area)', function (data) {
+            mypcas.SetValue(province, city, data.value);
+            form.render('select');
+        });
+        form.on('submit(*)', function(data){
+            var total=Number($('#span_total').html());
+            if(total<=0){
+                layer.msg('请选择套餐', { icon: 2,   time: 5000      });
+                return false;
+            }
+            if(total>myMoney){
+                layer.msg('您的电子币不足', { icon: 2,   time: 5000      });
+                return false;
+            }
+        });
+    });
 </script>
 <?php require 'footer.php';?>
 
