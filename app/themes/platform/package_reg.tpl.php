@@ -24,7 +24,7 @@
 </div>
 
 <div class="table_order">
-    <div style="line-height: 30px;"><?=$this->username?> 当前电子币：<?=$teaMoney->money?></div>
+    <div style="line-height: 30px;"><?=$this->username?> 当前电子币：<?=(float)$teaMoney->money?></div>
     <form method="post" class="layui-form">
         <input type="hidden" id="regType" value="1" name="regType">
         <div class="layui-tab layui-tab-card" lay-filter="tab1">
@@ -142,7 +142,7 @@
 
 <script src="/plugin/js/PCASClass.js"></script>
 <script type="text/javascript">
-    var myMoney=<?=$teaMoney->money?>;
+    var myMoney=<?=(float)$teaMoney->money?>;
     var mypcas=new PCAS("province,请选择省份","city,请选择城市","area,请选择地区");
     layui.use(['form','element'], function () {
         var form = layui.form();
