@@ -8,10 +8,39 @@
             <li><i class="paswod"></i><input type="password" name="password" placeholder="密码"></li>
             <li class="lo_subtb"><input type="submit" class="log_sumb" value="登录"></li>
         </ul>
-        <p class="m_alinka"><!--<a href="#">忘记密码？</a>--><a style="float:right;" href="<?=$_url?>">新用户注册</a></p>
+        <p class="m_alinka"><a href="<?=$getPwdUrl?>">忘记密码？</a><a style="float:right;" href="<?=$regUrl?>">新用户注册</a></p>
             <input type="hidden" name="_token"  value="<?=_token();?>"/>
         </form>
     </div>
 </div>
-<div class="lo_copy">&copy; <?=$this->site['name']?> 2016</div>
+    <script>
+        $(document).ready(function () {
+            $('#login_form').validate({
+                onkeyup: false,
+                errorPlacement: function (error, element) {
+                    element.nextAll('b').first().after(error);
+                },
+                submitHandler: function (form) {
+                    ajaxpost('login_form', '', '', 'onerror');
+                },
+                rules: {
+                    username: {
+                        required: true
+                    },
+                    password: {
+                        required: true
+                    },
+                },
+                messages: {
+                    username: {
+                        required: '请填写账号'
+                    },
+                    password: {
+                        required: '请填写密码'
+                    },
+                }
+            });
+        });
+    </script>
+    <div class="lo_copy">&copy; <?=$this->site['name']?> 2016</div>
 <?php require 'footer.php';?>
