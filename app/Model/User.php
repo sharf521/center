@@ -103,7 +103,7 @@ class User extends Model
         );
         $id = DB::table('user')->insertGetId($data);
         if (is_numeric($id) && $id > 0) {
-            if($data['no_login']===true){  //不需要登陆
+            if($data['no_login']!==true){  //不需要登陆
                 session()->set('user_id', $id);
                 session()->set('username', $data["username"]);
             }
