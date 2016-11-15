@@ -9,6 +9,8 @@
 namespace App\Model;
 
 
+use System\Lib\DB;
+
 class TeaGroup extends Model
 {
     protected $table='tea_group';
@@ -121,6 +123,13 @@ class TeaGroup extends Model
 
     public function Teas()
     {
-        return $this->hasMany('\App\Model\Tea','group_id','id','',"invite_count desc");
+        $result=DB::table('tea t')->select("t.id")->leftJoin('tea_user u',"t.user_id=u.id")->where("t.group_id={$this->id}")->orderBy("t.invite_count desc,u.invite_count desc,t.id")->all(\PDO::FETCH_OBJ);
+        $objs=array();
+        foreach($result as $row){
+            $tea=(new Tea())->find($row->id);
+            array_push($objs,$tea);
+        }
+        return $objs;
+        //return $this->hasMany('\App\Model\Tea','group_id','id','',"invite_count desc");
     }
 }

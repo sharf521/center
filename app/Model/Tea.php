@@ -226,10 +226,7 @@ class Tea extends Model
         $group1=$tGroup->create($group->level);
         $group2=$tGroup->create($group->level);
 
-        //$teas=$group->Teas();
-
-        $teas=DB::table('tea t')->select("t.*")->leftJoin('tea_user u',"t.user_id=u.id")->where("t.group_id={$group->id}")->orderBy("t.invite_count desc,u.invite_count desc,t.id")->all(\PDO::FETCH_OBJ);
-
+        $teas=$group->Teas();
         $i=1;
         foreach ($teas as $tea){
             if($tea->user_id!=$group->leader){
@@ -238,6 +235,7 @@ class Tea extends Model
                     $arr=array(
                         'user_id' => $tea->user_id,
                         'invite_count'=>$tea->invite_count,
+                        'invite_path'=>$tea->invite_path,
                         'group_id'=>$group1->id,
                         'level'=>$group1->level
                     );
@@ -247,6 +245,7 @@ class Tea extends Model
                     $arr=array(
                         'user_id' => $tea->user_id,
                         'invite_count'=>$tea->invite_count,
+                        'invite_path'=>$tea->invite_path,
                         'group_id'=>$group2->id,
                         'level'=>$group2->level
                     );
@@ -390,5 +389,16 @@ class Tea extends Model
     public function getMyGroup()
     {
         return $this->hasOne('\App\Model\TeaGroup','id','group_id');
+    }
+
+    public function showTeaUserName($user_id)
+    {
+        $User=(new User())->find($user_id);
+        $TeaUser=(new TeaUser())->find($user_id);
+        $again='';
+        if($TeaUser->again!=0){
+            $again='*';
+        }
+        return $User->username.$again.'&nbsp;　&nbsp;';
     }
 }

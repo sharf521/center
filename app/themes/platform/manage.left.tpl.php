@@ -32,6 +32,7 @@
 <div class="leftbox">
     <div class="leftbox_title">会员办公室</div>
     <ul>
+        <li><a target="middle" href="<?=url('tea/myStatus')?>">销售状况</a> </li>
         <li><a target="middle" href="/member/account/recharge/?from=hide">我要充值</a></li>
         <li><a target="middle" href="/member/account/cash/?from=hide">我要提现</a></li>
         <li><a target="middle" href="/member/password/changePwd/?from=hide">修改密码</a></li>

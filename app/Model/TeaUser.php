@@ -27,6 +27,11 @@ class TeaUser extends Model
         return $this->hasOne('\App\Model\User','id','id');
     }
 
+    public function inviteUsers()
+    {
+        return $this->hasMany('\App\Model\TeaUser','invite_id','id');
+    }
+
     public function getMyNowTea($id=null)
     {
         if($id!=null){
