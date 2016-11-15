@@ -104,17 +104,18 @@ class TeaGroup extends Model
         }
     }
 
-    //替换组长
+    //验证Tea是否可以替换所在组的组长
     public function checkChangeLeader(Tea $tea)
     {
-        if($this->level==1 || $this->leavel==2){
+        $group=(new TeaGroup())->find($tea->group_id);
+        if($group->level==1 || $group->leavel==2){
             if($tea->invite_count>=2 && $tea->TeaUser()->invite_count>=2){
-                $leaderUser=(new TeaUser())->find($this->leader);
+                $leaderUser=(new TeaUser())->find($group->leader);
                 $leaderTea=$leaderUser->getMyNowTea();
                 if($leaderUser->invite_count<2 || $leaderTea->invite_count<2){
-                    $this->leader=$tea->user_id;
-                    $this->save();
-                    $this->leaderReward();
+                    $group->leader=$tea->user_id;
+                    $group->save();
+                    $group->leaderReward();
                 }
             }
         }
