@@ -66,10 +66,20 @@ class UploadController extends Controller
         if (!move_uploaded_file($_FILES['file']['tmp_name'], $_path . $filename)) {
             $this->_error('can not move to tempath');
         } else {
-            $data = array(
-                'code' => '0',
-                'url' => $path . $filename
-            );
+            if($type=='chat'){
+                $data = array(
+                    'code' => '0',
+                    'data'=>array(
+                        'name' => $filename,
+                        'src' => $path . $filename
+                    )
+                );
+            }else{
+                $data = array(
+                    'code' => '0',
+                    'url' => $path . $filename
+                );
+            }
             echo json_encode($data);
         }
     }

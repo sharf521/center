@@ -35,7 +35,18 @@ class Category extends Model
         foreach ($result as $row) {
             $items[$row['id']] = $row;
         }
-        return genTree5($items);
+        return $this->genTree5($items);
+    }
+
+    private function genTree5($items)
+    {
+        $tree = array(); //格式化好的树
+        foreach ($items as $item)
+            if (isset($items[$item['pid']]))
+                $items[$item['pid']]['son'][] = &$items[$item['id']];
+            else
+                $tree[] = &$items[$item['id']];
+        return $tree;
     }
 
     function getNames($data)
@@ -45,14 +56,6 @@ class Category extends Model
             $where .= " and pid='{$data['pid']}'";
         }
         return DB::table('category')->where($where)->orderBy("`showorder`,id")->lists('name','id');
-//        $sql = "select id,name from {$this->dbfix}category {$where}  order by `showorder`,id";
-//        $result = $this->mysql->get_all($sql);
-//        //结果转换为特定格式
-//        $items = array();
-//        foreach ($result as $row) {
-//            $items[$row['id']] = $row['name'];
-//        }
-//        return $items;
     }
 
 
