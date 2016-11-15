@@ -96,8 +96,9 @@ class Tea extends Model
                 if($p_tea->level==1){
                     //同在第一盘时
                     $invite_id=$p_tea->user_id;
-                    $invite_path=$p_tea->invite_path.$p_tea->user_id.',';
+                    $invite_path=$p_tea->user_id.',';
                     $p_tea->invite_count=$p_tea->invite_count+1;
+                    $p_tea->invite_path=$p_tea->invite_path.$user->id.',';
                     $p_tea->save();
                     $group= $this->getLevel1Group($p_tea->group_id);
                 }else{
@@ -142,7 +143,7 @@ class Tea extends Model
         $arr=array(
             'user_id' => (int)$data['user_id'],
             'invite_id'=>$invite_id,
-            'invite_path'=>$invite_path,
+            'invite_path'=>'',
             'group_id'=>$group->id,
             'level'=>1
         );
@@ -299,7 +300,7 @@ class Tea extends Model
         $arr=array(
             'user_id' => $leader_uid,
             'invite_id'=>$invite_id,
-            'invite_path'=>$invite_path,
+            'invite_path'=>'',
             'group_id'=>$group->id,
             'invite_count'=>0,
             'level'=>$toLevel
@@ -338,6 +339,7 @@ class Tea extends Model
                     $tea=$tea->where("level={$level} and user_id={$user_id}")->first();
                 }
                 $tea->invite_count=$tea->invite_count+1;
+                $tea->invite_path=$tea->invite_path.$leaderUser->id.',';
                 $tea->save();
 
 
