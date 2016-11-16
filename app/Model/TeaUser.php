@@ -37,6 +37,7 @@ class TeaUser extends Model
         if($id!=null){
             $this->id=$id;
         }
-        return (new Tea())->where("status=1 and user_id={$this->id}")->first();
+        $user_id=(int)$this->id;
+        return (new Tea())->where("status=1 and user_id={$user_id}")->first();
     }
 }

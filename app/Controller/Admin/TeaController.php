@@ -70,6 +70,9 @@ class TeaController extends AdminController
 
     private function returnChatData($datas)
     {
+        if(!is_array($datas)){
+            return '';
+        }
         $string = '';
         foreach ($datas as $data) {
             if ($string == '') {

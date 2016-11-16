@@ -307,6 +307,7 @@ class Tea extends Model
         );
         $tea=$this->create($arr);
         $group=$group->putTea($tea);
+
         if($toLevel==2 && $group->child_count==15){
             $this->splitGroup($group);
         }
@@ -341,10 +342,7 @@ class Tea extends Model
                 $tea->invite_count=$tea->invite_count+1;
                 $tea->invite_path=$tea->invite_path.$leaderUser->id.',';
                 $tea->save();
-
-
                 $tGroup->checkChangeLeader($tea);//替换组长
-
                 $tGroup->tea_invite_id=$tea->user_id;
                 $tGroup->tea_invite_path=$tea->invite_path.$tea->user_id.',';
                 return $tGroup;

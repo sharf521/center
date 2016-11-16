@@ -48,10 +48,12 @@ class TeaGroup extends Model
         $this->child_count=$this->child_count+1;
         $this->child_ids=$this->child_ids.$tea->user_id.',';
         $this->save();
-        if($this->child_count==1) {
-            $this->leaderReward(); //组长奖励
+        if($this->leader!=0){
+            if($this->child_count==1) {
+                $this->leaderReward(); //组长奖励
+            }
+            $this->pointReward();//点奖励
         }
-        $this->pointReward();//点奖励
         return $this;
     }
 
