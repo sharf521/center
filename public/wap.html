@@ -14,8 +14,8 @@
 </head>
 <body ontouchstart>
 <div class="weui-cells__title">表单</div>
-<div class="weui-cells weui-cells_form">
-    <form method="post">
+<form method="post">
+    <div class="weui-cells weui-cells_form">
         <div class="page__bd">
             <div class="weui-gallery" id="gallery">
                 <span class="weui-gallery__img" id="galleryImg"></span>
@@ -69,10 +69,10 @@
                 <input class="weui-input" type="number" name="stock_count" onkeyup="value=value.replace(/[^0-9]/g,'')" placeholder="请输入库存数"/>
             </div>
         </div>
-        <div id="specBox"></div>
-        <div class="weui-cells__title" id="addSpecBtn">+添加商品规格</div>
-        <br>
-
+    </div>
+    <div id="specBox"></div>
+    <div class="weui-cells__title" id="addSpecBtn">+添加商品规格</div>
+    <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">运费</label></div>
             <div class="weui-cell__bd">
@@ -88,9 +88,8 @@
         <div class="weui-btn-area">
             <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
         </div>
-    </form>
-</div>
-
+    </div>
+</form>
 <script type="text/javascript">
     $(function(){
         var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
