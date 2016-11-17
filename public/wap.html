@@ -6,6 +6,7 @@
     <title>WeUI</title>
     <style type="text/css">
         *{max-height: 9999999px;}
+        .hide{display: none}
         .spec_item{border: 1px solid #d9d9d9; width: 90%; margin: 10px 0}
         .spec_del{position: absolute; width: 30px; right: -15px; background-color: #fff;}
     </style>
@@ -79,6 +80,8 @@
                 <input class="weui-input" type="number" onkeyup="value=value.replace(/[^0-9.]/g,'')" value="0.00"/>
             </div>
         </div>
+    </div>
+    <div class="weui-cells weui-cells_form">
         <div class="weui-cells__title">介绍</div>
         <div class="weui-cell">
             <div class="weui-cell__bd">
@@ -136,7 +139,7 @@
         });
     });
 </script>
-<div id="spec_item_hide">
+<div id="spec_item_hide" class="hide">
     <div class="spec_item">
         <div class="weui-cell">
             <label class="weui-label">规格</label>
