@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Model\Algorithm;
 use App\Model\Region;
+use App\Model\Tea;
+use App\Model\TeaUser;
 use System\Lib\DB;
 use System\Lib\Request;
 
@@ -115,6 +117,13 @@ class AjaxController extends Controller
         //print_r($result2);
         echo json_encode($result2);
 
+    }
+
+    public function getTeaTree()
+    {
+        $teaUser=new TeaUser();
+        $result=$teaUser->select('id,invite_id pid')->orderBy('id')->get(true);
+        echo json_encode($result);
     }
 
     public function algorithmSend()

@@ -175,28 +175,28 @@ class TeaController extends AdminController
             'id'		=>(int)$_GET['id'],
             'money'		=>(int)$_GET['money']
         );
-
         $where = " 1=1";
         $where2=' 1=1';
         if (!empty($arr['id'])) {
             $where .= " and id={$arr['id']}";
             $where2.=" and user_id={$arr['id']}";
         }
-
         if (!empty($arr['money'])) {
             $where .= " and money={$arr['money']}";
         }
-
         $invite_id=(int)$request->get('invite_id');
         if($invite_id!=0){
             $where.=" and invite_id={$invite_id}";
         }
         $data['result']=$teaUser->where($where)->orderBy('id desc')->pager($_GET['page'],10);
         $data['moneySum']=(new TeaMoney())->where($where2)->value('sum(money)');
-
-
         $data['profit']=(new TeaProfit())->orderBy('id desc')->get();
         $this->view('tea',$data);
+    }
+
+    public function userTree()
+    {
+        $this->view('tea');
     }
 
     public function order(TeaOrder $teaOrder)

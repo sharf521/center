@@ -4,7 +4,9 @@ if($this->func=='index')
 {
     ?>
     <div class="main_title">
-        <span>管理</span>列表<?=$this->anchor('tea/add','新增','class="but1"');?>
+        <span>管理</span>列表
+        <?=$this->anchor('tea/add','新增','class="but1"');?>
+        <a href="<?=url('tea/userTree')?>" target="_blank" class="but1">查看用户结构图</a>
     </div>
 
     <form method="get">
@@ -200,8 +202,6 @@ elseif($this->func=='add'||$this->func=='edit')
     <tr><td></td><td colspan="7" class="l">总计：￥<?=$moneySum?></td></tr>
 </table>
 <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
-
-
     <table class="table">
         <tr class="bt">
             <th>id</th>
@@ -226,5 +226,19 @@ elseif($this->func=='add'||$this->func=='edit')
         <? }?>
     </table>
 <?php
+}elseif($this->func=='userTree'){
+    ?>
+        <script>
+            mxBasePath = '/themes/admin/js/mxgraph/src';
+        </script>
+        <script src="/themes/admin/js/mxgraph/src/js/mxClient.js"></script>
+        <script src="/themes/admin/js/tea.js"></script>
+        <script>
+            $(document).ready(function () {
+                main(<?=(int)$_GET['user_id']?>);
+            });
+        </script>
+    <div><div class="drawContent" id="drawContent"></div></div>
+<?
 }
 require 'footer.php';
