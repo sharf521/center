@@ -232,7 +232,7 @@ elseif($this->func=='add'||$this->func=='edit')
             mxBasePath = '/themes/admin/js/mxgraph/src';
         </script>
         <script src="/themes/admin/js/mxgraph/src/js/mxClient.js"></script>
-        <script src="/themes/admin/js/tea.js"></script>
+        <script src="/themes/admin/js/tea.js/?1"></script>
         <script>
             $(document).ready(function () {
                 main(<?=(int)$_GET['user_id']?>);

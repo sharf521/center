@@ -93,7 +93,7 @@ mxGraphView.prototype.updateFloatingTerminalPoint = function (edge, start, end, 
     }
     edge.setAbsoluteTerminalPoint(pt, source);
 };
-function main(user_id)
+function main(id)
 {
     if (!mxClient.isBrowserSupported()) {
         mxUtils.error('浏览器不支持!', 200, false);
@@ -103,7 +103,7 @@ function main(user_id)
         $.ajax({
             type: "post",
             url: "/index.php/ajax/getTeaTree",
-            data:{user_id:user_id},
+            data:{id:id},
             dataType: "json",
             beforeSend: function (XMLHttpRequest) {
                 //setPromptPanelVisible();
