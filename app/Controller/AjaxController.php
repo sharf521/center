@@ -124,7 +124,7 @@ class AjaxController extends Controller
         $teaUser=new TeaUser();
         $where = " 1=1";
         if (!empty($_REQUEST['id'])) {
-            $where .= " and (id={$_REQUEST['id']} || invite_path like '%{$_REQUEST['id']},%')";
+            $where .= " and (id={$_REQUEST['id']} || invite_path like '%,{$_REQUEST['id']},%')";
         }
         $result=$teaUser->select('id,invite_id pid')->where($where)->orderBy('id')->get(true);
         echo json_encode($result);
