@@ -6,7 +6,7 @@ if($this->func=='index')
     <div class="main_title">
         <span>管理</span>列表
         <?=$this->anchor('tea/add','新增','class="but1"');?>
-        <a href="<?=url('tea/userTree')?>" target="_blank" class="but1">查看用户结构图</a>
+        <a href="<?=url('tea/userTree/?id=0')?>" target="_blank" class="but1">查看用户结构图</a>
     </div>
 
     <form method="get">
