@@ -121,10 +121,16 @@ class AjaxController extends Controller
 
     public function getTeaTree()
     {
+        $id=(int)$_REQUEST['id'];
         $teaUser=new TeaUser();
         $where = " 1=1";
-        if (!empty($_REQUEST['id'])) {
-            $where .= " and (id={$_REQUEST['id']} || invite_path like '%,{$_REQUEST['id']},%')";
+        if ($id!=0) {
+            $firstid=$teaUser->orderBy('id')->first()->id;
+            if($id==$firstid){
+                $where .= " and (id={$id} || invite_path like '{$id},%')";
+            }else{
+                $where .= " and (id={$id} || invite_path like '%,{$id},%')";
+            }
         }
         $result=$teaUser->select('id,invite_id pid')->where($where)->orderBy('id')->get(true);
         echo json_encode($result);
