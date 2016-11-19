@@ -235,7 +235,7 @@ elseif($this->func=='add'||$this->func=='edit')
         <script src="/themes/admin/js/tea.js?1"></script>
         <script>
             $(document).ready(function () {
-                main(<?=(int)$_GET['user_id']?>);
+                main(<?=(int)$_GET['id']?>);
             });
         </script>
     <div><div class="drawContent" id="drawContent"></div></div>
