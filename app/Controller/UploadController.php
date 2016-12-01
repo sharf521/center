@@ -36,6 +36,9 @@ class UploadController extends Controller
         } elseif ($type == 'card1' || $type == 'card2') {
             $name = $type;
             $path = '/data/upload/' . ceil($user_id / 2000) . '/' . $user_id . '/';
+        }elseif ($type=='logo'){
+            $name = 'logo';
+            $path="/data/upload/web/".date('Ym').'/';
         }
         //创建文件夹
         $_path = ROOT . '/public' . $path;
