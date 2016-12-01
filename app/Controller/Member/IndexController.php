@@ -47,6 +47,9 @@ class IndexController extends MemberController
             if($isGoWap){
                 $params['url']='/wap/user';
                 $url=$this->site[$app->subsite_field]."/wap/index";
+                var_dump($this->site);
+                echo $url;
+                exit;
             }else{
                 $params['url']='/user';
                 $url=$this->site[$app->subsite_field]."/jump";
