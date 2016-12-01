@@ -1,12 +1,5 @@
 <?php require 'header.php'; ?>
     <script type="text/javascript" src="/data/js/category.js?<?= rand(1, 100) ?>"></script>
-    <script>
-        function comupload_success(path, type) {
-            $('#' + type).val(path);
-            var _str = "<a href='" + path + "' target='_blank'><img src='" + path + "' height='100'/></a>";
-            $("#span_" + type).html(_str);
-        }
-    </script>
 <? if ($this->func == 'index') { ?>
     <div class="main_title">
         <span>文章管理</span>列表
@@ -72,7 +65,6 @@
         <span>文章管理</span><? if ($this->func == 'add') { ?>新增<? } else { ?>编辑<? } ?>
         <?= $this->anchor('article', '列表', 'class="but1"'); ?>
     </div>
-    <script src="/plugin/js/ajaxfileupload.js"></script>
     <div class="main_content">
         <form method="post">
             <input type="hidden" name="id" value="<?= $row->id ?>"/>

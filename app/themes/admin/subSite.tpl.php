@@ -57,10 +57,16 @@
                 <tr>
                     <td>LOGO：</td>
                     <td>
-                        <script src="/plugin/js/ajaxfileupload.js"></script>
-                        <span id="upload_span_logo"><img src="<?=$row->logo?>" height="50"></span>
-                        <input type="hidden" name="logo" value="<?=$row->logo?>" id="logo">
-                        <input type="file" id="upload_logo" name="files" onchange="upload_image('logo','logo')">
+
+                        <input type="hidden" name="logo" id="logo" value="<?= $row->logo ?>"/>
+						<span id="upload_span_logo">
+							<? if ($row->logo != '') { ?>
+                                <a href="<?= $row->logo ?>" target="_blank"><img
+                                        src="<?= $row->logo ?>" align="absmiddle" width="100"/></a>
+                            <? } ?>
+                        </span>
+                        <input type="file" name="file" class="layui-upload-file" upload_id="logo" upload_type="logo">
+
                     </td>
                 </tr>
                 <tr>
