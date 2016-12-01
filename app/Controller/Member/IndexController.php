@@ -70,8 +70,8 @@ class IndexController extends MemberController
         }
         $sign=$this->getSign($params,$app->appsecret);
         $url=$url."/?openid={$params['openid']}&url={$params['url']}&time={$params['time']}&sign={$sign}";
-        echo $url;
-        //redirect($url);
+        //echo $url;
+        redirect($url);
     }
 
     private function getSign($data,$appsecret)
