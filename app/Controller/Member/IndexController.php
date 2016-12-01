@@ -50,9 +50,6 @@ class IndexController extends MemberController
             }else{
                 $params['url']='/user';
                 $url=$this->site[$app->subsite_field]."/jump";
-                var_dump($this->site);
-                echo $url;
-                exit;
             }
         }elseif($app_id==8){  //一元云购
             if($isGoWap){
@@ -73,7 +70,8 @@ class IndexController extends MemberController
         }
         $sign=$this->getSign($params,$app->appsecret);
         $url=$url."/?openid={$params['openid']}&url={$params['url']}&time={$params['time']}&sign={$sign}";
-        redirect($url);
+        echo $url;
+        //redirect($url);
     }
 
     private function getSign($data,$appsecret)
