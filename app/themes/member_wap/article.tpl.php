@@ -6,9 +6,8 @@
 </div>
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
     <div style=" margin: 20px; text-align: center">
-        <img src="/themes/images/app.png" width="80%">
+        <img src="/themes/images/app_android_<?=$this->site['id']?>.png" width="80%">
         <div style="font-size: 3rem; margin-top: 5px;">安卓</div>
     </div>
     <?php require 'footer.php';?>
