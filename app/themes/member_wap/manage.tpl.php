@@ -11,7 +11,7 @@
             <?= $this->user->name ?></h3>
     </a>
 </div>
-<div class="set" style="margin-bottom: 8rem">
+<div class="set" style="margin-bottom: 10rem">
     <ul>
         <li><a href="<?= url('account/index'); ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/pic01.png"></b><span>我的资金</span></a></li>
