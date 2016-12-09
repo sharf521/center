@@ -4,10 +4,12 @@
     <span class="header_right">&nbsp;</span>
     <h1>下载APP</h1>
 </div>
-
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div style=" margin-bottom: 50px; text-align: center; margin-top: 11rem">
+        <img src="<?=$img_android?>" width="80%">
+        <div style="font-size: 3rem; margin-top: 5px;">android</div>
+    </div>
     <div style=" margin: 20px; text-align: center">
-        <img src="/themes/images/app_android_<?=$this->site['id']?>.png" width="80%">
-        <div style="font-size: 3rem; margin-top: 5px;">安卓</div>
+        <img src="<?=$img_iphone?>" width="80%">
+        <div style="font-size: 3rem; margin-top: 5px;">iphone</div>
     </div>
     <?php require 'footer.php';?>

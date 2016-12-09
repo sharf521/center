@@ -87,6 +87,21 @@ class IndexController extends MemberController
 
     public function app()
     {
-        $this->view('article');
+        $site_id=$this->site['id'];
+        $data['site_id']=$site_id;
+
+        $file_path = ROOT . "/public/data/app/";
+        if (!is_dir($file_path)) {
+            mkdir($file_path, 0777, true);
+        }
+
+        $iphone='http://'.$_SERVER['HTTP_HOST']."/data/app/iphone_{$site_id}.apk";
+        $android='http://'.$_SERVER['HTTP_HOST']."/data/app/android_{$site_id}.apk";
+        \PHPQRCode\QRcode::png($android, $file_path."android_{$site_id}.png", 'L', 4, 2);
+        \PHPQRCode\QRcode::png($iphone, $file_path."iphone_{$site_id}.png", 'L', 4, 2);
+
+        $data['img_android']="/data/app/iphone_{$site_id}.png";
+        $data['img_iphone']="/data/app/iphone_{$site_id}.png";
+        $this->view('article',$data);
     }
 }
