@@ -107,7 +107,7 @@ if ($userInfo->card_status == 2) : ?>
                         </span>
                     <div class="upload-upimg">
                         <span class="_upload_f">上传文件</span>
-                        <input type="file" id="upload_card1" name="files"
+                        <input type="file" id="upload_card1" name="file"
                                onchange="upload_image('card1','card1')"/>
                     </div>
                 </td>
@@ -125,7 +125,7 @@ if ($userInfo->card_status == 2) : ?>
                         </span>
                     <div class="upload-upimg">
                         <span class="_upload_f">上传文件</span>
-                        <input type="file" id="upload_card2" name="files"
+                        <input type="file" id="upload_card2" name="file"
                                onchange="upload_image('card2','card2')"/>
                     </div>
                 </td>
