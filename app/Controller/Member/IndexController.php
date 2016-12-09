@@ -95,7 +95,7 @@ class IndexController extends MemberController
             mkdir($file_path, 0777, true);
         }
 
-        $iphone='http://'.$_SERVER['HTTP_HOST']."/data/app/iphone_{$site_id}.apk";
+        $iphone='http://'.$_SERVER['HTTP_HOST']."/data/app/iphone_{$site_id}.ipa";
         $android='http://'.$_SERVER['HTTP_HOST']."/data/app/android_{$site_id}.apk";
         \PHPQRCode\QRcode::png($android, $file_path."android_{$site_id}.png", 'L', 4, 2);
         \PHPQRCode\QRcode::png($iphone, $file_path."iphone_{$site_id}.png", 'L', 4, 2);
