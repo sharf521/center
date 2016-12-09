@@ -100,7 +100,7 @@ class IndexController extends MemberController
         \PHPQRCode\QRcode::png($android, $file_path."android_{$site_id}.png", 'L', 4, 2);
         \PHPQRCode\QRcode::png($iphone, $file_path."iphone_{$site_id}.png", 'L', 4, 2);
 
-        $data['img_android']="/data/app/iphone_{$site_id}.png";
+        $data['img_android']="/data/app/android_{$site_id}.png";
         $data['img_iphone']="/data/app/iphone_{$site_id}.png";
         $this->view('article',$data);
     }
