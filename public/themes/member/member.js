@@ -63,7 +63,7 @@ function card() {
         return false;
     }
     if (document.getElementById("type1").checked == true) {
-        if (document.getElementById("money").value < 0) {
+        if (document.getElementById("money").value < 50) {
             layer.alert('充值金额不能小于50元', {icon: 2});
             return false;
         }
