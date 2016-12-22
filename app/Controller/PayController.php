@@ -50,8 +50,8 @@ class PayController extends Controller
         );
         $para['Sign'] = $this->md5_sign($para, $this->md5Key);
         $para['GateId'] = $request->post('GateId');//网关号
-        $para['returl'] = 'http://' . $host . '/pay/result.php';
-        $para['bgreturl'] = 'http://' . $host . '/pay/result.php';
+        $para['returl'] = 'http://' . $host . '/pay/result';
+        $para['bgreturl'] = 'http://' . $host . '/pay/result';
         $fee = round_money($para['OrdAmt'] * 0.003,2);
         $data = array(
             'trade_no' => $para['UsrSn'],
