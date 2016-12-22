@@ -95,7 +95,7 @@ class PayController extends Controller
         //判断缓存中是否有 创建交易cache缓存文件
         $path = ROOT . "/public/data/pay_cache/" . date("Y-m") . "/";
         if (!file_exists($path)) {
-            mkdir($path, 0777);
+            mkdir($path,0777,true);
         }
         $file = $path . $UsrSn;
         $fp = fopen($file, 'w+');
