@@ -23,25 +23,25 @@ class User extends Model
 
     function login($data)
     {
-        $user=array();
         if ($data['direct'] == '1') {
             if (isset($data['id'])) {
-                $user = DB::table('user')->where("id=?")->bindValues($data['id'])->row();
+                $user=$this->find($data['id']);
             } elseif (isset($data['openid'])) {
-                $user = DB::table('user')->where("openid=?")->bindValues($data['openid'])->row();
+                $user =$this->where("openid=?")->bindValues($data['openid'])->first();
             }
         } else {
-            $user = DB::table('user')->where("username=?")->bindValues($data['username'])->row();
-            $id = (int)$user['id'];
-            if ($id == 0) {
-                return '用户名或密码错误';
-            } elseif ($user['password'] != md5(md5($data['password']) . $user['salt'])) {
-                return '用户名或密码错误！';
+            $user =$this->where("username=?")->bindValues($data['username'])->first();
+            if($user->is_exist){
+                if($user->password != md5(md5($data['password']) . $user->salt)){
+                    return '用户名或密码错误！';
+                }
+            }else{
+                return '该用户不存在';
             }
         }
-        if (!empty($user)) {
+        if ($user->is_exist) {
             if ($data['admin'] == true) {
-                $usertype = DB::table('usertype')->select('id,permission_id,is_admin')->where("id={$user['type_id']}")->row();
+                $usertype = DB::table('usertype')->select('id,permission_id,is_admin')->where("id={$user->type_id}")->row();
                 if ($usertype['is_admin'] != 1) {
                     return '会员禁止登陆！';
                 }
@@ -51,8 +51,8 @@ class User extends Model
                 session()->set('usertype', 0);
                 session()->set('permission_id', '');
             }
-            session()->set('user_id', $user['id']);
-            session()->set('username', $user["username"]);
+            session()->set('user_id', $user->id);
+            session()->set('username', $user->username);
             return true;
         } else {
             return '未知错误!';
