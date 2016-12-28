@@ -1,4 +1,4 @@
-layui.use(['layer', 'util', 'laydate','form'], function(){
+/*layui.use(['layer', 'util', 'laydate','form'], function(){
     var layer = layui.layer
         ,util = layui.util
         ,laydate = layui.laydate;
@@ -6,6 +6,18 @@ layui.use(['layer', 'util', 'laydate','form'], function(){
     util.fixbar();
 
 
+
+});*/
+
+
+$(function () {
+    var layer = layui.layer
+        ,util = layui.util
+        ,laydate = layui.laydate;
+    var form = layui.form();
+    util.fixbar();
+    var element = layui.element();
+    element.init();
     //上传文件
     if ($('.layui-upload-file').length>0){
         layui.use(['upload'], function(){

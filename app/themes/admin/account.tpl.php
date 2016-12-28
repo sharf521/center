@@ -67,12 +67,23 @@
                         <td class="fl">￥<?=(float)$row->turnover_available_now?></td>
                         <td class="fl">￥<?=(float)$row->turnover_credit_now?></td>
                     </tr>
-                <? }?>
+                <? }
+                $sum=$result['sum'];
+                ?>
             </table>
         <? }else{?>
             <div class="alert-warning" role="alert">无记录！</div>
         <? }?>
         <?=$result['page'];?>
+    </div>
+    <div>总计：
+        可用资金：￥<?=(float)$sum->funds_available?><br>
+            冻结资金：￥<?=(float)$sum->funds_freeze?><br>
+            可用积分：￥<?=(float)$sum->integral_available?><br>
+            冻结积分：￥<?=(float)$sum->integral_freeze?><br>
+            保证金：￥<?=(float)$sum->security_deposit?><br>
+            可用周转金：￥<?=(float)$sum->turnover_available?><br>
+            周转金额度：￥<?=(float)$sum->turnover_credit?>
     </div>
 <? endif; ?>
 <?php require 'footer.php'; ?>

@@ -87,7 +87,7 @@ h1,h2,h3{ font-weight:normal;}
 
 /*left*/
 .neirong{ overflow:hidden;}
-.leftpanel{ background-color:#1c2b36; width:180px; float:left;}
+.leftpanel{ background-color:#1c2b36; width:180px; float:left;overflow-y: auto}
 /*right*/
 .rightpanel{ float:right;}
 

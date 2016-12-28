@@ -50,6 +50,13 @@ class AccountLog extends Model
             $where.=" and app_id='{$data['app_id']}'";
         }
         $result=$this->where($where)->orderBy('id desc')->pager(intval($_GET['page']));
+        $sum = $this->select("sum(funds_available) as funds_available,
+                sum(funds_freeze) as funds_freeze,
+                sum(integral_available) as integral_available,
+                sum(integral_freeze) as integral_freeze,
+                sum(security_deposit) as security_deposit,
+                sum(turnover_available) as turnover_available,
+                sum(turnover_credit) as turnover_credit")->where($where)->first();
         foreach ($result['list'] as $index=>$value){
             $change='';
             $now='';
@@ -111,6 +118,7 @@ class AccountLog extends Model
             }
             $result['list'][$index]->change=$change;
             $result['list'][$index]->now=$now;
+            $result['sum']=$sum;
         }
         return $result;
     }
