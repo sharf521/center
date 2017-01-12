@@ -91,11 +91,8 @@ class UserController  extends MemberController
             $bank->bank = $request->post('bank');
             $bank->branch = $request->post('branch');
             $bank->card_no = $request->post('card_no');
-            if ($bank->save()) {
-                redirect()->back()->with('msg', '保存成功！');
-            } else {
-                redirect()->back()->with('error', '保存失败！');
-            }
+            $bank->save();
+            redirect()->back()->with('msg', '保存成功！');
         }else{
             $bank->selBank=$linkPage->echoLink('account_bank',$bank->bank,array('name'=>'bank'));
             $data['bank']=$bank;
