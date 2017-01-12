@@ -1,11 +1,11 @@
-layui.use(['layer', 'util', 'laydate','form'], function(){
+$(function () {
     var layer = layui.layer
         ,util = layui.util
         ,laydate = layui.laydate;
     var form = layui.form();
     util.fixbar();
-
-
+    var element = layui.element();
+    element.init();
     //上传文件
     if ($('.layui-upload-file').length>0){
         layui.use(['upload'], function(){
@@ -33,11 +33,6 @@ layui.use(['layer', 'util', 'laydate','form'], function(){
                 });
             });
         });
-    }
-
-    var test=function(a)
-    {
-        alert(a);
     }
 });
 

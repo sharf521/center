@@ -3,6 +3,7 @@ namespace App\Controller\Member;
 
 use App\Model\App;
 use App\Model\AppUser;
+use App\Model\CarRent;
 use App\Model\User;
 use System\Lib\DB;
 use System\Lib\Request;
@@ -18,6 +19,10 @@ class IndexController extends MemberController
     {
         $data['account'] = DB::table('account')->where('user_id=?')->bindValues($this->user_id)->row();
         $data['title_herder']='帐户中心';
+
+
+        $data['carRents']=(new CarRent())->where("user_id=? and status=1")->bindValues($this->user_id)->orderBy('id desc')->get();
+
         $this->view('manage', $data);
     }
 
