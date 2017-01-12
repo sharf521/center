@@ -51,7 +51,7 @@ if($this->func=='index') :    ?>
                     <?
                     if ($row->status == 0) {
                         ?>
-                        <a href="<?= url("carRent/edit/?id={$row->id}") ?>">编辑</a> |
+                        <a href="<?= url("carRent/edit/?id={$row->id}") ?>" class="layui-btn layui-btn-mini">编辑</a> |
 
                         <?
                         $txt='生成还款列表，将不可编辑';
@@ -59,7 +59,7 @@ if($this->func=='index') :    ?>
                         $txt='还款列表';
                     }
                     ?>
-                    <a href="<?= url("carRent/repayment/?id={$row->id}") ?>"><?=$txt?></a>
+                    <a href="<?= url("carRent/repayment/?id={$row->id}") ?>" class="layui-btn layui-btn-mini"><?=$txt?></a>
                 </td>
             </tr>
         <? }?>
