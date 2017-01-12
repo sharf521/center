@@ -69,7 +69,10 @@
             </div>
         <?php elseif ($this->func == 'getPayPwd') : ?>
             <div class="box">
-                <h3>找回支付密码：</h3>
+                <br>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>找回支付密码</legend>
+                </fieldset>
                 <form method="post">
                     <table class="table_from">
                         <tr><td >用户名：</td><td><?=$user->username?></td></tr>
