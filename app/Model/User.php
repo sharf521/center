@@ -185,7 +185,8 @@ class User extends Model
             }
         }
         $user->password = md5(md5($data['password']) . $user->salt);
-        return $user->save();
+        $user->save();
+        return true;
     }
 
     //修改支付密码
@@ -200,7 +201,8 @@ class User extends Model
             }
         }
         $user->zf_password = md5(md5($data['zf_password']) . $user->salt);
-        return $user->save();
+        $user->save();
+        return true;
     }
 
     //验证支付密码
