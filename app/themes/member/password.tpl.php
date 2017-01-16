@@ -47,6 +47,7 @@
                         <div class="layui-input-inline">
                             <input type="password" name="old_password" placeholder="请输入原密码" class="layui-input" lay-verify="required" autocomplete="off"/>
                         </div>
+                        <div class="layui-form-mid layui-word-aux">初始密码为注册时填写的登陆密码</div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">新支付密码</label>

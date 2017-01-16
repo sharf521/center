@@ -54,7 +54,7 @@
                 <table width="100%">
                     <tr>
                         <td align="right" style="width:12rem;">原密码：</td>
-                        <td><input type="password" name="old_password" class="nam_inpou"/></td>
+                        <td><input type="password" name="old_password" class="nam_inpou"/>初始密码为注册时填写的登陆密码</td>
                     </tr>
                     <tr>
                         <td align="right" style="width:12rem;">新密码：</td>
