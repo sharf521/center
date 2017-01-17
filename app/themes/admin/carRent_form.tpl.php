@@ -39,7 +39,7 @@ if($this->func=='add' || $this->func=='edit') :    ?>
                     </select>
                 </div>
                 <div class="layui-input-inline">
-                    <select name="area" lay-filter="area" required>
+                    <select name="county" lay-filter="county" required>
                         <option></option>
                     </select>
                 </div>
@@ -125,7 +125,7 @@ if($this->func=='add' || $this->func=='edit') :    ?>
             $arr=explode('-',$row->area);
         ?>
         $(function () {
-            pca.init('select[name=province]', 'select[name=city]', 'select[name=area]', '<?=$arr[0]?>', '<?=$arr[1]?>', '<?=$arr[2]?>');
+            pca.init('select[name=province]', 'select[name=city]', 'select[name=county]', '<?=$arr[0]?>', '<?=$arr[1]?>', '<?=$arr[2]?>');
             layui.form('select').render();
             layui.form().on('submit(*)', function(data){
                 var form=data.form;

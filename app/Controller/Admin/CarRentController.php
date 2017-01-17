@@ -52,7 +52,7 @@ class CarRentController extends AdminController
             $carRent->user_id=(int)$request->post('user_id');
             $carRent->contacts=$request->post('contacts');
             $carRent->tel=$request->post('tel');
-            $carRent->area=$request->post('province').'-'.$request->post('city').'-'.$request->post('area');
+            $carRent->area=$request->post('province').'-'.$request->post('city').'-'.$request->post('county');
             $carRent->address=$request->post('address');
 
             $carRent->car_name=$request->post('car_name');
