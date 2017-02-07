@@ -11,6 +11,11 @@ class IndexController extends AdminController
         parent::__construct();
     }
 
+    public function test()
+    {
+        $this->view('layui.main');
+    }
+
     function index()
     {
         $permission_id = $this->permission_id;

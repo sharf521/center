@@ -10,6 +10,16 @@
 });*/
 
 
+function _initWH() {
+    var $content = $("#main-tab .layui-tab-content");
+    $content.width($(window).width() - 220);
+    $content.height($(window).height() - 140);
+    $content.find("iframe").each(function() {
+        $(this).height($content.height())
+        $(this).width($content.width())
+    });
+}
+
 $(function () {
     var layer = layui.layer
         ,util = layui.util
@@ -18,6 +28,43 @@ $(function () {
     util.fixbar();
     var element = layui.element();
     element.init();
+
+
+    $('.li_item').on('click',function () {
+
+
+
+
+        title = $(this).find('a').text();
+        url = $(this).find('a').attr('url');
+        // alert(url);
+
+        for (var i = 0; i <$('.x-iframe').length; i++) {
+            if($('.x-iframe').eq(i).attr('src')==url){
+                element.tabChange('x-tab', i);
+                return;
+            }
+        };
+
+        res = element.tabAdd('x-tab', {
+            title: title//用于演示
+            ,content: '<iframe frameborder="0" src="'+url+'" class="x-iframe"></iframe>'
+        });
+
+        _initWH();
+
+        element.tabChange('x-tab', $('.layui-tab-title li').length-1);
+
+        //$('.layui-tab-title li').eq(0).find('i').remove();
+    })
+
+
+/*    element.on('tab(demo)', function(data){
+        console.log(this); //当前Tab标题所在的原始DOM元素
+        console.log(data.index); //得到当前Tab的所在下标
+        console.log(data.elem); //得到当前的Tab大容器
+    });*/
+
     //上传文件
     if ($('.layui-upload-file').length>0){
         layui.use(['upload'], function(){

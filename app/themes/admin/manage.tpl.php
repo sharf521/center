@@ -40,7 +40,7 @@
                     if (isset($m['son']) && is_array($m['son'])) {
                         foreach ($m['son'] as $li) {
                             ?>
-                            <li><a href="<?= url($li['url']) ?>" target="iframe_main"><?= $li['name'] ?></a></li>
+                            <li class="li_item" style="cursor:pointer"><a url="<?= url($li['url']) ?>" target="iframe_main"><?= $li['name'] ?></a></li>
                             <?
                         }
                     }
@@ -52,19 +52,38 @@
         ?>
     </div>
     <div class="rightpanel">
-        <iframe marginheight="0" width="100%" marginwidth="0" frameborder="0" id="iframe_main" name="iframe_main"
-                src=""></iframe>
+
+        <div class="layui-tab layui-tab-card larry-tab-box" id="main-tab" lay-filter="x-tab" lay-allowclose="true">
+
+            <ul class="layui-tab-title">
+                <li class="layui-this">
+                    默认
+                    <i class="layui-icon layui-unselect layui-tab-close"></i>
+                </li>
+            </ul>
+            <div class="layui-tab-content" >
+                <div class="layui-tab-item layui-show">
+                    <iframe frameborder="0" class="x-iframe"></iframe>
+                </div>
+            </div>
+        </div>
+
+       <!-- <iframe marginheight="0" width="100%" marginwidth="0" frameborder="0" id="iframe_main" name="iframe_main" src=""></iframe>-->
     </div>
     <div class="clear"></div>
 </div>
 <script>
-    $(document).ready(function () {
-        initwh();
+    $(window).on("resize", function() {
         init_menu();
-        $(window).resize(function () {
-            initwh();
-        });
-    })
+        $('.leftpanel').css('height', ($(window).height() - 56 ));
+        //$('#iframe_main').css('width', ($(window).width() - 190));
+        //$('#iframe_main').css('height', ($(window).height() - 56 ));
+
+        _initWH();
+    }).resize();
 </script>
+
+
+
 </body>
 </html>
