@@ -8,7 +8,7 @@
         <form id="login_form" method="post">
             <h3>会员登录</h3>
             <div class="from_cont">
-                <p><input type="text" name="username"  placeholder="请输入账号"/><b></b></p>
+                <p><input type="text" name="username"  placeholder="请输入用户名"/><b></b></p>
                 <p><input type="password" name="password"  placeholder="请输入密码" /><b></b></p>
             </div>
             <p class="tip_most"><span>没有账号？<a href="/register">去注册</a></span>    <a href="/getPwd" style="float: right; margin-right: 10px;">忘记密码</a></p>

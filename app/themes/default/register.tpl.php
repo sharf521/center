@@ -8,9 +8,9 @@
         <form id="login_form" method="post">
             <h3>会员注册</h3>
             <div class="from_cont">
-                <p><input type="text" name="username"  placeholder="请输入账号"/><b></b></p>
+                <p><input type="text" name="username"  placeholder="请设置用户名"/><b></b></p>
                 <p><input type="text" name="email"  placeholder="请输入邮箱"/><b></b></p>
-                <p><input type="text" name="invite_user"  placeholder="推荐人"/><b></b></p>
+                <p><input type="text" name="invite_user"  placeholder="推荐人(可不填)"/><b></b></p>
                 <p><input type="password" name="password"  id="field" placeholder="请输入密码" /><b></b></p>
                 <p><input type="password" name="sure_password"  placeholder="确认密码"/><b></b></p>
             </div>

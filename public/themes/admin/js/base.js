@@ -12,11 +12,11 @@
 
 function _initWH() {
     var $content = $("#main-tab .layui-tab-content");
-    $content.width($(window).width() - 220);
-    $content.height($(window).height() - 140);
+    //$content.width($(window).width() - 220);
+    $content.height($(window).height() - 131);
     $content.find("iframe").each(function() {
         $(this).height($content.height())
-        $(this).width($content.width())
+        //$(this).width($content.width())
     });
 }
 
@@ -29,41 +29,33 @@ $(function () {
     var element = layui.element();
     element.init();
 
-
     $('.li_item').on('click',function () {
-
-
-
-
-        title = $(this).find('a').text();
-        url = $(this).find('a').attr('url');
-        // alert(url);
-
-        for (var i = 0; i <$('.x-iframe').length; i++) {
+        var title = $(this).find('a').text();
+        var url = $(this).find('a').attr('url');
+/*        for (var i = 0; i <$('.x-iframe').length; i++) {
             if($('.x-iframe').eq(i).attr('src')==url){
                 element.tabChange('x-tab', i);
                 return;
             }
-        };
-
-        res = element.tabAdd('x-tab', {
-            title: title//用于演示
-            ,content: '<iframe frameborder="0" src="'+url+'" class="x-iframe"></iframe>'
+        }*/
+        var isExist=false;
+        $('.x-iframe').each(function (index,obj) {
+            if($(obj).attr('src')==url){
+                element.tabChange('x-tab', index);
+                isExist=true;
+                return;
+            }
         });
-
-        _initWH();
-
-        element.tabChange('x-tab', $('.layui-tab-title li').length-1);
-
-        //$('.layui-tab-title li').eq(0).find('i').remove();
-    })
-
-
-/*    element.on('tab(demo)', function(data){
-        console.log(this); //当前Tab标题所在的原始DOM元素
-        console.log(data.index); //得到当前Tab的所在下标
-        console.log(data.elem); //得到当前的Tab大容器
-    });*/
+        if(isExist==false){
+            element.tabAdd('x-tab', {
+                title: title
+                ,content: '<iframe frameborder="0" src="'+url+'" class="x-iframe" width="100%"></iframe>'
+            });
+            element.tabChange('x-tab', $('.layui-tab-title li').length-1);
+            _initWH();
+            //$('.layui-tab-title li').eq(0).find('i').remove();
+        }
+    });
 
     //上传文件
     if ($('.layui-upload-file').length>0){
