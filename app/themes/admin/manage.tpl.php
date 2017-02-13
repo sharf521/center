@@ -6,18 +6,38 @@
     <script language="javascript" src="/plugin/js/jquery.js"></script>
     <script charset="utf-8" src="/plugin/js/My97DatePicker/WdatePicker.js"></script>
     <link rel="stylesheet" href="/plugin/layui/css/layui.css" />
-    <!--     <script src="/plugin/layui/layui.js"></script>-->
     <script src="/plugin/layui/lay/dest/layui.all.js"></script>
     <link href="/themes/admin/css/admin.css" rel="stylesheet">
     <script src="/themes/admin/js/base.js"></script>
     <title>管理中心</title>
     <style>
+        /*.topbox{width:100%; background:#fff; height:54px; overflow: hidden; border-top:2px solid #2baab1;  box-shadow: 0 1px 1px rgba(0,0,0,.15);  -moz-box-shadow: 0 1px 1px rgba(0,0,0,.15);  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.15); }*/
+        .topbox h3{ float:left;font-weight:normal; font-size:18px; color:#2baab1; line-height:70px; padding:0 0 0 20px;}
+        .topbox h3 i{ margin-right:6px; font-size:24px;}
+
+        .nav{ float:left; margin-left:50px;}
+        .nav li{float:left; margin-left:20px;  cursor:pointer;color:#018dba; font-size:14px; padding:0 21px; line-height:65px;}
+        .nav li.checkit{ color:#FFF; background-color:#4cd1fc;}
+        .nav li:hover{background-color:#4cd1fc; color:#FFF;}
+
+        .topnav{ top:10px; position:absolute; right:30px;}
+        .topnav li{ float:left;}
+
+        .leftpanel{ background-color:#1c2b36;overflow-y: auto}
+        .leftpanel h1{ font-size:16px; color:#f9691a; margin-left:36px; margin-top:30px; display: none}
+        /*二级菜单*/
+        .menu a{display: block; text-decoration: none; font-size:14px}
+        .menu li{line-height:42px;font-family: "微软雅黑";font-size: 14px;  border-bottom: 1px solid #17232c;}
+        .menu li a{ color: #7ca0bb; padding-left: 20px;}
+        .menu li a:hover{color: #fff; border-left: 5px #1AA094 solid; padding-left: 25px;background-color: #17232c;}
+        li.menuSelectd a{ color: #fff; border-left: 5px #1AA094 solid; padding-left: 25px;background-color: #17232c;}
+
+        .layui-tab{ margin: 0px; }
         .layui-tab-content {padding:0px;margin:0px;}
-        .larry-tab-box>.layui-tab-title {border-bottom:1px solid #1AA094;}
+        .larry-tab-box>.layui-tab-title {border-bottom:1px solid #efefef;}
         .larry-tab-box>.layui-tab-title li{ padding-left: 20px;}
         .larry-tab-box>.layui-tab-title .layui-this {color:white;background-color:#1AA094;}
         .larry-tab-box>.layui-tab-title .layui-this:after {border-bottom:0;}
-
         .layui-tab-card {border: 0px;}
     </style>
 </head>
@@ -93,24 +113,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- <iframe marginheight="0" width="100%" marginwidth="0" frameborder="0" id="iframe_main" name="iframe_main" src=""></iframe>-->
         </div>
 </div>
-
-
 <script>
     $(window).on("resize", function() {
         init_menu();
-        $('.leftpanel').css('height', ($(window).height() - 56 ));
-        //$('#iframe_main').css('width', ($(window).width() - 190));
-        //$('#iframe_main').css('height', ($(window).height() - 56 ));
-
         _initWH();
     }).resize();
 </script>
-
-
-
 </body>
 </html>

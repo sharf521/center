@@ -13,7 +13,7 @@
 function _initWH() {
     var $content = $("#main-tab .layui-tab-content");
     //$content.width($(window).width() - 220);
-    $content.height($(window).height() - 131);
+    $content.height($(window).height() - 115);
     $content.find("iframe").each(function() {
         $(this).height($content.height())
         //$(this).width($content.width())
