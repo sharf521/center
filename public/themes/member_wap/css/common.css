@@ -82,6 +82,6 @@ footer li p{ line-height: 4rem; font-size: 3rem;}
 .header a{text-decoration:none; color: #666;}
 .header .header_left{  padding:0 1rem; display: block; float: left;width: 10rem;}
 .header h1{text-align: center;font-size: 3rem;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;font-weight: normal; color: #f60;}
-.header .header_right{ display: block;  padding:0 1rem; float: right; width: 10rem;}
+.header .header_right{ display: block;  padding:0 1rem; float: right; width: 10rem; text-align: right}
 
 .margin_header {    margin-top: 10rem}
