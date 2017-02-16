@@ -31,7 +31,7 @@
             </div>
             <?php elseif($this->func=='bank'): ?>
             <div class="header">
-                <a class="header_left" href="<?=url('')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+                <a class="header_left" href="javascript:history.go(-1)" ><i class="iconfont">&#xe603;</i>返回</a>
                 <span class="header_right">&nbsp;</span>
                 <h1>我的银行卡</h1>
             </div>

@@ -3,11 +3,12 @@ require 'header.php';
 $region = new \App\Model\Region();
 $sex_array = array('', '男', '女');
 ?>
-<nav>
-    <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />返回</a></span>
-</nav>
+<div class="header">
+    <a class="header_left" href="javascript:history.go(-1)" ><i class="iconfont">&#xe603;</i>返回</a>
+    <span class="header_right"><a href="<?= url('account/log'); ?>">明细</a></span>
+    <h1>实名认证</h1>
+</div>
 <script src="/plugin/js/ajaxfileupload.js"></script>
-<div class="m_regtilinde">实名认证</div>
 <?
 if ($userInfo->card_status == 1) {
     echo '<div class="alert-warning" role="alert">您己经上传资料，请等待审核！</div>';
@@ -17,6 +18,7 @@ if ($userInfo->card_status == 3) {
 }
 //己审核
 if ($userInfo->card_status == 2) : ?>
+    <div class="margin_header"></div>
     <div class="alert-warning" role="alert">您己经通过实名认证！</div>
     <table class="table_from">
         <tr>
@@ -53,7 +55,7 @@ if ($userInfo->card_status == 2) : ?>
     </table>
 <?php else : ?>
     <script src="/plugin/js/ajaxfileupload.js?111"></script>
-    <form method="post">
+    <form method="post" class="margin_header">
         <table class="table_from">
             <tr>
                 <td>用户名：</td>
