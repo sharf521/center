@@ -2,7 +2,7 @@
 <?php if($this->func=='index') : ?>
     <div class="header">
         <a class="header_left" href="<?=url('')?>" ><i class="iconfont">&#xe603;</i>返回</a>
-        <span class="header_right"><a href="<?= url('account/log'); ?>">资金明细</a></span>
+        <span class="header_right"><a href="<?= url('account/log'); ?>">明细</a></span>
         <h1>我的资金</h1>
     </div>
     <div class="lump margin_header">

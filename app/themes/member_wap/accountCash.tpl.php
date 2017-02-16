@@ -2,7 +2,7 @@
 <?php if($this->func=='cash') :  ?>
     <div class="header">
         <a class="header_left" href="<?=url('account')?>" ><i class="iconfont">&#xe603;</i>返回</a>
-        <span class="header_right"><a href="<?= url('account/cashLog'); ?>">提现记录</a></span>
+        <span class="header_right"><a href="<?= url('account/cashLog'); ?>">记录</a></span>
         <h1>我要提现</h1>
     </div>
     <div class="show_box" style="margin-top: 10rem">
