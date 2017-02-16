@@ -5,7 +5,7 @@ $sex_array = array('', '男', '女');
 ?>
 <div class="header">
     <a class="header_left" href="javascript:history.go(-1)" ><i class="iconfont">&#xe603;</i>返回</a>
-    <span class="header_right"><a href="<?= url('account/log'); ?>">明细</a></span>
+    <span class="header_right">&nbsp;</span>
     <h1>实名认证</h1>
 </div>
 <script src="/plugin/js/ajaxfileupload.js"></script>
@@ -109,7 +109,7 @@ if ($userInfo->card_status == 2) : ?>
                         </span>
                     <div class="upload-upimg">
                         <span class="_upload_f">上传文件</span>
-                        <input type="file" id="upload_card1" name="file"
+                        <input type="file" id="upload_card1" name="file" accept="image/*"
                                onchange="upload_image('card1','card1')"/>
                     </div>
                 </td>
@@ -127,7 +127,7 @@ if ($userInfo->card_status == 2) : ?>
                         </span>
                     <div class="upload-upimg">
                         <span class="_upload_f">上传文件</span>
-                        <input type="file" id="upload_card2" name="file"
+                        <input type="file" id="upload_card2" name="file" accept="image/*"
                                onchange="upload_image('card2','card2')"/>
                     </div>
                 </td>

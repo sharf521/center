@@ -16,7 +16,7 @@
                             <span class="photo">
                                 <span id="upload_span_headimgurl"><img src="<?=$user->headimgurl?>"></span>
                                 <input type="hidden" name="headimgurl" value="<?=$user->headimgurl?>" id="headimgurl">
-                                <input type="file" id="upload_headimgurl" name="file" onchange="upload_image('headimgurl','headimgurl')">
+                                <input type="file" id="upload_headimgurl" accept="image/*" name="file" onchange="upload_image('headimgurl','headimgurl')">
                             </span></td>
                         </tr>
                         <tr><td align="right" style="width:12rem;">联系电话：</td><td><input type="text" name="tel" value="<?=$user->tel?>" class="nam_inpou" /></td></tr>
