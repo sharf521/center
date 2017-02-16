@@ -1,11 +1,12 @@
 <?php require 'header.php';?>
-<nav>
-    <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />返回</a></span>
-</nav>
         <?php if($this->func=='userInfo'): ?>
+            <div class="header">
+                <a class="header_left" href="<?=url('')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+                <span class="header_right">&nbsp;</span>
+                <h1>编辑个人资料</h1>
+            </div>
             <script src="/plugin/js/ajaxfileupload.js"></script>
-            <div class="m_regtilinde">编辑个人资料</div>
-            <div class="ca_d_table input_right">
+            <div class="ca_d_table input_right margin_header">
                 <form method="post">
                     <table width="100%">
                         <tbody>
@@ -29,8 +30,13 @@
                 </form>
             </div>
             <?php elseif($this->func=='bank'): ?>
-            <div class="m_regtilinde">我的银行卡</div>
-            <div class="ca_d_table">
+            <div class="header">
+                <a class="header_left" href="<?=url('')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+                <span class="header_right">&nbsp;</span>
+                <h1>我的银行卡</h1>
+            </div>
+
+            <div class="ca_d_table margin_header">
                 <? if($userInfo->card_status!=2) : ?>
                     <div class="alert-warning" role="alert">您还没有完成实名认证，请先完成<?=$this->anchor('user/realName','>>实名认证>>');?></div>
                 <?php else : ?>

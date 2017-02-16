@@ -1,10 +1,11 @@
 <?php require 'header.php';?>
 <?php if($this->func=='changePwd'):?>
-    <nav>
-        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />返回</a></span>
-    </nav>
-    <div class="m_regtilinde">密码修改</div>
-    <div class="view">
+    <div class="header">
+        <a class="header_left" href="<?=url('')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+        <span class="header_right">&nbsp;</span>
+        <h1>密码修改</h1>
+    </div>
+    <div class="view margin_header">
         <ul>
             <li <? if($this->func=='changePwd'){echo 'class="cur"';}?>><a  href="<?=url('password/changePwd')?>">账户密码</a></li>
             <li <? if($this->func=='changePayPwd'){echo 'class="cur"';}?>><a href="<?=url('password/changePayPwd')?>">修改支付密码</a></li>
@@ -37,11 +38,12 @@
         </form>
     </div>
 <?php elseif($this->func=='changePayPwd') : ?>
-    <nav>
-        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />首页</a></span>
-    </nav>
-    <div class="m_regtilinde">修改支付密码</div>
-    <div class="view">
+    <div class="header">
+        <a class="header_left" href="<?=url('')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+        <span class="header_right">&nbsp;</span>
+        <h1>修改支付密码</h1>
+    </div>
+    <div class="view margin_header">
         <ul>
             <li <? if($this->func=='changePwd'){echo 'class="cur"';}?>><a  href="<?=url('password/changePwd')?>">账户密码</a></li>
             <li <? if($this->func=='changePayPwd'){echo 'class="cur"';}?>><a href="<?=url('password/changePayPwd')?>">修改支付密码</a></li>
@@ -73,11 +75,12 @@
     </div>
 <?php elseif ($this->func == 'getPayPwd') : ?>
     <div class="box">
-        <nav>
-            <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />首页</a></span>
-        </nav>
-        <div class="m_regtilinde">找回支付密码</div>
-        <div class="view">
+        <div class="header">
+            <a class="header_left" href="<?=url('')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+            <span class="header_right">&nbsp;</span>
+            <h1>找回支付密码</h1>
+        </div>
+        <div class="view margin_header">
             <ul>
                 <li <? if($this->func=='changePwd'){echo 'class="cur"';}?>><a  href="<?=url('password/changePwd')?>">账户密码</a></li>
                 <li <? if($this->func=='changePayPwd'){echo 'class="cur"';}?>><a href="<?=url('password/changePayPwd')?>">修改支付密码</a></li>

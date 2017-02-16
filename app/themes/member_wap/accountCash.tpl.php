@@ -1,10 +1,11 @@
 <?php require 'header.php';?>
-    <nav>
-        <span><a href="/"><img src="/themes/member_wap/images/icon_right_hui.png" />返回</a></span>
-    </nav>
 <?php if($this->func=='cash') :  ?>
-    <div class="m_regtilinde">我要提现  <a href="<?=url('account/cashLog')?>">提现记录</a></div>
-    <div class="show_box">
+    <div class="header">
+        <a class="header_left" href="<?=url('account')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+        <span class="header_right"><a href="<?= url('account/cashLog'); ?>">提现记录</a></span>
+        <h1>我要提现</h1>
+    </div>
+    <div class="show_box" style="margin-top: 10rem">
         <? if($bank->card_no ==""){?>
             <div class="alert-warning" role="alert">您还没有填写银行账户，请先填写<?=$this->anchor('user/bank','>>银行账户>>');?></div>
         <? }else{?>
@@ -30,7 +31,12 @@
         <? }?>
     </div>
 <? elseif ($this->func=='cashLog') :  ?>
-    <div class="date_box">
+    <div class="header">
+        <a class="header_left" href="<?=url('account/cash')?>" ><i class="iconfont">&#xe603;</i>返回</a>
+        <span class="header_right">&nbsp;</span>
+        <h1>提现记录</h1>
+    </div>
+    <div class="date_box" style="margin-top: 10rem">
         <form method="get">
             时间： <input type="text" readonly="readonly" name="starttime" id="beginDate" value="<?=$_GET['starttime']?>"/> -
             <input type="text" readonly="readonly" name="endtime" id="endDate" value="<?=$_GET['endtime']?>"/>

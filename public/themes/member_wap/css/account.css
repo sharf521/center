@@ -17,7 +17,7 @@
 .switch{ height: 8rem; line-height: 8rem; font-size: 2.6rem; width: 90%; margin: 0 auto;}
 .switch li{ float: left; width: 50%; text-align: center; border-bottom: 2px solid #ddd;}
 .switch li.cur{ border-bottom: 2px solid #f60; color: #f60;}
-.view{height: 8rem; line-height: 8rem; font-size: 2.6rem; width: 90%; margin: 0 auto;}
+.view{height: 8rem; line-height: 8rem; font-size: 2.6rem; width: 90%;}
 .view li{ float: left; width: 33.33%; text-align: center; border-bottom: 2px solid #ddd;}
 .view li.cur{ border-bottom: 2px solid #f60; color: #f60;}
 .view li.cur a{color: #f60;}

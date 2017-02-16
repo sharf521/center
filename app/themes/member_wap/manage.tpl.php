@@ -13,28 +13,20 @@
 </div>
 <div class="set" style="margin-bottom: 10rem">
     <ul>
-        <li><a href="<?= url('account/index'); ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
+        <li><a href="<?= url('account/index'); ?>"><i><img
+                        src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/pic01.png"></b><span>我的资金</span></a></li>
 
-        <li><a href="<?= url('user/realName'); ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
+        <li><a href="<?= url('user/realName'); ?>"><i><img
+                        src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/icon_cash.png"></b><span>实名认证</span></a></li>
-    </ul>
-    <ul>
 
-<!--        <li><a href="recharge.html"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img-->
-<!--                        src="/themes/member_wap/images/icon_recharge.png"></b><span>账户充值</span></a></li>-->
-        <li><a href="<?=url('account/cash')?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
-                        src="/themes/member_wap/images/icon_exchange.png"></b><span>账户提现</span></a></li>
-    </ul>
-
-<!--    <ul>-->
-<!--        <li><a href="integral_eschange.html"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img-->
-<!--                        src="/themes/member_wap/images/icon_exchange.png"></b><span>积分兑换</span></a></li>-->
-<!--    </ul>-->
-    <ul>
         <li><a href="<?= url('user/bank'); ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/bank.png"></b><span>我的银行卡</span></a></li>
-        <li><a href="<?=url('app')?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img src="/themes/member_wap/images/icon_exchange.png"></b><span>下载APP</span></a></li>
+    </ul>
+    <ul>
+        <li><a href="<?= url('app') ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
+                        src="/themes/member_wap/images/icon_exchange.png"></b><span>下载APP</span></a></li>
     </ul>
     <ul>
         <li><a href="<?= url('password/changePwd'); ?>"><i><img

@@ -2,26 +2,17 @@
 <?php if($this->func=='index') : ?>
     <div class="header">
         <a class="header_left" href="<?=url('')?>" ><i class="iconfont">&#xe603;</i>返回</a>
-        <span class="header_right">&nbsp;</span>
+        <span class="header_right"><a href="<?= url('account/log'); ?>">资金明细</a></span>
         <h1>我的资金</h1>
     </div>
-    <div class="mode" style="display: none">
-        <p>可用资金</p>
-        <h3><?=(float)$account->funds_available?></h3>
-        <a href="<?= url('account/log'); ?>" class="link_bill">查看记录</a>
-    </div>
-    <div class="lump" style="margin-top: 10rem">
+    <div class="lump margin_header">
         <ul>
             <li>可用资金<br/><span><?=(float)$account->funds_available?></span></li>
             <li>冻结资金<br/><span><?=(float)$account->funds_freeze?></span></li>
-
-
             <li>可用积分<br/><span><?=(float)$account->integral_available?></span></li>
             <li>冻结积分<br/><span><?=(float)$account->integral_freeze?></span></li>
-
             <li>周转金<br/><span><?=(float)$account->turnover_available?></span></li>
             <li>周转金额度<br/><span><?=(float)$account->turnover_credit?></span></li>
-
             <li>保证金<br/><span><?=(float)$account->security_deposit?></span></li>
             <li></li>
         </ul>
@@ -30,7 +21,7 @@
     <br><br><br><br><br><br><br><br>
     <div class="mode_foot">
         <ul>
-            <li><a href="<?=url('account/log')?>">查看记录</a></li>
+            <li><a href="<?=url('account/log')?>">充值</a></li>
             <li><a href="<?=url('account/cash')?>">提现</a></li>
         </ul>
     </div>
