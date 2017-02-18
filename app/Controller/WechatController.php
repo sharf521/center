@@ -46,7 +46,7 @@ class WechatController extends Controller
             'out_trade_no'     => time().rand(10000,99999),
             'total_fee'        => math(88,100,'*',2),
             'attach'=>'',
-            'openid'=>$openid,
+            'openid'=>$request->get('wechat_openid'),
             'notify_url'       => "http://{$_SERVER['HTTP_HOST']}/index.php/wxapi/payNotify/"
         ];
         $order=new Order($attributes);
