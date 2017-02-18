@@ -1,28 +1,21 @@
 <script charset="utf-8" src="/plugin/layer.mobile/layer.js"></script>
-<?php
-if(session('msg'))
-{
-    ?>
-    <script>
+<script>
+    window.onload=function(){
+        <?php if (session('msg')){?>
         layer.open({
-            content: '<?=session('msg')?>',
-            style: 'font-size:2.8rem;padding: 2rem 1.5rem;line-height: 2.2rem;',
-            time: 3
+            content: '<?=session('msg')?>'
+            ,skin: 'msg'
+            //,time: 5
         });
-    </script>
-    <?
-}
-if(session('error'))
-{
-    ?>
-    <script>
+        <? }
+        if (session('error')){?>
         layer.open({
-            content: '<?=session('error')?>',
-            style: 'font-size:2.8rem;padding: 2rem 1.5rem;line-height: 2.2rem;'
+            content: '<?=session('error')?>'
+            ,skin: 'msg'
+            ,time: 200 //200秒后自动关闭
         });
-    </script>
-    <?
-}
-?>
+        <?php } ?>
+    }
+</script>
 </body>
 </html>
