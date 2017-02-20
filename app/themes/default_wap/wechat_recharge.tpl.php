@@ -95,7 +95,7 @@
         </div>
     </div>
     <div class="weui-btn-area">
-        <a class="weui-btn weui-btn_primary">立即充值</a>
+        <a class="weui-btn weui-btn_primary btn_recharge">立即充值</a>
     </div>
 </form>
 
@@ -136,18 +136,19 @@
     });
     wx.config(<?=$config?>);
     wx.ready(function () {
-        $(".weui-btn").click(function () {
-            wx.chooseWXPay({
-                timestamp: '<?=$pay['timestamp']?>',
-                nonceStr: '<?=$pay['nonceStr']?>',
-                package: '<?=$pay['package']?>',
-                signType: 'MD5',
-                paySign: '<?=$pay['paySign']?>',
-                success: function (res) {
-                    alert('支付成功！');
-                    //window.location = "/index.php/weixin/orderShow/?task_id=<?=$task->id?>";
-                }
-            });
+        $(".btn_recharge").click(function () {
+
+        });
+        wx.chooseWXPay({
+            timestamp: '<?=$pay['timestamp']?>',
+            nonceStr: '<?=$pay['nonceStr']?>',
+            package: '<?=$pay['package']?>',
+            signType: 'MD5',
+            paySign: '<?=$pay['paySign']?>',
+            success: function (res) {
+                alert('支付成功！');
+                //window.location = "/index.php/weixin/orderShow/?task_id=<?=$task->id?>";
+            }
         });
     });
 </script>
