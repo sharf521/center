@@ -29,7 +29,7 @@ class WechatController extends Controller
     {
 
     }
-    
+
     public function recharge(Request $request,User $user)
     {
         if(!$this->is_inWeChat){
@@ -73,16 +73,15 @@ class WechatController extends Controller
             $data['config']=$js->config(array('chooseWXPay','openAddress','checkJsApi'), true);
             $pay=$weChat->getPayParams($result->prepay_id);
             $data['pay']=$pay;
-            //$task->out_trade_no=$attributes['out_trade_no'];
-            //$task->save();
         }
+        var_dump($result);
         $data['trade_no']=$attributes['out_trade_no'];
         $this->title='我要冲值';
         $data['money']=$money;
         $data['url']=$url;
         $this->view('wechat_recharge',$data);
     }
-    
+
     public function payPre(Request $request,AccountRecharge $recharge)
     {
         if(!$this->is_inWeChat){
