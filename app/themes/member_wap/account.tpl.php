@@ -21,7 +21,7 @@
     <br><br><br><br><br><br><br><br>
     <div class="mode_foot">
         <ul>
-            <li><a href="javascript:alert('正在努力中')">充值</a></li>
+            <li><a href="<?=url('account/recharge')?>">充值</a></li>
             <li><a href="<?=url('account/cash')?>">提现</a></li>
         </ul>
     </div>
