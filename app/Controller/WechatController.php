@@ -33,8 +33,8 @@ class WechatController extends Controller
     public function recharge(Request $request,User $user)
     {
         if(!$this->is_inWeChat){
-            echo ' 仅限微信内调用！';
-            exit;
+            //echo ' 仅限微信内调用！';
+            //exit;
         }
         $money=abs((float)$request->get('money'));
         $url=$request->get('url');

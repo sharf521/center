@@ -10,6 +10,15 @@ header('Cache-Control: private',false); // required for certain browsers
 header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
 header('Expires: '.gmdate('D, d M Y H:i:s') . ' GMT');
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+/*//获取当前一级域名
+$domain = strtolower($_SERVER['HTTP_HOST']);
+$domain = explode('.', $domain);
+if ($domain[0] == 'www') {
+    unset($domain[0]);
+}
+$domain = implode('.', $domain);
+//多主机共享保存 SESSION ID 的 COOKIE
+ini_set('session.cookie_domain',$domain);*/
 session_cache_limiter('private,must-revalidate');
 session_start();
 date_default_timezone_set('Asia/Shanghai');//时区配置

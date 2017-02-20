@@ -55,10 +55,19 @@
 
 <div class="weui-mask hide"></div>
 <div class="div_bot">
-    充值金额：
-    <input style="line-height: 28px; border: 1px solid #ccc;" size="10" onkeyup="value=value.replace(/[^0-9.]/g,'')" type="tel" name="money" placeholder="￥" value=""/>
-    <input type="button" class="bot_btn1 weui-btn weui-btn_mini weui-btn_primary" value="确定">
-    <input type="button" class="bot_btn2 weui-btn weui-btn_mini weui-btn_plain-primary" value="取消">
+    <div class="weui-form-preview">
+        <div style=" line-height: 30px; padding: 10px 20px;">微信充值</div>
+        <div class="weui-form-preview__bd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">充值金额</label>
+                <span class="weui-form-preview__value"><input class="weui-input" onkeyup="value=value.replace(/[^0-9.]/g,'')" type="tel" name="money" placeholder="￥" value=""/></span>
+            </div>
+        </div>
+        <div class="weui-form-preview__ft">
+            <span class="bot_btn1 weui-form-preview__btn weui-form-preview__btn_primary">确定</span>
+            <span class="bot_btn2 weui-form-preview__btn weui-form-preview__btn_default">取消</span>
+        </div>
+    </div>
 </div>
 
 
@@ -69,7 +78,15 @@
     wx.config(<?=$config?>);
     wx.ready(function () {
         $(".btn_recharge").click(function () {
-            $.post("<?=url('wechat/payPre/')?>", { user_id: "<?=$user->id?>", trade_no: "<?=$trade_no?>",money:"<?=$money?>" }, function(data){
+            if(money<0 || parseFloat(money)==0){
+                layer.open({
+                    content: '请选择金额！'
+                    ,skin: 'msg'
+                    ,time: 2
+                });
+                return ;
+            }
+            $.post("<?=url('wechat/payPre/')?>", { user_id: "<?=$user->id?>", trade_no: "<?=$trade_no?>",money:money }, function(data){
                 if(data=='true'){
                     wx.chooseWXPay({
                         timestamp: '<?=$pay['timestamp']?>',
