@@ -133,18 +133,23 @@
             window.location=href+'&money='+m;
         });
     });
+
     wx.config(<?=$config?>);
     wx.ready(function () {
         $(".btn_recharge").click(function () {
-            wx.chooseWXPay({
-                timestamp: '<?=$pay['timestamp']?>',
-                nonceStr: '<?=$pay['nonceStr']?>',
-                package: '<?=$pay['package']?>',
-                signType: 'MD5',
-                paySign: '<?=$pay['paySign']?>',
-                success: function (res) {
-                    alert('支付成功！');
-                    //window.location = "/index.php/weixin/orderShow/?task_id=<?=$task->id?>";
+            $.post("<?=url('wechat/payPre/')?>", { user_id: "<?=$user->id?>", trade_no: "<?=$trade_no?>",money:"<?=$money?>" }, function(data){
+                if(data=='true'){
+                    wx.chooseWXPay({
+                        timestamp: '<?=$pay['timestamp']?>',
+                        nonceStr: '<?=$pay['nonceStr']?>',
+                        package: '<?=$pay['package']?>',
+                        signType: 'MD5',
+                        paySign: '<?=$pay['paySign']?>',
+                        success: function (res) {
+                            alert('支付成功！');
+                            //window.location = "/index.php/weixin/orderShow/?task_id=<?=$task->id?>";
+                        }
+                    });
                 }
             });
         });

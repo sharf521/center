@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Model\AccountRecharge;
 use App\Model\User;
 use App\WeChat;
 use EasyWeChat\Payment\Order;
@@ -48,7 +49,6 @@ class WechatController extends Controller
         }
         $data['user']=$user;
 
-
         $weChat=new WeChat();
         $app=$weChat->app;
         $payment = $app->payment;
@@ -71,12 +71,28 @@ class WechatController extends Controller
             //$task->out_trade_no=$attributes['out_trade_no'];
             //$task->save();
         }
-        var_dump($data);
-
+        $data['trade_no']=$attributes['out_trade_no'];
         $this->title='我要冲值';
         $data['money']=$money;
         $data['url']=$url;
         $this->view('wechat_recharge',$data);
+    }
+    
+    public function payPre(Request $request,AccountRecharge $recharge)
+    {
+        $user_id=(int)$request->post('user_id');
+        $money=(float)$request->post('money');
+        $recharge->user_id=$user_id;
+        $recharge->trade_no=$request->post('trade_no');
+        $recharge->status=0;
+        $recharge->money=$money;
+        $recharge->type=1;
+        $recharge->remark='wechat';
+        $recharge->fee=0;
+        $recharge->addip=ip();
+        $recharge->save();
+        echo  'true';
+        return 'true';
     }
 
     public function payNotify()
@@ -85,28 +101,33 @@ class WechatController extends Controller
         $app=$weChat->app;
         $response = $app->payment->handleNotify(function($notify, $successful){
             // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
-            $id=(int)$notify->attach;
+            //$id=(int)$notify->attach;
             $out_trade_no=$notify->out_trade_no;
 
-
-
-            if (!$task) { // 如果订单不存在
+            $recharge=new AccountRecharge();
+            $recharge=$recharge->where('trade_no=?')->bindValues($out_trade_no)->first();
+            if(! $recharge->is_exist){
+                // 如果订单不存在
                 return 'Order not exist.'; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
+            }else{
+                // 检查订单是否已经更新过支付状态
+                if ($recharge->status!=0 || $recharge->trade_no !=$out_trade_no) {
+                    return true; // 已经支付成功了就不再更新了
+                }
+                // 用户是否支付成功
+                if ($successful) {
+                    $recharge->money=(float)math($notify->total_fee,100,'/',2);
+                    $recharge->verify_userid=0;
+                    $recharge->verify_time=time();
+                    $recharge->verify_remark='';
+                    $recharge->status = 1;
+                    $recharge->save(); // 保存
+                } else {
+                    // 用户支付失败
+                }
             }
-            // 如果订单存在
-            // 检查订单是否已经更新过支付状态
-            if ($task->status!=3 || $task->out_trade_no !=$out_trade_no) {
-                return true; // 已经支付成功了就不再更新了
-            }
-            // 用户是否支付成功
-            if ($successful) {
-                $task->paytime = time();
-                $task->paymoney=(float)math($notify->total_fee,100,'/',2);
-                $task->status = 4;
-                $task->save(); // 保存
-            } else {
-                // 用户支付失败
-            }
+
+
             return true; // 返回处理完成
         });
         $response->send();
