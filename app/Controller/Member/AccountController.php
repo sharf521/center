@@ -28,7 +28,7 @@ class AccountController extends MemberController
     public function recharge(Request $request)
     {
         if($this->is_wap){
-            $url='http://wx02560f146a566747.wechat.yuantuwang.com/user/weChatRecharge/?money=0&url='.'http://'.$_SERVER['HTTP_HOST'].$this->self_url;
+            $url='http://wx02560f146a566747.wechat.yuantuwang.com/user/weChatRecharge/?id='.$this->user_id.'&money=0&url='.'http://'.$_SERVER['HTTP_HOST'].$this->self_url;
             redirect($url);
             exit;
         }
