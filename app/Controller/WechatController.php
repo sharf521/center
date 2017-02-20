@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Model\Account;
 use App\Model\AccountRecharge;
 use App\Model\User;
 use App\WeChat;
@@ -87,7 +88,7 @@ class WechatController extends Controller
         $recharge->status=0;
         $recharge->money=$money;
         $recharge->type=1;
-        $recharge->remark='wechat';
+        $recharge->remark='微信充值';
         $recharge->fee=0;
         $recharge->addip=ip();
         $recharge->save();
@@ -103,9 +104,7 @@ class WechatController extends Controller
             // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
             //$id=(int)$notify->attach;
             $out_trade_no=$notify->out_trade_no;
-
-            $recharge=new AccountRecharge();
-            $recharge=$recharge->where('trade_no=?')->bindValues($out_trade_no)->first();
+            $recharge=(new AccountRecharge())->where('trade_no=?')->bindValues($out_trade_no)->first();
             if(! $recharge->is_exist){
                 // 如果订单不存在
                 return 'Order not exist.'; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
@@ -121,13 +120,18 @@ class WechatController extends Controller
                     $recharge->verify_time=time();
                     $recharge->verify_remark='';
                     $recharge->status = 1;
-                    $recharge->save(); // 保存
+                    $inser_id=$recharge->save(true);
+
+                    $log = array();
+                    $log['user_id'] = $recharge->user_id;
+                    $log['type'] = 1;
+                    $log['funds_available'] = $recharge->money;
+                    $log['remark'] = "充值ID：" . $inser_id;
+                    (new Account())->addLog($log);
                 } else {
                     // 用户支付失败
                 }
             }
-
-
             return true; // 返回处理完成
         });
         $response->send();
