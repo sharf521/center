@@ -38,7 +38,7 @@
                         src="/themes/member_wap/images/icon_bill.png"></b><span>退出</span></a></li>
     </ul>
 </div>
-<footer>
+<footer style="display: none">
     <script>
         function mAlert()
         {
