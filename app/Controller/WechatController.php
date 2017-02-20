@@ -22,6 +22,11 @@ class WechatController extends Controller
     {
         parent::__construct();
     }
+
+    public function index()
+    {
+
+    }
     
     public function recharge(Request $request,User $user)
     {
@@ -54,7 +59,7 @@ class WechatController extends Controller
             'total_fee'        => math($money,100,'*',2),
             'attach'=>'',
             'openid'=>$request->get('wechat_openid'),
-            'notify_url'       => "http://{$_SERVER['HTTP_HOST']}/index.php/wxapi/payNotify/"
+            'notify_url'       => "http://centerwap.yuantuwang.com/index.php/wechat/payNotify/"
         ];
         $order=new Order($attributes);
         $result = $payment->prepare($order);
@@ -66,11 +71,44 @@ class WechatController extends Controller
             //$task->out_trade_no=$attributes['out_trade_no'];
             //$task->save();
         }
-
+        var_dump($data);
 
         $this->title='我要冲值';
         $data['money']=$money;
         $data['url']=$url;
         $this->view('wechat_recharge',$data);
+    }
+
+    public function payNotify()
+    {
+        $weChat=new WeChat();
+        $app=$weChat->app;
+        $response = $app->payment->handleNotify(function($notify, $successful){
+            // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
+            $id=(int)$notify->attach;
+            $out_trade_no=$notify->out_trade_no;
+
+
+
+            if (!$task) { // 如果订单不存在
+                return 'Order not exist.'; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
+            }
+            // 如果订单存在
+            // 检查订单是否已经更新过支付状态
+            if ($task->status!=3 || $task->out_trade_no !=$out_trade_no) {
+                return true; // 已经支付成功了就不再更新了
+            }
+            // 用户是否支付成功
+            if ($successful) {
+                $task->paytime = time();
+                $task->paymoney=(float)math($notify->total_fee,100,'/',2);
+                $task->status = 4;
+                $task->save(); // 保存
+            } else {
+                // 用户支付失败
+            }
+            return true; // 返回处理完成
+        });
+        $response->send();
     }
 }
