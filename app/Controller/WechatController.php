@@ -14,6 +14,7 @@ use App\WeChat;
 use EasyWeChat\Payment\Order;
 use System\Lib\DB;
 use System\Lib\Request;
+use System\Lib\Session;
 
 class WechatController extends Controller
 {
@@ -24,6 +25,11 @@ class WechatController extends Controller
     
     public function recharge(Request $request,User $user)
     {
+        $money=abs((float)$request->get('money'));
+        if($money>5000){
+            $money=5000;
+            (new Session())->flash('error','单次最多充值5000');
+        }
         $id=$request->get('id');
         $openid=$request->get('openid');
         $appid=$request->get('appid');
@@ -44,7 +50,7 @@ class WechatController extends Controller
             'trade_type'       => 'JSAPI', // JSAPI，NATIVE，APP...
             'body'             => '支付订单',
             'out_trade_no'     => time().rand(10000,99999),
-            'total_fee'        => math(88,100,'*',2),
+            'total_fee'        => math($money,100,'*',2),
             'attach'=>'',
             'openid'=>$request->get('wechat_openid'),
             'notify_url'       => "http://{$_SERVER['HTTP_HOST']}/index.php/wxapi/payNotify/"
@@ -62,6 +68,7 @@ class WechatController extends Controller
 
 
         $this->title='我要冲值';
+        $data['money']=$money;
         $this->view('wechat_recharge',$data);
     }
 }
