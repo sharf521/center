@@ -32,6 +32,10 @@ class WechatController extends Controller
     
     public function recharge(Request $request,User $user)
     {
+        if(!$this->is_inWeChat){
+            echo ' 仅限微信内调用！';
+            exit;
+        }
         $money=abs((float)$request->get('money'));
         $url=$request->get('url');
         if($money>5000){
@@ -81,6 +85,10 @@ class WechatController extends Controller
     
     public function payPre(Request $request,AccountRecharge $recharge)
     {
+        if(!$this->is_inWeChat){
+            echo ' 仅限微信内调用！';
+            exit;
+        }
         $user_id=(int)$request->post('user_id');
         $money=(float)$request->post('money');
         $recharge->user_id=$user_id;
