@@ -54,27 +54,30 @@ class WechatController extends Controller
         }
         $data['user']=$user;
 
-        $weChat=new WeChat();
-        $app=$weChat->app;
-        $payment = $app->payment;
-        $attributes = [
-            'trade_type'       => 'JSAPI', // JSAPI，NATIVE，APP...
-            'body'             => '支付订单',
-            'out_trade_no'     => time().rand(10000,99999),
-            'total_fee'        => math($money,100,'*',2),
-            'attach'=>'',
-            'openid'=>$request->get('wechat_openid'),
-            'notify_url'       => "http://centerwap.yuantuwang.com/index.php/wechat/payNotify/"
-        ];
-        $order=new Order($attributes);
-        $result = $payment->prepare($order);
-        if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
-            $js = $app->js;
-            $data['config']=$js->config(array('chooseWXPay','openAddress','checkJsApi'), false);
-            $pay=$weChat->getPayParams($result->prepay_id);
-            $data['pay']=$pay;
+        if($money>0){
+            $weChat=new WeChat();
+            $app=$weChat->app;
+            $payment = $app->payment;
+            $attributes = [
+                'trade_type'       => 'JSAPI', // JSAPI，NATIVE，APP...
+                'body'             => '支付订单',
+                'out_trade_no'     => time().rand(10000,99999),
+                'total_fee'        => math($money,100,'*',2),
+                'attach'=>'',
+                'openid'=>$request->get('wechat_openid'),
+                'notify_url'       => "http://centerwap.yuantuwang.com/index.php/wechat/payNotify/"
+            ];
+            $order=new Order($attributes);
+            $result = $payment->prepare($order);
+            if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
+                $js = $app->js;
+                $data['config']=$js->config(array('chooseWXPay','openAddress','checkJsApi'), false);
+                $pay=$weChat->getPayParams($result->prepay_id);
+                $data['pay']=$pay;
+            }
+            $data['trade_no']=$attributes['out_trade_no'];
         }
-        $data['trade_no']=$attributes['out_trade_no'];
+
         $this->title='我要冲值';
         $data['money']=$money;
         $data['url']=$url;

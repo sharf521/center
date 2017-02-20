@@ -75,33 +75,37 @@
 <script type="text/javascript" charset="utf-8">
     var money='<?=$money?>';
     wechat_recharge();
-    wx.config(<?=$config?>);
-    wx.ready(function () {
-        $(".btn_recharge").click(function () {
-            if(money<0 || parseFloat(money)==0){
+    if(money>0){
+        wx.config(<?=$config?>);
+        wx.ready(function () {
+            $(".btn_recharge").click(function () {
+                $.post("<?=url('wechat/payPre/')?>", { user_id: "<?=$user->id?>", trade_no: "<?=$trade_no?>",money:money }, function(data){
+                    if(data=='true'){
+                        wx.chooseWXPay({
+                            timestamp: '<?=$pay['timestamp']?>',
+                            nonceStr: '<?=$pay['nonceStr']?>',
+                            package: '<?=$pay['package']?>',
+                            signType: 'MD5',
+                            paySign: '<?=$pay['paySign']?>',
+                            success: function (res) {
+                                //alert('支付成功！');
+                                window.location = "<?=$url?>";
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    }else{
+        $(function () {
+            $(".btn_recharge").click(function () {
                 layer.open({
                     content: '请选择金额！'
                     ,skin: 'msg'
                     ,time: 2
                 });
-                return ;
-            }
-            $.post("<?=url('wechat/payPre/')?>", { user_id: "<?=$user->id?>", trade_no: "<?=$trade_no?>",money:money }, function(data){
-                if(data=='true'){
-                    wx.chooseWXPay({
-                        timestamp: '<?=$pay['timestamp']?>',
-                        nonceStr: '<?=$pay['nonceStr']?>',
-                        package: '<?=$pay['package']?>',
-                        signType: 'MD5',
-                        paySign: '<?=$pay['paySign']?>',
-                        success: function (res) {
-                            //alert('支付成功！');
-                            window.location = "<?=$url?>";
-                        }
-                    });
-                }
             });
         });
-    });
+    }
 </script>
 <?php require 'footer_v2.php';?>
