@@ -150,4 +150,4 @@
         });
     });
 </script>
-<?php require 'footer.php';?>
+<?php require 'footer_v2.php';?>

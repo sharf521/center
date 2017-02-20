@@ -29,7 +29,7 @@ class WechatController extends Controller
         $url=$request->get('url');
         if($money>5000){
             $money=5000;
-            (new Session())->flash('error','单次最多充值5000');
+            (new Session())->flash('msg','单次最多充值5000');
         }
         $id=$request->get('id');
         $openid=$request->get('openid');
