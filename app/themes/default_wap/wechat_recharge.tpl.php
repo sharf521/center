@@ -58,7 +58,7 @@
 <body ontouchstart>
 
 <div class="m_header">
-    <a class="m_header_l" href="javascript:history.go(-1)">返回</a>
+    <a class="m_header_l" href="<?=$url?>">返回</a>
     <a class="m_header_r"></a>
     <h1><?=$this->title?></h1>
 </div>
@@ -74,7 +74,7 @@
                 <?
                 $array_ms=array(50,100,500,1000);
                 if($money!=0 && ! in_array($money,$array_ms)){
-                    array_push($array_ms,$money);
+                    array_unshift($array_ms,$money);
                 }
                 foreach ($array_ms as $m):
                     if($m==$money){
@@ -132,7 +132,6 @@
             var m=Number($(this).prev("input[name='money']").val());
             window.location=href+'&money='+m;
         });
-
     });
     wx.config(<?=$config?>);
     wx.ready(function () {

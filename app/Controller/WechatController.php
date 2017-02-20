@@ -26,6 +26,7 @@ class WechatController extends Controller
     public function recharge(Request $request,User $user)
     {
         $money=abs((float)$request->get('money'));
+        $url=$request->get('url');
         if($money>5000){
             $money=5000;
             (new Session())->flash('error','单次最多充值5000');
@@ -69,6 +70,7 @@ class WechatController extends Controller
 
         $this->title='我要冲值';
         $data['money']=$money;
+        $data['url']=$url;
         $this->view('wechat_recharge',$data);
     }
 }
