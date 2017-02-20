@@ -74,7 +74,6 @@ class WechatController extends Controller
             $pay=$weChat->getPayParams($result->prepay_id);
             $data['pay']=$pay;
         }
-        var_dump($result);
         $data['trade_no']=$attributes['out_trade_no'];
         $this->title='我要冲值';
         $data['money']=$money;
