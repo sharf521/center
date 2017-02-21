@@ -50,7 +50,7 @@
         }
     </script>
     <ul>
-        <li><a href="<?= url('goApp/5/wap') ?>">
+        <li><a href="<?= url('goApp/10/wap') ?>">
                 <b><img src="/themes/member_wap/images/icon_shop.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
                 <p>汽车</p>

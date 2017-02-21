@@ -35,6 +35,8 @@ class SubSiteController extends AdminController
             $site->mall_url_wap=$request->post('mall_url_wap');
             $site->crowd_url=$request->post('crowd_url');
             $site->crowd_url_wap=$request->post('crowd_url_wap');
+            $site->shop_url=$request->post('shop_url');
+            $site->shop_url_wap=$request->post('shop_url_wap');
             $site->save();
             redirect('subSite')->with('msg','添加成功！');
         }else{
@@ -59,6 +61,8 @@ class SubSiteController extends AdminController
             $site->mall_url_wap=$request->post('mall_url_wap');
             $site->crowd_url=$request->post('crowd_url');
             $site->crowd_url_wap=$request->post('crowd_url_wap');
+            $site->shop_url=$request->post('shop_url');
+            $site->shop_url_wap=$request->post('shop_url_wap');
             $site->save();
             redirect('subSite')->with('msg','保存成功！');
         }else{

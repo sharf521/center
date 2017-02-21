@@ -114,6 +114,14 @@
                     <td><input type="text" name="crowd_url_wap" value="<?= $row->crowd_url_wap ?>" size="50"/></td>
                 </tr>
                 <tr>
+                    <td>新汽车网址：</td>
+                    <td><input type="text" name="shop_url" value="<?= $row->shop_url ?>" size="50"/></td>
+                </tr>
+                <tr>
+                    <td>新汽车wap网址：</td>
+                    <td><input type="text" name="shop_url_wap" value="<?= $row->shop_url_wap ?>" size="50"/></td>
+                </tr>
+                <tr>
                     <td></td>
                     <td><input type="submit" value="保存"/>
                         <input type="button" value="返回" onclick="window.history.go(-1)"/></td>

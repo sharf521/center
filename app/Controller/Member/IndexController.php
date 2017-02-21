@@ -72,6 +72,14 @@ class IndexController extends MemberController
                 $params['url']='/user';
                 $url=$this->site[$app->subsite_field]."/jump";
             }
+        }elseif ($app_id==10){
+            if($isGoWap){
+                $params['url']='/car';
+                $url=$this->site[$app->subsite_field.'_wap']."/user/auth";
+            }else{
+                //$params['url']='/user';
+                //$url=$this->site[$app->subsite_field]."/jump";
+            }
         }
         $sign=$this->getSign($params,$app->appsecret);
         $url=$url."/?openid={$params['openid']}&url={$params['url']}&time={$params['time']}&sign={$sign}";
