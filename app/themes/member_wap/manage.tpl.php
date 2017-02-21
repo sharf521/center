@@ -57,6 +57,7 @@
                 <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
                 <p>汽车</p>
             </a></li>
+        <? if($this->site['id']!=4) : ?>
         <li><a href="<?= url('goApp/8/wap') ?>">
                 <b><img src="/themes/member_wap/images/icon_shop.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
@@ -67,6 +68,7 @@
                 <i><img src="/themes/member_wap/images/icon_pos_cor.png"/></i>
                 <p>POS机</p>
             </a></li>
+        <? endif;?>
         <li class="cur"><a href="<?=url('')?>">
                 <b><img src="/themes/member_wap/images/icon_user.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_user_cor.png"/></i>
