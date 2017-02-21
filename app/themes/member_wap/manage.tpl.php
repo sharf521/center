@@ -69,8 +69,8 @@
                 <p>POS机</p>
             </a></li>
             <? else : ?>
-            <li></li>
-            <li></li>
+            <li>&nbsp;</li>
+            <li>&nbsp;</li>
         <? endif;?>
         <li class="cur"><a href="<?=url('')?>">
                 <b><img src="/themes/member_wap/images/icon_user.png"/></b>
