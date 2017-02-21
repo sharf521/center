@@ -24,10 +24,10 @@
         <li><a href="<?= url('user/bank'); ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/bank.png"></b><span>我的银行卡</span></a></li>
     </ul>
-    <ul>
-        <li><a href="<?= url('app') ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
+<!--    <ul>
+        <li><a href="<?/*= url('app') */?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/icon_exchange.png"></b><span>下载APP</span></a></li>
-    </ul>
+    </ul>-->
     <ul>
         <li><a href="<?= url('password/changePwd'); ?>"><i><img
                         src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
