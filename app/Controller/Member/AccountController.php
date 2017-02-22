@@ -29,7 +29,7 @@ class AccountController extends MemberController
     {
         if($this->is_wap){
             $url='http://'.$_SERVER['HTTP_HOST'].'/member/account/';
-            $url="http://wx02560f146a566747.wechat.yuantuwang.com/user/weChatRecharge/?id={$this->user_id}&money=0&url={$url}";
+            $url="http://wx02560f146a566747.wechat.yuantuwang.com/user/goWeChatPay/?id={$this->user_id}&money=0&url={$url}";
             redirect($url);
             exit;
         }
