@@ -4,7 +4,7 @@ function wechat_recharge() {
     $(function () {
         $('.prices span').on('click',function () {
             var m=Number($(this).html());
-            window.location=href+'&money='+m;
+            window.location=href+'&money='+m+'&t=1';
         });
 
         $('.btn_other').on('click',function () {
@@ -29,7 +29,7 @@ function wechat_recharge() {
                 $(inp).focus();
                 return ;
             }
-            window.location=href+'&money='+m;
+            window.location=href+'&money='+m+'&t=1';
         });
     });
 }

@@ -70,7 +70,6 @@
     </div>
 </div>
 
-
 <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
     var money='<?=$money?>';
@@ -95,6 +94,9 @@
                     }
                 });
             });
+            <? if($_GET['t']=='1') : ?>
+            $(".btn_recharge").click();
+            <? endif;?>
         });
     }else{
         $(function () {
