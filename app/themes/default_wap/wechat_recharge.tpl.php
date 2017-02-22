@@ -75,8 +75,13 @@
     var money='<?=$money?>';
     wechat_recharge();
     if(money>0){
+        var layer1=layer.open({
+            type: 2
+            ,content: '加载中'
+        });
         wx.config(<?=$config?>);
         wx.ready(function () {
+            layer.close(layer1);
             $(".btn_recharge").click(function () {
                 $.post("<?=url('wechat/payPre/')?>", { user_id: "<?=$user->id?>", trade_no: "<?=$trade_no?>",money:money }, function(data){
                     if(data=='true'){
