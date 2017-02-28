@@ -22,7 +22,7 @@ class AdminController extends BaseController
             // $this->user=m('user/one',array('user_id'=>$this->user_id));
         }
         ////主界面不验证权限
-        if(!in_array($this->control,array('index','login','logout','changepwd'))){
+        if(!in_array($this->control,array('index','login','logout','changepwd','main'))){
             /*if(! check_cmvalue($class.'_'.$func)){
                 echo 'no permission_id';
                 exit;

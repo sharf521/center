@@ -50,6 +50,12 @@ class IndexController extends AdminController
         exit;
     }
 
+    public function main()
+    {
+        $data=array();
+        $this->view('main', $data);
+    }
+    
     function logout(User $user)
     {
         $user->logout();

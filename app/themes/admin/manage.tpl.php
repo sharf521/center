@@ -11,30 +11,28 @@
     <script src="/themes/admin/js/base.js"></script>
     <title>管理中心</title>
     <style>
-        /*.topbox{width:100%; background:#fff; height:54px; overflow: hidden; border-top:2px solid #2baab1;  box-shadow: 0 1px 1px rgba(0,0,0,.15);  -moz-box-shadow: 0 1px 1px rgba(0,0,0,.15);  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.15); }*/
-        .topbox h3{ float:left;font-weight:normal; font-size:18px; color:#2baab1; line-height:70px; padding:0 0 0 20px;}
+        .topbox{height: 55px;}
+        .topbox h3{ float:left;font-weight:normal; font-size:18px; color:#2baab1; line-height:55px; padding:0 0 0 20px;}
         .topbox h3 i{ margin-right:6px; font-size:24px;}
-
         .nav{ float:left; margin-left:50px;}
-        .nav li{float:left; margin-left:20px;  cursor:pointer;color:#018dba; font-size:14px; padding:0 21px; line-height:65px;}
+        .nav li{float:left; margin-left:20px;  cursor:pointer;color:#018dba; font-size:14px; padding:0 21px; line-height:55px;}
         .nav li.checkit{ color:#FFF; background-color:#4cd1fc;}
         .nav li:hover{background-color:#4cd1fc; color:#FFF;}
 
-        .topnav{ top:10px; position:absolute; right:30px;}
-        .topnav li{ float:left;}
+        .topbox .layui-nav{position: absolute; right: 0; top: 0; padding: 0; background: none;}
+        .topbox .layui-nav .layui-nav-item{margin: 0 5px; line-height: 60px;}
+        .topbox .layui-nav .layui-nav-item a{color: #999;}
+        .topbox .layui-nav .layui-this{background-color: #f2f2f2;}
+        .topbox .layui-nav .layui-nav-item a:hover{color: #1AA094;}
+        .topbox .layui-nav .layui-this:after,.topbox  .layui-nav-bar{background-color: #393D49;}
 
-        .leftpanel{ background-color:#1c2b36;overflow-y: auto}
+        .leftpanel{ background-color:#393D49;overflow-y: auto}
         .leftpanel h1{ font-size:16px; color:#f9691a; margin-left:36px; margin-top:30px; display: none}
-        /*二级菜单*/
-        .menu a{display: block; text-decoration: none; font-size:14px}
-        .menu li{line-height:42px;font-family: "微软雅黑";font-size: 14px;  border-bottom: 1px solid #17232c;}
-        .menu li a{ color: #7ca0bb; padding-left: 20px;}
-        .menu li a:hover{color: #fff; border-left: 5px #1AA094 solid; padding-left: 25px;background-color: #17232c;}
-        li.menuSelectd a{ color: #fff; border-left: 5px #1AA094 solid; padding-left: 25px;background-color: #17232c;}
 
+        .layui-layout-admin .layui-header { background-color: #fff;border-bottom: 5px solid #1AA094; }
         .layui-tab{ margin: 0px; }
         .layui-tab-content {padding:0px;margin:0px;}
-        .larry-tab-box>.layui-tab-title {border-bottom:1px solid #efefef;}
+        .larry-tab-box>.layui-tab-title {border-bottom:0px solid #1AA094;}
         .larry-tab-box>.layui-tab-title li{ padding-left: 20px;}
         .larry-tab-box>.layui-tab-title .layui-this {color:white;background-color:#1AA094;}
         .larry-tab-box>.layui-tab-title .layui-this:after {border-bottom:0;}
@@ -60,61 +58,52 @@
                 }
                 ?>
             </ul>
-            <ul class="topnav">
-                <li class="nihao">您好，<?= $this->username ?>！</li>
-                <li class="tuichu"><a href="<?=url('/member')?>" target="_blank">用户中心</a> </li>
-                <li class="tuichu"><?= $this->anchor('changepwd', '[修改密码]', 'target="iframe_main"') ?></li>
-                <li class="tuichu"><?= $this->anchor('logout', '[退出]') ?></li>
+            <span style="line-height: 60px; color: #018dba; font-size: 14px; float: right; padding-right: 320px;">您好，<?= $this->username ?></span>
+            <ul class="layui-nav" lay-filter="">
+                <li class="layui-nav-item"><a href="<?=url('/member')?>" target="_blank">用户中心</a></li>
+                <li class="layui-nav-item li_item"><a style="cursor: pointer" url="<?=url('changepwd')?>" target="iframe_main">修改密码</a></li>
+                <li class="layui-nav-item"><?= $this->anchor('logout', '[退出]') ?></li>
             </ul>
         </div>
-
-        </div>
+    </div>
     <div class="layui-side leftpanel">
-            <?
-            $num = 0;
-            foreach ($menu as $i => $m) {
-                $num++;
-                //每个一级菜单输出一个div
-                ?>
-                <div class="menu <? if ($num > 1) {
-                    echo 'hide';
-                } ?>">
-                    <h1><?= $menu[$i]['name'] ?></h1>
-                    <ul>
-                        <?php
-                        //显示左侧二级菜单
-                        if (isset($m['son']) && is_array($m['son'])) {
-                            foreach ($m['son'] as $li) {
-                                ?>
-                                <li class="li_item" style="cursor:pointer"><a url="<?= url($li['url']) ?>" target="iframe_main"><?= $li['name'] ?></a></li>
-                                <?
-                            }
-                        }
-                        ?>
-                    </ul>
-                </div>
-                <?
-            }
+        <?
+        $num = 0;
+        foreach ($menu as $i => $m)  :
+            $num++;
             ?>
-        </div>
-    <div class="layui-body" style="bottom: 0px; padding-left: 8px;">
-
-            <div class="layui-tab layui-tab-card larry-tab-box" id="main-tab" lay-filter="x-tab" lay-allowclose="true">
-
-                <ul class="layui-tab-title">
-                    <li class="layui-this">
-                        默认
-                        <i class="layui-icon layui-unselect layui-tab-close"></i>
-                    </li>
+            <div class="menu <? if ($num > 1) {echo 'hide'; } ?>">
+                <h1><?= $menu[$i]['name'] ?></h1>
+                <ul class="layui-nav layui-nav-tree layui-inline">
+                    <?php
+                    //显示左侧二级菜单
+                    if (isset($m['son']) && is_array($m['son'])) {
+                        foreach ($m['son'] as $li) {
+                            ?>
+                            <li class="layui-nav-item li_item" style="cursor:pointer"><a url="<?= url($li['url']) ?>" target="iframe_main"><?= $li['name'] ?></a></li>
+                            <?
+                        }
+                    }
+                    ?>
                 </ul>
-                <div class="layui-tab-content" >
-                    <div class="layui-tab-item layui-show">
-                        <iframe frameborder="0" class="x-iframe" width="100%"></iframe>
-                    </div>
+            </div>
+        <?  endforeach;?>
+    </div>
+    <div class="layui-body" style="bottom: 0px; padding-left: 8px;">
+        <div class="layui-tab layui-tab-card larry-tab-box" id="main-tab" lay-filter="x-tab" lay-allowclose="true">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="0">
+                    默认
+                    <i class="layui-icon layui-unselect layui-tab-close"></i>
+                </li>
+            </ul>
+            <div class="layui-tab-content" >
+                <div class="layui-tab-item layui-show">
+                    <iframe frameborder="0" class="x-iframe" width="100%" src="<?=url('main')?>"></iframe>
                 </div>
             </div>
-            <!-- <iframe marginheight="0" width="100%" marginwidth="0" frameborder="0" id="iframe_main" name="iframe_main" src=""></iframe>-->
         </div>
+    </div>
 </div>
 <script>
     $(window).on("resize", function() {

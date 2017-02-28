@@ -49,7 +49,8 @@ $(function () {
         });
         if(isExist==false){
             element.tabAdd('x-tab', {
-                title: title
+                'id':$('.x-iframe').length
+                ,title: title
                 ,content: '<iframe frameborder="0" src="'+url+'" class="x-iframe" width="100%"></iframe>'
             });
             element.tabChange('x-tab', $('.layui-tab-title li').length-1);

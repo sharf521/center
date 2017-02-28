@@ -6,7 +6,7 @@ if($this->func=='index')
     <div class="main_title">
         <span>增进管理</span>列表<?=$this->anchor('zj/add','新增','class="but1"');?>
         <?=$this->anchor('zj/calZj','计算','class="but1"')?>
-<?=$this->anchor('zj/calAdd1000','添加10个','class="but1"')?>
+<?/*=$this->anchor('zj/calAdd1000','添加10个','class="but1"')*/?>
     </div>
 
     <form method="get">
