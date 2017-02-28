@@ -61,7 +61,7 @@
             <span style="line-height: 60px; color: #018dba; font-size: 14px; float: right; padding-right: 320px;">您好，<?= $this->username ?></span>
             <ul class="layui-nav" lay-filter="">
                 <li class="layui-nav-item"><a href="<?=url('/member')?>" target="_blank">用户中心</a></li>
-                <li class="layui-nav-item li_item"><a style="cursor: pointer" url="<?=url('changepwd')?>" target="iframe_main">修改密码</a></li>
+                <li class="layui-nav-item li_item"><a style="cursor: pointer" url="<?=url('changepwd')?>" data_id="000" target="iframe_main">修改密码</a></li>
                 <li class="layui-nav-item"><?= $this->anchor('logout', '[退出]') ?></li>
             </ul>
         </div>
@@ -80,7 +80,7 @@
                     if (isset($m['son']) && is_array($m['son'])) {
                         foreach ($m['son'] as $li) {
                             ?>
-                            <li class="layui-nav-item li_item" style="cursor:pointer"><a url="<?= url($li['url']) ?>" target="iframe_main"><?= $li['name'] ?></a></li>
+                            <li class="layui-nav-item li_item" style="cursor:pointer"><a url="<?= url($li['url']) ?>" data_id="<?=$li['id']?>" target="iframe_main"><?= $li['name'] ?></a></li>
                             <?
                         }
                     }

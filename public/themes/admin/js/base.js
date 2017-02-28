@@ -32,13 +32,14 @@ $(function () {
     $('.li_item').on('click',function () {
         var title = $(this).find('a').text();
         var url = $(this).find('a').attr('url');
-/*        for (var i = 0; i <$('.x-iframe').length; i++) {
+        var data_id = $(this).find('a').attr('data_id');
+        for (var i = 0; i <$('.x-iframe').length; i++) {
             if($('.x-iframe').eq(i).attr('src')==url){
-                element.tabChange('x-tab', i);
+                element.tabChange('x-tab', data_id);
                 return;
             }
-        }*/
-        var isExist=false;
+        }
+/*        var isExist=false;
         $('.x-iframe').each(function (index,obj) {
             if($(obj).attr('src')==url){
                 element.tabChange('x-tab', index);
@@ -48,15 +49,17 @@ $(function () {
             }
         });
         if(isExist==false){
-            element.tabAdd('x-tab', {
-                'id':$('.x-iframe').length
-                ,title: title
-                ,content: '<iframe frameborder="0" src="'+url+'" class="x-iframe" width="100%"></iframe>'
-            });
-            element.tabChange('x-tab', $('.layui-tab-title li').length-1);
-            _initWH();
+
             //$('.layui-tab-title li').eq(0).find('i').remove();
-        }
+        }*/
+
+        element.tabAdd('x-tab', {
+            'id':data_id
+            ,title: title
+            ,content: '<iframe frameborder="0" src="'+url+'" class="x-iframe" width="100%"></iframe>'
+        });
+        element.tabChange('x-tab',data_id);
+        _initWH();
     });
 
     //上传文件
@@ -113,13 +116,6 @@ function init_menu() {
         //$("li",'.leftpanel').removeClass("menuSelectd");
         //$(firstli).addClass("menuSelectd");
     });
-
-    //左侧菜单选中样式
-    var umenu = $("li", '.menu');
-    umenu.click(function () {
-        var i = umenu.index(this);
-        $(umenu[i]).addClass("menuSelectd").siblings().removeClass("menuSelectd");
-    })
 }
 function initwh() {
     $('.leftpanel').css('height', ($(window).height() - 56 ));
