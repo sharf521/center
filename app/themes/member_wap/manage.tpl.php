@@ -57,7 +57,7 @@
                 <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
                 <p>汽车</p>
             </a></li>
-        <? if($this->site['id']!=4) : ?>
+        <? if($this->site['id']<3) : ?>
         <li><a href="<?= url('goApp/8/wap') ?>">
                 <b><img src="/themes/member_wap/images/icon_shop.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
