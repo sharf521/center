@@ -36,6 +36,7 @@ $(function () {
         for (var i = 0; i <$('.x-iframe').length; i++) {
             if($('.x-iframe').eq(i).attr('src')==url){
                 element.tabChange('x-tab', data_id);
+                $('.x-iframe').eq(i).attr('src',url);
                 return;
             }
         }
