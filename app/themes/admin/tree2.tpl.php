@@ -70,7 +70,7 @@ if($this->func=='index')
     <?
     }
     ?>
-    <div><div class="drawContent" id="drawContent" style="margin: 50px 0px "></div></div>
+    <div><div class="drawContent" id="drawContent" style="margin: 20px 0px;"></div></div>
 
 <?
 }
