@@ -142,7 +142,7 @@ class Tree2 extends Model
                             $lastLevel=$pTree->level + 5;
                             $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id <={$tree->id}")->value("count(id)",'int');
                             if($count==31){
-                                $pTree->full_reward_num=4;
+                                $pTree->full_reward_num=5;
                                 $pTree->save();
                                 $log->money=0;
                                 $log->typeid='layer6first';
