@@ -57,21 +57,21 @@
                 <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
                 <p>汽车</p>
             </a></li>
-        <? if($this->site['id']<3) : ?>
-        <li><a href="<?= url('goApp/8/wap') ?>">
-                <b><img src="/themes/member_wap/images/icon_shop.png"/></b>
-                <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
-                <p>云购</p>
-            </a></li>
-        <li><a href="<?= url('goApp/9/wap'); ?>">
+        <? if(in_array($this->site['id'],array(2,3,6))) : ?>
+             <li><a href="<?= url('goApp/9/wap'); ?>">
                 <b><img src="/themes/member_wap/images/icon_pos.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_pos_cor.png"/></i>
                 <p>POS机</p>
             </a></li>
             <? else : ?>
             <li>&nbsp;</li>
-            <li>&nbsp;</li>
         <? endif;?>
+        <!--        <li><a href="--><?//= url('goApp/8/wap') ?><!--">-->
+        <!--                <b><img src="/themes/member_wap/images/icon_shop.png"/></b>-->
+        <!--                <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>-->
+        <!--                <p>云购</p>-->
+        <!--            </a></li>-->
+        <li></li>
         <li class="cur"><a href="<?=url('')?>">
                 <b><img src="/themes/member_wap/images/icon_user.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_user_cor.png"/></i>
