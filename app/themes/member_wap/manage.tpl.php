@@ -71,7 +71,7 @@
         <!--                <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>-->
         <!--                <p>云购</p>-->
         <!--            </a></li>-->
-        <li></li>
+        <li>&nbsp;</li>
         <li class="cur"><a href="<?=url('')?>">
                 <b><img src="/themes/member_wap/images/icon_user.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_user_cor.png"/></i>
