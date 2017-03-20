@@ -37,7 +37,7 @@ class UploadController extends Controller
             $name = $type;
             $path = '/data/upload/' . ceil($user_id / 2000) . '/' . $user_id . '/';
         }elseif ($type=='logo'){
-            $name = 'logo';
+            $name = 'logo'.$name;
             $path="/data/upload/web/".date('Ym').'/';
         }
         //创建文件夹
