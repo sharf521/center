@@ -63,7 +63,7 @@
                 <i><img src="/themes/member_wap/images/icon_shop_cor.png"/></i>
                 <p>汽车</p>
             </a></li>
-        <? if(in_array($this->site['id'],array(2,3,6))) : ?>
+        <? if(in_array($this->site['id'],array(2,3,6,7))) : ?>
              <li><a href="<?= url('goApp/9/wap'); ?>">
                 <b><img src="/themes/member_wap/images/icon_pos.png"/></b>
                 <i><img src="/themes/member_wap/images/icon_pos_cor.png"/></i>
