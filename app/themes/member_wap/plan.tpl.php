@@ -10,12 +10,12 @@ require 'header.php';
 
 <div class="margin_header"></div>
 <div class="planBox" style="padding: 0px 1rem">
-    <img src="\themes\member_wap\images\plan\1.jpg">
-    <img src="\themes\member_wap\images\plan\2.jpg">
-    <img src="\themes\member_wap\images\plan\3.jpg">
-    <img src="\themes\member_wap\images\plan\4.jpg">
-    <img src="\themes\member_wap\images\plan\5.jpg">
-    <img src="\themes\member_wap\images\plan\6.jpg">
+    <img src="\themes\member_wap\images\plan\1.jpg" width="100%">
+    <img src="\themes\member_wap\images\plan\2.jpg" width="100%">
+    <img src="\themes\member_wap\images\plan\3.jpg" width="100%">
+    <img src="\themes\member_wap\images\plan\4.jpg" width="100%">
+    <img src="\themes\member_wap\images\plan\5.jpg" width="100%">
+    <img src="\themes\member_wap\images\plan\6.jpg" width="100%">
 </div>
 <br><br><br>
 <?php require 'footer.php'; ?>
