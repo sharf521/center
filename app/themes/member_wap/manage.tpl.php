@@ -30,6 +30,12 @@
         <li><a href="<?= url('partner') ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/icon_exchange.png"></b><span>申请合伙人</span></a></li>
     </ul>
+
+    <ul>
+        <li><a href="<?= url('plan') ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
+                        src="/themes/member_wap/images/icon_integral.png"></b><span>规划、计划</span></a></li>
+    </ul>
+
     <ul>
         <li><a href="<?= url('password/changePwd'); ?>"><i><img
                         src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
