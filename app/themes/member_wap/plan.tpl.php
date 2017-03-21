@@ -9,7 +9,7 @@ require 'header.php';
 
 
 <div class="margin_header"></div>
-<div class="planBox">
+<div class="planBox" style="padding: 0px 1rem">
     <img src="\themes\member_wap\images\plan\1.jpg">
     <img src="\themes\member_wap\images\plan\2.jpg">
     <img src="\themes\member_wap\images\plan\3.jpg">
