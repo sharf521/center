@@ -42,3 +42,6 @@ em, i {
     left: 0;
     display: none;
 }
+
+.main_content{padding: 0px 1rem}
+.articleContent{  font-size: 14px;    line-height: 200%;}

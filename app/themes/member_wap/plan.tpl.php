@@ -10,7 +10,7 @@ require 'header.php';
 
 <div class="margin_header"></div>
 <div class="planBox">
-    <img src="\themes\member_wap\images\plan\1.jpg">
+    <a href="/article/detail/1"><img src="\themes\member_wap\images\plan\1.jpg"></a>
     <img src="\themes\member_wap\images\plan\2.jpg">
     <img src="\themes\member_wap\images\plan\3.jpg">
     <img src="\themes\member_wap\images\plan\4.jpg">
