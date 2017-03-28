@@ -8,6 +8,7 @@ $sex_array = array('', '男', '女');
     <span class="header_right">&nbsp;</span>
     <h1>实名认证</h1>
 </div>
+<div class="margin_header"></div>
 <script src="/plugin/js/ajaxfileupload.js"></script>
 <?
 if ($userInfo->card_status == 1) {
@@ -18,7 +19,6 @@ if ($userInfo->card_status == 3) {
 }
 //己审核
 if ($userInfo->card_status == 2) : ?>
-    <div class="margin_header"></div>
     <div class="alert-warning" role="alert">您己经通过实名认证！</div>
     <table class="table_from">
         <tr>
