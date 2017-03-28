@@ -54,8 +54,7 @@ if ($userInfo->card_status == 2) : ?>
         </tr>
     </table>
 <?php else : ?>
-    <script src="/plugin/js/ajaxfileupload.js?111"></script>
-    <form method="post" class="margin_header">
+    <form method="post">
         <table class="table_from">
             <tr>
                 <td>用户名：</td>
@@ -156,6 +155,4 @@ if ($userInfo->card_status == 2) : ?>
         }
     </script>
 <? endif; ?>
-
-
 <?php require 'footer.php'; ?>
