@@ -12,7 +12,7 @@
             <form method="post" onSubmit="return setdisabled();">
                 <table class="table_from">
                     <tr><td>用户名：</td><td><?=$this->username?></td></tr>
-                    <tr><td>可提现金额：</td><td><?='￥'.$account->funds_available?></td></tr>
+                    <tr><td>可提现：</td><td><?='￥'.$account->funds_available?></td></tr>
                     <tr><td>姓名：</td><td><?=$this->user->name?></td></tr>
                     <tr><td>提现银行：</td><td><?=$bank->bank?></td></tr>
                     <tr><td>开户支行：</td><td><?=$bank->branch?></td></tr>
