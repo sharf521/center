@@ -100,7 +100,7 @@ function GetpwdMsg($data = array())
     $username = $data['username'];
     $webname = '找回密码';
     $email = $data['email'];
-    $active_id = urlencode(authcode($user_id . "," . time(), "ENCODE"));
+    $active_id = (authcode($user_id . "," . time(), "ENCODE"));
     if ($data['type'] == 'getPwd') {
         $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/getPwd/updatePwd?id={$active_id}";
         $tital = "修改登录密码";
