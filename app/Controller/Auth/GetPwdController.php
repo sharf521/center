@@ -135,7 +135,7 @@ class GetPwdController extends AuthController
         $user_id = $data['user_id'];
         $username = $data['username'];
         $webname = '找回密码';
-        $active_id = authcode($user_id . "," . time(), "ENCODE");
+        $active_id = urlencode(authcode($user_id . "," . time(), "ENCODE"));
 
         $get=array(
             'appid'=>$data['appid'],
@@ -148,7 +148,6 @@ class GetPwdController extends AuthController
             $_url.="&r={$data['r']}";
         }
         $get['id']="".$active_id;
-
         $sign=$this->getSign($get);
         $_url.="&sign={$sign}";
 

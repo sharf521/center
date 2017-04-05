@@ -54,6 +54,9 @@ class AuthController extends BaseController
             unset($data['sign']);
         }
         ksort($data);
+        if(isset($data['id']) && is_string($data['id'])){
+            $data['id']=urlencode($data['id']);
+        }
         $jsonStr = json_encode($data);
         $str = strtoupper(md5($jsonStr.$this->appsecret));
         return $str;

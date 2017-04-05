@@ -29,7 +29,6 @@ class IndexController extends AuthController
         }
         $regUrl="/auth/register/".$_url;
         $getPwdUrl="/auth/getPwd/".$_url;
-        //$this->checkSign($get);
         if($_POST){
             $request->checkToken();
             $data = array(
