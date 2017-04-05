@@ -48,7 +48,7 @@ class GetPwdController extends AuthController
                 $data['msg'] = $this->getPwdMsg($data+$get);
 
                 $sendEmailTime=session()->get('sendEmailTime');
-                if(!empty($sendEmailTime) && $sendEmailTime+60*2>time()){
+                if(!empty($sendEmailTime) && $sendEmailTime+60*2>time() && false){
                     $error="请2分钟后再次请求。";
                 }else{
                     $result = mail_send($data['email'],'用户找回密码',$data['msg']);
@@ -151,7 +151,7 @@ class GetPwdController extends AuthController
         $sign=$this->getSign($get);
         $_url.="&sign={$sign}";
 
-        $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/auth/getPwd/updatePwd?id={$active_id}{$_url}";
+        $_url = "http://{$_SERVER['HTTP_HOST']}/auth/getPwd/updatePwd?id={$active_id}{$_url}";
         $tital = "修改登录密码";
         $send_email_msg = '
 	<div style="font-size:14px; ">

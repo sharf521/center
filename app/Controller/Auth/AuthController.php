@@ -17,6 +17,9 @@ class AuthController extends BaseController
             echo 'The site was not found！';
             exit;
         }
+        if(isset($_GET['id']) && is_string($_GET['id'])){
+            $_GET['id']=urlencode($_GET['id']);
+        }
         $this->checkSign($_GET);
 
         if (strpos($host, 'wap.') === false) {
@@ -54,9 +57,6 @@ class AuthController extends BaseController
             unset($data['sign']);
         }
         ksort($data);
-        if(isset($data['id']) && is_string($data['id'])){
-            $data['id']=urlencode($data['id']);
-        }
         $jsonStr = json_encode($data);
         $str = strtoupper(md5($jsonStr.$this->appsecret));
         return $str;
