@@ -102,13 +102,13 @@ function GetpwdMsg($data = array())
     $email = $data['email'];
     $active_id = urlencode(authcode($user_id . "," . time(), "ENCODE"));
     if ($data['type'] == 'getPwd') {
-        $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/getPwd/updatePwd?id={$active_id}";
+        $_url = "http://{$_SERVER['HTTP_HOST']}/getPwd/updatePwd?id={$active_id}";
         $tital = "修改登录密码";
     } elseif ($data['type'] == 'getPayPwd') {
-        $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/member/password/resetPayPwd?id={$active_id}";
+        $_url = "http://{$_SERVER['HTTP_HOST']}/member/password/resetPayPwd?id={$active_id}";
         $tital = "修改支付密码";
     } elseif ($data['type'] == 'sure_email') {
-        $_url = "http://{$_SERVER['HTTP_HOST']}/index.php/register/sure_email?id={$active_id}";
+        $_url = "http://{$_SERVER['HTTP_HOST']}/register/sure_email?id={$active_id}";
         $tital = "验证邮箱";
     }
     $send_email_msg = '

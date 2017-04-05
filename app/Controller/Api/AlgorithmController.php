@@ -70,26 +70,28 @@ class AlgorithmController extends ApiController
      *
      * typeid:1,2,3
      */
-    function rebate_add()
+    public function rebate_add()
     {
         $data=$this->data;
         $user_id=$this->getUserId($data['openid']);
         if($user_id==0){
             return $this->returnError('not find openid：'.$data['openid']);
+        }
+        if(!in_array($data['typeid'],array(1,2,3))){
+            return $this->returnError('parameter typeid error!');
+        }
+        $reate = new Rebate();
+        $post = array(
+            'user_id' => $user_id,
+            'site_id' => $this->app_id,
+            'typeid' => $data['typeid'],
+            'money' => $data['money']
+        );
+        $result = $reate->addRebate($post);
+        if($result===true){
+            return $this->returnSuccess();
         }else{
-            $reate = new Rebate();
-            $post = array(
-                'user_id' => $user_id,
-                'site_id' => $this->app_id,
-                'typeid' => $data['typeid'],
-                'money' => $data['money']
-            );
-            $result = $reate->addRebate($post);
-            if($result===true){
-                return $this->returnSuccess();
-            }else{
-                return $this->returnError($result);
-            }
+            return $this->returnError($result);
         }
     }
 
