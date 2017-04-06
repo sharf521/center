@@ -77,8 +77,8 @@ class IndexController extends MemberController
                 $params['url']='/car';
                 $url=$this->site[$app->subsite_field.'_wap']."/user/auth";
             }else{
-                //$params['url']='/user';
-                //$url=$this->site[$app->subsite_field]."/jump";
+                $params['url']='/member';
+                $url=$this->site[$app->subsite_field]."/user/auth";
             }
         }
         $sign=$this->getSign($params,$app->appsecret);
