@@ -64,6 +64,10 @@ class AccountController extends MemberController
                 redirect('account/rechargeLog')->with('msg', '操作成功，等待财务审核！');
             }
         } else {
+            $money=(float)$request->get('money');
+            if ($money != 0) {
+               $data['money']=$money;
+            }
             $data['title_herder']='我要充值';
             $data['user']=$this->user;
             $this->view('accountRecharge',$data);

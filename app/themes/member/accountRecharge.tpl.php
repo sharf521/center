@@ -14,7 +14,7 @@
                             <td align="right">用户名：</td><td><?=$user->username?></td>
                         </tr>
                         <tr>
-                            <td align="right">充值金额：</td><td><input id="money" name="money" type="text" size="8" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/>&nbsp;&nbsp;元</td>
+                            <td align="right">充值金额：</td><td><input id="money" value="<?=$money?>" name="money" type="text" size="8" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/>&nbsp;&nbsp;元</td>
                         </tr>
                         <tr>
                             <td align="right">充值方式：</td><td><label><input id="type1" name="type" type="radio" value="1" onClick="changetype(1)" checked="checked"/> 在线充值</label>
