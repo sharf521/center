@@ -42,15 +42,18 @@ class WechatController extends Controller
             $money=5000;
             (new Session())->flash('msg','单次最多充值5000');
         }
-        $id=$request->get('id');
+        $wechat_openid=$request->get('wechat_openid');
+        $id=(int)$request->get('id');
         $openid=$request->get('openid');
         $appid=$request->get('appid');
-        if(empty($id)){
+        if($id==0){
             $app_id = DB::table('app')->where('appid=?')->bindValues($appid)->value('id');
             $id=DB::table('app_user')->where('app_id=? and openid=?')->bindValues(array($app_id, $openid))->value('user_id','int');
-            $user=$user->findOrFail($id);
-        }else{
-            $user=$user->findOrFail($id);
+        }
+        $user=$user->find($id);
+        if($user->wechat_openid==''){
+            $user->wechat_openid=$wechat_openid;
+            $user->save();
         }
         $data['user']=$user;
 
@@ -64,7 +67,7 @@ class WechatController extends Controller
                 'out_trade_no'     => time().rand(10000,99999),
                 'total_fee'        => math($money,100,'*',2),
                 'attach'=>'',
-                'openid'=>$request->get('wechat_openid'),
+                'openid'=>$wechat_openid,
                 'notify_url'       => "http://centerwap.yuantuwang.com/index.php/wechat/payNotify/"
             ];
             $order=new Order($attributes);

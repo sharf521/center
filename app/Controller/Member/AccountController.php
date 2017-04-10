@@ -29,7 +29,12 @@ class AccountController extends MemberController
     {
         if($this->is_wap){
             $url='http://'.$_SERVER['HTTP_HOST'].'/member/account/';
-            $url="http://wx02560f146a566747.wechat.yuantuwang.com/user/goWeChatPay/?id={$this->user_id}&money=0&url={$url}";
+            $wechat_openid=$this->user->wechat_openid;
+            if(empty($wechat_openid)){
+                $url="http://wx02560f146a566747.wechat.yuantuwang.com/user/goWeChatPay/?id={$this->user_id}&money=0&url={$url}";
+            }else{
+                $url="http://centerwap.yuantuwang.com/wechat/recharge/?id={$this->user_id}&wechat_openid={$wechat_openid}&money=0&url={$url}";
+            }
             redirect($url);
             exit;
         }
