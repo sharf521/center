@@ -8,9 +8,13 @@ use System\Lib\DB;
 class MemberController extends BaseController
 {
     protected $user;
+    protected $user_id;
     public function __construct()
     {
         parent::__construct();
+        $this->user_id = session('user_id');
+        $this->username = session('username');
+        $this->user_typeid = session('usertype');
         $host = strtolower($_SERVER['HTTP_HOST']);
         $this->site=DB::table('subsite')->where("domain like '%{$host}|%'")->row();
         if(empty($this->site)){

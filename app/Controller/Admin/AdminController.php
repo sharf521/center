@@ -5,9 +5,13 @@ use System\Lib\Controller as BaseController;
 
 class AdminController extends BaseController
 {
+    protected $user_id;
     public function __construct()
     {
         parent::__construct();
+        $this->user_id = session('user_id');
+        $this->username = session('username');
+        $this->user_typeid = session('usertype');
         $this->template='admin';
         $this->control	=application('control');
         $this->user_typeid	=session('usertype');
