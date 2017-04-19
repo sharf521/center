@@ -353,6 +353,132 @@ class Tree2 extends Model
         }
     }
 
+    public function calTree2_type4($money,$car_money)
+    {
+        $money=math($money,$car_money,'-',2);
+        $this->reset(array('money'=>$money));//重置
+        $where="status=0";
+        $result=(new Tree2())->where($where)->orderBy('id')->get();
+        foreach ($result as $tree){
+            $tree->status=1;
+            $tree->save();
+            if($tree->pid!=0){
+                $pTree=(new Tree2())->find($tree->pid);
+                $pTree->childsize=$pTree->childsize+1;
+                $pTree->save();
+
+                $pids = rtrim($tree->pids, ',');//去除最后一个，
+                $arr_pid = explode(',', $pids);
+                array_pop($arr_pid);//去除自己
+                $arr_pid = array_reverse($arr_pid);
+
+                //四、工具A、17500+10000元，自提一台车，推荐两个给1万，三层满给一万
+                $log=new Tree2Log();
+                $log->in_tree_id =$tree->id;
+                $log->in_user_id=$tree->user_id;
+                foreach ($arr_pid as $j=>$pid) {
+                    $pTree=(new Tree2())->find($pid);
+                    $log->user_id=$pTree->user_id;
+                    $log->tree_id= $pTree->id;
+                    $log->layer=$j+2;
+                    // echo $tree->id.'-'.$pTree->id.'<br>';
+                    if($j==0){//第2层
+                        if($pTree->childsize==2){
+                            $log->money=10000;
+                            $log->typeid='layer2full';
+                            $log->save();
+                            //echo '<br>layer2full<br>';
+                            $pTree->income=math($pTree->income,$log->money,'+',2);
+                            $pTree->save();
+                        }
+                    }elseif ($j==1){//3
+                        $lastLevel=$pTree->level + 3;
+                        $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id<={$tree->id}")->value("count(id)",'int');
+                        if($count==7){
+                            $log->money=10000;
+                            $log->typeid='layer3full';
+                            $log->save();
+                            $pTree->income=math($pTree->income,$log->money,'+',2);
+                            $pTree->save();
+                        }
+                    }else{
+                        break;
+                    }
+                }
+            }
+            $this->profit();
+        }
+    }
+
+    public function calTree2_type5($money,$car_money)
+    {
+        $money=math($money,$car_money,'-',2);
+        $this->reset(array('money'=>$money));//重置
+        $where="status=0";
+        $result=(new Tree2())->where($where)->orderBy('id')->get();
+        foreach ($result as $tree){
+            $tree->status=1;
+            $tree->save();
+            if($tree->pid!=0){
+                $pTree=(new Tree2())->find($tree->pid);
+                $pTree->childsize=$pTree->childsize+1;
+                $pTree->save();
+
+                $pids = rtrim($tree->pids, ',');//去除最后一个，
+                $arr_pid = explode(',', $pids);
+                array_pop($arr_pid);//去除自己
+                $arr_pid = array_reverse($arr_pid);
+
+                //五、工具A、36000 自提车，推荐2个给1万，三层满给30000，四层满见点5000
+                $log=new Tree2Log();
+                $log->in_tree_id =$tree->id;
+                $log->in_user_id=$tree->user_id;
+                foreach ($arr_pid as $j=>$pid) {
+                    $pTree=(new Tree2())->find($pid);
+                    $log->user_id=$pTree->user_id;
+                    $log->tree_id= $pTree->id;
+                    $log->layer=$j+2;
+                    // echo $tree->id.'-'.$pTree->id.'<br>';
+                    if($j==0){//第2层
+                        if($pTree->childsize==2){
+                            $log->money=10000;
+                            $log->typeid='layer2full';
+                            $log->save();
+                            //echo '<br>layer2full<br>';
+                            $pTree->income=math($pTree->income,$log->money,'+',2);
+                            $pTree->save();
+                        }
+                    }elseif ($j==1){//3
+                        $lastLevel=$pTree->level + 3;
+                        $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id<={$tree->id}")->value("count(id)",'int');
+                        if($count==7){
+                            $log->money=30000;
+                            $log->typeid='layer3full';
+                            $log->save();
+                            $pTree->income=math($pTree->income,$log->money,'+',2);
+                            $pTree->save();
+                        }
+                    }elseif ($j==2){//4
+                        $lastLevel=$pTree->level + 3;
+                        $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id<={$tree->id}")->value("count(id)",'int');
+                        if($count==7){
+                            //第4层见点5000（3层满）
+                            $log->money=5000;
+                            $log->typeid='layer4dian';
+                            $log->save();
+                            //echo '<br>'.$pTree->id.'——layer4dian<br>';
+                            $pTree->income=math($pTree->income,$log->money,'+',2);
+                            $pTree->save();
+                        }
+                    }else{
+                        break;
+                    }
+                }
+            }
+            $this->profit();
+        }
+    }
+
     //计算拨出比
     private function profit()
     {

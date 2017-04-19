@@ -84,6 +84,12 @@ class Tree2Controller extends AdminController
                     case 'type3':
                         (new Tree2())->calTree2_type3($money,$car_money);
                         break;
+                    case 'type4':
+                        (new Tree2())->calTree2_type4($money,$car_money);
+                        break;
+                    case 'type5':
+                        (new Tree2())->calTree2_type5($money,$car_money);
+                        break;
                 }
                 DB::commit();
                 redirect('tree2')->with('msg','计算完成！');

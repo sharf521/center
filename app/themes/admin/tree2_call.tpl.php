@@ -72,6 +72,36 @@
         </div>
     </fieldset>
 
+
+    <fieldset class="layui-elem-field">
+        <legend>四、套餐:27500元，自提一台车，推荐两个给1万，三层满给一万</legend>
+        <div class="layui-field-box">
+            <form method="post">
+                <input type="hidden" name="typeid" value="type4">
+                <table class="table_from">
+                    <tr><td>套餐金额：</td><td><input type="text" name="money" value="27500"/>元</td></tr>
+                    <tr><td>提车支出：</td><td><input type="text" name="car_money" value=""/>元</td></tr>
+                    <tr><td></td><td><input type="submit" class="but3" value="重新开始计算" />
+                            <input type="button" class="but3" value="返回" onclick="window.history.go(-1)"/></td></tr>
+                </table>
+            </form>
+        </div>
+    </fieldset>
+
+    <fieldset class="layui-elem-field">
+        <legend>五、套餐、36000 自提车，推荐2个给1万，三层满给30000，四层满见点5000</legend>
+        <div class="layui-field-box">
+            <form method="post">
+                <input type="hidden" name="typeid" value="type5">
+                <table class="table_from">
+                    <tr><td>套餐金额：</td><td><input type="text" name="money" value="27500"/>元</td></tr>
+                    <tr><td>提车支出：</td><td><input type="text" name="car_money" value=""/>元</td></tr>
+                    <tr><td></td><td><input type="submit" class="but3" value="重新开始计算" />
+                            <input type="button" class="but3" value="返回" onclick="window.history.go(-1)"/></td></tr>
+                </table>
+            </form>
+        </div>
+    </fieldset>
 </div>
 <?php
 require 'footer.php';
