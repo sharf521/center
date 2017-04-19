@@ -3,6 +3,7 @@ namespace App\Controller\Admin;
 
 use App\Model\Tree2;
 use App\Model\Tree2Log;
+use App\Model\Tree2Profit;
 use System\Lib\DB;
 use System\Lib\Request;
 
@@ -58,19 +59,42 @@ class Tree2Controller extends AdminController
         }
     }
 
-    function calTree2()
+    function calTree2(Request $request)
     {
-        try {
-            DB::beginTransaction();
-            (new Tree2())->calTree2();
-            DB::commit();
-            redirect('tree2')->with('msg','计算完成！');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            $error= "Failed: " . $e->getMessage();
-            redirect()->back()->with('error',$error);
+        if($_POST){
+            $typeid=$request->post('typeid');
+            $money=(float)$request->post('money');
+            $car_money=(float)$request->post('car_money');
+            $transfer_money=(float)$request->post('transfer_money');
+            if($money==0){
+                redirect()->back()->with('error','套餐金额为空');
+            }
+            try {
+                DB::beginTransaction();
+                switch ($typeid){
+                    case 'default':
+                        (new Tree2())->calTree2_default($money,$car_money,$transfer_money);
+                        break;
+                    case 'type1' :
+                        (new Tree2())->calTree2_type1($money,$car_money);
+                        break;
+                    case 'type2' :
+                        (new Tree2())->calTree2_type2($money,$car_money);
+                        break;
+                    case 'type3':
+                        (new Tree2())->calTree2_type3($money,$car_money);
+                        break;
+                }
+                DB::commit();
+                redirect('tree2')->with('msg','计算完成！');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                $error= "Failed: " . $e->getMessage();
+                redirect()->back()->with('error',$error);
+            }
+        }else{
+            $this->view('tree2_call');
         }
-        return true;
     }
 
     function tree2log(Tree2Log $tree2Log)
@@ -103,6 +127,14 @@ class Tree2Controller extends AdminController
             $where .= " and typeid='{$arr['typeid']}'";
         }
         $data['result'] = $tree2Log->where($where)->orderBy('id desc')->pager($_GET['page'], 10);
+
+        $user_count=(new Tree2Profit())->lists('user_count');
+        $rate=(new Tree2Profit())->lists('rate');
+        $data['user_count']=$user_count;
+        $data['rate']=$rate;
+        $data['received']=(new Tree2Profit())->lists('received');
+        $data['support']=(new Tree2Profit())->lists('support');;
+
         $this->view('tree2', $data);
     }
 }

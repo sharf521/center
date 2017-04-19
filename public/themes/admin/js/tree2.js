@@ -135,10 +135,10 @@ function main(user_id,id,money)
                     for (var i = 0; i < data.length; i++) {
 
                         if (i == 0) {
-                            var vNode = graph.insertVertex(parent,0, 'user_id:'+data[i]['user_id']+'\r\n'+'('+data[i]['id']+')', w / 3 - 30, 20, 60, 40);
+                            var vNode = graph.insertVertex(parent,0, 'u_id:'+data[i]['user_id']+'\r\n'+'('+data[i]['id']+')', w / 3 - 30, 20, 60, 40);
                             node[data[i]['id']] = vNode;
                         } else {
-                            vNode = graph.insertVertex(parent, 0, 'user_id:'+data[i]['user_id']+'\r\n'+'('+data[i]['id']+')', 0, 0, 60, 40);
+                            vNode = graph.insertVertex(parent, 0, 'u_id:'+data[i]['user_id']+'\r\n'+'('+data[i]['id']+')', 0, 0, 60, 40);
                             node[data[i]['id']] = vNode;
                         }
 

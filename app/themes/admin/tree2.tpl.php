@@ -1,10 +1,12 @@
 <?php
 require 'header.php';
 $arr_typeid=array(
-    'layer2full'=>'直推满2个',
+    'layer2first'=>'推荐1个',
+    'layer2full'=>'二层满',
+    'layer3full'=>'三层满',
     'layer4dian'=>'第4层见点',
-    'layer5first'=>'提车',
-    'layer6first'=>'过户',
+    'car_money'=>'提车',
+    'transfer_money'=>'过户',
 );
 if($this->func=='index')
 {
@@ -145,6 +147,77 @@ elseif($this->func=='add')
         <? }?>
     </table>
     <? if(empty($result['total'])){echo "无记录！";}else{echo $result['page'];}?>
+    <div id="div_echarts" style="height:500px;"></div>
+    <script src="/plugin/echarts/echarts-all.js"></script>
+    <script>
+        option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            legend: {
+                data:['收入','支出','支出比']
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: <?php echo json_encode($user_count) ?>,
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '收支',
+                    axisLabel: {
+                        formatter: '{value} '
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '收支比',
+                    axisLabel: {
+                        formatter: '{value} '
+                    }
+                }
+            ],
+            series: [
+                {
+                    name:'收入',
+                    type:'bar',
+                    data:<?php echo json_encode($received) ?>
+                },
+                {
+                    name:'支出',
+                    type:'bar',
+                    data:<?php echo json_encode($support) ?>
+                },
+                {
+                    name:'支出比',
+                    type:'line',
+                    yAxisIndex: 1,
+                    data:<?php echo json_encode($rate) ?>
+                }
+            ]
+        };
+        var myChart = echarts.init(document.getElementById('div_echarts'));
+        myChart.setOption(option);
+    </script>
 <?
 }
 require 'footer.php';
