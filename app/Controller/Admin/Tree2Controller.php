@@ -92,9 +92,12 @@ class Tree2Controller extends AdminController
                         $layer3full_money=(float)$request->post('layer3full_money');
                         (new Tree2())->calTree2_type5($money,$car_money,$layer2full_money,$layer3full_money);
                         break;
+                    case 'type6':
+                        (new Tree2())->calTree2_type6($money,$car_money);
+                        break;
                 }
                 DB::commit();
-                redirect('tree2')->with('msg','计算完成！');
+                redirect('tree2/tree2log')->with('msg','计算完成！');
             } catch (\Exception $e) {
                 DB::rollBack();
                 $error= "Failed: " . $e->getMessage();

@@ -104,6 +104,21 @@
             </form>
         </div>
     </fieldset>
+
+    <fieldset class="layui-elem-field">
+        <legend>六、套餐：12000元，推荐两个提车，三层满给1万，四层见点5000</legend>
+        <div class="layui-field-box">
+            <form method="post">
+                <input type="hidden" name="typeid" value="type6">
+                <table class="table_from">
+                    <tr><td>套餐金额：</td><td><input type="text" name="money" value="12000"/>元</td></tr>
+                    <tr><td>提车支出：</td><td><input type="text" name="car_money" value=""/>元</td></tr>
+                    <tr><td></td><td><input type="submit" class="but3" value="重新开始计算" />
+                            <input type="button" class="but3" value="返回" onclick="window.history.go(-1)"/></td></tr>
+                </table>
+            </form>
+        </div>
+    </fieldset>
 </div>
 <?php
 require 'footer.php';
