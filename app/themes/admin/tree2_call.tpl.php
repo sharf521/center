@@ -96,6 +96,8 @@
                 <table class="table_from">
                     <tr><td>套餐金额：</td><td><input type="text" name="money" value="27500"/>元</td></tr>
                     <tr><td>提车支出：</td><td><input type="text" name="car_money" value=""/>元</td></tr>
+                    <tr><td>二层满支出：</td><td><input type="text" name="layer2full_money" value="10000"/>元</td></tr>
+                    <tr><td>二层满支出：</td><td><input type="text" name="layer3full_money" value="30000"/>元</td></tr>
                     <tr><td></td><td><input type="submit" class="but3" value="重新开始计算" />
                             <input type="button" class="but3" value="返回" onclick="window.history.go(-1)"/></td></tr>
                 </table>

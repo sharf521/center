@@ -88,7 +88,9 @@ class Tree2Controller extends AdminController
                         (new Tree2())->calTree2_type4($money,$car_money);
                         break;
                     case 'type5':
-                        (new Tree2())->calTree2_type5($money,$car_money);
+                        $layer2full_money=(float)$request->post('layer2full_money');
+                        $layer3full_money=(float)$request->post('layer3full_money');
+                        (new Tree2())->calTree2_type5($money,$car_money,$layer2full_money,$layer3full_money);
                         break;
                 }
                 DB::commit();

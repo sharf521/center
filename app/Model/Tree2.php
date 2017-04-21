@@ -410,7 +410,7 @@ class Tree2 extends Model
         }
     }
 
-    public function calTree2_type5($money,$car_money)
+    public function calTree2_type5($money,$car_money,$layer2full_money,$layer3full_money)
     {
         $money=math($money,$car_money,'-',2);
         $this->reset(array('money'=>$money));//重置
@@ -441,7 +441,7 @@ class Tree2 extends Model
                     // echo $tree->id.'-'.$pTree->id.'<br>';
                     if($j==0){//第2层
                         if($pTree->childsize==2){
-                            $log->money=10000;
+                            $log->money=$layer2full_money;
                             $log->typeid='layer2full';
                             $log->save();
                             //echo '<br>layer2full<br>';
@@ -452,7 +452,7 @@ class Tree2 extends Model
                         $lastLevel=$pTree->level + 3;
                         $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id<={$tree->id}")->value("count(id)",'int');
                         if($count==7){
-                            $log->money=30000;
+                            $log->money=$layer3full_money;
                             $log->typeid='layer3full';
                             $log->save();
                             $pTree->income=math($pTree->income,$log->money,'+',2);
