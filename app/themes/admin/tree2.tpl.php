@@ -5,6 +5,8 @@ $arr_typeid=array(
     'layer2full'=>'二层满',
     'layer3full'=>'三层满',
     'layer4dian'=>'第4层见点',
+    'layer5first_money'=>'五层第一个',
+    'layer6first_money'=>'六层第一个',
     'car_money'=>'提车',
     'transfer_money'=>'过户',
 );
