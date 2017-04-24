@@ -75,17 +75,20 @@ class Tree2Controller extends AdminController
                     case 'default':
                         (new Tree2())->calTree2_default($money,$car_money,$transfer_money);
                         break;
-                    case 'type1' :
-                        (new Tree2())->calTree2_type1($money,$car_money);
-                        break;
-                    case 'type2' :
+                    case 'zong' :
                         $layer2first_money=(float)$request->post('layer2first_money');
                         $layer2full_money=(float)$request->post('layer2full_money');
                         $layer3full_money=(float)$request->post('layer3full_money');
                         $layer4dian_money=(float)$request->post('layer4dian_money');
                         $layer5fist_money=(float)$request->post('layer5fist_money');
                         $layer6fist_money=(float)$request->post('layer6fist_money');
-                        (new Tree2())->calTree2_type2($money,$layer2first_money,$layer2full_money,$layer3full_money,$layer4dian_money,$layer5fist_money,$layer6fist_money);
+                        (new Tree2())->calTree2_zong($money,$layer2first_money,$layer2full_money,$layer3full_money,$layer4dian_money,$layer5fist_money,$layer6fist_money);
+                        break;
+                    case 'type1' :
+                        (new Tree2())->calTree2_type1($money,$car_money);
+                        break;
+                    case 'type2' :
+                        (new Tree2())->calTree2_type2($money,$car_money);
                         break;
                     case 'type3':
                         (new Tree2())->calTree2_type3($money,$car_money);
@@ -94,9 +97,8 @@ class Tree2Controller extends AdminController
                         (new Tree2())->calTree2_type4($money,$car_money);
                         break;
                     case 'type5':
-                        $layer2full_money=(float)$request->post('layer2full_money');
                         $layer3full_money=(float)$request->post('layer3full_money');
-                        (new Tree2())->calTree2_type5($money,$car_money,$layer2full_money,$layer3full_money);
+                        (new Tree2())->calTree2_type5($money,$car_money,$layer3full_money);
                         break;
                     case 'type6':
                         (new Tree2())->calTree2_type6($money,$car_money);

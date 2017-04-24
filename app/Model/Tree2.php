@@ -215,7 +215,7 @@ class Tree2 extends Model
         }
     }
 
-    public function calTree2_type2($money,$layer2first_money,$layer2full_money,$layer3full_money,$layer4dian_money,$layer5fist_money,$layer6first_money)
+    public function calTree2_type2($money,$car_money)
     {
         $this->reset(array('money'=>$money));//重置
         $where="status=0";
@@ -244,26 +244,18 @@ class Tree2 extends Model
                     $log->layer=$j+2;
                     // echo $tree->id.'-'.$pTree->id.'<br>';
                     if($j==0){//第2层
-                        if($pTree->childsize==1 && $layer2first_money!=0){
-                            $log->money=$layer2first_money;
-                            $log->typeid='layer2first';
-                            $log->save();
-                            $pTree->income=math($pTree->income,$log->money,'+',2);
-                            $pTree->save();
-                        }
-                        if($pTree->childsize==2 && $layer2full_money!=0){
-                            $log->money=$layer2full_money;
+                        if($pTree->childsize==2){
+                            $log->money=$car_money;
                             $log->typeid='layer2full';
                             $log->save();
-                            //echo '<br>layer2full<br>';
                             $pTree->income=math($pTree->income,$log->money,'+',2);
                             $pTree->save();
                         }
                     }elseif ($j==1){//3
                         $lastLevel=$pTree->level + 3;
                         $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id<={$tree->id}")->value("count(id)",'int');
-                        if($count==7 && $layer3full_money!=0){
-                            $log->money=$layer3full_money;
+                        if($count==7){
+                            $log->money=10000;
                             $log->typeid='layer3full';
                             $log->save();
                             $pTree->income=math($pTree->income,$log->money,'+',2);
@@ -272,42 +264,14 @@ class Tree2 extends Model
                     }elseif ($j==2){//4
                         $lastLevel=$pTree->level + 3;
                         $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id<={$tree->id}")->value("count(id)",'int');
-                        if($count==7 && $layer4dian_money!=0){
+                        if($count==7){
                             //第4层见点5000（3层满）
-                            $log->money=$layer4dian_money;
+                            $log->money=5000;
                             $log->typeid='layer4dian';
                             $log->save();
                             //echo '<br>'.$pTree->id.'——layer4dian<br>';
                             $pTree->income=math($pTree->income,$log->money,'+',2);
                             $pTree->save();
-                        }
-                    }elseif ($j==3){//5
-                        //第4层满奖励没有发过
-                        if($pTree->full_reward_num<4){
-                            $lastLevel=$pTree->level + 4;
-                            $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id <={$tree->id}")->value("count(id)",'int');
-                            if($count==15 && $layer5fist_money!=0){
-                                $pTree->full_reward_num=4;
-                                $pTree->save();
-                                $log->money=$layer5fist_money;
-                                $log->typeid='layer5first_money';//五层第一个
-                                $log->save();
-                                //echo '<br>layer5first<br>';
-                            }
-                        }
-                    }elseif ($j==4){//第6层
-                        //第5层满奖励没有发过
-                        if($pTree->full_reward_num<5){
-                            $lastLevel=$pTree->level + 5;
-                            $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id <={$tree->id}")->value("count(id)",'int');
-                            if($count==31 && $layer6first_money!=0){
-                                $pTree->full_reward_num=5;
-                                $pTree->save();
-                                $log->money=$layer6first_money;
-                                $log->typeid='layer6first_money';//六层第一个
-                                $log->save();
-                                //echo '<br>layer6first<br>';
-                            }
                         }
                     }else{
                         break;
@@ -438,9 +402,8 @@ class Tree2 extends Model
         }
     }
 
-    public function calTree2_type5($money,$car_money,$layer2full_money,$layer3full_money)
+    public function calTree2_type5($money,$car_money,$layer3full_money)
     {
-        $money=math($money,$car_money,'-',2);
         $this->reset(array('money'=>$money));//重置
         $where="status=0";
         $result=(new Tree2())->where($where)->orderBy('id')->get();
@@ -468,8 +431,15 @@ class Tree2 extends Model
                     $log->layer=$j+2;
                     // echo $tree->id.'-'.$pTree->id.'<br>';
                     if($j==0){//第2层
+                        if($pTree->childsize==1){
+                            $log->money=$car_money;
+                            $log->typeid='layer2first';
+                            $log->save();
+                            $pTree->income=math($pTree->income,$log->money,'+',2);
+                            $pTree->save();
+                        }
                         if($pTree->childsize==2){
-                            $log->money=$layer2full_money;
+                            $log->money=10000;
                             $log->typeid='layer2full';
                             $log->save();
                             //echo '<br>layer2full<br>';
@@ -507,7 +477,9 @@ class Tree2 extends Model
         }
     }
 
-    public function calTree2_type6($money,$car_money)
+
+
+    public function calTree2_zong($money,$layer2first_money,$layer2full_money,$layer3full_money,$layer4dian_money,$layer5fist_money,$layer6first_money)
     {
         $this->reset(array('money'=>$money));//重置
         $where="status=0";
@@ -536,18 +508,26 @@ class Tree2 extends Model
                     $log->layer=$j+2;
                     // echo $tree->id.'-'.$pTree->id.'<br>';
                     if($j==0){//第2层
-                        if($pTree->childsize==2){
-                            $log->money=$car_money;
+                        if($pTree->childsize==1 && $layer2first_money!=0){
+                            $log->money=$layer2first_money;
+                            $log->typeid='layer2first';
+                            $log->save();
+                            $pTree->income=math($pTree->income,$log->money,'+',2);
+                            $pTree->save();
+                        }
+                        if($pTree->childsize==2 && $layer2full_money!=0){
+                            $log->money=$layer2full_money;
                             $log->typeid='layer2full';
                             $log->save();
+                            //echo '<br>layer2full<br>';
                             $pTree->income=math($pTree->income,$log->money,'+',2);
                             $pTree->save();
                         }
                     }elseif ($j==1){//3
                         $lastLevel=$pTree->level + 3;
                         $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id<={$tree->id}")->value("count(id)",'int');
-                        if($count==7){
-                            $log->money=10000;
+                        if($count==7 && $layer3full_money!=0){
+                            $log->money=$layer3full_money;
                             $log->typeid='layer3full';
                             $log->save();
                             $pTree->income=math($pTree->income,$log->money,'+',2);
@@ -556,14 +536,42 @@ class Tree2 extends Model
                     }elseif ($j==2){//4
                         $lastLevel=$pTree->level + 3;
                         $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id<={$tree->id}")->value("count(id)",'int');
-                        if($count==7){
+                        if($count==7 && $layer4dian_money!=0){
                             //第4层见点5000（3层满）
-                            $log->money=5000;
+                            $log->money=$layer4dian_money;
                             $log->typeid='layer4dian';
                             $log->save();
                             //echo '<br>'.$pTree->id.'——layer4dian<br>';
                             $pTree->income=math($pTree->income,$log->money,'+',2);
                             $pTree->save();
+                        }
+                    }elseif ($j==3){//5
+                        //第4层满奖励没有发过
+                        if($pTree->full_reward_num<4){
+                            $lastLevel=$pTree->level + 4;
+                            $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id <={$tree->id}")->value("count(id)",'int');
+                            if($count==15 && $layer5fist_money!=0){
+                                $pTree->full_reward_num=4;
+                                $pTree->save();
+                                $log->money=$layer5fist_money;
+                                $log->typeid='layer5first_money';//五层第一个
+                                $log->save();
+                                //echo '<br>layer5first<br>';
+                            }
+                        }
+                    }elseif ($j==4){//第6层
+                        //第5层满奖励没有发过
+                        if($pTree->full_reward_num<5){
+                            $lastLevel=$pTree->level + 5;
+                            $count=(new Tree2())->where("pids like '{$pTree->pids}%' and level<{$lastLevel} and id <={$tree->id}")->value("count(id)",'int');
+                            if($count==31 && $layer6first_money!=0){
+                                $pTree->full_reward_num=5;
+                                $pTree->save();
+                                $log->money=$layer6first_money;
+                                $log->typeid='layer6first_money';//六层第一个
+                                $log->save();
+                                //echo '<br>layer6first<br>';
+                            }
                         }
                     }else{
                         break;
