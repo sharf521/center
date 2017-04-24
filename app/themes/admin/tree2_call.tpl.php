@@ -105,7 +105,7 @@
 
 
     <fieldset class="layui-elem-field">
-        <legend>汇总</legend>
+        <legend>通用</legend>
         <div class="layui-field-box">
             <form method="post">
                 <input type="hidden" name="typeid" value="zong">
