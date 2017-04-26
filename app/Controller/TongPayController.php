@@ -108,8 +108,8 @@ class TongPayController extends Controller
         $myfile = fopen(ROOT."/public/data/tonglian".date('YmdHis').".txt", "w");
         $txt = json_encode($_REQUEST);
         fwrite($myfile, $txt);
-        $txt = json_encode("\r\n POST：".$_POST);
-        fwrite($myfile, $txt);
+        $txt = json_encode($_POST);
+        fwrite($myfile, 'POST:'.$txt);
         fclose($myfile);
 
         $UsrSn=$request->post('orderId');
