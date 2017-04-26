@@ -53,7 +53,7 @@ class TongPayController extends Controller
             'fee' => 0,
             'payment' => 'tonglian',
             'type' => 1,
-            'remark' => '',
+            'remark' => '信用卡分期',
             'created_at' => time(),
             'addip' => ip()
         );
