@@ -32,7 +32,7 @@ class TongPayController extends Controller
             'v'=>'1.0',
             'sign_v'=>'1',
             'amount'=>'2000.00',
-            'channel'=>'1',//支付渠道：0：pc   1：wap
+            'channel'=>'0',//支付渠道：0：pc   1：wap
             'comment'=>'',
             'description'=>'',
             'notify_url'=>'http://center.yuantuwang.com/tongPay/result',
@@ -41,7 +41,7 @@ class TongPayController extends Controller
             'order_id'=>time() . rand(10000, 99999),
             'timestamp'=>date('YmdHis'),
             'trade_date'=>date('Ymd'),
-            'trade_time'=>date('His'), 
+            'trade_time'=>date('His'),
             'unalter'=>'nper'
         );
 
