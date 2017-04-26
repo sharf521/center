@@ -20,5 +20,11 @@ class IndexController extends Controller
         redirect('member/');
     }
 
+    public function pay()
+    {
+        $url='http://gateway.ulinkpay.com:8002/asaop/rest/api/';
+        
+    }
+
 
 }
