@@ -41,7 +41,7 @@ class TongPayController extends Controller
             'order_id'=>time() . rand(10000, 99999),
             'timestamp'=>date('YmdHis'),
             'trade_date'=>date('Ymd'),
-            'trade_time'=>date('His'),
+            'trade_time'=>date('His'), 
             'unalter'=>'nper'
         );
 
