@@ -106,10 +106,10 @@ class PayController extends Controller
             $MerPriv = explode('#', $MerPriv);
             $user_id = (int)$MerPriv[0];
             $host = $MerPriv[1];
-            $row = DB::table('account_recharge')->where("user_id={$user_id} and trade_no={$UsrSn}")->row();
+            $row = DB::table('account_recharge')->where("user_id={$user_id} and trade_no='{$UsrSn}'")->row();
             if ($row) {
                 if ($row['status'] == 0) {
-                    DB::table('account_recharge')->where("user_id={$user_id} and trade_no={$UsrSn}")->update(array('status' => 1));
+                    DB::table('account_recharge')->where("user_id={$user_id} and trade_no='{$UsrSn}'")->update(array('status' => 1));
                     $log = array();
                     $log['user_id'] = $row['user_id'];
                     $log['type'] = 1;

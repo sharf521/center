@@ -43,7 +43,7 @@ class TongPayController extends Controller
             'comment'=>'',
             'description'=>'',
             'notify_url'=>'http://center.yuantuwang.com/tongPay/result',
-            'return_url'=>'http://www.yuantuwang.com',
+            'return_url'=>'http://wechat.yuantuwang.com',
             'nper'=>'12',//分期数
             'order_id'=>'TL'.time() . rand(10000, 99999),
             'timestamp'=>date('YmdHis'),
@@ -67,7 +67,7 @@ class TongPayController extends Controller
             'fee' => 0,
             'payment' => 'tonglian',
             'type' => 1,
-            'remark' => "信用卡分{$para['nper']}期",
+            'remark' => "信用卡分{$para['nper']}期,{$para['trade_date']}|{$para['trade_time']}",
             'created_at' => time(),
             'addip' => ip()
         );
@@ -139,6 +139,7 @@ class TongPayController extends Controller
         fclose($fp);
     }
 
+    //查询
     public function getOrder()
     {
         $url='http://gateway.ulinkpay.com:8002/asaop/rest/api/';
@@ -154,7 +155,6 @@ class TongPayController extends Controller
             'timestamp'=>date('YmdHis')
         );
         $para['sign']=$this->sign($para);
-        print_r($para);
         $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$url}' method='post' style='display:'>";
         while (list ($key, $val) = each($para)) {
             $sHtml .= "<input type='hidden' name='" . $key . "' value='" . $val . "'/>";
@@ -166,7 +166,37 @@ class TongPayController extends Controller
         exit;
         $html=$this->curl_url('http://gateway.ulinkpay.com:8002/asaop/rest/api/',$para);
         echo $html;
+    }
 
+    //退款
+    public function refund()
+    {
+        $url='http://gateway.ulinkpay.com:8002/asaop/rest/api/';
+        $para=array(
+            'app_key'=>'testhn',
+            'method'=>'allinpay.order.orderinstall.refund',
+            'format'=>'json',
+            'mer_id'=>'999290053990002',
+            'pdno'=>'0200',
+            'v'=>'1.0',
+            'sign_v'=>'1',
+            'order_id'=>'TL149327919428688',
+            'amount'=>sprintf("%.2f", 3000),
+            'channel'=>'1',//支付渠道：0：pc   1：wap
+            'timestamp'=>date('YmdHis'),
+            'trade_date'=>date('Ymd'),
+            'trade_time'=>date('His'),
+        );
+        $para['sign']=$this->sign($para);
+        $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$url}' method='post' style='display:'>";
+        while (list ($key, $val) = each($para)) {
+            $sHtml .= "<input type='hidden' name='" . $key . "' value='" . $val . "'/>";
+        }
+        //submit按钮控件请不要含有name属性
+        $sHtml = $sHtml . "<input type='submit'></form>";
+        //$sHtml = $sHtml . "<script>document.forms['fupaysubmit'].submit();</script>";
+        echo $sHtml;
+        exit;
     }
 
     private function curl_url($url, $data = array())
