@@ -33,7 +33,7 @@ class TongPayController extends Controller
             'pdno'=>'0200',
             'v'=>'1.0',
             'sign_v'=>'1',
-            'amount'=>sprintf("%.2f", 2000),
+            'amount'=>sprintf("%.2f", 3000),
             'channel'=>'0',//支付渠道：0：pc   1：wap
             'comment'=>'',
             'description'=>'',
@@ -47,12 +47,12 @@ class TongPayController extends Controller
             'unalter'=>'nper',
             'cetitype'=>'01'
         );
-        $para['creditName']='李超';
-        $para['idno']=$this->des_encrypt('230715199203234023');
+        $para['creditName']='李红';
+        $para['idno']=$this->des_encrypt('340603199402064797');
         $para['phoneNo']=$this->des_encrypt('13937127756');
-        $para['creditNo']=$this->des_encrypt('6259983790374402');
-        $para['validty_period']=$this->des_encrypt('0418');
-        $para['cvv']=$this->des_encrypt('838');
+        $para['creditNo']=$this->des_encrypt('6259986239282080');
+        $para['validty_period']=$this->des_encrypt('0620');
+        $para['cvv']=$this->des_encrypt('490');
 
         $data = array(
             'trade_no' => $para['order_id'],
