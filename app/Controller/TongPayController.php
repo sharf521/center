@@ -18,6 +18,8 @@ class TongPayController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->pfxpath = ROOT.'/pay_file/private.pfx'; //密钥文件路径
+        $this->privkeypass = '123456'; //私钥密码
     }
 
     public function index()
@@ -38,7 +40,7 @@ class TongPayController extends Controller
             'notify_url'=>'http://center.yuantuwang.com/tongPay/result',
             'return_url'=>'http://www.yuantuwang.com',
             'nper'=>'12',//分期数
-            'order_id'=>time() . rand(10000, 99999),
+            'order_id'=>'TL'.time() . rand(10000, 99999),
             'timestamp'=>date('YmdHis'),
             'trade_date'=>date('Ymd'),
             'trade_time'=>date('His'),
@@ -53,25 +55,12 @@ class TongPayController extends Controller
             'fee' => 0,
             'payment' => 'tonglian',
             'type' => 1,
-            'remark' => '信用卡分期',
+            'remark' => "信用卡分{$para['nper']}期",
             'created_at' => time(),
             'addip' => ip()
         );
         DB::table('account_recharge')->insert($data);
-
-        echo "\r\n\r\n 参数==================================\r\n\r\n";
-        print_r($para);
-        $sign_str=$this->getsignstr($para);
-        echo "\r\n\r\n 签名前字符==================================\r\n\r\n".$sign_str;
-
-        echo "\r\n\r\n 签名==================================\r\n\r\n";
-
-        $sign_str=$this->sign($sign_str);
-        echo $sign_str;
-        $para['sign']=$sign_str;
-        echo "\r\n\r\n 所有数值==================================\r\n\r\n";
-        print_r($para);
-
+        $para['sign']=$this->sign($para);
         $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$url}' method='post' style='display:'>";
         while (list ($key, $val) = each($para)) {
             $sHtml .= "<input type='hidden' name='" . $key . "' value='" . $val . "'/>";
@@ -84,38 +73,70 @@ class TongPayController extends Controller
 
     private function sign($data)
     {
-        $privkeypass = '123456'; //私钥密码
-        $pfxpath = ROOT.'/pay_file/private.pfx'; //密钥文件路径
-        $priv_key = file_get_contents($pfxpath); //获取密钥文件内容
-        //$data = "test"; //加密数据测试test
+        $sign_str=$this->getsignstr($data);
+        //echo "\r\n\r\n 签名前字符==================================\r\n\r\n".$sign_str;
+        $priv_key = file_get_contents($this->pfxpath); //获取密钥文件内容
         //私钥加密
-        openssl_pkcs12_read($priv_key, $certs, $privkeypass); //读取公钥、私钥
+        openssl_pkcs12_read($priv_key, $certs, $this->privkeypass); //读取公钥、私钥
         $prikeyid = $certs['pkey']; //私钥
-        openssl_sign($data, $signMsg, $prikeyid,OPENSSL_ALGO_SHA1); //注册生成加密信息
+        openssl_sign($sign_str, $signMsg, $prikeyid,OPENSSL_ALGO_SHA1); //注册生成加密信息
         //$signMsg = base64_encode($signMsg); //base64转码加密信息
         $signMsg=bin2hex($signMsg);//转16进制
         return $signMsg;
     }
 
-    /**
-    msg=订单提交成功，待支付
-    orderId=201608301002296995
-    result=0
-    sign=06a85083a70fed3c90d2
-     */
+    private function checkSign($data)
+    {
+        $signStr=$data['sign'];
+        $signStr=hex2bin($signStr);
+        unset($data['sign']);
+        $data=$this->getsignstr($data);
+        $priv_key = file_get_contents($this->pfxpath); //获取密钥文件内容
+        openssl_pkcs12_read($priv_key, $certs, $this->privkeypass); //读取公钥、私钥
+        $pubkeyid = $certs['cert']; //公钥
+
+        $res = openssl_verify($data, $signStr, $pubkeyid); //验证
+        //echo $res; //输出验证结果，1：验证成功，0：验证失败
+        if($res=='1'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private function log($data)
+    {
+        $myfile = fopen(ROOT."/public/data/tonglian".date('YmdHi').".txt", "a+");
+        if(is_array($data)){
+            $data=json_encode($data);
+        }
+        fwrite($myfile, '【'.date('Y-m-d H:i:s').'】'.$data."\r\n");
+        fclose($myfile);
+    }
+
     public function result(Request $request, Account $account)
     {
-        $myfile = fopen(ROOT."/public/data/tonglian".date('YmdHis').".txt", "w");
-        $txt = json_encode($_REQUEST);
-        fwrite($myfile, $txt);
-        $txt = json_encode($_POST);
-        fwrite($myfile, 'POST:'.$txt);
-        fclose($myfile);
-
+        $this->log($_POST);
+/*        $arr = array(
+            'msg' => '消费成功',
+            'nper' => '12',
+            'orderId' => '149320225680298',
+            'result' => '1',
+            'totalAmt' => '2127.80',
+            'sign' => '0720794c53a495dbb3438cb381c96534fcb12ed0df3c2fef719917335d85c647f2c81ae7ebebc63bd7ed48994a7458aaee1c8c2273f6ddeeceb02b13a0b189b79615f4b837a313948971e4960241491e0a81f70a1a7d1182dd1c4d5c5aafaf40b95b9dac2588bbfc093861f289c02a85d4a24de0708874c1ef60f7dba998dd2d'
+        );*/
+        $checkSign = $this->checkSign($_POST);
+        if(!$checkSign){
+            $this->log('checkSign error');
+            exit;
+        }
+        $msg=$request->post('msg');
+        $nper=$request->post('nper');//12
+        $totalAmt=$request->post('totalAmt');//2127.80
         $UsrSn=$request->post('orderId');
         $result=$request->post('result');
-        $sign=$request->post('sign');
         if($result!=1){
+            echo 'success';
             exit;
         }
         //判断缓存中是否有 创建交易cache缓存文件
