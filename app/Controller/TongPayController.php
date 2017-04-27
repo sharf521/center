@@ -33,7 +33,7 @@ class TongPayController extends Controller
             'pdno'=>'0200',
             'v'=>'1.0',
             'sign_v'=>'1',
-            'amount'=>sprintf("%.2f", 3000),
+            'amount'=>sprintf("%.2f", 2000),
             'channel'=>'0',//支付渠道：0：pc   1：wap
             'comment'=>'',
             'description'=>'',
