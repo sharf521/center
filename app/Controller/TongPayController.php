@@ -22,8 +22,13 @@ class TongPayController extends Controller
         $this->privkeypass = '123456'; //私钥密码
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        if($request->get('t')==1){
+            $channel='1';
+        }else{
+            $channel='0';
+        }
         $url='http://gateway.ulinkpay.com:8002/asaop/rest/api/';
         $para=array(
             'app_key'=>'testhn',
@@ -34,7 +39,7 @@ class TongPayController extends Controller
             'v'=>'1.0',
             'sign_v'=>'1',
             'amount'=>sprintf("%.2f", 3000),
-            'channel'=>'0',//支付渠道：0：pc   1：wap
+            'channel'=>$channel,//支付渠道：0：pc   1：wap
             'comment'=>'',
             'description'=>'',
             'notify_url'=>'http://center.yuantuwang.com/tongPay/result',
