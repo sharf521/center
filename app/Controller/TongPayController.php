@@ -150,10 +150,10 @@ class TongPayController extends Controller
         if (flock($fp, LOCK_EX | LOCK_NB)) //设定模式独占锁定和不堵塞锁定
         {
             ////////////start处理////////////////////////////
-            $row = DB::table('account_recharge')->where("trade_no={$UsrSn}")->row();
+            $row = DB::table('account_recharge')->where("trade_no='{$UsrSn}'")->row();
             if ($row) {
                 if ($row['status'] == 0) {
-                    DB::table('account_recharge')->where("trade_no={$UsrSn}")->update(array('status' => 1));
+                    DB::table('account_recharge')->where("trade_no='{$UsrSn}'")->update(array('status' => 1));
                     $log = array();
                     $log['user_id'] = $row['user_id'];
                     $log['type'] = 1;
