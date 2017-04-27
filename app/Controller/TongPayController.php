@@ -133,7 +133,7 @@ class TongPayController extends Controller
         $msg=$request->post('msg');
         $nper=$request->post('nper');//12
         $totalAmt=$request->post('totalAmt');//2127.80
-        $UsrSn=$request->post('orderId');
+        $UsrSn=$request->post('orderId');  
         $result=$request->post('result');
         if($result!=1){
             echo 'success';
