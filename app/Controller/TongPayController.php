@@ -67,7 +67,7 @@ class TongPayController extends Controller
             'fee' => 0,
             'payment' => 'tonglian',
             'type' => 1,
-            'remark' => "信用卡分{$para['nper']}期,{$para['trade_date']}|{$para['trade_time']}",
+            'remark' => "信用卡分{$para['nper']}期,{$para['channel']}|{$para['trade_date']}|{$para['trade_time']}",
             'created_at' => time(),
             'addip' => ip()
         );
@@ -151,7 +151,7 @@ class TongPayController extends Controller
             'pdno'=>'0200',
             'v'=>'1.0',
             'sign_v'=>'1',
-            'order_id'=>'TL149326676837772',
+            'order_id'=>'TL149328338469412',
             'timestamp'=>date('YmdHis')
         );
         $para['sign']=$this->sign($para);
@@ -180,12 +180,12 @@ class TongPayController extends Controller
             'pdno'=>'0200',
             'v'=>'1.0',
             'sign_v'=>'1',
-            'order_id'=>'TL149327919428688',
+            'order_id'=>'TL149328338469412',
             'amount'=>sprintf("%.2f", 3000),
-            'channel'=>'1',//支付渠道：0：pc   1：wap
+            'channel'=>'0',//下单时的支付渠道：0：pc   1：wap
             'timestamp'=>date('YmdHis'),
-            'trade_date'=>date('Ymd'),
-            'trade_time'=>date('His'),
+            'trade_date'=>'20170427',
+            'trade_time'=>'165624',
         );
         $para['sign']=$this->sign($para);
         $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$url}' method='post' style='display:'>";
