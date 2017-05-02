@@ -34,6 +34,7 @@ class AccountController extends MemberController
             if(empty($wechat_openid) && empty($get_wechat_openid)){
                 $url="http://wx02560f146a566747.wechat.yuantuwang.com/user/getWeChatOpenId/?url={$url}";
                 //$url="http://wx02560f146a566747.wechat.yuantuwang.com/user/goWeChatPay/?id={$this->user_id}&money=0&url={$url}";
+                redirect($url);
             }
             $url="http://centerwap.yuantuwang.com/wechat/recharge/?id={$this->user_id}&wechat_openid={$wechat_openid}&money=0&url={$url}";
             echo $url;
