@@ -27,16 +27,20 @@ class AccountController extends MemberController
     //线下冲值
     public function recharge(Request $request)
     {
-        $get_wechat_openid = $request->get('wechat_openid');
         if ($this->is_wap) {
-            $url = 'http://' . $_SERVER['HTTP_HOST'] . '/member/account/';
             $wechat_openid = $this->user->wechat_openid;
-            if (empty($wechat_openid) && empty($get_wechat_openid)) {
-                $this_url='http://'.$_SERVER['HTTP_HOST'].urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
-                $url = "http://wx02560f146a566747.wechat.yuantuwang.com/user/getWeChatOpenId/?url={$this_url}";
-                //$url="http://wx02560f146a566747.wechat.yuantuwang.com/user/goWeChatPay/?id={$this->user_id}&money=0&url={$url}";
-                redirect($url);
+            if (empty($wechat_openid)) {
+                $get_wechat_openid = $request->get('wechat_openid');
+                if(empty($get_wechat_openid)){
+                    $this_url='http://'.$_SERVER['HTTP_HOST'].urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+                    $url = "http://wx02560f146a566747.wechat.yuantuwang.com/user/getWeChatOpenId/?url={$this_url}";
+                    //$url="http://wx02560f146a566747.wechat.yuantuwang.com/user/goWeChatPay/?id={$this->user_id}&money=0&url={$url}";
+                    redirect($url);
+                }else{
+                    $wechat_openid=$get_wechat_openid;
+                }
             }
+            $url = 'http://' . $_SERVER['HTTP_HOST'] . '/member/account/';
             $url = "http://centerwap.yuantuwang.com/wechat/recharge/?id={$this->user_id}&wechat_openid={$wechat_openid}&money=0&url={$url}";
             echo $url;
             //redirect($url);
