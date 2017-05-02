@@ -40,10 +40,9 @@ class AccountController extends MemberController
                     $wechat_openid=$get_wechat_openid;
                 }
             }
-            $url = 'http://' . $_SERVER['HTTP_HOST'] . '/member/account/';
-            $url = "http://centerwap.yuantuwang.com/wechat/recharge/?id={$this->user_id}&wechat_openid={$wechat_openid}&money=0&url={$url}";
-            echo $url;
-            //redirect($url);
+            $redirect_url = 'http://' . $_SERVER['HTTP_HOST'] . '/member/account/';
+            $url = "http://centerwap.yuantuwang.com/wechat/recharge/?id={$this->user_id}&wechat_openid={$wechat_openid}&money=0&url={$redirect_url}";
+            redirect($url);
             exit;
         }
         if ($_POST) {
