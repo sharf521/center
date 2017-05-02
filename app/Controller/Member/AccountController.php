@@ -32,7 +32,7 @@ class AccountController extends MemberController
             $url = 'http://' . $_SERVER['HTTP_HOST'] . '/member/account/';
             $wechat_openid = $this->user->wechat_openid;
             if (empty($wechat_openid) && empty($get_wechat_openid)) {
-                $this_url=urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+                $this_url='http://'.$_SERVER['HTTP_HOST'].urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
                 $url = "http://wx02560f146a566747.wechat.yuantuwang.com/user/getWeChatOpenId/?url={$this_url}";
                 //$url="http://wx02560f146a566747.wechat.yuantuwang.com/user/goWeChatPay/?id={$this->user_id}&money=0&url={$url}";
                 redirect($url);
