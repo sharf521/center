@@ -36,6 +36,9 @@ class UserController extends ApiController
                 'invite_openid' => '',
                 'email' =>$row['email']
             );
+/*            if($this->app_id==10){
+                $user['user_id']=$row['id'];
+            }*/
             if($row['invite_userid']!=0){
                 $user['invite_openid']=DB::table('app_user')->where('app_id=? and user_id=?')
                     ->bindValues(array($this->app_id, $row['invite_userid']))->value('openid');
