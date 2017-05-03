@@ -23,6 +23,11 @@ class TongPayController extends Controller
         $this->app_key='hnszdyzc';
         $this->pfxpath = ROOT.'/ulinkpay_file/99491055110002.pfx'; //密钥文件路径
         $this->privkeypass = 'FXxGdukKraMFGVqcUmJRDVABfucnFibJ'; //私钥密码
+        $this->cerpath=  ROOT.'/ulinkpay_file/tlsw_pub_resp.cer'; //公钥文件路径
+
+        //$this->pfxpath = ROOT.'/ulinkpay_file/private.pfx'; //密钥文件路径
+        //$this->cerpath=  ROOT.'/ulinkpay_file/public.cer'; //公钥文件路径
+        //$this->privkeypass = '123456'; //私钥密码
     }
 
     public function index(Request $request)
@@ -101,23 +106,20 @@ class TongPayController extends Controller
      * */
     public function result(Request $request, Account $account)
     {
-        $_POST=array(
+        /*$_POST=array(
             'msg'=>'消费成功',
             'nper'=>'12',
             'orderId'=>'TL149378374976329',
             'result'=>'1',
             'sign'=>'78ee1761f94da22fe9bbf220070caa9e138b3b24f8106911552322843258644d0989fe03f72ed953f83b33eaddffc20d4380c332b0019499e0678452e8b35264c85b1a98d556aefb6f0355eefdfb7e7f24c7e670b024f26ed73b7b9ad2d30eef76de70086b284635826784bf59df109d535f98b8ff9fbc0cf8a259715a382073e9782d578a6138719dbbc9946f9bf0c879c483d02741ad16a2640d3e324fc2d08a0b6bf5bd0efca5e7b43f9176f7e77cc14b2f33bce100e6e9cd3773f040770b3f3bef1f7154fc1eac3b03290531e23cb6efac5f6f7e17723de534ea700989b5ae9dcec4ff6318d9eb0434cfee83af9497566328d29d40ab5d088053cfdd26b6',
             'totalAmt'=>'600.00'
-        );
+        );*/
         $this->log($_POST);
         $checkSign = $this->checkSign($_POST);
         if(!$checkSign){
             $this->log('checkSign error');
             exit;
         }
-
-        echo 'ok';
-        exit;
         $msg=$request->post('msg');
         $nper=$request->post('nper');//12
         $totalAmt=$request->post('totalAmt');//2127.80
@@ -278,12 +280,32 @@ class TongPayController extends Controller
         $signStr=hex2bin($signStr);
         unset($data['sign']);
         $data=$this->getsignstr($data);
+        //拼接验签路径
+        $verifyKey4Server = file_get_contents($this->cerpath);
+        $pem = chunk_split(base64_encode($verifyKey4Server),64,"\n");//转换为pem格式的公钥
+        $pem = "-----BEGIN CERTIFICATE-----\n".$pem."-----END CERTIFICATE-----\n";
+        $verifyKey = openssl_pkey_get_public($pem);
+        $verify_result=openssl_verify($data,$signStr,$verifyKey);
+        //输出验证结果，1：验证成功，0：验证失败
+        if($verify_result=='1'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    //无用
+    private function checkSign1($data)
+    {
+        $signStr=$data['sign'];
+        $signStr=hex2bin($signStr);
+        unset($data['sign']);
+        $data=$this->getsignstr($data);
         $priv_key = file_get_contents($this->pfxpath); //获取密钥文件内容
-        echo $this->privkeypass;
         openssl_pkcs12_read($priv_key, $certs, $this->privkeypass); //读取公钥、私钥
         $pubkeyid = $certs['cert']; //公钥
         $res = openssl_verify($data, $signStr, $pubkeyid); //验证
-        var_dump($res);
         //echo $res; //输出验证结果，1：验证成功，0：验证失败
         if($res=='1'){
             return true;
