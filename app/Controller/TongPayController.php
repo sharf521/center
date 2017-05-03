@@ -21,7 +21,7 @@ class TongPayController extends Controller
         $this->payUrl='https://www.allinpaycard.com/asaop/rest/api/';
         $this->mer_id='999491055110002';
         $this->app_key='hnszdyzc';
-        $this->pfxpath = ROOT.'/ulinkpay_file/999491055110002.pfx'; //密钥文件路径
+        $this->pfxpath = ROOT.'/ulinkpay_file/99491055110002.pfx'; //密钥文件路径
         $this->privkeypass = 'FXxGdukKraMFGVqcUmJRDVABfucnFibJ'; //私钥密码
     }
 
