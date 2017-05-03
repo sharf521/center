@@ -95,14 +95,29 @@ class TongPayController extends Controller
             'totalAmt' => '2127.80',
             'sign' => '0720794c53a495dbb3438cb381c96534fcb12ed0df3c2fef719917335d85c647f2c81ae7ebebc63bd7ed48994a7458aaee1c8c2273f6ddeeceb02b13a0b189b79615f4b837a313948971e4960241491e0a81f70a1a7d1182dd1c4d5c5aafaf40b95b9dac2588bbfc093861f289c02a85d4a24de0708874c1ef60f7dba998dd2d'
         );*/
+
+    /*
+     * 【2017-05-03 11:59:19】{"msg":"消费成功","nper":"12","orderId":"TL149378374976329","result":"1","sign":"78ee1761f94da22fe9bbf220070caa9e138b3b24f8106911552322843258644d0989fe03f72ed953f83b33eaddffc20d4380c332b0019499e0678452e8b35264c85b1a98d556aefb6f0355eefdfb7e7f24c7e670b024f26ed73b7b9ad2d30eef76de70086b284635826784bf59df109d535f98b8ff9fbc0cf8a259715a382073e9782d578a6138719dbbc9946f9bf0c879c483d02741ad16a2640d3e324fc2d08a0b6bf5bd0efca5e7b43f9176f7e77cc14b2f33bce100e6e9cd3773f040770b3f3bef1f7154fc1eac3b03290531e23cb6efac5f6f7e17723de534ea700989b5ae9dcec4ff6318d9eb0434cfee83af9497566328d29d40ab5d088053cfdd26b6","totalAmt":"600.00"}
+     * */
     public function result(Request $request, Account $account)
     {
+        $_POST=array(
+            'msg'=>'消费成功',
+            'nper'=>'12',
+            'orderId'=>'TL149378374976329',
+            'result'=>'1',
+            'sign'=>'78ee1761f94da22fe9bbf220070caa9e138b3b24f8106911552322843258644d0989fe03f72ed953f83b33eaddffc20d4380c332b0019499e0678452e8b35264c85b1a98d556aefb6f0355eefdfb7e7f24c7e670b024f26ed73b7b9ad2d30eef76de70086b284635826784bf59df109d535f98b8ff9fbc0cf8a259715a382073e9782d578a6138719dbbc9946f9bf0c879c483d02741ad16a2640d3e324fc2d08a0b6bf5bd0efca5e7b43f9176f7e77cc14b2f33bce100e6e9cd3773f040770b3f3bef1f7154fc1eac3b03290531e23cb6efac5f6f7e17723de534ea700989b5ae9dcec4ff6318d9eb0434cfee83af9497566328d29d40ab5d088053cfdd26b6',
+            'totalAmt'=>'600.00'
+        );
         $this->log($_POST);
         $checkSign = $this->checkSign($_POST);
         if(!$checkSign){
             $this->log('checkSign error');
             exit;
         }
+
+        echo 'ok';
+        exit;
         $msg=$request->post('msg');
         $nper=$request->post('nper');//12
         $totalAmt=$request->post('totalAmt');//2127.80
@@ -143,8 +158,9 @@ class TongPayController extends Controller
     }
 
     //查询
-    public function getOrder()
+    public function getOrder(Request $request)
     {
+        $order_id=$request->get('order_id');
         $para=array(
             'app_key'=>$this->app_key,
             'method'=>'allinpay.order.orderinstall.query',
@@ -153,7 +169,7 @@ class TongPayController extends Controller
             'pdno'=>'0200',
             'v'=>'1.0',
             'sign_v'=>'1',
-            'order_id'=>'TL149328338469412',
+            'order_id'=>$order_id,
             'timestamp'=>date('YmdHis')
         );
         $para['sign']=$this->sign($para);
@@ -163,11 +179,9 @@ class TongPayController extends Controller
         }
         //submit按钮控件请不要含有name属性
         $sHtml = $sHtml . "<input type='submit'></form>";
-        //$sHtml = $sHtml . "<script>document.forms['fupaysubmit'].submit();</script>";
+        $sHtml = $sHtml . "<script>document.forms['fupaysubmit'].submit();</script>";
+        //$html=$this->curl_url($this->payUrl,$para);
         echo $sHtml;
-        exit;
-        $html=$this->curl_url($this->payUrl,$para);
-        echo $html;
     }
 
     //退款
@@ -265,10 +279,11 @@ class TongPayController extends Controller
         unset($data['sign']);
         $data=$this->getsignstr($data);
         $priv_key = file_get_contents($this->pfxpath); //获取密钥文件内容
+        echo $this->privkeypass;
         openssl_pkcs12_read($priv_key, $certs, $this->privkeypass); //读取公钥、私钥
         $pubkeyid = $certs['cert']; //公钥
-
         $res = openssl_verify($data, $signStr, $pubkeyid); //验证
+        var_dump($res);
         //echo $res; //输出验证结果，1：验证成功，0：验证失败
         if($res=='1'){
             return true;
