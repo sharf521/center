@@ -18,9 +18,10 @@ class TongPayController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $system=(new System());
         $this->payUrl='https://www.allinpaycard.com/asaop/rest/api/';
-        $this->mer_id='999491055110002';
-        $this->app_key='hnszdyzc';
+        $this->mer_id=$system->getCode('TL_mer_id');
+        $this->app_key=$system->getCode('TL_app_key');
         $this->pfxpath = ROOT.'/ulinkpay_file/99491055110002.pfx'; //密钥文件路径
         $this->privkeypass = 'FXxGdukKraMFGVqcUmJRDVABfucnFibJ'; //私钥密码
         $this->cerpath=  ROOT.'/ulinkpay_file/tlsw_pub_resp.cer'; //公钥文件路径
@@ -197,12 +198,12 @@ class TongPayController extends Controller
             'pdno'=>'0200',
             'v'=>'1.0',
             'sign_v'=>'1',
-            'order_id'=>'TL149328338469412',
-            'amount'=>sprintf("%.2f", 3000),
+            'order_id'=>'TL149379513315377',
+            'amount'=>sprintf("%.2f", 600),
             'channel'=>'0',//下单时的支付渠道：0：pc   1：wap
             'timestamp'=>date('YmdHis'),
-            'trade_date'=>'20170427',
-            'trade_time'=>'165624',
+            'trade_date'=>'20170503',
+            'trade_time'=>'150533',
         );
         $para['sign']=$this->sign($para);
         $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$this->payUrl}' method='post' style='display:'>";
@@ -316,7 +317,7 @@ class TongPayController extends Controller
 
     private function log($data)
     {
-        $myfile = fopen(ROOT."/public/data/tonglian".date('YmdHi').".txt", "a+");
+        $myfile = fopen(ROOT."/public/data/tonglian/".date('Y-m')."/".date('YmdHi').".txt", "a+");
         if(is_array($data)){
             $data=json_encode($data);
         }
