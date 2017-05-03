@@ -18,8 +18,11 @@ class TongPayController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->pfxpath = ROOT.'/pay_file/private.pfx'; //密钥文件路径
-        $this->privkeypass = '123456'; //私钥密码
+        $this->payUrl='https://www.allinpaycard.com/asaop/rest/api/';
+        $this->mer_id='999491055110002';
+        $this->app_key='hnszdyzc';
+        $this->pfxpath = ROOT.'/pay_file/999491055110002.pfx'; //密钥文件路径
+        $this->privkeypass = 'FXxGdukKraMFGVqcUmJRDVABfucnFibJ'; //私钥密码
     }
 
     public function index(Request $request)
@@ -29,12 +32,11 @@ class TongPayController extends Controller
         }else{
             $channel='0';
         }
-        $url='http://gateway.ulinkpay.com:8002/asaop/rest/api/';
         $para=array(
-            'app_key'=>'testhn',
-            'method'=>'allinpay.order.orderstage.add.test',
+            'app_key'=>$this->app_key,
+            'method'=>'allinpay.order.orderinstall.add',//'allinpay.order.orderstage.add.test',
             'format'=>'json',
-            'mer_id'=>'999290053990002',
+            'mer_id'=>$this->mer_id,
             'pdno'=>'0200',
             'v'=>'1.0',
             'sign_v'=>'1',
@@ -52,12 +54,12 @@ class TongPayController extends Controller
             'unalter'=>'nper',
             'cetitype'=>'01'
         );
-        $para['creditName']='李红';
+        /*$para['creditName']='李红';
         $para['idno']=$this->des_encrypt('340603199402064797');
         $para['phoneNo']=$this->des_encrypt('13937127756');
         $para['creditNo']=$this->des_encrypt('6259986239282080');
         $para['validty_period']=$this->des_encrypt('0620');
-        $para['cvv']=$this->des_encrypt('490');
+        $para['cvv']=$this->des_encrypt('490');*/
 
         $data = array(
             'trade_no' => $para['order_id'],
@@ -66,14 +68,14 @@ class TongPayController extends Controller
             'money' => $para['amount'],
             'fee' => 0,
             'payment' => 'tonglian',
-            'type' => 1,
+            'type' => 3,
             'remark' => "信用卡分{$para['nper']}期,{$para['channel']}|{$para['trade_date']}|{$para['trade_time']}",
             'created_at' => time(),
-            'addip' => ip()
+            'addip' => $this->ip()
         );
         DB::table('account_recharge')->insert($data);
         $para['sign']=$this->sign($para);
-        $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$url}' method='post' style='display:'>";
+        $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$this->payUrl}' method='post' style='display:'>";
         while (list ($key, $val) = each($para)) {
             $sHtml .= "<input type='hidden' name='" . $key . "' value='" . $val . "'/>";
         }
@@ -142,12 +144,11 @@ class TongPayController extends Controller
     //查询
     public function getOrder()
     {
-        $url='http://gateway.ulinkpay.com:8002/asaop/rest/api/';
         $para=array(
-            'app_key'=>'testhn',
+            'app_key'=>$this->app_key,
             'method'=>'allinpay.order.orderinstall.query',
             'format'=>'json',
-            'mer_id'=>'999290053990002',
+            'mer_id'=>$this->mer_id,
             'pdno'=>'0200',
             'v'=>'1.0',
             'sign_v'=>'1',
@@ -155,7 +156,7 @@ class TongPayController extends Controller
             'timestamp'=>date('YmdHis')
         );
         $para['sign']=$this->sign($para);
-        $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$url}' method='post' style='display:'>";
+        $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$this->payUrl}' method='post' style='display:'>";
         while (list ($key, $val) = each($para)) {
             $sHtml .= "<input type='hidden' name='" . $key . "' value='" . $val . "'/>";
         }
@@ -164,19 +165,18 @@ class TongPayController extends Controller
         //$sHtml = $sHtml . "<script>document.forms['fupaysubmit'].submit();</script>";
         echo $sHtml;
         exit;
-        $html=$this->curl_url('http://gateway.ulinkpay.com:8002/asaop/rest/api/',$para);
+        $html=$this->curl_url($this->payUrl,$para);
         echo $html;
     }
 
     //退款
     public function refund()
     {
-        $url='http://gateway.ulinkpay.com:8002/asaop/rest/api/';
         $para=array(
-            'app_key'=>'testhn',
+            'app_key'=>$this->app_key,
             'method'=>'allinpay.order.orderinstall.refund',
             'format'=>'json',
-            'mer_id'=>'999290053990002',
+            'mer_id'=>$this->mer_id,
             'pdno'=>'0200',
             'v'=>'1.0',
             'sign_v'=>'1',
@@ -188,7 +188,7 @@ class TongPayController extends Controller
             'trade_time'=>'165624',
         );
         $para['sign']=$this->sign($para);
-        $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$url}' method='post' style='display:'>";
+        $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$this->payUrl}' method='post' style='display:'>";
         while (list ($key, $val) = each($para)) {
             $sHtml .= "<input type='hidden' name='" . $key . "' value='" . $val . "'/>";
         }
@@ -231,7 +231,7 @@ class TongPayController extends Controller
     }
 
     //关键数据DES加密
-    private function des_encrypt ($encrypt,$key='a32df3e4')
+    private function des_encrypt ($encrypt,$key='06l3d3zZ')
     {
         // 根據 PKCS#7 RFC 5652 Cryptographic Message Syntax (CMS) 修正 Message 加入 Padding
         $block = mcrypt_get_block_size(MCRYPT_DES, MCRYPT_MODE_ECB);
@@ -310,5 +310,17 @@ class TongPayController extends Controller
         return $arg;
     }
 
-
+    private  function ip()
+    {
+        if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
+            $ip_address = $_SERVER["HTTP_CLIENT_IP"];
+        } else if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+            $ip_address = array_pop(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
+        } else if (!empty($_SERVER["REMOTE_ADDR"])) {
+            $ip_address = $_SERVER["REMOTE_ADDR"];
+        } else {
+            $ip_address = '';
+        }
+        return $ip_address;
+    }
 }

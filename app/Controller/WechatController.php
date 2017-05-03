@@ -53,7 +53,7 @@ class WechatController extends Controller
         $user=$user->find($id);
         if($user->wechat_openid==''){
             $user->wechat_openid=$wechat_openid;
-            $user->save();
+            $user->save();//用户中心和用应都更新
         }
         $data['user']=$user;
 
