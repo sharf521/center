@@ -317,7 +317,11 @@ class TongPayController extends Controller
 
     private function log($data)
     {
-        $myfile = fopen(ROOT."/public/data/tonglian/".date('Y-m')."/".date('YmdHi').".txt", "a+");
+        $path = ROOT . "/public/data/tonglian/" . date("Y-m") . "/";
+        if (!file_exists($path)) {
+            mkdir($path,0777,true);
+        }
+        $myfile = fopen($path.date('YmdHi').".txt", "a+");
         if(is_array($data)){
             $data=json_encode($data);
         }
