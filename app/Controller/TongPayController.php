@@ -75,6 +75,7 @@ class TongPayController extends Controller
         );
         DB::table('account_recharge')->insert($data);
         $para['sign']=$this->sign($para);
+        print_r($para);
         $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$this->payUrl}' method='post' style='display:'>";
         while (list ($key, $val) = each($para)) {
             $sHtml .= "<input type='hidden' name='" . $key . "' value='" . $val . "'/>";
