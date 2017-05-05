@@ -17,8 +17,11 @@
                             <td align="right">充值金额：</td><td><input id="money" value="<?=$money?>" name="money" type="text" size="8" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/>&nbsp;&nbsp;元</td>
                         </tr>
                         <tr>
-                            <td align="right">充值方式：</td><td><label><input id="type1" name="type" type="radio" value="1" onClick="changetype(1)" checked="checked"/> 在线充值</label>
-                                <label><input id="type2" name="type" type="radio" value="2" onClick="changetype(2)"/> 线下充值</label></td>
+                            <td align="right">充值方式：</td>
+                            <td><label><input id="type1" name="type" type="radio" value="1" onClick="changetype(1)" checked="checked"/> 在线充值</label>
+                                <label><input id="type2" name="type" type="radio" value="2" onClick="changetype(2)"/> 线下充值</label>
+                                <label><input id="type3" name="type" type="radio" value="3" onClick="changetype(3)"/> 分期充值</label>
+                            </td>
                         </tr>
                         <tr id="xianshang">
                             <td align="right">充值银行：</td>
@@ -91,6 +94,12 @@
                         <tr id="xianxiabz" style="display:none">
                             <td align="right">备注：</td><td><textarea  id="remark" name="remark" cols="60" rows="5"></textarea>*必填</td>
                         </tr>
+                        <tr id="fenqi" style="display:none">
+                            <td align="right">分期：</td>
+                            <td>
+                                12期：费用7%
+                            </td>
+                        </tr>
                         <tr>
                             <td></td><td><input type="submit" value="确认提交"/></td>
                         </tr>
@@ -117,7 +126,8 @@
                         <input  type="submit" value="查询" />
                     </form>
                 </div>
-                <? if(!empty($result['total'])){?>
+                <?
+                if(!empty($result['total'])){?>
                     <table class="table">
                         <tr>
                             <th>充值时间</th>
@@ -132,7 +142,21 @@
                         <? foreach($result['list'] as $row){?>
                             <tr>
                                 <td align="center"><?=$row->created_at?></td>
-                                <td align="center"><? if($row->type==1){echo "在线";}else{echo "线下";}?></td>
+                                <td align="center">
+                                    <?php
+                                    switch ($row->type){
+                                        case 1:
+                                            echo '在线';
+                                            break;
+                                        case 2:
+                                            echo '线下';
+                                            break;
+                                        case 3:
+                                            echo '分期';
+                                            break;
+                                    }
+                                    ?>
+                                </td>
                                 <td>￥<?=(float)$row->money?></td>
                                 <td>￥<?=(float)$row->fee?></td>
                                 <td style="color:#F00;"><? if($row->status==1){?>￥<?=$row->money-$row->fee?><? }?></td>

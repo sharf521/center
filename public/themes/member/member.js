@@ -40,13 +40,21 @@ function changetype(type) {
         document.getElementById("xianxia").style.display = "none";
         document.getElementById("xianxiabz").style.display = "none";
         document.getElementById("xianshang").style.display = "";
-    }
-    if (type == 2) {
+        document.getElementById("fenqi").style.display = "none";
+    }else if (type == 2) {
         document.getElementById("formpay").action = "";
         document.getElementById("formpay").target='';
         document.getElementById("xianshang").style.display = "none";
         document.getElementById("xianxia").style.display = "";
         document.getElementById("xianxiabz").style.display = "";
+        document.getElementById("fenqi").style.display = "none";
+    }else if (type == 3) {
+        document.getElementById("formpay").action = "/tongPay/recharge";
+        document.getElementById("formpay").target='_blank';
+        document.getElementById("xianshang").style.display = "none";
+        document.getElementById("xianxia").style.display = "none";
+        document.getElementById("xianxiabz").style.display = "none";
+        document.getElementById("fenqi").style.display = "";
     }
 }
 function card() {
@@ -71,6 +79,16 @@ function card() {
         }
         if (document.getElementById("remark").value == "") {
             alert("充值备注不能为空!");
+            return false;
+        }
+    }
+    if (document.getElementById("type3").checked == true) {
+        if (document.getElementById("money").value < 1000) {
+            alert("充值金额不能小于1000元");
+            return false;
+        }
+        if(document.getElementById("money").value >50000){
+            layer.alert('单笔金额不能大于5万元', {icon: 2});
             return false;
         }
     }
@@ -145,3 +163,24 @@ function changeSel(sel,id)
 //userInfo   end
 
 
+function orderPayJs() {
+    $(function () {
+        $("#integral").bind('input propertychange',function(){
+            if(Number($(this).val())>Number($('#span_integral').html())){
+                $(this).val($('#span_integral').html());
+            }
+            var max_jf=Math.mul(price_true,lv);
+            if(Number($(this).val())>max_jf){
+                $("#integral").val(max_jf);
+            }
+            var _m=Math.div(Number($("#integral").val()),lv);
+            var money=Math.sub(price_true,Math.moneyRound(_m,2));
+            $('#money_yes').html(money);
+        });
+        /*$('.recharge').on('click',function () {
+         var center_url=$(this).attr('center_url');
+         var money=$('#money_yes').html();
+         goCenterRecharge(center_url,money);
+         });   */
+    });
+}

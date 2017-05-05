@@ -31,9 +31,21 @@ class TongPayController extends Controller
         //$this->privkeypass = '123456'; //私钥密码
     }
 
-    public function index(Request $request)
+   public function index()
+   {
+
+   }
+
+    public function recharge(Request $request)
     {
-        if($request->get('t')==1){
+        $user_id = (int)$this->user_id;
+        $host = $_SERVER['HTTP_HOST'];
+        $money = (float)$request->post('money');
+        if ($user_id == 0 || $money<=600 || $money>50000) {
+            echo '参数错误';
+            exit();
+        }
+        if($this->is_wap){
             $channel='1';
         }else{
             $channel='0';
@@ -46,12 +58,12 @@ class TongPayController extends Controller
             'pdno'=>'0200',
             'v'=>'1.0',
             'sign_v'=>'1',
-            'amount'=>sprintf("%.2f", 600),
+            'amount'=>sprintf("%.2f", $money),
             'channel'=>$channel,//支付渠道：0：pc   1：wap
             'comment'=>'',
             'description'=>'',
-            'notify_url'=>'http://center.yuantuwang.com/tongPay/result',
-            'return_url'=>'http://wechat.yuantuwang.com',
+            'notify_url'=>"http://{$host}/tongPay/result",
+            'return_url'=>"http://{$host}/member/account/rechargeLog",
             'nper'=>'12',//分期数
             'order_id'=>'TL'.time() . rand(10000, 99999),
             'timestamp'=>date('YmdHis'),
@@ -67,6 +79,7 @@ class TongPayController extends Controller
         $para['validty_period']=$this->des_encrypt('0620');
         $para['cvv']=$this->des_encrypt('490');*/
 
+
         $data = array(
             'trade_no' => $para['order_id'],
             'user_id' => 2,
@@ -79,16 +92,17 @@ class TongPayController extends Controller
             'created_at' => time(),
             'addip' => $this->ip()
         );
+        $fee=math($data['money'],'0.07','*',3);
+        $data['fee']=round_money($fee,2,2);
         DB::table('account_recharge')->insert($data);
         $para['sign']=$this->sign($para);
-        print_r($para);
-        $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$this->payUrl}' method='post' style='display:'>";
+        $sHtml = "<form id='fupaysubmit' name='fupaysubmit' action='{$this->payUrl}' method='post' style='display:none'>";
         while (list ($key, $val) = each($para)) {
             $sHtml .= "<input type='hidden' name='" . $key . "' value='" . $val . "'/>";
         }
         //submit按钮控件请不要含有name属性
         $sHtml = $sHtml . "<input type='submit'></form>";
-        //$sHtml = $sHtml . "<script>document.forms['fupaysubmit'].submit();</script>";
+        $sHtml = $sHtml . "<script>document.forms['fupaysubmit'].submit();</script>";
         echo $sHtml;
     }
 
