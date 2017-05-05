@@ -95,9 +95,9 @@
                             <td align="right">备注：</td><td><textarea  id="remark" name="remark" cols="60" rows="5"></textarea>*必填</td>
                         </tr>
                         <tr id="fenqi" style="display:none">
-                            <td align="right">分期：</td>
+                            <td align="right"></td>
                             <td>
-                                12期：费用7%
+                                金额2千至5万、12期、费用7%
                             </td>
                         </tr>
                         <tr>
