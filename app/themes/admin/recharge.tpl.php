@@ -9,6 +9,7 @@
                 <option value=""<? if($_GET['type']==""){?> selected="selected"<? }?>>请选择</option>
                 <option value="1"<? if($_GET['type']=="1"){?> selected="selected"<? }?>>在线充值</option>
                 <option value="2"<? if($_GET['type']=="2"){?> selected="selected"<? }?>>线下充值</option>
+                <option value="3"<? if($_GET['type']=="3"){?> selected="selected"<? }?>>分期充值</option>
             </select>
             <? if($this->user['type_id']==2){?>
                 归属分站：
@@ -65,7 +66,11 @@
                         <td><? if($row->verify_time!=0){echo date('Y-m-d H:i:s',$row->verify_time);}?></td>
                         <td class="fl"><?=nl2br($row->verify_remark)?></td>
                         <td><? if ($row->status == 0) {
-                                echo "待审核";
+                                if($row->type==2){
+                                    echo "待审核";
+                                }else{
+                                    echo '未成功';
+                                }
                             } elseif ($row->status == 1) {
                                 echo "充值成功";
                             } elseif ($row->status == 2) {
@@ -104,10 +109,10 @@
                 <tr><td>真实姓名：</td><td><?=$row->user()->name?></td></tr>
                 <tr><td>充值类型：</td><td><? if($row->type==1){echo "在线充值";}else{echo "线下充值";}?></td></tr>
                 <tr><td>所属银行：</td><td><? if($row->type==1){echo "在线充值";}else{echo "线下充值";}?></td></tr>
-                <tr><td>充值金额：</td><td>￥<?=$row->fee?></td></tr>
+                <tr><td>充值金额：</td><td>￥<?=$row->money?></td></tr>
                 <tr><td>手续费：</td><td>￥<?=$row->fee?></td></tr>
                 <tr><td>到账金额：</td><td>￥<?=$row->money-$row->fee?></td></tr>
-                <tr><td>充值时间：</td><td><?=$row->money?></td></tr>
+                <tr><td>添加时间：</td><td><?=$row->created_at?></td></tr>
                 <tr><td>状态：</td><td><? if($row->status==0){echo "待审核";}elseif($row->status==1){echo "充值成功";}elseif($row->status==2){echo "审核未通过";}?></td></tr>
                 <tr><td></td><td></td></tr>
                 <tr><td>审核：</td><td>

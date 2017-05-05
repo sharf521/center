@@ -82,13 +82,13 @@ class TongPayController extends Controller
 
         $data = array(
             'trade_no' => $para['order_id'],
-            'user_id' => 2,
+            'user_id' => $user_id,
             'status' => 0,
             'money' => $para['amount'],
             'fee' => 0,
             'payment' => 'tonglian',
             'type' => 3,
-            'remark' => "信用卡分{$para['nper']}期,{$para['channel']}|{$para['trade_date']}|{$para['trade_time']}",
+            'remark' => "分{$para['nper']}期,{$para['channel']}|{$para['trade_date']}|{$para['trade_time']}",
             'created_at' => time(),
             'addip' => $this->ip()
         );

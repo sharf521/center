@@ -163,7 +163,11 @@
                                 <td><?=nl2br($row->remark)?></td>
                                 <td><?=nl2br($row->verify_remark)?></td>
                                 <td align="center"><? if ($row->status == 0) {
-                                        echo "待审核";
+                                        if($row->type==2){
+                                            echo "待审核";
+                                        }else{
+                                            echo '未成功';
+                                        }
                                     } elseif ($row->status == 1) {
                                         echo "充值成功";
                                     } elseif ($row->status == 2) {
