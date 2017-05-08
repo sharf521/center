@@ -165,7 +165,7 @@ class WechatController extends Controller
             'body'             => '支付订单',
             'out_trade_no'     => time().rand(10000,99999),
             'total_fee'        => math($money,100,'*',2),
-            'attach'=>'',
+            'attach'=>$order_sn,
             'product_id'=>$order_sn,
             'notify_url'       => "http://centerwap.yuantuwang.com/index.php/wechat/payQRcodeNotify/"
         ];
