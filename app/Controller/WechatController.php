@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Helper;
 use App\Model\Account;
 use App\Model\AccountRecharge;
 use App\Model\User;
@@ -29,6 +30,8 @@ class WechatController extends Controller
     {
 
     }
+
+
 
     public function recharge(Request $request,User $user)
     {
@@ -147,5 +150,50 @@ class WechatController extends Controller
             return true; // 返回处理完成
         });
         $response->send();
+    }
+
+    //扫码付
+    public function getPayQRcode(Request $request)
+    {
+        $money=abs((float)$request->get('money'));
+        $order_sn=$request->get('order_sn');
+        $weChat=new WeChat();
+        $app=$weChat->app;
+        $payment = $app->payment;
+        $attributes = [
+            'trade_type'       => 'NATIVE', // JSAPI，NATIVE，APP...
+            'body'             => '支付订单',
+            'out_trade_no'     => time().rand(10000,99999),
+            'total_fee'        => math($money,100,'*',2),
+            'attach'=>'',
+            'product_id'=>$order_sn,
+            'notify_url'       => "http://centerwap.yuantuwang.com/index.php/wechat/payQRcodeNotify/"
+        ];
+        $order=new \EasyWeChat\Payment\Order($attributes);
+        $result = $payment->prepare($order);
+        if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
+            $wechat_pay_url=$result->code_url;
+            $imgUrl=Helper::QRcode($wechat_pay_url,'wchat_pay',time().rand(1000,9999));
+            echo "<img src='{$imgUrl}'>";
+        }
+    }
+    public function payQRcodeNotify(Request $request)
+    {
+        $this->log(date('Y-m-d H:i:s').json_encode($_REQUEST));
+        $this->log("\r\n".data('Y-m-d H:i:s').json_encode($_POST));
+    }
+
+    private function log($data)
+    {
+        $path = ROOT . "/public/data/wechat_QRcode/" . date("Y-m") . "/";
+        if (!file_exists($path)) {
+            mkdir($path,0777,true);
+        }
+        $myfile = fopen($path.date('YmdHi').".txt", "a+");
+        if(is_array($data)){
+            $data=json_encode($data);
+        }
+        fwrite($myfile, '【'.date('Y-m-d H:i:s').'】'.$data."\r\n");
+        fclose($myfile);
     }
 }

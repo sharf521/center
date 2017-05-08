@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Member;
 
+use App\Helper;
 use App\Model\Account;
 use App\Model\AccountCash;
 use App\Model\AccountLog;
@@ -9,6 +10,7 @@ use App\Model\Order;
 use App\Model\Rebate;
 use App\Model\System;
 use App\Model\User;
+use App\WeChat;
 use System\Lib\DB;
 use System\Lib\Request;
 
@@ -33,6 +35,7 @@ class OrderController extends MemberController
         if(empty($convert_rate)){
             $convert_rate=2.52;
         }
+
         $data['order']=$order;
         $data['account']=$account;
         $data['convert_rate']=$convert_rate;
