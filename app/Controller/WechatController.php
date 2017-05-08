@@ -179,6 +179,8 @@ class WechatController extends Controller
     }
     public function payQRcodeNotify(Request $request)
     {
+        $_POST['aa']=time();
+        $_REQUEST['aa']=time();
         $this->log($_REQUEST);
         $this->log($_POST);
     }
