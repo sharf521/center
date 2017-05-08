@@ -183,6 +183,18 @@ class WechatController extends Controller
         $_REQUEST['aa']=time();
         $this->log($_REQUEST);
         $this->log($_POST);
+        $weChat=new WeChat();
+        $app=$weChat->app;
+        $response = $app->payment->handleNotify(function($notify, $successful){
+            // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
+            //$id=(int)$notify->attach;
+            $out_trade_no=$notify->out_trade_no;
+           $this->log($out_trade_no);
+            $this->log('ok');
+            return true; // 返回处理完成
+        });
+        $this->log('oooooo');
+        $response->send();
     }
 
     private function log($data)
