@@ -20,7 +20,7 @@
                             <td align="right">充值方式：</td>
                             <td><label><input id="type1" name="type" type="radio" value="1" onClick="changetype(1)" checked="checked"/> 在线充值</label>
                                 <label><input id="type2" name="type" type="radio" value="2" onClick="changetype(2)"/> 线下充值</label>
-                                <label><input id="type3" name="type" type="radio" value="3" onClick="changetype(3)"/> 分期充值</label>
+                                <!--<label><input id="type3" name="type" type="radio" value="3" onClick="changetype(3)"/> 分期充值</label>-->
                             </td>
                         </tr>
                         <tr id="xianshang">
