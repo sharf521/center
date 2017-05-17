@@ -39,7 +39,7 @@
 
         <br><br>
         <?php   if(! empty($carRents)) : ?>
-            <a href="<?= url('carRent'); ?>"class="layui-btn">我的购车</a>
+            <!--<a href="<?/*= url('carRent'); */?>"class="layui-btn">我的购车</a>-->
         <?php endif;?>
     </div>
 </div>
