@@ -80,7 +80,7 @@
                 <tr><td>上层用户Id：</td><td><input type="text" name="p_userid" value="<?=$row->invite_uid?>"></td></tr>
                 <tr><td>审核：</td><td>
                         <label><input type="radio" name="status" value="2"/>审核通过</label>
-                        <label><input type="radio" name="status" value="3"/>审核不通过</label></td></tr>
+                       <!-- <label><input type="radio" name="status" value="3"/>审核不通过</label>--></td></tr>
                 <tr><td>审核备注：</td><td><textarea name="verify_remark" cols="45" rows="5"></textarea></td></tr>
                 <tr><td></td><td><input type="submit" class="but3" value="确认审核" />
                         <input type="button" class="but3" value="返回" onclick="window.history.go(-1)"/></td></tr>
