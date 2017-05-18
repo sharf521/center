@@ -85,3 +85,5 @@ footer li p{ line-height: 4rem; font-size: 3rem;}
 .header .header_right{ display: block;  padding:0 1rem; float: right; width: 10rem; text-align: right}
 
 .margin_header {    margin-top: 10rem}
+
+.button1{ border:0; background:#00adfe; color:#fff; font-size:3rem; width:100%;line-height:7rem; height:7rem;-moz-border-radius:.6rem;-webkit-border-radius:.6rem;border-radius:.6rem; text-align:center;}

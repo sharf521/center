@@ -18,12 +18,12 @@ require 'header.php';
         <? endif;?>
         <form method="post" onSubmit="return setdisabled();">
             <table class="table_from">
-                <tr><td style="width: 30%">用户：</td><td style="width: 70%"><?=$this->username?>（<?=$this->user->name?>）</td></tr>
+                <tr><td style="width: 28%">用户：</td><td style="width: 72%"><?=$this->username?>（<?=$this->user->name?>）</td></tr>
                 <tr><td>可用金额：</td><td><?='￥'.$account->funds_available?></td></tr>
                 <tr><td>邀请码：</td><td><input type="text" name="invite_code" value="<?=$invite_code?>"></td></tr>
                 <tr><td>申请级别：</td><td><?=$type?></td></tr>
                 <tr><td>支付密码：</td><td><input  name="zf_password" type="password"/></td></tr>
-                <tr><td></td><td><input type="submit" value="提交申请" /></td></tr>
+                <tr><td colspan="2"><input type="submit" class="button1" value="提交申请" /></td></tr>
             </table>
         </form>
     <? else : ?>
