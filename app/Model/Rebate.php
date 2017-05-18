@@ -6,6 +6,7 @@ use System\Lib\DB;
 class Rebate extends Model
 {
     protected $table='rebate';
+    private $config;
     public function __construct()
     {
         ini_set("max_execution_time", "1800000");

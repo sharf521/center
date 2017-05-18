@@ -9,10 +9,12 @@
 namespace App\Controller\Admin;
 
 
+use App\Helper;
 use App\Model\Account;
 use App\Model\FBB;
 use App\Model\LinkPage;
 use App\Model\Partner;
+use App\Model\Rebate;
 use App\Model\User;
 use System\Lib\DB;
 use System\Lib\Request;
@@ -56,6 +58,7 @@ class PartnerController extends AdminController
 
     public function edit(Partner $partner,Request $request,Account $account)
     {
+        $convert_rate=Helper::getSystemParam('convert_rate');
         $id=$request->get('id');
         $row=$partner->findOrFail($id);
         if($_POST){
@@ -97,9 +100,30 @@ class PartnerController extends AdminController
                         $fbb_data = array(
                             'user_id' => $row->user_id,
                             'p_userid' => $p_userid,
-                            'money' => $total
+                            'money' => math($total,1.31,'/','2')
                         );
                         $fbb->add($fbb_data);
+
+                        //奖励积分
+                        $arr = array(
+                            'site_id' => $row->site_id,
+                            'typeid' => 1,
+                            'user_id' => $row->user_id,
+                            'money' => math($total,$convert_rate,'*',2)
+                        );
+                        (new Rebate())->addRebate($arr);
+
+                        //解冻邀请人的200
+                        if($row->invite_uid!=0){
+                            $log = array();
+                            $log['user_id'] = $row->user_id;
+                            $log['type'] = 'partner_invite_success';
+                            $log['funds_available'] ='200';
+                            $log['funds_freeze']='-200';
+                            $log['label'] = "partner_{$row->user_id}";
+                            $log['remark'] = "";
+                            (new Account())->addLog($log);
+                        }
                     }elseif($status== 3){
                         //不通过解冻资金
                         $log = array();
