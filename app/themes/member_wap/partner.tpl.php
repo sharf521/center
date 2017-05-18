@@ -18,7 +18,7 @@ require 'header.php';
         <? endif;?>
         <form method="post" onSubmit="return setdisabled();">
             <table class="table_from">
-                <tr><td style="width: 28%">用户：</td><td style="width: 72%"><?=$this->username?>（<?=$this->user->name?>）</td></tr>
+                <tr><td style="width: 28%">用户：</td><td style="width: 72%"><?=$this->username?></td></tr>
                 <tr><td>可用金额：</td><td><?='￥'.$account->funds_available?></td></tr>
                 <tr><td>邀请码：</td><td><input type="text" name="invite_code" value="<?=$invite_code?>"></td></tr>
                 <tr><td>申请级别：</td><td><?=$type?></td></tr>
