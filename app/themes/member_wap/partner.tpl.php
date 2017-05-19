@@ -28,7 +28,7 @@ require 'header.php';
         </form>
     <? else : ?>
         <table class="table_from">
-            <tr><td>用户：</td><td><?=$this->username?>（<?=$this->user->name?>）</td></tr>
+            <tr><td>用户：</td><td><?=$this->username?></td></tr>
             <tr><td>级别：</td><td><? echo $partner->getLinkPageName('partner_type',$partner->type)?></td></tr>
             <tr><td>状态：</td><td><? echo $partner->getLinkPageName('check_status',$partner->status)?></td></tr>
             <?
@@ -51,7 +51,7 @@ if($partner->status==2){ ?>
 
         <table class="table_from">
             <tr><td>我的邀请码：</td><td><?=$invite_code?></td></tr>
-            <tr><td>邀请二维码：</td><td><img src="<?=$invite_img?>" width="50%"></td></tr>
+            <tr><td>邀请二维码：</td><td><img src="<?=$invite_img?>" width="70%"></td></tr>
         </table>
     <? endif;?>
     <div style="line-height: 70px; font-size: 22px; font-weight: 400">我的邀请列表</div>
