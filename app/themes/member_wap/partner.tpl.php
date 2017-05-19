@@ -46,28 +46,25 @@ require 'header.php';
 if($partner->status==2){ ?>
     <? if($account->funds_available>='262') : ?>
         <div class="alert-warning" role="alert">
-            将下面邀请码或二维码复制并发送给好友，该好友申请后您即成为好友的邀请人<br>
-            邀请好友将冻结262元,余额不足262元，将暂时无法邀请其它会员！
+            将下面邀请码或二维码复制并发送给好友，该好友申请后您即成为好友的邀请人，邀请好友将冻结262元,余额不足262元，将暂时无法邀请其它会员！
         </div>
 
         <table class="table_from">
             <tr><td>我的邀请码：</td><td><?=$invite_code?></td></tr>
-            <tr><td>邀请二维码：</td><td><img src="<?=$invite_img?>"></td></tr>
+            <tr><td>邀请二维码：</td><td><img src="<?=$invite_img?>" width="50%"></td></tr>
         </table>
     <? endif;?>
-    <fieldset class="layui-elem-field layui-field-title">
-        <legend>我的邀请列表</legend>
-    </fieldset>
+    <div style="line-height: 70px; font-size: 22px; font-weight: 400">我的邀请列表</div>
     <?
     if(count($invite_list)==0) {
         echo '<blockquote class="layui-elem-quote">暂无邀请</blockquote>';
     }else{ ?>
-        <table class="table" width="100%" cellpadding="10">
+        <table class="table" width="100%" cellpadding="10" cellspacing="1">
             <thead>
             <tr>
-                <th>用户名</th>
-                <th>邀请时间</th>
-                <th>状态</th>
+                <th align="left">用户名</th>
+                <th align="left">邀请时间</th>
+                <th align="left">状态</th>
             </tr>
             </thead>
             <tbody>
@@ -84,7 +81,7 @@ if($partner->status==2){ ?>
                 </tr>
             <? endforeach; ?>
             </tbody>
-        </table>
+        </table><br>
         <?php
     }
 } ?>
