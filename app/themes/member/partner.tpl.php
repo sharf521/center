@@ -46,7 +46,7 @@
                     <? if($account->funds_available>='262') : ?>
                         <blockquote class="layui-elem-quote">
                             将下面邀请码或二维码复制并发送给好友，该好友申请后您即成为好友的邀请人<br>
-                            邀请好友将冻结262元,余额不足262元，将暂时无法邀请其它会员！</blockquote>
+                            邀请好友将冻结262元,如果余额不足262元，将暂时无法邀请！</blockquote>
                         <form class="layui-form" method="post">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">我的邀请码</label>
