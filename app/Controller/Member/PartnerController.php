@@ -37,6 +37,7 @@ class PartnerController extends MemberController
                 if(!$pPartner->is_exist){
                     redirect()->back()->with('error','邀请码无效！');
                 }
+
             }
         }
 
@@ -46,6 +47,9 @@ class PartnerController extends MemberController
         }elseif($invite_uid!=0){
             //冻结邀请人资金
             $inviteAccount=(new Account())->find($invite_uid);
+            if($inviteAccount->funds_available<262){
+                redirect()->back()->with('error','您的邀请人余额不足262元，邀请码暂不可用！');
+            }
             $rebate_money=math(262,$convert_rate,'*',2);
             $log = array();
             $log['user_id'] = $invite_uid;

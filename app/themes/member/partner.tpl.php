@@ -44,7 +44,9 @@
                 //己审枋
                 if($partner->status==2){ ?>
                     <? if($account->funds_available>='262') : ?>
-                        <blockquote class="layui-elem-quote">将下面邀请码或二维码复制并发送给好友，该好友申请后您即成为好友的邀请人</blockquote>
+                        <blockquote class="layui-elem-quote">
+                            将下面邀请码或二维码复制并发送给好友，该好友申请后您即成为好友的邀请人<br>
+                            邀请好友将冻结262元,余额不足262元，将暂时无法邀请其它会员！</blockquote>
                         <form class="layui-form" method="post">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">我的邀请码</label>
@@ -60,8 +62,6 @@
                                 </div>
                             </div>
                         </form>
-                    <? else : ?>
-                        <div class="alert-warning" role="alert">您的余额不足262元，暂时无法邀请其它会员！<br> 您的余额：<?=$account->funds_available?>元</div>
                     <? endif;?>
                     <fieldset class="layui-elem-field layui-field-title">
                         <legend>我的邀请列表</legend>
