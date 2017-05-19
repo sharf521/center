@@ -14,6 +14,7 @@ use App\Model\Account;
 use App\Model\LinkPage;
 use App\Model\Partner;
 use App\Model\Rebate;
+use App\Model\User;
 use App\WeChat;
 use System\Lib\Request;
 
@@ -82,6 +83,9 @@ class PartnerController extends MemberController
         }
         $account=$this->user->Account();
         if($_POST){
+            if($partner->status!=0){
+                redirect()->back()->with('error','己审请，勿重复提交！');
+            }
             $total=$request->post('partner_type');
             $type_arr=$linkPage->getLink('partner_type');
             if(!array_key_exists($total,$type_arr)){
@@ -111,6 +115,10 @@ class PartnerController extends MemberController
             $log['funds_freeze']=$total;
             $log['label'] = "partner_{$this->user_id}";
             $log['remark'] = "";
+            if($invite_uid!=0){
+                $invite_uname=(new User())->find($invite_uid)->username;
+                $log['remark'] = "邀请人：{$invite_uname}";
+            }
             $account->addLog($log);
 
             redirect()->back()->with('msg','申请己上报，等待管理员审核！');
