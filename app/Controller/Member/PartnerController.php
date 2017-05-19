@@ -71,7 +71,7 @@ class PartnerController extends MemberController
             (new Rebate())->addRebate($arr);
                 
             //写入申请表
-            $partner->site_id=$this->site['id'];
+            $partner->site_id=$this->site->id;
             $partner->user_id=$this->user_id;
             $partner->invite_uid=$invite_uid;
             $partner->status=0;
@@ -94,7 +94,7 @@ class PartnerController extends MemberController
             if($checkPwd!==true){
                 redirect()->back()->with('error','支付密码错误！');
             }
-            $partner->site_id=$this->site['id'];
+            $partner->site_id=$this->site->id;
             $partner->user_id=$this->user_id;
             $partner->invite_uid=$invite_uid;
             $partner->status=1;
@@ -122,7 +122,7 @@ class PartnerController extends MemberController
             $data['partner']=$partner;
             if($partner->status==2){
                 $data['invite_code']=Helper::encrypt($this->user_id);
-                $data['invite_url']='http://'.$_SERVER['HTTP_HOST']."/member/partner/?invite_code=".urlencode($data['invite_code']);
+                $data['invite_url']=$this->site->wap_url."/member/partner/?invite_code=".urlencode($data['invite_code']);
                 if($this->is_inWeChat){
                     $data['invite_url']=(new WeChat())->shorten($data['invite_url']);
                 }

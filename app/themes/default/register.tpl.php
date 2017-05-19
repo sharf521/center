@@ -2,7 +2,7 @@
 <body style="background:url(/themes/default/images/qpbj.jpg) no-repeat center; background-size:cover;">
 <div class="mainbox">
     <div class="left_reason fl">
-        <div class="link_logo"><img src="<?=$this->site['logo']?>"/></div>
+        <div class="link_logo"><img src="<?=$this->site->logo?>"/></div>
     </div>
     <div class="mill loginbox fl">
         <form id="login_form" method="post">

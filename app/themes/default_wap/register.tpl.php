@@ -84,5 +84,5 @@
             });
         });
     </script>
-<div class="lo_copy">&copy; <?=$this->site['name']?> 2016</div>
+<div class="lo_copy">&copy; <?=$this->site->name?> 2016</div>
 <?php require 'footer.php';?>

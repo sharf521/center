@@ -39,6 +39,12 @@ class IndexController extends MemberController
         $app_id=$request->get(2);
         $isGoWap=$request->get(3)=='wap'?true:false;
         $app=$app->findOrFail($app_id);
+
+        $app_field=$app->subsite_field;
+        $app_field_wap=$app->subsite_field.'_wap';
+        $app_url=$this->site->$app_field;
+        $app_url_wap=$this->site->$app_field_wap;
+        
         $openid=$appUser->getOpenId($this->user_id,$app_id);
         if($openid==''){
             $openid=$appUser->create($this->user_id,$app_id);
@@ -51,34 +57,34 @@ class IndexController extends MemberController
             //商城
             if($isGoWap){
                 $params['url']='/wap/user';
-                $url=$this->site[$app->subsite_field]."/wap/index";
+                $url=$app_url."/wap/index";
             }else{
                 $params['url']='/user';
-                $url=$this->site[$app->subsite_field]."/jump";
+                $url=$app_url."/jump";
             }
         }elseif($app_id==8){  //一元云购
             if($isGoWap){
                 $params['url']='/wap';
-                $url=$this->site[$app->subsite_field]."/auth/result";
+                $url=$app_url."/auth/result";
             }else{
                 $params['url']='/user';
-                $url=$this->site[$app->subsite_field]."/auth/result";
+                $url=$app_url."/auth/result";
             }
         }elseif($app_id==9){  //pos代理
             if($isGoWap){
                 $params['url']='/';
-                $url=$this->site[$app->subsite_field.'_wap']."/jump";
+                $url=$app_url_wap."/jump";
             }else{
                 $params['url']='/user';
-                $url=$this->site[$app->subsite_field]."/jump";
+                $url=$app_url."/jump";
             }
         }elseif ($app_id==10){
             if($isGoWap){
                 $params['url']='/car';
-                $url=$this->site[$app->subsite_field.'_wap']."/user/auth";
+                $url=$app_url_wap."/user/auth";
             }else{
                 $params['url']='/member';
-                $url=$this->site[$app->subsite_field]."/user/auth";
+                $url=$app_url."/user/auth";
             }
         }
         $sign=$this->getSign($params,$app->appsecret);
@@ -100,7 +106,7 @@ class IndexController extends MemberController
 
     public function app()
     {
-        $site_id=$this->site['id'];
+        $site_id=$this->site->id;
         $data['site_id']=$site_id;
 
         $file_path = ROOT . "/public/data/app/";

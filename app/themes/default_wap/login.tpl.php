@@ -1,6 +1,6 @@
 <?php require 'header.php';?>
 <div class="login_contc">
-    <div class="logoslog"><img src="<?=$this->site['logo']?>"></div>
+    <div class="logoslog"><img src="<?=$this->site->logo?>"></div>
     <div class="login_form">
         <form id="login_form" method="post">
         <ul>
@@ -42,5 +42,5 @@
             });
         });
     </script>
-<div class="lo_copy">&copy; <?=$this->site['name']?> 2016</div>
+<div class="lo_copy">&copy; <?=$this->site->name?> 2016</div>
 <?php require 'footer.php';?>

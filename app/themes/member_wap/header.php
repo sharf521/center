@@ -10,7 +10,7 @@
     <meta http-equiv="Expires" content="-1">
     <meta http-equiv="pragram" content="no-cache">
     <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
-    <title><?php if(!empty($title_herder)){echo $title_herder.'-';}?><?=$this->site['name']?></title>
+    <title><?php if(!empty($title_herder)){echo $title_herder.'-';}?><?=$this->site->name?></title>
     <link rel="stylesheet" href="/plugin/iconfont/iconfont.css?<?=rand(10000,99999)?>" />
     <link href="/themes/member_wap/css/common.css?<?=rand(10000,99999)?>" type="text/css" rel="stylesheet"/>
     <link href="/themes/member_wap/css/account.css?<?=rand(10000,99999)?>" type="text/css" rel="stylesheet"/>

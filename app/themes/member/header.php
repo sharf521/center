@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title><?php if(!empty($title_herder)){echo $title_herder.'-';}?><?=$this->site['name'];?></title>
+    <title><?php if(!empty($title_herder)){echo $title_herder.'-';}?><?=$this->site->name;?></title>
     <link href="/themes/member/user.css" rel="stylesheet" type="text/css" />
     <script language="javascript" src="/plugin/js/jquery.js"></script>
     <link rel="stylesheet" href="/plugin/layui/css/layui.css" />
@@ -14,7 +14,7 @@
 <div class="usernav">
     <div class="userlogo">
         <div class="logoleft">
-            <a href="/"><img src="<?=$this->site['logo']?>" height="60"></a>
+            <a href="/"><img src="<?=$this->site->logo?>" height="60"></a>
         </div>
         <div class="usermenu">
             <ul>
