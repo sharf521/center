@@ -32,6 +32,7 @@ class RegisterController extends Controller
             $loginUrl="/login/";
             $url=$request->get('url');
             if($url){
+                $url=urlencode($url);
                 $loginUrl.="?url={$url}";
             }
             $data['loginUrl']=$loginUrl;

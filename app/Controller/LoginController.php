@@ -36,6 +36,7 @@ class LoginController extends Controller
             $getPwdUrl="/getPwd/";
             $url=$request->get('url');
             if($url){
+                $url=urlencode($url);
                 $regUrl.="?url={$url}";
                 $getPwdUrl.="?url={$url}";
             }
