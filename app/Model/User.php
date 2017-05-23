@@ -33,7 +33,7 @@ class User extends Model
             $user =$this->where("username=?")->bindValues($data['username'])->first();
             if($user->is_exist){
                 if($user->password != md5(md5($data['password']) . $user->salt)){
-                    return '用户名或密码错误！';
+                    return '帐号或密码错误！';
                 }
             }else{
                 return '该用户不存在';
@@ -245,15 +245,14 @@ class User extends Model
 
     public function checkUserName($username)
     {
-        if (strlen($username) < 5 || strlen($username) > 30) {
-            return "用户名长度5位到15位！";
-        } else {
-            $id = DB::table('user')->where("username=?")->bindValues($username)->value('id', 'int');
-            if ($id > 0) {
-                return '用户名已经存在';
-            }
-            return true;
+        if(strlen($username)!=11 || substr($username,0,1)!='1' || (float)$username!=$username){
+            return "请输入正确的手机号";
         }
+        $id = DB::table('user')->where("username=?")->bindValues($username)->value('id', 'int');
+        if ($id > 0) {
+            return '用户名已经存在';
+        }
+        return true;
     }
 
     /**

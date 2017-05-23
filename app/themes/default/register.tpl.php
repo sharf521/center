@@ -8,7 +8,7 @@
         <form id="login_form" method="post">
             <h3>会员注册</h3>
             <div class="from_cont">
-                <p><input type="text" name="username"  placeholder="请设置用户名"/><b></b></p>
+                <p><input type="text" name="username"  placeholder="请输入手机号"/><b></b></p>
                 <p><input type="text" name="email"  placeholder="请输入邮箱"/><b></b></p>
                 <p><input type="text" name="invite_user"  placeholder="推荐人(可不填)"/><b></b></p>
                 <p><input type="password" name="password"  id="field" placeholder="请输入密码" /><b></b></p>
@@ -25,6 +25,11 @@
 <script src="/plugin/js/jquery.js"></script>
 <script src="/plugin/js/jquery.validation.min.js"></script>
 <script>
+    jQuery.validator.addMethod("isPhone", function(value, element) {
+        var length = value.length;
+        var mobile = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+        return this.optional(element) || (length == 11 && mobile.test(value));
+    }, "请填写正确的手机号码");//可以自定义默认提示信息
     $(document).ready(function(){
         $('#login_form').validate({
             onkeyup: false,
@@ -37,7 +42,7 @@
             rules: {
                 username: {
                     required: true,
-                    rangelength:[6,15],
+                    isPhone:true,
                     remote:"/index.php/register/checkUserName/"
                 },
                 email: {
@@ -67,9 +72,9 @@
             },
             messages: {
                 username: {
-                    required: '<i class="fa fa-exclamation-circle"></i>请填写账号',
-                    rangelength: '<i class="fa fa-exclamation-circle"></i>长度6至15位',
-                    remote:'<i class="fa fa-exclamation-circle"></i>该用户名己存在'
+                    required: '<i class="fa fa-exclamation-circle"></i>不能为空',
+                    isPhone:'<i class="fa fa-exclamation-circle"></i>请填写正确的手机号码',
+                    remote:'<i class="fa fa-exclamation-circle"></i>己存在'
                 },
                 email:{
                     required: '<i class="fa fa-exclamation-circle"></i>邮箱不能为空',

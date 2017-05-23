@@ -46,7 +46,7 @@ require 'header.php';
 if($partner->status==2){ ?>
     <? if($account->funds_available>='262') : ?>
         <div class="alert-warning" role="alert">
-            将下面邀请码或二维码复制并发送给好友，该好友申请后您即成为好友的邀请人，邀请好友将冻结262元,余额不足262元，将暂时无法邀请其它会员！
+            将下面邀请码或二维码复制并发送给好友，该好友申请后您即成为好友的邀请人<!--，邀请好友将冻结262元,余额不足262元，将暂时无法邀请其它会员-->！
         </div>
 
         <table class="table_from">

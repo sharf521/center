@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Auth;
 
+use App\Model\SubSite;
 use System\Lib\Controller as BaseController;
 use System\Lib\DB;
 
@@ -15,8 +16,12 @@ class AuthController extends BaseController
         $this->username = session('username');
         $this->user_typeid = session('usertype');
         $host = strtolower($_SERVER['HTTP_HOST']);
-        $this->site=DB::table('subsite')->where("domain like '%{$host}|%'")->row();
-        if(empty($this->site)){
+        $this->site=(new SubSite())->where("domain like '%{$host}|%'")->orderBy('id')->first();
+        if($this->site->is_exist){
+            $arr_domain=explode('|',$this->site->domain);
+            $this->site->pc_url='http://'.$arr_domain[0];
+            $this->site->wap_url='http://'.$arr_domain[1];
+        }else{
             echo 'The site was not found！';
             exit;
         }
@@ -24,7 +29,6 @@ class AuthController extends BaseController
             $_GET['id']=urlencode($_GET['id']);
         }
         $this->checkSign($_GET);
-
         if (strpos($host, 'wap.') === false) {
             $this->is_wap = false;
             $this->template = 'auth';

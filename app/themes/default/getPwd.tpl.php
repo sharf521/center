@@ -9,7 +9,7 @@
             <form id="login_form" method="post">
                 <h3>找回密码</h3>
                 <div class="from_cont">
-                    <p><input type="text" name="username"  placeholder="请输入账号"/><b></b></p>
+                    <p><input type="text" name="username"  placeholder="请输入手机号/账号"/><b></b></p>
                     <p><input type="text" name="email"  placeholder="请输入邮箱" /><b></b></p>
                 </div>
                 <p class="tip_most"><span>想起密码？<a href="/login">去登陆</a></span></p>
@@ -43,7 +43,7 @@
                 },
                 messages: {
                     username: {
-                        required: '<i class="fa fa-exclamation-circle"></i>请填写账号'
+                        required: '<i class="fa fa-exclamation-circle"></i>请填写手机号或账号'
                     },
                     email:{
                         required: '<i class="fa fa-exclamation-circle"></i>邮箱不能为空',

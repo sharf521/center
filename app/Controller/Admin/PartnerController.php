@@ -113,7 +113,7 @@ class PartnerController extends AdminController
                         );
                         (new Rebate())->addRebate($arr);
 
-                        //解冻邀请人的200
+                        /*//解冻邀请人的200
                         if($row->invite_uid!=0){
                             $fbb_username=(new User())->find($row->user_id)->username;
                             $log = array();
@@ -124,7 +124,7 @@ class PartnerController extends AdminController
                             $log['label'] = "partner_{$row->user_id}";
                             $log['remark'] = "被邀请人{$fbb_username}成为合伙人";
                             (new Account())->addLog($log);
-                        }
+                        }*/
                     }elseif($status== 3){
                         //不通过解冻资金
                         $log = array();

@@ -46,6 +46,7 @@ class PartnerController extends MemberController
         if($partner->is_exist){
             $invite_code=Helper::encrypt($partner->invite_uid);
         }elseif($invite_uid!=0){
+/*
             //冻结邀请人资金
             $inviteAccount=(new Account())->find($invite_uid);
             if($inviteAccount->funds_available<262){
@@ -70,7 +71,7 @@ class PartnerController extends MemberController
                 'money' => $rebate_money
             );
             (new Rebate())->addRebate($arr);
-                
+            */
             //写入申请表
             $partner->site_id=$this->site->id;
             $partner->user_id=$this->user_id;
