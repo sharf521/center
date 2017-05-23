@@ -8,7 +8,7 @@
             <li><i class="paswod"></i><input type="password" name="password" placeholder="密码"></li>
             <li class="lo_subtb"><input type="submit" class="log_sumb" value="登录"></li>
         </ul>
-        <p class="m_alinka"><a href="/getPwd">忘记密码？</a><a style="float:right;" href="/register">新用户注册</a></p>
+        <p class="m_alinka"><a href="<?=$getPwdUrl?>">忘记密码？</a><a style="float:right;" href="<?=$regUrl?>">新用户注册</a></p>
             <input type="hidden" name="_token"  value="<?=_token();?>"/>
         </form>
     </div>

@@ -10,7 +10,7 @@
                     <li><i class="usename"></i><input type="text" name="email" placeholder="邮箱"></li>
                     <li class="lo_subtb"><input type="submit" class="log_sumb" value="立即找回"></li>
                 </ul>
-                <p class="m_alinka"><a style="float:right;" href="/login">去登陆</a></p>
+                <p class="m_alinka"><a style="float:right;" href="<?=$loginUrl?>">去登陆</a></p>
                 <input type="hidden" name="_token"  value="<?=_token();?>"/>
             </form>
         </div>

@@ -32,6 +32,15 @@ class LoginController extends Controller
             }
             redirect()->back()->with('error',$error);
         }else{
+            $regUrl="/register/";
+            $getPwdUrl="/getPwd/";
+            $url=$request->get('url');
+            if($url){
+                $regUrl.="?url={$url}";
+                $getPwdUrl.="?url={$url}";
+            }
+            $data['regUrl']=$regUrl;
+            $data['getPwdUrl']=$getPwdUrl;
             $data['title_herder']='用户登陆';
             $this->view('login',$data);
         }

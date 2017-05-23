@@ -29,6 +29,12 @@ class RegisterController extends Controller
             }
             redirect()->back()->with('error', $error);
         } else {
+            $loginUrl="/login/";
+            $url=$request->get('url');
+            if($url){
+                $loginUrl.="?url={$url}";
+            }
+            $data['loginUrl']=$loginUrl;
             $data['title_herder']='新用户注册';
             $this->view('register',$data);
         }

@@ -12,7 +12,7 @@
                     <p><input type="text" name="username"  placeholder="请输入手机号/账号"/><b></b></p>
                     <p><input type="text" name="email"  placeholder="请输入邮箱" /><b></b></p>
                 </div>
-                <p class="tip_most"><span>想起密码？<a href="/login">去登陆</a></span></p>
+                <p class="tip_most"><span>想起密码？<a href="<?=$loginUrl?>">去登陆</a></span></p>
                 <p class="smit_btn"><input type="submit" value="立即找回" /></p>
                 <input type="hidden" name="_token"  value="<?=_token();?>"/>
             </form>

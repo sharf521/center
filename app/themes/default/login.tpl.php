@@ -11,8 +11,9 @@
                 <p><input type="text" name="username"  placeholder="手机号/用户名"/><b></b></p>
                 <p><input type="password" name="password"  placeholder="请输入密码" /><b></b></p>
             </div>
-            <p class="tip_most"><span>没有账号？<a href="/register">去注册</a></span>    <a href="/getPwd" style="float: right; margin-right: 10px;">忘记密码</a></p>
-
+            <p class="tip_most">
+                <span>没有账号？<a href="<?=$regUrl?>">去注册</a></span>
+                <a href="<?=$getPwdUrl?>" style="float: right; margin-right: 10px;">忘记密码</a></p>
             <p class="smit_btn"><input type="submit" value="登&nbsp;&nbsp;录" /></p>
             <input type="hidden" name="_token"  value="<?=_token();?>"/>
         </form>

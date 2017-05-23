@@ -53,6 +53,13 @@ class GetPwdController extends Controller
             }
             redirect()->back()->with('error',$error);
         }else{
+            $loginUrl="/login/";
+            $url=$request->get('url');
+            if($url){
+                $loginUrl.="?url={$url}";
+            }
+            echo $loginUrl;
+            $data['loginUrl']=$loginUrl;
             $data['title_herder']='找回密码';
             $this->view('getPwd',$data);
         }

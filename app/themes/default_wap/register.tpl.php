@@ -13,7 +13,7 @@
             </ul>
             <input type="hidden" name="_token"  value="<?=_token();?>"/>
         </form>
-        <p class="m_alinka"><!--<a href="#">忘记密码？</a>--><a style="float:right;" href="/login">已有帐号，马上登录！</a></p>
+        <p class="m_alinka"><!--<a href="#">忘记密码？</a>--><a style="float:right;" href="<?=$loginUrl?>">已有帐号，马上登录！</a></p>
     </div>
 </div>
 

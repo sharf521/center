@@ -14,7 +14,7 @@
                 <p><input type="password" name="password"  id="field" placeholder="请输入密码" /><b></b></p>
                 <p><input type="password" name="sure_password"  placeholder="确认密码"/><b></b></p>
             </div>
-            <p class="tip_most"><span>没有账号？<a href="/login">去登陆</a></span></p>
+            <p class="tip_most"><span>没有账号？<a href="<?=$loginUrl?>">去登陆</a></span></p>
             <p class="smit_btn"><input type="submit" value="登&nbsp;&nbsp;录" /></p>
             <input type="hidden" name="_token"  value="<?=_token();?>"/>
         </form>
