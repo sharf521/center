@@ -4,7 +4,7 @@
     <div class="login_form">
         <form id="add_acon" method="post">
             <ul>
-                <li><i class="tjuser"></i><input name="username" type="text" placeholder="请设置用户名"><span></span></li>
+                <li><i class="tjuser"></i><input name="username" type="text" placeholder="请输入手机号"><span></span></li>
                 <li><i class="usename"></i><input name="email" type="text" placeholder="请输入邮箱"><span></span></li>
                 <li><i class="paswod"></i><input id="field" name="password" type="password" placeholder="请输入密码"><span></span></li>
                 <li><i class="paswod"></i><input name="sure_password" type="password" placeholder="请确认密码"><span></span></li>
@@ -18,6 +18,11 @@
 </div>
 
     <script>
+        jQuery.validator.addMethod("isPhone", function(value, element) {
+            var length = value.length;
+            var mobile = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+            return this.optional(element) || (length == 11 && mobile.test(value));
+        }, "请填写正确的手机号码");//可以自定义默认提示信息
         $(document).ready(function(){
             $('#add_acon').validate({
                 onkeyup: false,
@@ -30,7 +35,7 @@
                 rules: {
                     username: {
                         required: true,
-                        rangelength:[6,15],
+                        isPhone:true,
                         remote:"/index.php/register/checkUserName/"
                     },
                     email: {
@@ -60,9 +65,9 @@
                 },
                 messages: {
                     username: {
-                        required: '请填写账号',
-                        rangelength: '长度6至15位',
-                        remote:'该用户名己存在'
+                        required: '不能为空',
+                        isPhone:'请填写正确的手机号',
+                        remote:'己存在'
                     },
                     email:{
                         required: '邮箱不能为空',

@@ -64,9 +64,9 @@
                 },
                 messages: {
                     username: {
-                        required: '<i class="fa fa-exclamation-circle"></i>不能为空',
-                        isPhone:'<i class="fa fa-exclamation-circle"></i>请填写正确的手机号码',
-                        remote:'<i class="fa fa-exclamation-circle"></i>己存在'
+                        required: '不能为空',
+                        isPhone:'请填写正确的手机号码',
+                        remote:'己存在'
                     },
                     email:{
                         required: '邮箱不能为空',
