@@ -62,15 +62,19 @@ if($partner->status==2){ ?>
         <table class="table" width="100%" cellpadding="10" cellspacing="1">
             <thead>
             <tr>
-                <th align="left">用户名</th>
+                <th align="left">真实姓名</th>
+                <th align="left">帐户</th>
                 <th align="left">邀请时间</th>
                 <th align="left">状态</th>
             </tr>
             </thead>
             <tbody>
-            <? foreach ($invite_list as $part) : ?>
+            <? foreach ($invite_list as $part) :
+                $user=(new \App\Model\User())->find($part->user_id);
+                ?>
                 <tr>
-                    <td><?=(new \App\Model\User())->find($part->user_id)->username ?></td><td><?= $part->created_at ?></td>
+                    <td><?=$user->name?></td>
+                    <td><?=$user->username ?></td><td><?= $part->created_at ?></td>
                     <td><?
                         if($part->status==0){
                             echo '待支付';

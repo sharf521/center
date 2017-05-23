@@ -73,15 +73,19 @@
                         <table class="layui-table" lay-skin="line">
                             <thead>
                             <tr>
-                                <th>用户名</th>
+                                <th>真实姓名</th>
+                                <th>帐号</th>
                                 <th>邀请时间</th>
                                 <th>状态</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <? foreach ($invite_list as $part) : ?>
+                            <? foreach ($invite_list as $part) :
+                                $user=(new \App\Model\User())->find($part->user_id);
+                                ?>
                                 <tr>
-                                    <td><?=(new \App\Model\User())->find($part->user_id)->username ?></td><td><?= $part->created_at ?></td>
+                                    <td><?=$user->name?></td>
+                                    <td><?=$user->username ?></td><td><?= $part->created_at ?></td>
                                     <td><?
                                         if($part->status==0){
                                             echo '待支付';

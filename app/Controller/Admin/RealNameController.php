@@ -37,7 +37,7 @@ class RealNameController extends AdminController
         if(!empty($endtime)){
             $where.=" and created_at<".strtotime($endtime);
         }
-        $data['result']=$userInfo->where($where)->pager($page,10);
+        $data['result']=$userInfo->where($where)->orderBy('id desc')->pager($page,10);
         $this->view('realName',$data);
     }
 

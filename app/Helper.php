@@ -23,14 +23,18 @@ class Helper
         return "<a href='http://wpa.qq.com/msgrd?v=3&uin={$qq}&site=qq&menu=yes' target='_blank'><img src='http://wpa.qq.com/pa?p=1:{$qq}:4' alt='QQ'></a>";
     }
 
-    public static function QRcode($txt,$type='goods',$type_id=0,$level='L')
+    public static function QRcode($txt,$filePath='goods',$fileName=0,$level='L')
     {
-        $img_url="/data/QRcode/{$type}/".ceil(intval($type_id)/2000)."/";
+        if(is_int($fileName)){
+            $img_url="/data/QRcode/{$filePath}/".ceil(intval($fileName)/2000)."/";
+        }else{
+            $img_url="/data/QRcode/{$filePath}/";
+        }
         $file_dir = ROOT . "/public".$img_url;
         if (!is_dir($file_dir)) {
             mkdir($file_dir, 0777, true);
         }
-        $file_name=$type_id.'.png';
+        $file_name=$fileName.'.png';
         $file_path=$file_dir.$file_name;
         $img_url.=$file_name;
         if(!file_exists($file_path)){
