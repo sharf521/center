@@ -58,7 +58,6 @@ class GetPwdController extends Controller
             if($url){
                 $loginUrl.="?url={$url}";
             }
-            echo $loginUrl;
             $data['loginUrl']=$loginUrl;
             $data['title_herder']='找回密码';
             $this->view('getPwd',$data);
