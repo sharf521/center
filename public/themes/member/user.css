@@ -132,11 +132,11 @@ input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
 .toutext h2{ font-weight:normal; color:#000; font-size:20px; width:170px; height:40px; line-height:40px; padding-top:15px}
 .toutext p{ width:170px; height:30px; line-height:30px; font-size:12px; color:#666}
 .toutext p img{ float:left; padding-top:8px;}
-.zhjin{ height:100px; background:#f5f5f5; float:left; display:inline-block; margin:20px; font-size:14px; color:#555; padding:20px}
+.zhjin{ background:#f5f5f5; float:left; display:inline-block; margin:20px; font-size:14px; color:#555; padding:20px}
 .zhjin p{ height:30px; line-height:30px}
 .zhjin p span{ color:#C00; font-weight:bold}
 .zhjin p a.chongzhi{ background:#096; width:80px; font-size:12px; color:#fff; text-align:center; height:24px; line-height:24px; display:inline-block; float:left; margin-right:20px}
-.zhjinle{ height:100px; float:left; display:inline-block; margin-right: 20px;}
+.zhjinle{ float:left; display:inline-block; margin-right: 20px;}
 .zhjinri{height:80px; float:left; display:inline-block; padding:10px}
 .zhjin p a.tixian{ background:#c00; width:80px; font-size:12px; color:#fff; text-align:center; height:24px; line-height:24px; display:inline-block; float:left; margin-right:20px}
 

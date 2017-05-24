@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Member;
 
+use App\Helper;
 use App\Model\Account;
 use App\Model\AccountCash;
 use App\Model\AccountLog;
@@ -21,6 +22,11 @@ class AccountController extends MemberController
     public function index(Account $account)
     {
         $data['account'] = $account->find($this->user_id);
+
+        $convert_rate=Helper::getSystemParam('convert_rate');
+        $rebate=(new Rebate())->select("sum(money) as money,sum(money_rebate) as money_rebate")->where("user_id=?")->bindValues($this->user_id)->first();
+        $data['expectedIntegralReward']=math($rebate->money,$convert_rate,'*',5);
+        $data['alreadyIntegralReward']=math($rebate->money_rebate,$convert_rate,'*',5);
         $this->view('account', $data);
     }
 

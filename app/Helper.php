@@ -15,7 +15,13 @@ class Helper
 {
     public static function getSystemParam($code)
     {
-        return app('\App\Model\System')->getCode($code);
+        $value = app('\App\Model\System')->getCode($code);
+        if ($code == 'convert_rate') {
+            if (empty($value)) {
+                $value = 2.52;
+            }
+        }
+        return $value;
     }
 
     public static function getQqLink($qq=123456)

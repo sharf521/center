@@ -1,9 +1,11 @@
 <?php
 namespace App\Controller\Member;
 
+use App\Helper;
 use App\Model\App;
 use App\Model\AppUser;
 use App\Model\CarRent;
+use App\Model\Rebate;
 use App\Model\User;
 use System\Lib\DB;
 use System\Lib\Request;
@@ -20,8 +22,13 @@ class IndexController extends MemberController
         $data['account'] = DB::table('account')->where('user_id=?')->bindValues($this->user_id)->row();
         $data['title_herder']='帐户中心';
 
+        $convert_rate=Helper::getSystemParam('convert_rate');
+        $rebate=(new Rebate())->select("sum(money) as money,sum(money_rebate) as money_rebate")->where("user_id=?")->bindValues($this->user_id)->first();
+        $data['expectedIntegralReward']=math($rebate->money,$convert_rate,'*',5);
+        $data['alreadyIntegralReward']=math($rebate->money_rebate,$convert_rate,'*',5);
 
-        $data['carRents']=(new CarRent())->where("user_id=? and status=1")->bindValues($this->user_id)->orderBy('id desc')->get();
+
+        /*$data['carRents']=(new CarRent())->where("user_id=? and status=1")->bindValues($this->user_id)->orderBy('id desc')->get();*/
 
         $this->view('manage', $data);
     }

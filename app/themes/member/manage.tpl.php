@@ -20,11 +20,14 @@
                     <p>可用积分：<span><?=(float)$account['integral_available']?></span></p>
                     <p>周转金：<span> <?=(float)$account['turnover_available']?></span></p>
                     <p>保证金：<span> <?=(float)$account['security_deposit']?></span></p>
+                    <p>预计奖励：<span> <?=$expectedIntegralReward?> 积分</span></p>
                 </div>
                 <div class="zhjinle">
                     <p>冻结资金：<span> <?=(float)$account['funds_freeze']?></span></p>
                     <p>冻结积分：<span> <?=(float)$account['integral_freeze']?></span></p>
                     <p>周转金额度：<span> <?=(float)$account['turnover_credit']?></span></p>
+                    <p></p>
+                    <p>己奖励：<span> <?=$alreadyIntegralReward?> 积分</span></p>
                 </div>
                 <div class="zhjinri">
                     <p><a href="<?=url('account/recharge')?>" class="chongzhi">充值</a></p>
@@ -33,14 +36,17 @@
 
             </div>
         </div>
-        <a href="<?= url('goApp/10'); ?>" target="_blank" class="layui-btn">进入我的商城</a>
-<!--        <a href="<?/*= url('goApp/5'); */?>" target="_blank" class="layui-btn">进入我的商城（旧）</a>-->
-        <a href="<?= url('goApp/8'); ?>" target="_blank" class="layui-btn">进入我的云购</a>
+        <div class="layui-clear">
+            <a href="<?= url('goApp/10'); ?>" target="_blank" class="layui-btn">进入我的商城</a>
+            <!--        <a href="<?/*= url('goApp/5'); */?>" target="_blank" class="layui-btn">进入我的商城（旧）</a>-->
+            <a href="<?= url('goApp/8'); ?>" target="_blank" class="layui-btn">进入我的云购</a>
 
-        <br><br>
-        <?php   if(! empty($carRents)) : ?>
-            <!--<a href="<?/*= url('carRent'); */?>"class="layui-btn">我的购车</a>-->
-        <?php endif;?>
+            <br><br>
+            <?php   if(! empty($carRents)) : ?>
+                <!--<a href="<?/*= url('carRent'); */?>"class="layui-btn">我的购车</a>-->
+            <?php endif;?>
+        </div>
+
     </div>
 </div>
 
