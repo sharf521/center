@@ -15,7 +15,7 @@
             <li>周转金额度<br/><span><?=(float)$account->turnover_credit?></span></li>
             <li>保证金<br/><span><?=(float)$account->security_deposit?></span></li>
             <li>&nbsp;<br><span>&nbsp;</span></li>
-            <li>预计奖励积分<br/><span><?=$expectedIntegralReward?></span></li>
+            <li>计划奖励积分<br/><span><?=$expectedIntegralReward?></span></li>
             <li>己奖励积分<br/><span><?=$alreadyIntegralReward?></span></li>
         </ul>
         <p class="clear"></p>

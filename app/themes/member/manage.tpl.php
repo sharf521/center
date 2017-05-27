@@ -20,7 +20,7 @@
                     <p>可用积分：<span><?=(float)$account['integral_available']?></span></p>
                     <p>周转金：<span> <?=(float)$account['turnover_available']?></span></p>
                     <p>保证金：<span> <?=(float)$account['security_deposit']?></span></p>
-                    <p>预计奖励：<span> <?=$expectedIntegralReward?> 积分</span></p>
+                    <p>计划奖励：<span> <?=$expectedIntegralReward?> 积分</span></p>
                 </div>
                 <div class="zhjinle">
                     <p>冻结资金：<span> <?=(float)$account['funds_freeze']?></span></p>
