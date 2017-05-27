@@ -24,10 +24,10 @@ class MemberController extends Controller
                 redirect("/login?url={$url}");
                 exit;
             }
-        }
-        $this->user=(new User())->findOrFail($this->user_id);
-        if(trim($this->user->headimgurl)==''){
-            $this->user->headimgurl='/themes/member/images/no-img.jpg';
+            $this->user=(new User())->findOrFail($this->user_id);
+            if(trim($this->user->headimgurl)==''){
+                $this->user->headimgurl='/themes/member/images/no-img.jpg';
+            }
         }
     }
 
