@@ -26,7 +26,7 @@ if($domain_arr[count($domain_arr)-2]=='com'){
     $domain=$domain_arr[count($domain_arr)-2].'.'.$domain_arr[count($domain_arr)-1];
 }*/
 //session_start();之前设置  php.ini 里 session.auto_start=0
-ini_set('session.cookie_domain', $domain);//域名不需要端口
+//ini_set('session.cookie_domain', $domain);//域名不需要端口
 session_cache_limiter('private,must-revalidate');
 session_start();
 date_default_timezone_set('Asia/Shanghai');//时区配置
