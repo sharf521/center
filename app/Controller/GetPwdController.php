@@ -95,7 +95,7 @@ class GetPwdController extends Controller
                 );
                 $result = $user->updatePwd($post);
                 if ($result === true) {
-                    redirect()->back()->with('msg', '密码重置成功，请登陆!');
+                    redirect('login')->with('msg', '密码重置成功，请登陆!');
                 } else {
                     $error = $result;
                 }
