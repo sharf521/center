@@ -31,11 +31,13 @@ class Rebate extends Model
             throw new \Exception('参数错误'); 
         } else {
             $arr = array(
+                'app_id'=>(int)$data['app_id'],
                 'site_id' => (int)$data['site_id'],
                 'typeid' => (int)$data['typeid'],
                 'user_id' => (int)$data['user_id'],
                 'money' => (float)($data['money']),
                 'addtime' => date('Y-m-d H:i:s'),
+                'remark'=>$data['remark'],
                 'status' => 0,
                 'money_rebate' => 0
             );
@@ -415,6 +417,11 @@ class Rebate extends Model
             DB::table('rebate')->where("id={$row['id']}")->limit(1)->update($arr_rebate);
         }
         return true;
+    }
+
+    public function App()
+    {
+        return $this->hasOne('\App\Model\App','id','app_id');
     }
 }
 

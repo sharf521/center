@@ -82,10 +82,12 @@ class AlgorithmController extends ApiController
         }
         $reate = new Rebate();
         $post = array(
+            'app_id'=>$this->app_id,
             'user_id' => $user_id,
-            'site_id' => $this->app_id,
+            'site_id' => (int)$data['site_id'],
             'typeid' => $data['typeid'],
-            'money' => $data['money']
+            'money' => $data['money'],
+            'remark'=>$data['remark']
         );
         $result = $reate->addRebate($post);
         if($result===true){

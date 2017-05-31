@@ -47,6 +47,36 @@
             <?php endif;?>
         </div>
 
+
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>计划奖励(最近)</legend>
+        </fieldset>
+        <? if(empty($rebateList)) : ?>
+            <div class="alert-warning" role="alert">无记录！</div>
+        <? endif;?>
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th>计划奖励 </th>
+                <th>己奖励</th>
+                <th>添加时间</th>
+                <th>来源</th>
+                <th>说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <? foreach ($rebateList as $rebate) : ?>
+            <tr>
+                <td><?= (float)$rebate->money ?></td>
+                <td><?= (float)$rebate->money_rebate ?></td>
+                <td><?= $rebate->addtime ?></td>
+                <td><?=$rebate->App()->name?></td>
+                <td><?=$rebate->remark?></td>
+            </tr>
+            <? endforeach;?>
+            </tbody>
+        </table>
+
     </div>
 </div>
 

@@ -22,6 +22,7 @@ if ($this->func == 'index') {
                 <option value="2"<? if ($_GET['status'] == 2) { ?> selected="selected"<? } ?>>己结束</option>
             </select>&nbsp;&nbsp;
             用户ID<input type="text" name="user_id" value="<?= $_GET['user_id'] ?>">
+            关键字:<input type="text" name="remark" value="<?=$_GET['remark']?>">
             时间：<input type="text" size="10" name="startdate" value="<?= $_GET['startdate'] ?>" class="Wdate"
                       onclick="javascript:WdatePicker();">-
             <input type="text" size="10" name="enddate" value="<?= $_GET['enddate'] ?>" class="Wdate"
@@ -32,12 +33,14 @@ if ($this->func == 'index') {
     <table class="table">
         <tr class="bt">
             <th>ID</th>
+            <th>app_id</th>
             <th>site_id</th>
             <th>用户ID</th>
             <th>对列类型</th>
             <th>应返金额</th>
             <th>己返金额</th>
             <th>添加时间</th>
+            <th>备注</th>
             <th>状态</th>
             <th>完成时间</th>
             <th>操作</th>
@@ -49,12 +52,14 @@ if ($this->func == 'index') {
             ?>
             <tr>
                 <td><?= $row->id ?></td>
+                <td><?=$row->app_id?></td>
                 <td><?= $row->site_id ?></td>
                 <td><?= $row->user_id ?></td>
                 <td><?= $arr_typeid[$row->typeid] ?></td>
                 <td><?= (float)$row->money ?></td>
                 <td><?= (float)$row->money_rebate ?></td>
                 <td><?= $row->addtime ?></td>
+                <td><?=$row->remark?></td>
                 <td><?= $arr_status[$row->status] ?></td>
                 <td><?= $row->success_time ?></td>
                 <td>

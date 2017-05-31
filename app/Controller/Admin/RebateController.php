@@ -21,6 +21,7 @@ class RebateController extends AdminController
             'startdate' => $_GET['startdate'],
             'enddate' => $_GET['enddate'],
             'status' => $_GET['status'],
+            'remark' => $_GET['remark'],
             'user_id' => (int)$_GET['user_id']
         );
         $where = " 1=1";
@@ -35,6 +36,9 @@ class RebateController extends AdminController
         }
         if (!empty($arr['user_id'])) {
             $where .= " and user_id={$arr['user_id']}";
+        }
+        if ($arr['remark'] != '') {
+            $where .= " and remark like '%{$arr['remark']}%'";
         }
         if ($arr['status'] != '') {
             $where .= " and status={$arr['status']}";

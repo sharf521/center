@@ -22,14 +22,16 @@ class IndexController extends MemberController
         $data['account'] = DB::table('account')->where('user_id=?')->bindValues($this->user_id)->row();
         $data['title_herder']='帐户中心';
 
-        $convert_rate=Helper::getSystemParam('convert_rate');
+        //$convert_rate=Helper::getSystemParam('convert_rate');
         $rebate=(new Rebate())->select("sum(money) as money,sum(money_rebate) as money_rebate")->where("user_id=?")->bindValues($this->user_id)->first();
-        $data['expectedIntegralReward']=math($rebate->money,$convert_rate,'*',5);
-        $data['alreadyIntegralReward']=math($rebate->money_rebate,$convert_rate,'*',5);
+        $data['expectedIntegralReward']=(float)$rebate->money;
+        $data['alreadyIntegralReward']=(float)$rebate->money_rebate;
 
 
         /*$data['carRents']=(new CarRent())->where("user_id=? and status=1")->bindValues($this->user_id)->orderBy('id desc')->get();*/
 
+        $rebateList=(new Rebate())->where("user_id=?")->bindValues($this->user_id)->orderBy('id desc')->limit('0,15')->get();
+        $data['rebateList']=$rebateList;
         $this->view('manage', $data);
     }
 
