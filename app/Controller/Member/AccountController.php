@@ -236,6 +236,7 @@ class AccountController extends MemberController
                     'typeid' => 3,
                     'user_id' => $user_id,
                     'money' => $total,
+                    'remark'=>'积分兑换现金'
                 );
                 $rebate->addRebate($arr);
 

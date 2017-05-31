@@ -18,7 +18,7 @@
                     </form>
                 </div>
                 <? if(!empty($result['total'])){?>
-                    <table class="table">
+                    <table class="layui-table">
                         <tr>
                             <th>时间</th>
                             <th>类型</th>

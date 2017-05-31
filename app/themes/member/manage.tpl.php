@@ -70,7 +70,7 @@
                 <td><?= (float)$rebate->money ?></td>
                 <td><?= (float)$rebate->money_rebate ?></td>
                 <td><?= $rebate->addtime ?></td>
-                <td><?=$rebate->App()->name?></td>
+                <td><? if($rebate->app_id!=0){echo $rebate->App()->name;}else{echo '帐户中心';}?></td>
                 <td><?=$rebate->remark?></td>
             </tr>
             <? endforeach;?>
