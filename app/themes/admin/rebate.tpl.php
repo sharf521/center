@@ -52,7 +52,7 @@ if ($this->func == 'index') {
             ?>
             <tr>
                 <td><?= $row->id ?></td>
-                <td><?=$row->app_id?></td>
+                <td><? if($row->app_id!=0){echo $row->App()->name;}else{echo '帐户中心';}?></td>
                 <td><?= $row->site_id ?></td>
                 <td><?= $row->user_id ?></td>
                 <td><?= $arr_typeid[$row->typeid] ?></td>
