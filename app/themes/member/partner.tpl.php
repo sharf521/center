@@ -62,6 +62,8 @@
                                 </div>
                             </div>
                         </form>
+                    <? else : ?>
+                        <blockquote class="layui-elem-quote">邀请好友将冻结262元,如果余额不足262元，将暂时无法邀请！</blockquote>
                     <? endif;?>
                     <fieldset class="layui-elem-field layui-field-title">
                         <legend>我的邀请列表</legend>

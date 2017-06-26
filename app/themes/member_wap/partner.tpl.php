@@ -48,11 +48,12 @@ if($partner->status==2){ ?>
         <div class="alert-warning" role="alert">
             将下面邀请码或二维码复制并发送给好友，该好友申请后您即成为好友的邀请人<!--，邀请好友将冻结262元,余额不足262元，将暂时无法邀请其它会员-->！
         </div>
-
         <table class="table_from">
             <tr><td>我的邀请码：</td><td><?=$invite_code?></td></tr>
             <tr><td>邀请二维码：</td><td><img src="<?=$invite_img?>" width="70%"></td></tr>
         </table>
+     <? else : ?>
+        <div class="alert-warning" role="alert">邀请好友将冻结262元,如果余额不足262元，将暂时无法邀请！</div>
     <? endif;?>
     <div style="line-height: 70px; font-size: 22px; font-weight: 400">我的邀请列表</div>
     <?
