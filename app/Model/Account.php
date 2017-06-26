@@ -105,11 +105,8 @@ class Account extends Model
             }else{
                 $where="user_id={$user_id}";
                 //并发时验证资金
-                if(isset($data['funds_available_now'])){
-                    $where.=" and funds_available='{$data['funds_available_now']}'";
-                }
-                if(isset($data['integral_available_now'])){
-                    $where.=" and integral_available='{$data['integral_available_now']}'";
+                if(isset($data['signature'])){
+                    $where.=" and signature='{$data['signature']}'";
                 }
                 $count=DB::table('account')->where($where)->limit(1)->update($account);
                 if($count!=1){
