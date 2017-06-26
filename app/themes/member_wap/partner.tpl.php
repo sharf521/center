@@ -53,7 +53,7 @@ if($partner->status==2){ ?>
             <tr><td>邀请二维码：</td><td><img src="<?=$invite_img?>" width="70%"></td></tr>
         </table>
      <? else : ?>
-        <div class="alert-warning" role="alert">邀请好友将冻结262元,您的帐户余额不足262元，将暂时无法邀请！</div>
+        <div class="alert-warning" role="alert">邀请好友将冻结262元,您的帐户余额不足262元，暂时无法邀请！</div>
     <? endif;?>
     <div style="line-height: 70px; font-size: 22px; font-weight: 400">我的邀请列表</div>
     <?
