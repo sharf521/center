@@ -105,7 +105,7 @@ class FBB extends Model
                         if ($row['position'] == 1) {
                             $fbb_log['money'] = bcmul($money, 0.2, 5);//400
                         } else {
-                            $fbb_log['money'] = bcmul($money, 0.65, 5);//1300
+                            $fbb_log['money'] = bcmul($money, 0.6, 5);//1200
                         }
                     } elseif ($i == 2) {
                         if ($row['position'] == 1 && $arr_pos[1] >= 2) {
