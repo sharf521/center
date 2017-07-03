@@ -25,6 +25,7 @@ class Helper
             );
             $result=$user->login($_data);
             if ($result === true) {
+                session()->remove('wechat_openid');
                 $url=(new Request())->get('url');
                 if(empty($url)){
                     redirect('member/');

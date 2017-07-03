@@ -32,9 +32,8 @@ class WechatController extends Controller
     }
 
     //取wechat_openid 中转地址
-    public function middleReturn(Request $request)
+        public function middleReturn(Request $request)
     {
-        session()->remove('wechat_openid');
         $get_wechat_openid = $request->get('wechat_openid');
         if(empty($get_wechat_openid)){
             $this_url='http://'.$_SERVER['HTTP_HOST'].urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
