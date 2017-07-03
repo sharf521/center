@@ -68,6 +68,9 @@ class AuthController extends BaseController
     }
     protected function getSign($data)
     {
+        if(isset($data['wechat_openid'])){
+            unset($data['wechat_openid']);
+        }
         if(isset($data['sign'])){
             unset($data['sign']);
         }
