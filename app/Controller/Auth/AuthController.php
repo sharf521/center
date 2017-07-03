@@ -36,6 +36,14 @@ class AuthController extends BaseController
             $this->is_wap = true;
             $this->template = 'auth_wap';
         }
+        $agent = addslashes($_SERVER['HTTP_USER_AGENT']);
+        if(strpos($agent, 'MicroMessenger') === false && strpos($agent, 'Windows Phone') === false)
+        {
+            $this->is_inWeChat=false;
+            //die('Sorry！非微信浏览器不能访问');
+        }else{
+            $this->is_inWeChat=true;
+        }
     }
     public function error()
     {

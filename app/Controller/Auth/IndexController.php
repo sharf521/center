@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Auth;
 
+use App\Helper;
 use App\Model\AppUser;
 use App\Model\User;
 use System\Lib\DB;
@@ -54,6 +55,9 @@ class IndexController extends AuthController
             }
             redirect()->back()->with('error',$error);
         }else{
+            if($this->is_wap && $this-$this->is_inWeChat){
+                Helper::wechatAutoLogin();
+            }
             $data['regUrl']=$regUrl;
             $data['getPwdUrl']=$getPwdUrl;
             $data['title_herder']='用户登陆';
