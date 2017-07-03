@@ -55,7 +55,7 @@ class IndexController extends AuthController
             }
             redirect()->back()->with('error',$error);
         }else{
-            if($this->is_wap && $this-$this->is_inWeChat){
+            if($this->is_wap && $this->is_inWeChat){
                 Helper::wechatAutoLogin();
             }
             $data['regUrl']=$regUrl;
