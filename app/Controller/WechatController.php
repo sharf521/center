@@ -43,6 +43,7 @@ class WechatController extends Controller
             $wechat_openid=$get_wechat_openid;
             session()->set('wechat_openid',$wechat_openid);
             $middleReturnUrl=session('middleReturnUrl');
+            session()->remove('middleReturnUrl');
             redirect($middleReturnUrl);
         }
     }
