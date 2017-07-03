@@ -33,6 +33,7 @@ class LoginController extends Controller
             redirect()->back()->with('error',$error);
         }else{
             if($this->is_wap && $this->is_inWeChat){
+                session()->remove('wechat_openid');
                 $get_wechat_openid = $request->get('wechat_openid');
                 if(empty($get_wechat_openid)){
                     $this_url='http://'.$_SERVER['HTTP_HOST'].urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
@@ -41,7 +42,28 @@ class LoginController extends Controller
                 }else{
                     $wechat_openid=$get_wechat_openid;
                 }
-            }echo $wechat_openid;
+                $user=$user->where('wechat_openid=?')->bindValues($wechat_openid)->first();
+                if($user->is_exist){
+                    $_data=array(
+                        'direct'=>1,
+                        'id'=>$user->id
+                    );
+                    $result=$user->login($_data);
+                    if ($result === true) {
+                        $url=$request->get('url');
+                        if(empty($url)){
+                            redirect('member/');
+                        }else{
+                            header("location:$url");exit;
+                        }
+                    } else {
+                        $error = $result;
+                    }
+                    redirect()->back()->with('error',$error);
+                }else{
+                    session()->set('wechat_openid',$wechat_openid);
+                }
+            }
             $regUrl="/register/";
             $getPwdUrl="/getPwd/";
             $url=$request->get('url');

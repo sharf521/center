@@ -53,6 +53,11 @@ class User extends Model
             }
             session()->set('user_id', $user->id);
             session()->set('username', $user->username);
+            $wechat_openid=session('wechat_openid');
+            if($user->wechat_openid=='' && !empty($wechat_openid)){
+                $user->wechat_openid=$wechat_openid;
+                $user->save();
+            }
             return true;
         } else {
             return '未知错误!';
