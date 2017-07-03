@@ -34,7 +34,7 @@ class LoginController extends Controller
             redirect()->back()->with('error',$error);
         }else{
             if($this->is_wap && $this->is_inWeChat){
-                Helper::wechatAutoLogin();
+                //Helper::wechatAutoLogin();
             }
             $regUrl="/register/";
             $getPwdUrl="/getPwd/";
