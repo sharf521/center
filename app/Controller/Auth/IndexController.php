@@ -56,13 +56,7 @@ class IndexController extends AuthController
             redirect()->back()->with('error',$error);
         }else{
             if($this->is_wap && $this->is_inWeChat){
-                $wechat_openid=session('wechat_openid');
-                if(empty($wechat_openid)){
-                    $this_url='http://'.$_SERVER['HTTP_HOST'].urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
-                    session()->set('middleReturnUrl',$this_url);
-                    redirect('http://centerwap.yuantuwang.com/wechat/middleReturn/');
-                }
-                Helper::wechatAutoLogin($wechat_openid);
+                Helper::wechatAutoLogin();
             }
             $data['regUrl']=$regUrl;
             $data['getPwdUrl']=$getPwdUrl;

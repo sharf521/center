@@ -15,8 +15,14 @@ use System\Lib\Request;
 
 class Helper
 {
-    public static function wechatAutoLogin($wechat_openid)
+    public static function wechatAutoLogin()
     {
+        $wechat_openid=session('wechat_openid');
+        if(empty($wechat_openid)){
+            $this_url='http://'.$_SERVER['HTTP_HOST'].urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+            session()->set('middleReturnUrl',$this_url);
+            redirect('http://centerwap.yuantuwang.com/wechat/middleReturn/');
+        }
         $user=(new User())->where('wechat_openid=?')->bindValues($wechat_openid)->first();
         if($user->is_exist){
             $_data=array(
