@@ -15,18 +15,8 @@ use System\Lib\Request;
 
 class Helper
 {
-    public static function wechatAutoLogin()
+    public static function wechatAutoLogin($wechat_openid)
     {
-        $request=new Request();
-        session()->remove('wechat_openid');
-        $get_wechat_openid = $request->get('wechat_openid');
-        if(empty($get_wechat_openid)){
-            $this_url='http://'.$_SERVER['HTTP_HOST'].urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
-            $url = "http://wx02560f146a566747.wechat.yuantuwang.com/user/getWeChatOpenId/?url={$this_url}";
-            redirect($url);
-        }else{
-            $wechat_openid=$get_wechat_openid;
-        }
         $user=(new User())->where('wechat_openid=?')->bindValues($wechat_openid)->first();
         if($user->is_exist){
             $_data=array(
@@ -35,7 +25,7 @@ class Helper
             );
             $result=$user->login($_data);
             if ($result === true) {
-                $url=$request->get('url');
+                $url=(new Request())->get('url');
                 if(empty($url)){
                     redirect('member/');
                 }else{
@@ -45,8 +35,6 @@ class Helper
                 $error = $result;
             }
             redirect()->back()->with('error',$error);
-        }else{
-            session()->set('wechat_openid',$wechat_openid);
         }
     }
     public static function getSystemParam($code)
