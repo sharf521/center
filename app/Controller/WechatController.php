@@ -31,7 +31,7 @@ class WechatController extends Controller
 
     }
 
-    //取wechat_openid 中转地址
+    //取wechat_openid 中转地址  无用
     public function middleReturn(Request $request)
     {
         $get_wechat_openid = $request->get('wechat_openid');

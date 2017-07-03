@@ -17,11 +17,15 @@ class Helper
 {
     public static function wechatAutoLogin()
     {
-        $wechat_openid=session('wechat_openid');
-        if(empty($wechat_openid)){
+        $request=new Request();
+        session()->remove('wechat_openid');
+        $get_wechat_openid = $request->get('wechat_openid');
+        if(empty($get_wechat_openid)){
             $this_url='http://'.$_SERVER['HTTP_HOST'].urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
-            session()->set('middleReturnUrl',$this_url);
-            redirect('http://centerwap.yuantuwang.com/wechat/middleReturn/');
+            $url = "http://wx02560f146a566747.wechat.yuantuwang.com/user/getWeChatOpenId/?url={$this_url}";
+            redirect($url);
+        }else{
+            $wechat_openid=$get_wechat_openid;
         }
         $user=(new User())->where('wechat_openid=?')->bindValues($wechat_openid)->first();
         if($user->is_exist){
@@ -31,8 +35,7 @@ class Helper
             );
             $result=$user->login($_data);
             if ($result === true) {
-                session()->remove('wechat_openid');
-                $url=(new Request())->get('url');
+                $url=$request->get('url');
                 if(empty($url)){
                     redirect('member/');
                 }else{
@@ -42,6 +45,8 @@ class Helper
                 $error = $result;
             }
             redirect()->back()->with('error',$error);
+        }else{
+            session()->set('wechat_openid',$wechat_openid);
         }
     }
     public static function getSystemParam($code)

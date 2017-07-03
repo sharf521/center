@@ -64,43 +64,6 @@ class IndexController extends AuthController
             $this->view('login',$data);
         }
     }
-    
-    private function wechatAutoLogin()
-    {
-        $request=new Request();
-        session()->remove('wechat_openid');
-        $get_wechat_openid = $request->get('wechat_openid');
-        if(empty($get_wechat_openid)){
-            $this_url='http://'.$_SERVER['HTTP_HOST'].urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
-            session()->set('auth_login_url',$this_url);
-            $this_url='http://centerwap.yuantuwang.com/wechat/middleReturn/';
-            $url = "http://wx02560f146a566747.wechat.yuantuwang.com/user/getWeChatOpenId/?url={$this_url}";
-            redirect($url);
-        }else{
-            $wechat_openid=$get_wechat_openid;
-        }
-        $user=(new User())->where('wechat_openid=?')->bindValues($wechat_openid)->first();
-        if($user->is_exist){
-            $_data=array(
-                'direct'=>1,
-                'id'=>$user->id
-            );
-            $result=$user->login($_data);
-            if ($result === true) {
-                $url=$request->get('url');
-                if(empty($url)){
-                    redirect('member/');
-                }else{
-                    header("location:$url");exit;
-                }
-            } else {
-                $error = $result;
-            }
-            redirect()->back()->with('error',$error);
-        }else{
-            session()->set('wechat_openid',$wechat_openid);
-        }
-    }
 
     public function register(Request $request,User $user,AppUser $appUser)
     {
