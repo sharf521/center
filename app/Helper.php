@@ -37,6 +37,9 @@ class Helper
             if ($result === true) {
                 $url=$request->get('url');
                 if(empty($url)){
+                    $url=$request->get('redirect_uri');
+                }
+                if(empty($url)){
                     redirect('member/');
                 }else{
                     header("location:$url");exit;
