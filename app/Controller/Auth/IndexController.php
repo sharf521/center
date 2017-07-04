@@ -14,6 +14,32 @@ class IndexController extends AuthController
         parent::__construct();
     }
 
+    private function doLogin($data)
+    {
+        $user=new User();
+        $request=new Request();
+        $appUser=new AppUser();
+        $redirect_uri=$request->redirect_uri;
+        $result = $user->login($data);
+        if ($result === true) {
+            $user_id=session('user_id');
+            $openid=$appUser->getOpenId($user_id,$this->app_id);
+            if($openid==''){
+                $openid=$appUser->create($user_id,$this->app_id);
+            }
+            $sign=$this->getSign(array('openid'=>$openid));
+            if(strpos($redirect_uri,'?')===false){
+                $url=$redirect_uri.'?openid='.$openid.'&sign='.$sign;
+            }else{
+                $url=$redirect_uri.'&openid='.$openid.'&sign='.$sign;
+            }
+            redirect($url);
+        } else {
+            $error = $result;
+        }
+        redirect()->back()->with('error',$error);
+    }
+
     //index.php/auth/login/?appid=shop&redirect_uri=http://www.yuantuwang.com/&sign=1F07E77550FEBAD99EC245CBDBC7EF29
     //http://center.test.cn:8000/index.php/auth/login/?appid=shop&redirect_uri=/&sign=6F25A41551491FF8A05112E9709688B4&r=admin
     public function login(Request $request,User $user,AppUser $appUser)
@@ -36,27 +62,18 @@ class IndexController extends AuthController
                 'username' => $request->post('username'),
                 'password' => $request->post('password')
             );
-            $result = $user->login($data);
-            if ($result === true) {
-                $user_id=session('user_id');
-                $openid=$appUser->getOpenId($user_id,$this->app_id);
-                if($openid==''){
-                    $openid=$appUser->create($user_id,$this->app_id);
-                }
-                $sign=$this->getSign(array('openid'=>$openid));
-                if(strpos($get['redirect_uri'],'?')===false){
-                    $url=$get['redirect_uri'].'?openid='.$openid.'&sign='.$sign;
-                }else{
-                    $url=$get['redirect_uri'].'&openid='.$openid.'&sign='.$sign;
-                }
-                redirect($url);
-            } else {
-                $error = $result;
-            }
-            redirect()->back()->with('error',$error);
+            $this->doLogin($data);
         }else{
             if($this->is_wap && $this->is_inWeChat){
-                Helper::wechatAutoLogin();
+                $wechat_openid=Helper::getWechatOpenId();
+                $user=(new User())->where('wechat_openid=?')->bindValues($wechat_openid)->first();
+                if($user->is_exist){
+                    $_data=array(
+                        'direct'=>1,
+                        'id'=>$user->id
+                    );
+                    $this->doLogin($_data);
+                }
             }
             $data['regUrl']=$regUrl;
             $data['getPwdUrl']=$getPwdUrl;
