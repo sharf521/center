@@ -26,6 +26,7 @@
                     <th>真实姓名</th>
                     <th>类型</th>
                     <th>冻结金额</th>
+                    <th>冻结积分</th>
                     <th>己收金额</th>
                     <th>审请时间</th>
                     <th>审核时间</th>
@@ -39,7 +40,8 @@
                         <td><?=$row->user()->username?></td>
                         <td><?=$row->user()->name?></td>
                         <td><?=$row->getLinkPageName('partner_type',$row->type)?></td>
-                        <td>￥<?=(float)$row->apply_money?></td>
+                        <td>￥<?=(float)$row->payed_funds?></td>
+                        <td><?=(float)$row->payed_integral?></td>
                         <td>￥<?=(float)$row->money?></td>
                         <td><?=$row->created_at?></td>
                         <td><? if($row->verify_at!=0){echo $row->verify_at;}?></td>
@@ -74,7 +76,7 @@
                 <tr><td>编号：</td><td><?=$row->id?></td></tr>
                 <tr><td>用户名：</td><td><?=$row->user()->username?>(<?=$row->user()->name?>)</td></tr>
                 <tr><td>申请级别：</td><td><? echo $row->getLinkPageName('partner_type',$row->type)?></td></tr>
-                <tr><td>冻结金额：</td><td>￥<?=$row->apply_money?></td></tr>
+                <tr><td>己冻结：</td><td><?=(float)$row->payed_funds?>元 和 <?=(float)$row->payed_integral?> 积分</td></tr>
                 <tr><td>申请时间：</td><td><?=$row->created_at?></td></tr>
                 <tr><td>状态：</td><td><? echo $row->getLinkPageName('check_status',$row->status)?></td></tr>
                 <tr><td>上层用户Id：</td><td><input type="text" name="p_userid" value="<?=$row->invite_uid?>"></td></tr>

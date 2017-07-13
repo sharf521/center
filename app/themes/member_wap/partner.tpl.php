@@ -16,7 +16,7 @@ require 'header.php';
         <? if($_GET['invite_code']!=$invite_code): ?>
             <div class="alert-warning" role="alert">您己经使用过邀请码，己更换为原来的邀请码！</div>
         <? endif;?>
-        <form method="post" onSubmit="return setdisabled();">
+        <form method="post" onSubmit="return setdisabled();" style="display: none">
             <table class="table_from">
                 <tr><td style="width: 28%">用户：</td><td style="width: 72%"><?=$this->username?></td></tr>
                 <tr><td>可用金额：</td><td><?='￥'.$account->funds_available?></td></tr>
@@ -26,6 +26,57 @@ require 'header.php';
                 <tr><td colspan="2"><input type="submit" class="button1" value="提交申请" /></td></tr>
             </table>
         </form>
+        <link rel="stylesheet" href="//res.wx.qq.com/open/libs/weui/1.1.0/weui.css"/>
+        <form method="post" name="form1">
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">邀请码</label></div>
+                    <div class="weui-cell__bd">
+                        <input type="text" name="invite_code" value="<?=$invite_code?>"  placeholder=""  class="weui-input" autocomplete="off"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">申请级别</label></div>
+                    <div class="weui-cell__bd">
+                        <?=$type?>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">扣除积分</label></div>
+                    <div class="weui-cell__bd">
+                        <input type="text" id="integral" name="integral" value="0" required placeholder="" onkeyup="value=value.replace(/[^0-9.]/g,'')"  class="weui-input" autocomplete="off"/>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells__tips">可用积分：<span id="span_integral"><?=$account->integral_available?></span></div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">支付密码</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" required type="password" name="zf_password" placeholder="支付密码" />
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells__tips">可用金额：¥<span id="span_funds"><?=$account->funds_available?></span></div>
+            <div style="text-align: right; padding: 10px 20px 0px 0px; font-size: 16px; font-weight: 600; color: #c00;">支付金额：¥<span id="money_yes"><?=$order->order_money?></span></div>
+            <div class="weui-btn-area">
+                <input class="weui-btn weui-btn_primary" type="submit" value="提交申请">
+                <a class="recharge weui-btn weui-btn_plain-primary" href="<?=url('account/recharge')?>">我要充值</a>
+            </div>
+        </form>
+        <script src="/plugin/js/math.js"></script>
+        <script>
+            var lv='<?=$convert_rate?>';
+            var price_true='0';
+            partner_js();
+        </script>
     <? else : ?>
         <table class="table_from">
             <tr><td>用户：</td><td><?=$this->username?></td></tr>

@@ -54,9 +54,9 @@
                     <td><?=$row->app_order_no?></td>
                     <td><?=$row->user()->username?>/<?=$row->user()->id?></td>
                     <td><?=$row->created_at?></td>
-                    <td><?=$row->getLinkPageName('account_type',$row->type);?></td>
+                    <td><nobr><?=$row->getLinkPageName('account_type',$row->type);?></nobr></td>
                     <td class="fl"><?=$row->label?></td>
-                    <td class="fl"><?=$row->change?></td>
+                    <td class="fl" width="210"><?=$row->change?></td>
                     <td class="fl"><?=nl2br($row->remark)?></td>
                     <td class="fl">￥<?=(float)$row->funds_available_now?></td>
                     <td class="fl">￥<?=(float)$row->funds_freeze_now?></td>

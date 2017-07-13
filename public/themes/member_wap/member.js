@@ -104,3 +104,40 @@ function changeSel(sel,id)
     });
 }
 //userInfo   end
+
+
+function partner_js()
+{
+    var selVal='';
+    $(function () {
+        $("select[name='partner_type']").change(function () {
+            price_true=$(this).val();
+            $('#money_yes').html(price_true);
+            $('#integral').val(0);
+            selVal=$(this).find("option:selected").val();
+        });
+        $("#integral").bind('input propertychange',function(){
+            if(Number($(this).val())>Number($('#span_integral').html())){
+                $(this).val($('#span_integral').html());
+            }
+            var max_jf=Math.mul(price_true,lv);
+            if(Number($(this).val())>max_jf){
+                $("#integral").val(max_jf);
+            }
+            var _m=Math.div(Number($("#integral").val()),lv);
+            var money=Math.sub(price_true,Math.moneyRound(_m,2));
+            $('#money_yes').html(money);
+        });
+
+        $("form[name='form1']").submit(function () {
+            if(selVal==''){
+                layer.open({
+                    content: '先选择申请级别'
+                    ,skin: 'msg'
+                    ,time: 200 //200秒后自动关闭
+                });
+                return false;
+            }
+        });
+    });
+}

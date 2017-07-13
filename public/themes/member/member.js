@@ -184,3 +184,42 @@ function orderPayJs() {
          });   */
     });
 }
+
+
+function partner_js() {
+    $(function () {
+        layui.form('select').render();
+        layui.form().on('select(sel1)', function(data){
+            price_true=data.value;
+            $('#money_yes').html(data.value);
+            $('#integral').val(0);
+        });
+        layui.form().on('submit(*)', function(data){
+            var form=data.form;
+            var fields=data.field;
+            var partner_type=$(form).find('select[name=partner_type]');
+            if(partner_type.val()==''){
+                layer.tips('不能为空！', $(partner_type).next('.layui-form-select'));
+                return false;
+            }
+            var zf_password=$(form).find('input[name=zf_password]');
+            if(zf_password.val()==''){
+                layer.tips('不能为空！', zf_password);
+                zf_password.focus();
+                return false;
+            }
+        });
+        $('#integral').keyup(function () {
+            if(Number($(this).val())>Number($('#span_integral').html())){
+                $(this).val($('#span_integral').html());
+            }
+            var max_jf=Math.mul(price_true,lv);
+            if(Number($(this).val())>max_jf){
+                $("#integral").val(max_jf);
+            }
+            var _m=Math.div(Number($("#integral").val()),lv);
+            var money=Math.sub(price_true,Math.moneyRound(_m,2));
+            $('#money_yes').html(money);
+        });
+    });
+}

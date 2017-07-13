@@ -90,7 +90,8 @@ class PartnerController extends AdminController
                         $log = array();
                         $log['user_id'] = $row->user_id;
                         $log['type'] = 'partner_success';
-                        $log['funds_freeze']=-$total;
+                        $log['funds_freeze']='-'.$row->payed_funds;
+                        $log['integral_freeze']='-'.$row->payed_integral;
                         $log['label'] = "partner_{$row->user_id}";
                         $log['remark'] = "";
                         $account->addLog($log);
@@ -130,8 +131,10 @@ class PartnerController extends AdminController
                         $log = array();
                         $log['user_id'] = $row->user_id;
                         $log['type'] = 'partner_fail';
-                        $log['funds_available'] =$total;
-                        $log['funds_freeze']=-$total;
+                        $log['funds_available'] =$row->payed_funds;
+                        $log['funds_freeze']='-'.$row->payed_funds;
+                        $log['integral_available'] =$row->payed_integral;
+                        $log['integral_freeze']='-'.$row->payed_integral;
                         $log['label'] = "partner_{$row->user_id}";
                         $log['remark'] = "";
                         $account->addLog($log);

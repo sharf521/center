@@ -38,10 +38,8 @@ class PartnerController extends MemberController
                 if(!$pPartner->is_exist){
                     redirect()->back()->with('error','邀请码无效！');
                 }
-
             }
         }
-
         $partner=$partner->where("user_id=?")->bindValues($this->user_id)->first();
         if($partner->is_exist){
             $invite_code=Helper::encrypt($partner->invite_uid);
@@ -92,9 +90,21 @@ class PartnerController extends MemberController
             if(!array_key_exists($total,$type_arr)){
                 redirect()->back()->with('error','数据异常！');
             }
-            if($total > $account->funds_available){
-                redirect()->back()->with('error','您的可用余额不足！');
+
+            $integral=(float)$request->post('integral');
+            if($integral<0){
+                redirect()->back()->with('error','不能为负数！');
             }
+            if($integral > $account->integral_available){
+                redirect()->back()->with('error','可用积分不足！');
+            }
+            $_money=math($integral,$convert_rate,'/',3);
+            $_money=round_money($_money,1,2);
+            $money=math($total,$_money,'-',2);
+            if($money > $account->funds_available){
+                redirect()->back()->with('error','您的可用资金不足！');
+            }
+
             $checkPwd=$this->user->checkPayPwd($request->post('zf_password'),$this->user);
             if($checkPwd!==true){
                 redirect()->back()->with('error','支付密码错误！');
@@ -106,14 +116,18 @@ class PartnerController extends MemberController
             $partner->type=1;
             $partner->type=$total;
             $partner->apply_money=$total;
+            $partner->payed_funds=$money;
+            $partner->payed_integral=$integral;
             $partner->save();
 
             //冻结资金
             $log = array();
             $log['user_id'] = $this->user_id;
             $log['type'] = 'partner_apply';
-            $log['funds_available'] ='-'.$total;
-            $log['funds_freeze']=$total;
+            $log['funds_available'] ='-'.$money;
+            $log['funds_freeze']=$money;
+            $log['integral_available']='-'.$integral;
+            $log['integral_freeze']=$integral;
             $log['label'] = "partner_{$this->user_id}";
             $log['remark'] = "";
             if($invite_uid!=0){
@@ -125,7 +139,7 @@ class PartnerController extends MemberController
             redirect()->back()->with('msg','申请己上报，等待管理员审核！');
         }else{
             $data['invite_code']=$invite_code;
-            $data['type']=$linkPage->echoLink('partner_type',$partner->type,array('type'=>'radio'));
+            $data['type']=$linkPage->echoLink('partner_type',$partner->type,array('type'=>'selecte','attr'=>'class="layui-select" lay-filter="sel1"'));
             $data['userInfo']=$this->user->UserInfo();
             $data['account']=$account;
             $data['partner']=$partner;
@@ -140,6 +154,7 @@ class PartnerController extends MemberController
                 $invite_list=(new Partner())->where("invite_uid=?")->bindValues($this->user_id)->get();
                 $data['invite_list']=$invite_list;
             }
+            $data['convert_rate']=$convert_rate;
             $this->view('partner',$data);
         }
     }
