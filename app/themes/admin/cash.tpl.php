@@ -15,13 +15,13 @@
     </div>
     <div class="main_content">
         <? if(!empty($result['total'])){?>
-            <table class="table">
+            <table class="layui-table">
                 <tr>
                     <th>ID</th>
                     <th>用户名</th>
                     <th>申请时间</th>
                     <th>提现金额</th>
-                    <th>手续费</th>
+                    <th>提现费用</th>
                     <th>姓名</th>
                     <th>提现银行</th>
                     <th>开户支行</th>
@@ -37,7 +37,11 @@
                         <td><?=$row->user()->username?></td>
                         <td><?=$row->created_at?></td>
                         <td>￥<?=$row->total?></td>
-                        <td>￥<?=$row->fee?></td>
+                        <td>手续费：￥<?=$row->fee?><br>
+                            <? if($row->tax_fee>0) : ?>
+                                代扣税：￥<?=$row->tax_fee?>
+                            <? endif;?>
+                        </td>
                         <td><?=$row->name?></td>
                         <td><?=$row->bank?></td>
                         <td ><?=$row->branch?></td>
@@ -74,7 +78,10 @@
                 <tr><td>编号：</td><td><?=$row->id?></td></tr>
                 <tr><td>用户名：</td><td><?=$row->user()->username?></td></tr>
                 <tr><td>提现金额：</td><td>￥<?=$row->total?></td></tr>
-                <tr><td>手续费：</td><td>￥<?=$row->fee?></td></tr>
+                <tr><td>提现费用：</td><td>手续费：￥<?=$row->fee?> &nbsp;
+                        <? if($row->tax_fee>0) : ?>
+                            代扣税：￥<?=$row->tax_fee?>
+                        <? endif;?></td></tr>
                 <tr><td>到账金额：</td><td>￥<?=$row->credited?></td></tr>
                 <tr><td>申请时间：</td><td><?=$row->created_at?></td></tr>
                 <tr><td>姓名：</td><td><?=$row->name?></td></tr>
@@ -111,7 +118,10 @@
                 <tr><td>编号：</td><td><?=$row->id?></td></tr>
                 <tr><td>用户名：</td><td><?=$row->user()->username?></td></tr>
                 <tr><td>提现金额：</td><td>￥<?=$row->total?></td></tr>
-                <tr><td>手续费：</td><td>￥<?=$row->fee?></td></tr>
+                <tr><td>提现费用：</td><td>手续费：￥<?=$row->fee?> &nbsp;
+                        <? if($row->tax_fee>0) : ?>
+                            代扣税：￥<?=$row->tax_fee?>
+                        <? endif;?></td></tr>
                 <tr><td>到账金额：</td><td>￥<?=$row->credited?></td></tr>
                 <tr><td>申请时间：</td><td><?=$row->created_at?></td></tr>
                 <tr><td>姓名：</td><td><?=$row->name?></td></tr>

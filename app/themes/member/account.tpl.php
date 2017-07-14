@@ -75,9 +75,9 @@
                 </form>
                 <ul class="prompt">
                     <h4>温馨提示：</h4>
-                    <li>1、50积分起兑。</li>
-                    <li>2、兑换比例：2.52积分=1元。</li>
-                    <li>3、扣除31%用于长成积分。</li>
+                    <li>50积分起兑。</li>
+                    <li>兑换比例：2.52积分=1元。</li>
+                    <li>扣除31%用于长成积分。</li>
                 </ul>
             </div>
         <? elseif($this->func=='playToUser') : ?>

@@ -120,12 +120,18 @@ class AccountController extends MemberController
     public function cash(System $system, Request $request, AccountCash $accountCash)
     {
         $cash_rate = (float)$system->getCode('cash_rate');
+        $cash_tax_rate = (float)$system->getCode('cash_tax_rate');
+        $cash_money_min = (float)$system->getCode('cash_money_min');
+        $cash_money_max = (float)$system->getCode('cash_money_max');
+        $cash_fee_min = (float)$system->getCode('cash_fee_min');
+        $cash_fee_max = (float)$system->getCode('cash_fee_max');
+
         $account = $this->user->Account();
         $bank = $this->user->Bank();
         if ($_POST) {
             $total = (float)$request->post('total');
-            if ($total < 50 || $total > 50000) {
-                redirect()->back()->with('error', '提现范围50元-50000元！');
+            if ($total < $cash_money_min || $total > $cash_money_max) {
+                redirect()->back()->with('error', "提现范围{$cash_money_min}元-{$cash_money_max}元！");
             }
             if ($total > $account->funds_available) {
                 redirect()->back()->with('error', '提现金额超过可提现金额！');
@@ -135,17 +141,25 @@ class AccountController extends MemberController
                 redirect()->back()->with('error', '支付密码错误！');
             }
             $fee = round_money(math($total, $cash_rate, '*', 3), 2, 2);
-            if ($fee < 5) {
-                $fee = 5;
+            if ($cash_fee_min>0 && $fee < $cash_money_min) {
+                $fee = $cash_fee_min;
             }
+            if ($cash_fee_max>0 && $fee > $cash_fee_max) {
+                $fee = $cash_fee_max;
+            }
+            $taxFee = round_money(math($total, $cash_tax_rate, '*', 3), 2, 2);//税点
+            $credited=math($total, $fee, '-', 2);
+            $credited=math($credited, $taxFee, '-', 2);
+
             $accountCash->user_id = $this->user_id;
             $accountCash->name = $this->user->name;
             $accountCash->bank = $bank->bank;
             $accountCash->branch = $bank->branch;
             $accountCash->card_no = $bank->card_no;
             $accountCash->total = $total;
-            $accountCash->credited = math($total, $fee, '-', 2);
+            $accountCash->credited = $credited;
             $accountCash->fee = $fee;
+            $accountCash->tax_fee=$taxFee;
             $accountCash->status = 1;
             $accountCash->addip = ip();
             $insertId = $accountCash->save(true);
@@ -161,7 +175,13 @@ class AccountController extends MemberController
             $account->addLog($log);
             redirect('account/cashLog')->with('msg', '申请提现成功，静等审核！');
         } else {
-            $data['cash_rate'] = $cash_rate;
+            $data['cash_rate']=$cash_rate;
+            $data['cash_tax_rate']=$cash_tax_rate;
+            $data['cash_money_min']=$cash_money_min;
+            $data['cash_money_max']=$cash_money_max;
+            $data['cash_fee_min']=$cash_fee_min;
+            $data['cash_fee_max']=$cash_fee_max;
+
             $data['account'] = $account;
             $data['bank'] = $bank;
             $data['title_herder'] = '我要提现';

@@ -24,9 +24,15 @@
             </form>
             <ul class="cash_prompt">
                 <h4>温馨提示：</h4>
-                <li>1. 单笔提现金额最低50.00元，最高50000.00元。</li>
-                <li>2. 单笔提现费率<?=math($cash_rate,100,'*',2)?>%，单笔提现手续费最低5.00元。</li>
-                <li>3. 每个工作日的下午5点之前提交的提现申请，T+1个工作日到账，每个工作日的下午5点之后提交的提现申请，T+2个工作日到账。</li>
+                <li>单笔提现金额最低<?=$cash_money_min?>元，最高<?=$cash_money_max?>元</li>
+                <li>单笔提现费率<?=math($cash_rate,100,'*',2)?>%，单笔提现手续费最低<?=$cash_fee_min?>元
+                    <? if($cash_fee_max>0){
+                        echo "，单笔提现手续费最高{$cash_fee_max}元";
+                    }?></li>
+                <? if($cash_tax_rate>0){
+                    echo "<li>代扣税点：".math($cash_tax_rate,100,'*',2)."%</li>";
+                }?>
+                <li>每个工作日的下午5点之前提交的提现申请，T+1个工作日到账，每个工作日的下午5点之后提交的提现申请，T+2个工作日到账</li>
             </ul>
         <? }?>
     </div>
@@ -56,6 +62,9 @@
             </div>
             <div class="bill_show">
                 <p><span>手续费：</span><i>￥<?=$row->fee?></i></p>
+                <? if($row->tax_fee>0) : ?>
+                    <p><span>代扣税：</span><i>￥<?=$row->tax_fee?></i></p>
+                <? endif;?>
                 <p><span>提现银行：</span><i><?=$row->bank?></i></p>
                 <p><span>开户支行：</span><i><?=$row->branch?></i></p>
                 <p><span>银行账户：</span><i><?=$row->card_no?></i></p>

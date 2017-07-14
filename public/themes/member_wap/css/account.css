@@ -163,7 +163,8 @@ input[type=radio],input[type=checkbox]{ width:2.4rem; height:2.4rem;}
 
 /*提现说明*/
 .cash_prompt{ overflow:hidden; font-size:2.4rem; margin:3rem 1rem; color:#ff675c;}
-.cash_prompt li{ line-height:140%; color:#900; font-size:2.1rem;max-height: 2000rem;}
+.cash_prompt h4{line-height: 50px;}
+.cash_prompt li{ line-height:140%; color:#900; font-size:2.1rem; padding-left: 20px; line-height: 130%; margin-bottom: 10px;list-style-type: decimal; list-style-position: inside}
 
 .main_content{padding: 0px 1rem}
 .planBox{padding: 0px 1rem}

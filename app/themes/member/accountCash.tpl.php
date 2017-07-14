@@ -26,9 +26,15 @@
                     </form>
                     <ul class="prompt">
                         <h4>温馨提示：</h4>
-                        <li>1. 单笔提现金额最低50.00元，最高50000.00元。</li>
-                        <li>2. 单笔提现费率<?=math($cash_rate,100,'*',2)?>%，单笔提现手续费最低5.00元。</li>
-                        <li>3. 每个工作日的下午5点之前提交的提现申请，T+1个工作日到账，每个工作日的下午5点之后提交的提现申请，T+2个工作日到账。</li>
+                        <li>单笔提现金额最低<?=$cash_money_min?>元，最高<?=$cash_money_max?>元</li>
+                        <li>单笔提现费率<?=math($cash_rate,100,'*',2)?>%，单笔提现手续费最低<?=$cash_fee_min?>元
+                            <? if($cash_fee_max>0){
+                                echo "，单笔提现手续费最高{$cash_fee_max}元";
+                            }?></li>
+                        <? if($cash_tax_rate>0){
+                            echo "<li>代扣税点：".math($cash_tax_rate,100,'*',2)."%</li>";
+                        }?>
+                        <li>每个工作日的下午5点之前提交的提现申请，T+1个工作日到账，每个工作日的下午5点之后提交的提现申请，T+2个工作日到账</li>
                     </ul>
                 <? }?>
             </div>
@@ -47,11 +53,11 @@
                     </form>
                 </div>
                 <? if(!empty($result['total'])){?>
-                    <table class="table">
+                    <table class="layui-table">
                         <tr>
                             <th>申请时间</th>
                             <th>提现金额</th>
-                            <th>手续费</th>
+                            <th>提现费用</th>
                             <th>提现银行</th>
                             <th>开户支行</th>
                             <th>银行账户</th>
@@ -63,7 +69,11 @@
                             <tr>
                                 <td><?=$row->created_at?></td>
                                 <td>￥<?=$row->total?></td>
-                                <td>￥<?=$row->fee?></td>
+                                <td>手续费：￥<?=$row->fee?><br>
+                                    <? if($row->tax_fee>0) : ?>
+                                        代扣税：￥<?=$row->tax_fee?>
+                                    <? endif;?>
+                                </td>
                                 <td><?=$row->bank?></td>
                                 <td ><?=$row->branch?></td>
                                 <td ><?=$row->card_no?></td>

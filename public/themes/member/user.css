@@ -123,7 +123,7 @@ input[type=radio],input[type=checkbox]{ width:16px; height:16px;}
 /*注意*/
 .prompt{ overflow:hidden; font-size:12px; margin:30px; color:#ff675c;}
 .prompt h4{font-size: 20px; line-height: 40px;}
-.prompt li{ height:30px; line-height:30px; color:#900; font-size:12px; padding-left: 30px;}
+.prompt li{ line-height:130%; color:#900; font-size:12px; padding-left: 20px;margin-bottom: 10px;list-style-type: decimal; list-style-position: inside}
 
 .jiben{ width:935px; height:180px; background:url(images/userlbg.jpg) no-repeat 320px 0px #fff; margin-bottom:20px}
 .jbtx{ width:280px; padding:40px 20px; height:100px; float:left; display:inline-block}
