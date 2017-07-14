@@ -113,7 +113,8 @@ class PayController extends Controller
                     $log = array();
                     $log['user_id'] = $row['user_id'];
                     $log['type'] = 1;
-                    $log['funds_available'] = $row['money'] - $row['fee'];
+                    //$log['funds_available'] = $row['money'] - $row['fee'];
+                    $log['funds_available'] = $row['money'];
                     $log['remark'] = "在线充值：" . $row['id'];
                     $account->addLog($log);
                 }
