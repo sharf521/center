@@ -29,13 +29,13 @@ class Helper
             session()->set('wechat_openid',$wechat_openid);
             return $wechat_openid;
         }
-
     }
     public static function getSystemParam($code)
     {
         $value = app('\App\Model\System')->getCode($code);
         if ($code == 'convert_rate') {
-            if (empty($value)) {
+            $value=(float)$value;
+            if ($value==0) {
                 $value = 2.52;
             }
         }

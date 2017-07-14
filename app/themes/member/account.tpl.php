@@ -101,6 +101,11 @@
                         <tr><td></td><td><input type="submit" value="立即转账"/></td></tr>
                     </table>
                 </form>
+                <ul class="prompt">
+                    <h4>温馨提示：</h4>
+                    <li>转资金手续费：<?=$transferFundsRateText?></li>
+                    <li>转积分手续费：<?=$transferIntegralRateText?></li>
+                </ul>
             </div>
         <?php endif;?>
     </div>

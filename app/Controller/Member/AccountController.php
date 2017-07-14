@@ -256,6 +256,10 @@ class AccountController extends MemberController
     //站内转帐
     public function playToUser(Account $account, Request $request, User $user)
     {
+        $transferFundsRate=(float)Helper::getSystemParam('transferFundsRate');
+        $transferIntegralRate=(float)Helper::getSystemParam('transferIntegralRate');
+        $transferFundsRateText=math($transferFundsRate,100,'*').'%';
+        $transferIntegralRateText=math($transferIntegralRate,100,'*').'%';
         $user_id = $this->user_id;
         $account = $account->find($user_id);
         if ($_POST) {
@@ -293,7 +297,8 @@ class AccountController extends MemberController
             }
             try {
                 DB::beginTransaction();
-
+                $_fRate=math(1,$transferFundsRate,'-');
+                $_iRate=math(1,$transferIntegralRate,'-');
                 if ($type == 1) {
                     $log = array(
                         'user_id' => $user_id,
@@ -305,8 +310,8 @@ class AccountController extends MemberController
                     $log = array(
                         'user_id' => $to_uid,
                         'type' => 'getFromUser',
-                        'funds_available' => $total,
-                        'remark' => "{$this->username}：转入现金，备注：{$remark}"
+                        'funds_available' => math($total,$_fRate,'*',2),
+                        'remark' => "{$this->username}：转入现金，己扣除{$transferFundsRateText}的手续费，备注：{$remark}"
                     );
                     $account->addLog($log);
                 } else {
@@ -320,12 +325,34 @@ class AccountController extends MemberController
                     $log = array(
                         'user_id' => $to_uid,
                         'type' => 'getFromUser',
-                        'integral_available' => $total,
-                        'remark' => "{$this->username}：转入积分，备注：{$remark}"
+                        'integral_available' =>math($total,$_iRate,'*',5),
+                        'remark' => "{$this->username}：转入积分，己扣除{$transferIntegralRateText}的手续费，备注：{$remark}"
                     );
                     $account->addLog($log);
                 }
-
+                //转帐给合作商，合作商获得奖励
+                if((new User())->isPartner($to_uid)){
+                    if($type==1){
+                        $transferFundsRateReward=(float)Helper::getSystemParam('transferFundsRateReward');
+                        $convert_rate=Helper::getSystemParam('convert_rate');
+                        $rewardMoney=math($total,$transferFundsRateReward,'*',2);
+                        $reward=math($rewardMoney,$convert_rate,'*',5);
+                        $remark="{$this->username}：转入现金，合作商获得奖励";
+                    }else{
+                        $transferIntegralRateReward=(float)Helper::getSystemParam('transferIntegralRateReward');
+                        $reward=math($total,$transferIntegralRateReward,'*',5);
+                        $remark="{$this->username}：转入积分，合作商获得奖励";
+                    }
+                    if($reward>0){
+                        $log = array(
+                            'user_id' => $to_uid,
+                            'type' => 'getFromUserReward',
+                            'integral_available' =>$reward,
+                            'remark' => $remark
+                        );
+                        $account->addLog($log);
+                    }
+                }
                 DB::commit();
                 redirect('account/log')->with('msg', '站内转帐完成！');
             } catch (\Exception $e) {
@@ -334,6 +361,8 @@ class AccountController extends MemberController
                 redirect()->back()->with('error', $error);
             }
         } else {
+            $data['transferFundsRateText']=$transferFundsRateText;
+            $data['transferIntegralRateText']=$transferIntegralRateText;
             $data['account'] = $account;
             $this->view('account', $data);
         }

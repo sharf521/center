@@ -26,6 +26,7 @@ class System extends Model
         $arr['style'] = (int)$data['style'];
         return DB::table('system')->insert($arr);
     }
+
     function edit($data=array())
     {
         $id=(int)$data['id'];

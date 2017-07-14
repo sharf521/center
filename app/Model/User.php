@@ -287,4 +287,18 @@ class User extends Model
     {
         return $this->hasOne('App\Model\User', 'id','invite_userid');
     }
+
+    //是否为合伙人
+    public function isPartner($user_id=0)
+    {
+        if($user_id==0){
+            $user_id=$this->id;
+        }
+        $fbb=(new FBB())->where("user_id=?")->bindValues($user_id)->first();
+        if($fbb->is_exist){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

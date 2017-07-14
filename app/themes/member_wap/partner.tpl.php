@@ -13,9 +13,9 @@ require 'header.php';
     <div class="alert-warning" role="alert">您还没有完成实名认证，请先完成<?=$this->anchor('user/realName','>>实名认证>>');?></div>
 <? else : ?>
         <? if($partner->status==0 || $partner->status==3) : ?>
-        <? if(isset($_GET['invite_code']) && $_GET['invite_code']!=$invite_code) : ?>
+        <? if(isset($_GET['invite_code']) && $_GET['invite_code']!=$invite_code){ ?>
             <div class="alert-warning" role="alert">您己经使用过邀请码，己更换为原来的邀请码！</div>
-        <? endif;?>
+        <? }?>
         <? if(trim($partner->verify_remark)!=''){?>
             <div class="alert-warning" role="alert">审核备注：<?=nl2br($partner->verify_remark)?></div>
         <? }?>
