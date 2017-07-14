@@ -12,10 +12,13 @@ require 'header.php';
 <? if($userInfo->card_status!=2) : ?>
     <div class="alert-warning" role="alert">您还没有完成实名认证，请先完成<?=$this->anchor('user/realName','>>实名认证>>');?></div>
 <? else : ?>
-    <? if($partner->status==0) : ?>
-        <? if($_GET['invite_code']!=$invite_code): ?>
+        <? if($partner->status==0 || $partner->status==3) : ?>
+        <? if(isset($_GET['invite_code']) && $_GET['invite_code']!=$invite_code) : ?>
             <div class="alert-warning" role="alert">您己经使用过邀请码，己更换为原来的邀请码！</div>
         <? endif;?>
+        <? if(trim($partner->verify_remark)!=''){?>
+            <div class="alert-warning" role="alert">审核备注：<?=nl2br($partner->verify_remark)?></div>
+        <? }?>
         <form method="post" onSubmit="return setdisabled();" style="display: none">
             <table class="table_from">
                 <tr><td style="width: 28%">用户：</td><td style="width: 72%"><?=$this->username?></td></tr>
@@ -36,7 +39,6 @@ require 'header.php';
                     </div>
                 </div>
             </div>
-
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">申请级别</label></div>
@@ -45,8 +47,6 @@ require 'header.php';
                     </div>
                 </div>
             </div>
-
-
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">扣除积分</label></div>
@@ -95,7 +95,9 @@ require 'header.php';
 <?php
 //己审枋
 if($partner->status==2){ ?>
-    <? if($account->funds_available>='262') : ?>
+    <? if($account->funds_available>='0') :
+        //余额小于262也可以邀请
+        ?>
         <div class="alert-warning" role="alert">
             将下面邀请码或二维码复制并发送给好友，该好友申请后您即成为好友的邀请人<!--，邀请好友将冻结262元,余额不足262元，将暂时无法邀请其它会员-->！
         </div>

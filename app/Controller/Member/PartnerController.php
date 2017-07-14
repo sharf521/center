@@ -82,7 +82,7 @@ class PartnerController extends MemberController
         }
         $account=$this->user->Account();
         if($_POST){
-            if($partner->status!=0){
+            if($partner->status!=0 && $partner->status!=3){
                 redirect()->back()->with('error','己审请，勿重复提交！');
             }
             $total=$request->post('partner_type');

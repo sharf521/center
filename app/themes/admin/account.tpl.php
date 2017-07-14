@@ -24,7 +24,7 @@
         </form>
     </div>
     <? if(!empty($result['total'])){?>
-        <table class="layui-table">
+        <table class="layui-table" style="width: 2800px">
             <tr>
                 <th>ID</th>
                 <th>app</th>
