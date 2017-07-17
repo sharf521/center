@@ -1,0 +1,52 @@
+*{max-height: 9999999px;}
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar
+{
+    width: 0;
+    height: 0;
+    background-color: #fff;
+    display: none;
+}
+@media only screen and (min-width:800px){
+    body{ width:760px; margin:0 auto; }
+}
+ul,li{list-style: none}
+em, i {
+    font-style: normal;
+}
+.hide{display: none}
+.clear{ clear:both}
+.clearFix:after{
+    clear:both;
+    display:block;
+    visibility:hidden;
+    height:0;
+    line-height:0;
+    content:'';
+}
+
+.m_header{ line-height:28px;height:28px; padding:8px 0;background: #eaeaea;color:#333;text-align: center; width:100%; display:block; position:fixed; top:0; left:0; z-index:999;}
+.m_header a{color: #333;}
+.m_header h1{ height:28px; padding:0 60px; width:100%; box-sizing:border-box; font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; font-weight:normal;}
+.m_header .m_header_r{ position:absolute;height: 28px; display:block;right:0; top:0; padding:8px 10px;}
+.m_header .m_header_l{ position:absolute;height: 28px; display:block;left:0; top:0;padding:8px 10px;}
+.m_header .m_header_l i{ font-size: 20px; color: #333;}
+.margin_header{margin-top: 50px;}
+.div_bot {
+    z-index: 9999;
+    position: fixed;
+    border-top: 1px solid #efefef;
+    bottom: -1px;
+    width: 100%;
+    background-color: #F7F7FA;
+    left: 0;
+    display: none;
+}
+
+.main_content{padding: 0px 1rem}
+.articleContent{  font-size: 14px;    line-height: 200%;}
+
+/*注意*/
+.prompt{ overflow:hidden; font-size:12px; margin:30px; color:#ff675c;}
+.prompt h4{font-size: 20px; line-height: 40px;}
+.prompt li{ line-height:130%; color:#900; font-size:12px; padding-left: 20px;margin-bottom: 10px;list-style-type: decimal; list-style-position: inside}

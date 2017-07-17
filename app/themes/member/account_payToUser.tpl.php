@@ -16,7 +16,7 @@
                                 <label><input type="radio" name="type" value="1" checked>转资金</label>
                                 <label><input type="radio" name="type" value="2">转积分</label></td></tr>
                         <tr><td>对方用户名：</td><td><input  name="to_username" type="text"/></td></tr>
-                        <tr><td>转出金额：</td><td><input  name="total" type="text" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/></td></tr>
+                        <tr><td>转出数量：</td><td><input  name="total" type="text" onKeyUp="value=value.replace(/[^0-9.]/g,'')"/></td></tr>
                         <tr><td>备注：</td><td><textarea cols="50" rows="2" name="remark"></textarea></td></tr>
                         <tr><td>支付密码：</td><td><input  name="zf_password" type="password"/></td></tr>
                         <tr><td></td><td><input type="submit" value="立即转账"/></td></tr>

@@ -384,6 +384,7 @@ class AccountController extends MemberController
             $data['transferFundsRateText']=$transferFundsRateText;
             $data['transferIntegralRateText']=$transferIntegralRateText;
             $data['account'] = $account;
+            $data['title_herder'] = '站内转帐';
             $this->view('account_payToUser', $data);
         }
     }
