@@ -12,7 +12,7 @@ require 'header_v2.php';
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">对方用户名</label></div>
                 <div class="weui-cell__bd">
-                    <input type="text" name="to_username" required  placeholder=""  class="weui-input" autocomplete="off"/>
+                    <input type="text" name="to_username" required  placeholder="输入对方手机号"  class="weui-input" autocomplete="off"/>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@ require 'header_v2.php';
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">转出数量</label></div>
                 <div class="weui-cell__bd">
-                    <input type="text" name="total" required placeholder="" onkeyup="value=value.replace(/[^0-9.]/g,'')"  class="weui-input" autocomplete="off"/>
+                    <input type="text" name="total" required placeholder="输入数量" onkeyup="value=value.replace(/[^0-9.]/g,'')"  class="weui-input" autocomplete="off"/>
                 </div>
             </div>
         </div>
