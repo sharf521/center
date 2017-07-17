@@ -51,7 +51,7 @@ require 'header_v2.php';
         </div>
     </form>
     <ul class="prompt">
-        <h4>温馨提示：</h4>
+        <h4>提示：</h4>
         <li>转资金手续费：<?=$transferFundsRateText?></li>
         <li>转积分手续费：<?=$transferIntegralRateText?></li>
     </ul>
