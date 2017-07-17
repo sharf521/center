@@ -31,7 +31,7 @@ em, i {
 .m_header .m_header_r{ position:absolute;height: 28px; display:block;right:0; top:0; padding:8px 10px;}
 .m_header .m_header_l{ position:absolute;height: 28px; display:block;left:0; top:0;padding:8px 10px;}
 .m_header .m_header_l i{ font-size: 20px; color: #333;}
-.margin_header{margin-top: 50px;}
+.margin_header{margin-top: 55px;}
 .div_bot {
     z-index: 9999;
     position: fixed;
