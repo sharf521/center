@@ -274,7 +274,7 @@ class AccountController extends MemberController
     }
 
     //站内转帐
-    public function playToUser(Account $account, Request $request, User $user)
+    public function payToUser(Account $account, Request $request, User $user)
     {
         $transferFundsRate=(float)Helper::getSystemParam('transferFundsRate');
         $transferIntegralRate=(float)Helper::getSystemParam('transferIntegralRate');
@@ -384,7 +384,7 @@ class AccountController extends MemberController
             $data['transferFundsRateText']=$transferFundsRateText;
             $data['transferIntegralRateText']=$transferIntegralRateText;
             $data['account'] = $account;
-            $this->view('account', $data);
+            $this->view('account_payToUser', $data);
         }
     }
 }

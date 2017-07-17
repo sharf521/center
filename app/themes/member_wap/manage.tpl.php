@@ -16,19 +16,24 @@
         <li><a href="<?= url('account/index'); ?>"><i><img
                         src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/pic01.png"></b><span>我的资金</span></a></li>
-        </ul>
+    </ul>
     <ul>
-
         <li><a href="<?= url('user/realName'); ?>"><i><img
                         src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/icon_cash.png"></b><span>实名认证</span></a></li>
-</ul><ul>
+    </ul>
+    <ul>
         <li><a href="<?= url('user/bank'); ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/bank.png"></b><span>我的银行卡</span></a></li>
     </ul>
     <ul>
         <li><a href="<?= url('partner') ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
                         src="/themes/member_wap/images/icon_exchange.png"></b><span>申请合伙人</span></a></li>
+    </ul>
+    
+    <ul>
+        <li><a href="<?= url('account/payToUser') ?>"><i><img src="/themes/member_wap/images/icon_right_hui.png"/></i><b><img
+                        src="/themes/member_wap/images/icon_cash.png"></b><span>站内转账</span></a></li>
     </ul>
 
     <ul>
