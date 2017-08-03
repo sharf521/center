@@ -20,6 +20,7 @@
                     <th>ID</th>
                     <th>用户名</th>
                     <th>申请时间</th>
+                    <th>己过天数</th>
                     <th>提现金额</th>
                     <th>提现费用</th>
                     <th>姓名</th>
@@ -36,6 +37,7 @@
                         <td><?=$row->id?></td>
                         <td><?=$row->user()->username?></td>
                         <td><?=$row->created_at?></td>
+                        <td><?=$row->getPastDays()?></td>
                         <td>￥<?=$row->total?></td>
                         <td>手续费：￥<?=$row->fee?><br>
                             <? if($row->tax_fee>0) : ?>
@@ -84,6 +86,7 @@
                         <? endif;?></td></tr>
                 <tr><td>到账金额：</td><td>￥<?=$row->credited?></td></tr>
                 <tr><td>申请时间：</td><td><?=$row->created_at?></td></tr>
+                <tr><td>己过天数：</td><td><?=$row->getPastDays()?></td></tr>
                 <tr><td>姓名：</td><td><?=$row->name?></td></tr>
                 <tr><td>提现银行：</td><td><?=$row->bank?></td></tr>
                 <tr><td>开户支行：</td><td><?=$row->branch?></td></tr>
@@ -124,6 +127,7 @@
                         <? endif;?></td></tr>
                 <tr><td>到账金额：</td><td>￥<?=$row->credited?></td></tr>
                 <tr><td>申请时间：</td><td><?=$row->created_at?></td></tr>
+                <tr><td>己过天数：</td><td><?=$row->getPastDays()?></td></tr>
                 <tr><td>姓名：</td><td><?=$row->name?></td></tr>
                 <tr><td>提现银行：</td><td><?=$row->bank?></td></tr>
                 <tr><td>开户支行：</td><td><?=$row->branch?></td></tr>

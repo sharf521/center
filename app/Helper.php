@@ -15,6 +15,18 @@ use System\Lib\Request;
 
 class Helper
 {
+    public static function betweenDays ($date1, $date2)
+    {
+        $second1 = strtotime($date1);
+        $second2 = strtotime($date2);
+        if ($second1 < $second2) {
+            $tmp = $second2;
+            $second2 = $second1;
+            $second1 = $tmp;
+        }
+        return ($second1 - $second2) / 86400;
+    }
+
     public static function getWechatOpenId()
     {
         $request=new Request();

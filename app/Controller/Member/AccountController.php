@@ -175,12 +175,18 @@ class AccountController extends MemberController
             $account->addLog($log);
             redirect('account/cashLog')->with('msg', '申请提现成功，静等审核！');
         } else {
-            $data['cash_rate']=$cash_rate;
-            $data['cash_tax_rate']=$cash_tax_rate;
-            $data['cash_money_min']=$cash_money_min;
-            $data['cash_money_max']=$cash_money_max;
-            $data['cash_fee_min']=$cash_fee_min;
-            $data['cash_fee_max']=$cash_fee_max;
+            //提示说明
+            $promptList=array();
+            $promptList[0]="单笔提现金额最低{$cash_money_min}元，最高{$cash_money_max}元";
+            $promptList[1]="单笔提现费率".math($cash_rate,100,'*',2)."%，单笔提现手续费最低{$cash_fee_min}元";
+            if($cash_fee_max>0){
+                $promptList[1].= "，单笔提现手续费最高{$cash_fee_max}元";
+            }
+            if($cash_tax_rate>0){
+                $promptList[2].= "代扣税点：".math($cash_tax_rate,100,'*',2)."%";
+            }
+            //$promptList[3]="每个工作日的下午5点之前提交的提现申请，T+1个工作日到账，每个工作日的下午5点之后提交的提现申请，T+2个工作日到账";
+            $data['promptList']=$promptList;
 
             $data['account'] = $account;
             $data['bank'] = $bank;

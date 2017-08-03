@@ -26,15 +26,11 @@
                     </form>
                     <ul class="prompt">
                         <h4>温馨提示：</h4>
-                        <li>单笔提现金额最低<?=$cash_money_min?>元，最高<?=$cash_money_max?>元</li>
-                        <li>单笔提现费率<?=math($cash_rate,100,'*',2)?>%，单笔提现手续费最低<?=$cash_fee_min?>元
-                            <? if($cash_fee_max>0){
-                                echo "，单笔提现手续费最高{$cash_fee_max}元";
-                            }?></li>
-                        <? if($cash_tax_rate>0){
-                            echo "<li>代扣税点：".math($cash_tax_rate,100,'*',2)."%</li>";
-                        }?>
-                        <li>每个工作日的下午5点之前提交的提现申请，T+1个工作日到账，每个工作日的下午5点之后提交的提现申请，T+2个工作日到账</li>
+                        <?php
+                        foreach ($promptList as $prompt) {
+                            echo "<li>{$prompt}</li>";
+                        }
+                        ?>
                     </ul>
                 <? }?>
             </div>
