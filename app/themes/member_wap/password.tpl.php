@@ -143,7 +143,7 @@
     </div>
 <?php elseif ($this->func == 'resetPayPwd') : ?>
     <div class="m_header">
-        <a class="m_header_l" href="<?=url('')?>"><i class="iconfont">&#xe603;</i>首页</a>
+        <a class="m_header_l" href="<?=url('')?>"></a>
         <a class="m_header_r"></a>
         <h1>重置支付密码</h1>
     </div>
