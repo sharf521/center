@@ -205,7 +205,6 @@
                 ,skin: 'msg'
                 ,time: 2
             });
-            $("#original_psw").focus();
             return false;
         }else if(value.length<6||value.length>15){
             layer.open({
@@ -213,7 +212,6 @@
                 ,skin: 'msg'
                 ,time: 2
             });
-            $("#original_psw").focus();
             return false;
         }else{
             return true;
@@ -236,7 +234,6 @@
                 ,skin: 'msg'
                 ,time: 2
             });
-            $("#new_psw").focus();
             return false;
         }else{
             return true;
@@ -252,7 +249,6 @@
                 ,skin: 'msg'
                 ,time: 2
             });
-            $("#confirm_psw").focus();
             return false;
         }else if(value.length<6||value.length>15){
             layer.open({
@@ -260,7 +256,6 @@
                 ,skin: 'msg'
                 ,time: 2
             });
-            $("#confirm_psw").focus();
             return false;
         }else if(value!=pwd){
             layer.open({
@@ -268,7 +263,6 @@
                 ,skin: 'msg'
                 ,time: 2
             });
-            $("#confirm_psw").focus();
             return false;
         }else{
             return true;
@@ -284,7 +278,6 @@
                 ,skin: 'msg'
                 ,time: 2
             });
-            $("#valicode").focus();
             return false;
         }else{
             return true;
