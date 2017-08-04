@@ -27,7 +27,7 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">新密码：</label></div>
                     <div class="weui-cell__bd">
-                        <input type="password" name="password"  placeholder="长度6至20位"  class="weui-input"  id="new_psw" autocomplete="off"/>
+                        <input type="password" name="password"  placeholder="长度6至15位"  class="weui-input"  id="new_psw" autocomplete="off"/>
                     </div>
                 </div>
             </div>
@@ -64,15 +64,16 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">原密码：</label></div>
                     <div class="weui-cell__bd">
-                        <input type="password" name="old_password" placeholder="初始密码为注册时填写的登陆密码"  class="weui-input" id="original_psw" autocomplete="off"/>
+                        <input type="password" name="old_password" placeholder="输入原支付密码"  class="weui-input" id="original_psw" autocomplete="off"/>
                     </div>
                 </div>
             </div>
+            <div class="weui-cells__tips m_tips">初始密码为注册时填写的登陆密码</div>
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">新密码：</label></div>
                     <div class="weui-cell__bd">
-                        <input type="password" name="zf_password"  placeholder="长度6至20位"  class="weui-input"  id="new_psw" autocomplete="off"/>
+                        <input type="password" name="zf_password"  placeholder="长度6至15位"  class="weui-input"  id="new_psw" autocomplete="off"/>
                     </div>
                 </div>
             </div>
