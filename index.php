@@ -1,4 +1,12 @@
 <?php
+/*$total=0;
+for($i=0;$i<15;$i++){
+    $row=pow(2,$i);
+    echo "第".($i+1) ."层：数量：".$row.'，';
+    $total+=$row;
+    echo '当前总计：'.$total.'个<br>';
+}
+exit;*/
 $t1 = microtime(true);
 //error_reporting(E_ALL & ~E_NOTICE);
 error_reporting(7);

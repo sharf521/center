@@ -50,3 +50,6 @@ em, i {
 .prompt{ overflow:hidden; font-size:12px; margin:30px; color:#ff675c;}
 .prompt h4{font-size: 18px; line-height: 40px;}
 .prompt li{ line-height:130%; color:#900; font-size:12px; padding-left: 20px;margin-bottom: 10px;list-style-type: decimal; list-style-position: inside}
+
+/* nzj密码修改 */
+.m-password .m-password__navbar{padding-bottom: 50px;}
