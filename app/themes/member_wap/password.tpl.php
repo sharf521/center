@@ -17,9 +17,9 @@
         <form method="post" name="form2" class="m-password__form" onsubmit="return validateForm()">
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">原始密码：</label></div>
+                    <div class="weui-cell__hd"><label class="weui-label">原密码：</label></div>
                     <div class="weui-cell__bd">
-                        <input type="password" name="old_password" placeholder=""  class="weui-input" id="original_psw" autocomplete="off"/>
+                        <input type="password" name="old_password" placeholder="输入原密码"  class="weui-input" id="original_psw" autocomplete="off"/>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">新密码：</label></div>
                     <div class="weui-cell__bd">
-                        <input type="password" name="password"  placeholder=""  class="weui-input"  id="new_psw" autocomplete="off"/>
+                        <input type="password" name="password"  placeholder="长度6至20位"  class="weui-input"  id="new_psw" autocomplete="off"/>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
         <form method="post" name="form2" class="m-password__form" onsubmit="return validateForm()">
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">原始密码：</label></div>
+                    <div class="weui-cell__hd"><label class="weui-label">原密码：</label></div>
                     <div class="weui-cell__bd">
                         <input type="password" name="old_password" placeholder="初始密码为注册时填写的登陆密码"  class="weui-input" id="original_psw" autocomplete="off"/>
                     </div>
@@ -72,7 +72,7 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">新密码：</label></div>
                     <div class="weui-cell__bd">
-                        <input type="password" name="zf_password"  placeholder=""  class="weui-input"  id="new_psw" autocomplete="off"/>
+                        <input type="password" name="zf_password"  placeholder="长度6至20位"  class="weui-input"  id="new_psw" autocomplete="off"/>
                     </div>
                 </div>
             </div>
@@ -141,29 +141,41 @@
         </form>
     </div>
 <?php elseif ($this->func == 'resetPayPwd') : ?>
+    <div class="m_header">
+        <a class="m_header_l" href="<?=url('')?>"><i class="iconfont">&#xe603;</i>首页</a>
+        <a class="m_header_r"></a>
+        <h1>重置支付密码</h1>
+    </div>
+    <div class="margin_header"></div>
     <div class="box">
         <div class="m_regtilinde">重置支付密码：</div>
         <? if ($error != '') {
             echo '<div class="alert-warning">' . $error . '</div>';
         } else {
             ?>
-            <form method="post">
-                <div class="ca_d_table">
-                    <table width="100%">
-                        <tr>
-                            <td align="right" style="width:12rem;">新密码：</td>
-                            <td><input type="password" name="zf_password" class="nam_inpou"/></td>
-                        </tr>
-                        <tr>
-                            <td align="right" style="width:12rem;">确认密码：</td>
-                            <td><input type="password" name="sure_password" class="nam_inpou"/></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" align="center"><input class="cada_tba" type="submit" value="确认修改"></td>
-                        </tr>
-                    </table>
-                </div>
-            </form>
+            <div class="m-password">
+                <form method="post" class="m-password__form">
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">新密码：</label></div>
+                            <div class="weui-cell__bd">
+                                <input type="password" name="zf_password"  placeholder="长度6至15位"  class="weui-input"  autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">确认密码：</label></div>
+                            <div class="weui-cell__bd">
+                                <input type="password" name="sure_password" class="weui-input" id="confirm_psw" autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-btn-area">
+                        <input class="weui-btn weui-btn_primary" type="submit" name="submit" value="确认保存">
+                    </div>
+                </form>
+            </div>
         <? } ?>
     </div>
 <?php endif;?>
@@ -173,15 +185,8 @@
         $('.weui-navbar__item ').on('click', function () {
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
             var a = $(this).attr("data_url");
-            console.log(a);
             window.location.href=a;
         });
-
-
-        /*表单提交验证*/
-        /*$("#original_psw").blur(pwdOriginalValidator);
-         $("#new_psw").blur(pwdValidator);
-         $("#confirm_psw").blur(pwdRepeatValidator);*/
     });
     /*账户密码验证，修改支付密码验证*/
     function validateForm(){
@@ -199,20 +204,15 @@
                 ,skin: 'msg'
                 ,time: 2
             });
+            $("#original_psw").focus();
             return false;
-        }else if(value.length<6||value.length>20){
+        }else if(value.length<6||value.length>15){
             layer.open({
-                content: '密码长度不能小于6大于20'
+                content: '密码长度不能小于6大于15'
                 ,skin: 'msg'
                 ,time: 2
             });
-            return false;
-        }else if(/^[a-zA-Z0-9]$/.test(value)){
-            layer.open({
-                content: '密码输入格式不正确'
-                ,skin: 'msg'
-                ,time: 2
-            });
+            $("#original_psw").focus();
             return false;
         }else{
             return true;
@@ -227,20 +227,15 @@
                 ,skin: 'msg'
                 ,time: 2
             });
+            $("#new_psw").focus();
             return false;
-        }else if(value.length<6||value.length>20){
+        }else if(value.length<6||value.length>15){
             layer.open({
-                content: '密码长度不能小于6大于20'
+                content: '密码长度不能小于6大于15'
                 ,skin: 'msg'
                 ,time: 2
             });
-            return false;
-        }else if(/^[a-zA-Z0-9]$/.test(value)){
-            layer.open({
-                content: '密码输入格式不正确'
-                ,skin: 'msg'
-                ,time: 2
-            });
+            $("#new_psw").focus();
             return false;
         }else{
             return true;
@@ -256,20 +251,15 @@
                 ,skin: 'msg'
                 ,time: 2
             });
+            $("#confirm_psw").focus();
             return false;
-        }else if(value.length<6||value.length>20){
+        }else if(value.length<6||value.length>15){
             layer.open({
-                content: '密码长度不能小于6大于20'
+                content: '密码长度不能小于6大于15'
                 ,skin: 'msg'
                 ,time: 2
             });
-            return false;
-        }else if(!/^[a-zA-Z0-9]{6,20}$/.test(value)){
-            layer.open({
-                content: '密码输入格式不正确'
-                ,skin: 'msg'
-                ,time: 2
-            });
+            $("#confirm_psw").focus();
             return false;
         }else if(value!=pwd){
             layer.open({
@@ -277,6 +267,7 @@
                 ,skin: 'msg'
                 ,time: 2
             });
+            $("#confirm_psw").focus();
             return false;
         }else{
             return true;
@@ -285,13 +276,6 @@
 
     /*找回支付密码页面提交验证*/
     function validateForm3(){
-        if(!emailValidator()){
-            return false;
-        }
-        return true;
-    }
-    //定义Email验证函数
-    function emailValidator(){
         var value=$("#valicode").val();
         if(value==""||value==null){
             layer.open({
@@ -299,6 +283,7 @@
                 ,skin: 'msg'
                 ,time: 2
             });
+            $("#valicode").focus();
             return false;
         }else{
             return true;
