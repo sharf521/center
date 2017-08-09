@@ -97,8 +97,10 @@ class AjaxController extends Controller
             $where .= " and money={$data['money']}";
         }
         if (!empty($data['id'])) {
-            $pids = DB::table('fbb')->where('id=?')->bindValues($data['id'])->value('pids');
-            $where .= " and  pids like '{$pids}%'";
+            $row = DB::table('fbb')->select('pids,level')->where('id=?')->bindValues($data['id'])->row();
+            $level=(int)$data['level'];
+            $level+=$row['level'];
+            $where .= " and  pids like '{$row['pids']}%' and level <={$level}";
         }
 
         //$sql="select id,user_id,money,pid,addtime from {$this->dbfix}fbb where status=1 and pids like '{$path}%' order by id";

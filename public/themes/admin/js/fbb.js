@@ -38,7 +38,7 @@ mxGraphView.prototype.updateFloatingTerminalPoint = function (edge, start, end, 
     }
     edge.setAbsoluteTerminalPoint(pt, source);
 };
-function main(user_id,id,money)
+function main(user_id,id,money,level)
 {
     if (!mxClient.isBrowserSupported()) {
         mxUtils.error('浏览器不支持!', 200, false);
@@ -48,7 +48,7 @@ function main(user_id,id,money)
         $.ajax({
             type: "post",
             url: "/index.php/ajax/getFbbTree",
-            data:{user_id:user_id,id:id,money:money},
+            data:{user_id:user_id,id:id,money:money,level:level},
             dataType: "json",
             beforeSend: function (XMLHttpRequest) {
                 //setPromptPanelVisible();
@@ -63,13 +63,10 @@ function main(user_id,id,money)
                 container.style.top = '0px';
                 container.style.right = '0px';
                 container.style.bottom = '0px';
-
                 if (mxClient.IS_IE) {
                     new mxDivResizer(container);
                 }
-
                 $(container).appendTo($("#drawContent"));
-
                 var graph = new mxGraph(container);
                 graph.isCellEditable = false;
                 var style = graph.getStylesheet().getDefaultVertexStyle();
@@ -113,7 +110,6 @@ function main(user_id,id,money)
                             state.y + state.height + TreeNodeShape.prototype.segment * s - h / 2 * s,
                             w * s, h * s);
                     }
-
                     return null;
                 };
                 graph.foldCells = function (collapse, recurse, cells) {
@@ -131,24 +127,21 @@ function main(user_id,id,money)
                 graph.getModel().beginUpdate();
                 try {
                     var w = graph.container.offsetWidth;
+                    console.log(w/3);
                     var node = new Array();
                     for (var i = 0; i < data.length; i++) {
-
                         if (i == 0) {
-                            var vNode = graph.insertVertex(parent,0, 'user_id:'+data[i]['user_id']+'\r\n￥'+parseFloat(data[i]['money'])+'('+data[i]['id']+')', w / 3 - 30, 20, 60, 40);
+                            var vNode = graph.insertVertex(parent,0, data[i]['id']+'(￥'+parseFloat(data[i]['money'])+')\r\n'+'user_id:'+data[i]['user_id'], w / 3, 20, 60, 40);
                             node[data[i]['id']] = vNode;
                         } else {
-                            vNode = graph.insertVertex(parent, 0, 'user_id:'+data[i]['user_id']+'\r\n￥'+parseFloat(data[i]['money'])+'('+data[i]['id']+')', 0, 0, 60, 40);
+                            vNode = graph.insertVertex(parent, 0, data[i]['id']+'(￥'+parseFloat(data[i]['money'])+')\r\n'+'user_id:'+data[i]['user_id'], 0, 0, 60, 40,'');
                             node[data[i]['id']] = vNode;
                         }
-
                     }
                     for (var j = 0; j < data.length; j++) {
-
                         if (j != 0) {
                             graph.insertEdge(parent, null, '', node[data[j]['pid']], node[data[j]['id']]);
                         }
-
                         graph.updateCellSize(node[data[j]['id']]);
                     }
                 }
@@ -168,13 +161,11 @@ function main(user_id,id,money)
 function toggleSubtree(graph, cell, show) {
     show = (show != null) ? show : true;
     var cells = [];
-
     graph.traverse(cell, true, function (vertex) {
         if (vertex != cell) {
             cells.push(vertex);
         }
         return vertex == cell || !graph.isCellCollapsed(vertex);
     });
-
     graph.toggleCells(show, cells, true);
 };

@@ -24,6 +24,7 @@ class FBB extends Model
             'user_id' => (int)$data['user_id'],
             'pid' => 0,
             'pids'=>'',
+            'level'=>0,
             'money' => (float)($data['money']),
             'income'=>0,
             'addtime' => date('Y-m-d H:i:s'),
@@ -49,8 +50,13 @@ class FBB extends Model
             }
         }
         $id=DB::table('fbb')->insertGetId($arr);
+        $level=explode(',',$pids);
         $pids=$pids.$id.',';
-        DB::table('fbb')->where("id={$id}")->limit(1)->update(array('pids'=>$pids));
+        $update_arr=array(
+            'pids'=>$pids,
+            'level'=>count($level)
+        );
+        DB::table('fbb')->where("id={$id}")->limit(1)->update($update_arr);
         return true;
     }
 
@@ -76,7 +82,7 @@ class FBB extends Model
     private function calFbbDo()
     {
         $where="status=0 and addtime<'".date('Y-m-d')."'";
-        $result=DB::table('fbb')->select('id,user_id,pids,`position`,money')->where($where)->orderBy('id')->all();
+        $result=DB::table('fbb')->select('id,user_id,pids,`position`,money')->where($where)->limit('0,5000')->orderBy('id')->all();
         foreach ($result as $row) {
             DB::table('fbb')->where("id={$row['id']}")->limit(1)->update(array('status' => 1));//设为己处理
             $pids = rtrim($row['pids'], ',');//去除最后一个，
@@ -176,6 +182,11 @@ class FBB extends Model
             return true;
         }
         return false;
+    }
+
+    public function User()
+    {
+        return $this->hasOne('App\Model\User', 'id','user_id');
     }
 
     ///////////////////////////////////////////////////

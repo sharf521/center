@@ -8,4 +8,8 @@ class FbbLog extends Model
     {
         parent::__construct();
     }
+    public function User()
+    {
+        return $this->hasOne('App\Model\User', 'id','user_id');
+    }
 }

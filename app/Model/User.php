@@ -94,7 +94,7 @@ class User extends Model
             $invite_path=$invite_arr['invite_path'];
         }
         $salt = rand(100000, 999999);
-        $data = array(
+        $_data = array(
             'type_id' => 1,
             'username' => $data['username'],
             'password' => md5(md5($data['password']) . $salt),
@@ -106,7 +106,11 @@ class User extends Model
             'invite_userid' => $invite_userid,
             'invite_path'=>$invite_path
         );
-        $id = DB::table('user')->insertGetId($data);
+        $id = DB::table('user')->insertGetId($_data);
+        if($data['reg_type']=='test'){
+            //批量测试注册
+            return $id;
+        }
         if (is_numeric($id) && $id > 0) {
             if($data['no_login']!==true){  //不需要登陆
                 session()->set('user_id', $id);
@@ -250,9 +254,9 @@ class User extends Model
 
     public function checkUserName($username)
     {
-        if(strlen($username)!=11 || substr($username,0,1)!='1' || (float)$username!=$username){
+/*        if(strlen($username)!=11 || substr($username,0,1)!='1' || (float)$username!=$username){
             return "请输入正确的手机号";
-        }
+        }*/
         $id = DB::table('user')->where("username=?")->bindValues($username)->value('id', 'int');
         if ($id > 0) {
             return '用户名已经存在';
