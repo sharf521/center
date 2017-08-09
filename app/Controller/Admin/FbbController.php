@@ -122,7 +122,7 @@ class FbbController extends AdminController
 
     function test1000FbbReg()
     {
-        $userList=(new User())->select('id')->where("id>=1500")->limit("10000,5000")->get();
+        $userList=(new User())->select('id')->where("id>=1500")->limit("15000,5000")->get();
         //$userList=DB::table('user u')->select("u.id")->leftJoin('fbb b','u.id=b.user_id')->where()
         //SELECT * FROM `plf_user` u WHERE 1 and not EXISTS (SELECT 1 FROM plf_fbb b WHERE u.id = b.user_id)
         foreach ($userList as $user){
