@@ -29,6 +29,7 @@
                     <th>冻结金额</th>
                     <th>冻结积分</th>
                     <th>己收金额</th>
+                    <th>推荐人</th>
                     <th>审请时间</th>
                     <th>审核时间</th>
                     <th>审核备注</th>
@@ -46,6 +47,14 @@
                         <td><?=(float)$row->payed_integral?></td>
                         <td>￥<?=(float)$row->money?></td>
                         <td><?=$row->created_at?></td>
+                        <td>
+                            <?php
+                            if($row->invite_uid!=0){
+                                $inviteUser=$row->InviteUser();
+                                echo $inviteUser->username."({$inviteUser->id}:{$inviteUser->name})";
+                            }
+                            ?>
+                        </td>
                         <td><? if($row->verify_at!=0){echo $row->verify_at;}?></td>
                         <td class="fl"><?=nl2br($row->verify_remark)?></td>
                         <td><?=$row->getLinkPageName('check_status',$row->status)?></td>

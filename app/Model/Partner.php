@@ -22,4 +22,9 @@ class Partner extends Model
     {
         return $this->hasOne('\App\Model\User','id','user_id');
     }
+
+    public function InviteUser()
+    {
+        return $this->hasOne('\App\Model\User','id','invite_uid');
+    }
 }
