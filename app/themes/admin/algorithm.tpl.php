@@ -25,7 +25,7 @@ if ($this->func == 'index') {
             <th>ID</th>
             <th>用户ID</th>
             <th>用户名</th>
-            <th>金额</th>
+            <th>积分</th>
             <th>时间</th>
             <th>状态</th>
         </tr>
