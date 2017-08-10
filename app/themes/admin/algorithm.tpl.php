@@ -20,7 +20,7 @@ if ($this->func == 'index') {
             <input type="submit" class="but2" value="查询"/>
         </div>
     </form>
-    <table class="table">
+    <table class="layui-table">
         <tr class="bt">
             <th>ID</th>
             <th>用户ID</th>
