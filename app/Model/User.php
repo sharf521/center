@@ -254,9 +254,9 @@ class User extends Model
 
     public function checkUserName($username)
     {
-/*        if(strlen($username)!=11 || substr($username,0,1)!='1' || (float)$username!=$username){
+        if(strlen($username)!=11 || substr($username,0,1)!='1' || (float)$username!=$username){
             return "请输入正确的手机号";
-        }*/
+        }
         $id = DB::table('user')->where("username=?")->bindValues($username)->value('id', 'int');
         if ($id > 0) {
             return '用户名已经存在';

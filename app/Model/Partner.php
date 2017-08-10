@@ -12,6 +12,7 @@ namespace App\Model;
 class Partner extends Model
 {
     protected $table='partner';
+    protected $dates=array('verify_at','created_at');
     public function __construct()
     {
         parent::__construct();
