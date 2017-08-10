@@ -423,5 +423,10 @@ class Rebate extends Model
     {
         return $this->hasOne('\App\Model\App','id','app_id');
     }
+
+    public function User()
+    {
+        return $this->hasOne('\App\Model\User','id','user_id');
+    }
 }
 

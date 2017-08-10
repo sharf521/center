@@ -36,6 +36,7 @@ if ($this->func == 'index') {
             <th>app_id</th>
             <th>site_id</th>
             <th>用户ID</th>
+            <th>用户名</th>
             <th>对列类型</th>
             <th>应返金额</th>
             <th>己返金额</th>
@@ -49,12 +50,14 @@ if ($this->func == 'index') {
         $arr_typeid = array('', '16%', '15%', '31%');
         $arr_status = array('未开始', '正常', '己结束');
         foreach ($result['list'] as $row) {
+            $user=$row->User();
             ?>
             <tr>
                 <td><?= $row->id ?></td>
                 <td><? if($row->app_id!=0){echo $row->App()->name;}else{echo '帐户中心';}?></td>
                 <td><?= $row->site_id ?></td>
                 <td><?= $row->user_id ?></td>
+                <td><?= $user->username ?></td>
                 <td><?= $arr_typeid[$row->typeid] ?></td>
                 <td><?= (float)$row->money ?></td>
                 <td><?= (float)$row->money_rebate ?></td>
