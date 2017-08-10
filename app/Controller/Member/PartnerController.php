@@ -149,7 +149,7 @@ class PartnerController extends MemberController
                 if($this->is_inWeChat){
                     $data['invite_url']=(new WeChat())->shorten($data['invite_url']);
                 }
-                $data['invite_img']=Helper::QRcode($data['invite_url'],'fbb',urlencode($data['invite_code']));
+                $data['invite_img']=Helper::QRcode($data['invite_url'],'fbb',"fb{$this->user_id}");
                 //邀请列表
                 $invite_list=(new Partner())->where("invite_uid=?")->bindValues($this->user_id)->get();
                 $data['invite_list']=$invite_list;
