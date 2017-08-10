@@ -88,4 +88,8 @@ class Algorithm extends Model
         }
         return true;
     }
+    public function User()
+    {
+        return $this->hasOne('App\Model\User', 'id','user_id');
+    }
 }

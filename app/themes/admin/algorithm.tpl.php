@@ -24,6 +24,7 @@ if ($this->func == 'index') {
         <tr class="bt">
             <th>ID</th>
             <th>用户ID</th>
+            <th>用户名</th>
             <th>金额</th>
             <th>时间</th>
             <th>状态</th>
@@ -31,10 +32,12 @@ if ($this->func == 'index') {
         <?php
         $arr_status = array('未处理', '己处理');
         foreach ($result['list'] as $row) {
+            $user=$row->User();
             ?>
             <tr>
                 <td><?= $row->id ?></td>
                 <td><?= $row->user_id ?></td>
+                <td><?=$user->username?></td>
                 <td><?= (float)$row->money ?></td>
                 <td><?= $row->addtime ?></td>
                 <td><?= $arr_status[$row->status] ?></td>
