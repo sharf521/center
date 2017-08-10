@@ -43,7 +43,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">邀请码</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="<?=$invite_code?>" value="<?=$invite_code?>"  placeholder="" class="layui-input" autocomplete="off"/>
+                                <input type="text" name="invite_code" value="<?=$invite_code?>"  placeholder="" class="layui-input" autocomplete="off"/>
                             </div>
                         </div>
                         <div class="layui-form-item">
