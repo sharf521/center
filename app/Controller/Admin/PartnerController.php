@@ -78,6 +78,7 @@ class PartnerController extends AdminController
 
                     $arr = array();
                     $arr['status'] = $status;
+                    $arr['invite_uid']=$p_userid;
                     $arr['verify_userid'] = $this->user_id;
                     $arr['verify_at'] = time();
                     $arr['verify_remark'] = $verify_remark;

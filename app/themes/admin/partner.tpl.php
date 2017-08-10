@@ -46,7 +46,6 @@
                         <td>￥<?=(float)$row->payed_funds?></td>
                         <td><?=(float)$row->payed_integral?></td>
                         <td>￥<?=(float)$row->money?></td>
-                        <td><?=$row->created_at?></td>
                         <td>
                             <?php
                             if($row->invite_uid!=0){
@@ -55,6 +54,7 @@
                             }
                             ?>
                         </td>
+                        <td><?=$row->created_at?></td>
                         <td><? if($row->verify_at!=0){echo $row->verify_at;}?></td>
                         <td class="fl"><?=nl2br($row->verify_remark)?></td>
                         <td><?=$row->getLinkPageName('check_status',$row->status)?></td>
