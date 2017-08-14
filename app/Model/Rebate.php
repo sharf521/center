@@ -130,7 +130,9 @@ class Rebate extends Model
             $rebate_last['position_end'] = 0;
             $rebate_last['position_last'] = 0;
         }
+        echo "quantity:{$quantity}，{$rebate_last['position_last']}，{$position_size}";
         $to_quantity = bcdiv($quantity + $rebate_last['position_last'], $position_size);//应返个数()
+        echo "，to_quantity：{$to_quantity}.<br>";
         $position_last_new = bcmod($quantity + $rebate_last['position_last'], $position_size);//不够60个 剩余的个数
         $rebate_list = array(
             'rebate_id' => $rebate['id'],
