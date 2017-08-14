@@ -1,6 +1,7 @@
 <?php
 
-
+echo 'bc:'.bcdiv(0.1511496000+0,60);
+exit;
 
 $url='http://webservices.vcivc.cn:8000/index.php/api';
 $site_id=1;
