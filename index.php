@@ -1,4 +1,6 @@
 <?php
+
+//quantity:0.1511496000，0，60，to_quantity：0.0025191600.
 /*$total=0;
 for($i=0;$i<15;$i++){
     $row=pow(2,$i);

@@ -120,6 +120,9 @@ class Rebate extends Model
      * */
     private function calRebateListDo($rebate, $quantity, $typeid, $money_last)
     {
+        echo 'bc:'.bcdiv(0.1511496000+0,60);
+        exit;
+
         if ($typeid == 1) {
             $position_size = 60;
             $position_money = 500;
