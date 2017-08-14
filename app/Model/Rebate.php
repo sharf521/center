@@ -91,16 +91,14 @@ class Rebate extends Model
 //            }
             $user_money_last = DB::table('rebate_user')->where("user_id={$row['user_id']}")->value('money_last');
             $money = bcadd($row['money'], floatval($user_money_last), 5);
-            $nums500 = bcdiv($money, 500);//500排队个数
-            echo "nums500:{$nums500}，";
+            $nums500 = bcdiv($money, 500,0);//500排队个数
             if ($nums500 > 0) {
                 $money_100 = bcsub($money, bcmul($nums500, 500), 5);// $money-$nums*500 计算排队100的金额  bcmod 结果为整数，所以不能使用
                 $this->calRebateListDo($row, $nums500, 1, $money_100);
             } else {
                 $money_100 = $money;
             }
-            $nums100 = bcdiv($money_100, 100);//100排队个数
-            echo "nums100:{$nums100},";
+            $nums100 = bcdiv($money_100, 100,0);//100排队个数
             if ($nums100 > 0) {
                 $money_last = bcsub($money_100, bcmul($nums100, 100), 5);
                 $this->calRebateListDo($row, $nums100, 2, $money_last);
@@ -120,9 +118,6 @@ class Rebate extends Model
      * */
     private function calRebateListDo($rebate, $quantity, $typeid, $money_last)
     {
-        echo 'bc:'.bcdiv(0.1511496000+0,60);
-        exit;
-
         if ($typeid == 1) {
             $position_size = 60;
             $position_money = 500;
@@ -135,9 +130,7 @@ class Rebate extends Model
             $rebate_last['position_end'] = 0;
             $rebate_last['position_last'] = 0;
         }
-        echo "quantity:{$quantity}，{$rebate_last['position_last']}，{$position_size}";
-        $to_quantity = bcdiv($quantity + $rebate_last['position_last'], $position_size);//应返个数()
-        echo "，to_quantity：{$to_quantity}.<br>";
+        $to_quantity = bcdiv($quantity + $rebate_last['position_last'], $position_size,0);//应返个数()
         $position_last_new = bcmod($quantity + $rebate_last['position_last'], $position_size);//不够60个 剩余的个数
         $rebate_list = array(
             'rebate_id' => $rebate['id'],
@@ -251,9 +244,9 @@ class Rebate extends Model
                 $position_size = 70;
                 $position_money = 100;
             }
-            $position_start_nextpos = (bcdiv($rebate_list['position_start'], $position_size) + 1) * $position_size;//下一个整位置
+            $position_start_nextpos = (bcdiv($rebate_list['position_start'], $position_size,0) + 1) * $position_size;//下一个整位置
             if (bcmod($rebate_list['position_start'], $position_size) == 0 || bcmod($rebate_list['position_end'], $position_size) == 0 || $position_start_nextpos < $rebate_list['position_end']) {
-                $times = bcdiv($rebate_list['position_end'] - $position_start_nextpos, $position_size) + 1;//多少个整位置
+                $times = bcdiv($rebate_list['position_end'] - $position_start_nextpos, $position_size,0) + 1;//多少个整位置
                 $rebate_money = $position_money;
                 $rebate_quantity = 1;
                 for ($i = 1; $i < $times; $i++) {
@@ -349,7 +342,7 @@ class Rebate extends Model
             $result16 = DB::table('rebate')->select('user_id,sum(money) as money')->where("typeid!=2 and status!=2 and money>={$rabate1_dividend_equity} and addtime<'{$day2} 23:59:59'")->groupBy('user_id')->orderBy('null')->all();
             $nums16 = 0;//16总份数
             foreach ($result16 as $k => $row) {
-                $_num = bcdiv($row['money'], $rabate1_dividend_equity);
+                $_num = bcdiv($row['money'], $rabate1_dividend_equity,0);
                 $nums16 += $_num;
                 $result16[$k]['num16'] = $_num;
             }
@@ -365,7 +358,7 @@ class Rebate extends Model
             $result15 = DB::table('rebate')->select('user_id,sum(money) as money')->where("typeid!=1 and status!=2 and money>={$rabate2_dividend_equity} and addtime<'{$day2} 23:59:59'")->groupBy('user_id')->orderBy('null')->all();
             $nums15 = 0;//15总分数
             foreach ($result15 as $k => $row) {
-                $_num = bcdiv($row['money'], $rabate2_dividend_equity);
+                $_num = bcdiv($row['money'], $rabate2_dividend_equity,0);
                 $nums15 += $_num;
                 $result15[$k]['num15'] = $_num;
             }
