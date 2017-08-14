@@ -1,6 +1,10 @@
 <?php
 
-echo 'bc:'.bcdiv(0.1511496000+0,60);
+echo 'bc:'.bcdiv(0.1511496000,60);
+echo '<br>';
+echo 'bc:'.bcdiv('0.1511496000','60');
+echo '<br>';
+echo 'bc:'.bcdiv(0.1511496000+0,60,0);
 exit;
 
 $url='http://webservices.vcivc.cn:8000/index.php/api';
