@@ -92,6 +92,7 @@ class Rebate extends Model
             $user_money_last = DB::table('rebate_user')->where("user_id={$row['user_id']}")->value('money_last');
             $money = bcadd($row['money'], floatval($user_money_last), 5);
             $nums500 = bcdiv($money, 500);//500排队个数
+            echo "nums500:{$nums500}，";
             if ($nums500 > 0) {
                 $money_100 = bcsub($money, bcmul($nums500, 500), 5);// $money-$nums*500 计算排队100的金额  bcmod 结果为整数，所以不能使用
                 $this->calRebateListDo($row, $nums500, 1, $money_100);
@@ -99,6 +100,7 @@ class Rebate extends Model
                 $money_100 = $money;
             }
             $nums100 = bcdiv($money_100, 100);//100排队个数
+            echo "nums100:{$nums100},";
             if ($nums100 > 0) {
                 $money_last = bcsub($money_100, bcmul($nums100, 100), 5);
                 $this->calRebateListDo($row, $nums100, 2, $money_last);
