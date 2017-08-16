@@ -13,7 +13,9 @@ if($this->func=='index')
             金额：<input type="text" size="10" name="money" value="<?=$_GET['money']?>">&nbsp;&nbsp;
             用户ID：<input type="text" size="10" name="user_id" value="<?=$_GET['user_id']?>">&nbsp;&nbsp;
             Fbb_ID：<input type="text" size="10" name="id" value="<?=$_GET['id']?>">&nbsp;&nbsp;
-            结构显示层数:<input type="text" size="10" name="level" value="<?=$_GET['level']?$_GET['level']:'5'?>">&nbsp;&nbsp;
+            第:<input type="text" size="10" name="level" value="<?=$_GET['level']?>">层&nbsp;&nbsp;
+            结构显示层数:<input type="text" size="10" name="showLevel" value="<?=$_GET['showLevel']?$_GET['showLevel']:'5'?>">&nbsp;&nbsp;
+
             <input type="submit" class="but2" value="查询" />
         </div>
     </form>
@@ -76,7 +78,7 @@ if($this->func=='index')
         <script src="/themes/admin/js/fbb.js"></script>
         <script>
             $(document).ready(function () {
-                main(<?=(int)$_GET['user_id']?>, <?=(int)$_GET['id']?>,<?=(float)$_GET['money']?>,<?=(int)$_GET['level']?>);
+                main(<?=(int)$_GET['user_id']?>, <?=(int)$_GET['id']?>,<?=(float)$_GET['money']?>,<?=(int)$_GET['showLevel']?>);
             });
         </script>
     <?

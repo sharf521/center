@@ -20,12 +20,16 @@ class FbbController extends AdminController
         $user_id = (int)$request->get('user_id');
         $id = (int)$request->get('id');
         $money = (int)$request->get('money');
+        $level = (int)$request->get('level');
         $where = "1=1";
         if (!empty($user_id)) {
             $where .= " and user_id={$user_id}";
         }
         if (!empty($money)) {
             $where .= " and money={$money}";
+        }
+        if (!empty($level)) {
+            $where .= " and level={$level}";
         }
         if (!empty($id)) {
             $pids = DB::table('fbb')->where("id=?")->bindValues($id)->value('pids');
