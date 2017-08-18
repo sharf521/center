@@ -21,7 +21,7 @@ class Algorithm extends Model
             $date = date('Y-m-d', strtotime($lastDate) + 3600 * 24);
             $tables=array('fbb_log','zj_log','rebate_log');
             foreach($tables as $table){
-                $result=DB::table($table)->select('user_id,sum(money) as money,substring(addtime,1,10) as addtime')->where("addtime>'{$date}'")->orderBy("id")->groupBy('substring(addtime,1,10),user_id')->all();
+                $result=DB::table($table)->select('user_id,sum(money) as money,substring(addtime,1,10) as addtime')->where("addtime>='{$date}'")->orderBy("id")->groupBy('substring(addtime,1,10),user_id')->all();
                 foreach($result as $row){
                     if ($table != 'rebate_log') {
                         $row['money'] = bcmul($row['money'], 2.52, 5);
